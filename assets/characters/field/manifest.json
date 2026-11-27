@@ -19,5 +19,47 @@
       922
     ],
     "faces": "right"
+  },
+  "morgan": {
+    "size": [
+      334,
+      721
+    ],
+    "faces": "left"
+  },
+  "elwin": {
+    "size": [
+      308,
+      691
+    ],
+    "faces": "left"
+  },
+  "silvaen": {
+    "size": [
+      447,
+      669
+    ],
+    "faces": "left"
+  },
+  "torbin": {
+    "size": [
+      658,
+      694
+    ],
+    "faces": "left"
+  },
+  "lina": {
+    "size": [
+      349,
+      697
+    ],
+    "faces": "left"
+  },
+  "mirel": {
+    "size": [
+      322,
+      645
+    ],
+    "faces": "left"
   }
 }

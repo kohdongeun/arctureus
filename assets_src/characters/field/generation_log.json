@@ -53,21 +53,24 @@
   "why": "흰테두리 56%, 잘림 1, 차지 27%"
  },
  "torbin": {
-  "seed": 1208,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, stout dwarf king blacksmith, huge braided red beard, iron crown, leather smith apron over chainmail, giant forge hammer, laughing expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 4.5
+  "seed": 7181,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, stout dwarf king blacksmith, huge braided red beard, iron crown, leather smith apron over chainmail, giant forge hammer, laughing expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.28,
+  "why": "흰테두리 88%, 잘림 1, 차지 51%"
  },
  "lina": {
-  "seed": 1209,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, little girl with long black hair, simple white dress, holding a small brass music box, absent dreamy expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 4.1
+  "seed": 7192,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, little girl with long black hair, simple white dress, holding a small brass music box, absent dreamy expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.3,
+  "why": "흰테두리 90%, 잘림 1, 차지 28%"
  },
  "mirel": {
-  "seed": 1210,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, pale faded elf girl, grey hood and grey tunic, long pointed ears, faint orange glowing eyes, ghostly melancholy expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 5.0
+  "seed": 7201,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, pale faded elf girl, grey hood and grey tunic, long pointed ears, faint orange glowing eyes, ghostly melancholy expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.59,
+  "why": "흰테두리 1%, 잘림 1, 차지 21%"
  }
 }

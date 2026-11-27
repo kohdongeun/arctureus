@@ -46,10 +46,11 @@
   "why": "흰테두리 1%, 잘림 1, 차지 18%"
  },
  "silvaen": {
-  "seed": 1207,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 39.9
+  "seed": 7171,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.04,
+  "why": "흰테두리 56%, 잘림 1, 차지 27%"
  },
  "torbin": {
   "seed": 1208,

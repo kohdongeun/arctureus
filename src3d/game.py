@@ -423,8 +423,15 @@ class Game:
         Texture.default_filtering = "mipmap"
         from pathlib import Path
         application.fonts_folder = Path(FONTS)
+        Text.default_font = FONT_UI          # 기본 폰트에 한글이 없으므로 모든 Text 기본값을 나눔고딕으로
         Text.default_resolution = 1440 * Text.size
         self.story = load_json("story.json")
+        from src.entities.party import GameState      # 파티 성장·인벤토리 (2D 와 공용)
+        self.state = GameState(self.story)
+        self.battle = None
+        self.listeners = []
+        self.walked = 0.0
+        self.encounters_enabled = True
         self.world = World(map_id)
         m = self.world.m
         # 조명·안개는 src3d/shaders.py 의 자체 셰이더가 계산 (그림자는 지형 텍스처에 구워 둠)
@@ -460,6 +467,7 @@ class Game:
                          color=color.rgba(1, 1, 1, 0.85))
         self.hint.create_background(padding=0.012, radius=0.008, color=color.rgba(0.08, 0.06, 0.04, 0.55))
         self.input_override = None        # 자동 테스트: (x, z) 이동 입력
+        self.state.map_id = m["id"]
         self.bgm = None
         self._audio(m.get("bgm"))
         Entity(update=self.update, input=self.input)
@@ -528,11 +536,10 @@ class Game:
         self.log_bgm = getattr(self, "log_bgm", []) + [name]
 
     def _update_music(self, dt):
-        if self.bgm is None:
-            return
         f = getattr(self, "bgm_fade", 0.0)
         step = dt / f if f else 1.0
-        self.bgm.setVolume(min(self.BGM_VOLUME, self.bgm.getVolume() + self.BGM_VOLUME * step))
+        if self.bgm is not None:
+            self.bgm.setVolume(min(self.BGM_VOLUME, self.bgm.getVolume() + self.BGM_VOLUME * step))
         keep = []
         for snd, v in self.fading:
             v = max(0.0, v - self.BGM_VOLUME * step)
@@ -554,7 +561,14 @@ class Game:
             pass
 
     # ------------------------------------------------------------ 입력/갱신
+    def emit(self, event, **data):
+        for cb in self.listeners:
+            cb(event, data)
+
     def input(self, key):
+        if self.battle:
+            self.battle.input(key)
+            return
         if self.dialogue.active:
             if key in ("z", "space", "enter", "left mouse down"):
                 self.dialogue.advance()
@@ -593,6 +607,10 @@ class Game:
         self.clock = getattr(self, "clock", 0.0) + dt
         self.dialogue.update(dt)
         self.banner.update(dt)
+        if self.battle:
+            self.battle.update(dt)
+            self.update_camera(dt)
+            return
         speed = 5.2
         vx, vz = (0.0, 0.0) if self.dialogue.active else self.move_vector()
         p = self.player
@@ -605,6 +623,9 @@ class Game:
             if math.hypot(p.x - self.trail[0][0], p.z - self.trail[0][1]) > 0.12:
                 self.trail.insert(0, (p.x, p.z))
                 self.trail = self.trail[:160]
+            self.walked += speed * dt
+            if self.check_encounter(speed * dt):
+                return
         p.step(vx, vz, dt, self.yaw, speed)
         # 동료: 발자취를 따라 일정 간격 뒤에서 걷는다
         for i, f in enumerate(self.followers):
@@ -632,11 +653,64 @@ class Game:
         self.yaw = lerp(self.yaw, self.yaw_goal, min(1, dt * 6))
         p = self.player
         goal = Vec3(p.x, self.world.h(p.x, p.z) + 0.9, p.z)
-        self.cam_target = lerp(self.cam_target, goal, min(1, dt * 6))
+        pitch_goal, dist_goal = 50.0, getattr(self, "field_dist", self.dist)
+        if self.battle:
+            goal, pitch_goal, dist_goal = self.battle.camera_goal()
+        else:
+            self.field_dist = self.dist
+        self.pitch = lerp(self.pitch, pitch_goal, min(1, dt * 3))
+        self.dist = lerp(self.dist, dist_goal, min(1, dt * 3))
+        self.cam_target = lerp(self.cam_target, goal, min(1, dt * (3 if self.battle else 6)))
         r, pr = math.radians(self.yaw), math.radians(self.pitch)
         hd = math.cos(pr) * self.dist
         camera.position = self.cam_target + Vec3(-math.sin(r) * hd, math.sin(pr) * self.dist, -math.cos(r) * hd)
         camera.look_at(self.cam_target)
+
+    # ------------------------------------------------------------ 전투
+    def check_encounter(self, meters):
+        enc = self.world.m.get("encounters")
+        if not enc or not self.encounters_enabled or self.walked < enc.get("min_meters", 12):
+            return False
+        sx, sz = self.world.m["start"]
+        if math.hypot(self.player.x - sx, self.player.z - sz) < enc.get("safe_radius", 0):
+            return False
+        if random.random() < enc.get("chance_per_meter", 0.02) * meters:
+            from src.datafiles import load_json as lj
+            table = lj("battle.json")["encounters"][enc["table"]]
+            group = random.choices(table, weights=[g["weight"] for g in table])[0]
+            self.start_battle(group["enemies"])
+            return True
+        return False
+
+    def start_battle(self, enemy_ids, boss=False):
+        from src3d.battle3d import Battle3D
+        self.walked = 0.0
+        self.input_override = None
+        self.emit("encounter", enemies=enemy_ids)
+        self.battle = Battle3D(self, enemy_ids, boss, on_end=self.end_battle)
+        self.emit("battle_start", enemies=enemy_ids)
+
+    def end_battle(self, kind):
+        self.battle = None
+        p = self.player
+        if kind == "defeat":
+            for c in self.state.party:
+                c.full_heal()
+            p.x, p.z = self.world.m["start"]
+        # 동료를 다시 루크 뒤로 줄 세우고 NPC 표시 복구
+        self.trail = [(p.x, p.z - i * 0.125) for i in range(160)]
+        for i, f in enumerate(self.followers):
+            f.x, f.z = p.x, p.z - (i + 1) * 1.5
+        for n in self.npcs:
+            n.body.enabled = n.shadow.enabled = True
+        self.set_bgm(self.world.m.get("bgm"), fade=0.8)
+        self.emit("battle_end", result=kind)
+
+    def stop_bgm(self):
+        if self.bgm is not None:
+            self.fading.append([self.bgm, self.bgm.getVolume()])
+            self.bgm_fade = 0.5
+        self.bgm, self.bgm_name = None, None
 
     def nearest_npc(self, reach=2.6):
         p = self.player

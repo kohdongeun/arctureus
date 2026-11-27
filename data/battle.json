@@ -66,6 +66,12 @@
   },
 
   "encounters": {
+    "verdan_edge": [
+      {"enemies": ["hollow"], "weight": 2},
+      {"enemies": ["rust_crawler", "rust_crawler"], "weight": 2},
+      {"enemies": ["hollow", "rust_crawler"], "weight": 3},
+      {"enemies": ["hollow", "hollow", "rust_crawler"], "weight": 1}
+    ],
     "sewer": [
       {"enemies": ["rust_crawler"], "weight": 2},
       {"enemies": ["rust_crawler", "rust_crawler"], "weight": 3},

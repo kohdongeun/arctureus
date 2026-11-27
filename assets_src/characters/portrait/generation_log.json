@@ -19,5 +19,54 @@
   "endpoint": "image.pollinations.ai (free)",
   "score": 0.5,
   "why": "흰테두리 50%, 잘림 0, 차지 2%"
+ },
+ "cecil": {
+  "seed": 8330,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.6,
+  "why": "흰테두리 0%, 잘림 1, 차지 50%"
+ },
+ "balthazar": {
+  "seed": 8340,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.56,
+  "why": "흰테두리 56%, 잘림 0, 차지 52%"
+ },
+ "morgan": {
+  "seed": 8351,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 64-year-old cheerful old woman mechanic, grey hair in a bun, leather apron over brown work clothes, brass peg leg, big wrench on her shoulder, hearty grin, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 39%"
+ },
+ "elwin": {
+  "seed": 8360,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, young elf scout, short blonde hair, long pointed ears, green hooded tunic, brown leggings, quiver of arrows on back, energetic expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 30%"
+ },
+ "silvaen": {
+  "seed": 8371,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -1.0,
+  "why": "인물 없음"
+ },
+ "torbin": {
+  "seed": 8381,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, stout dwarf king blacksmith, huge braided red beard, iron crown, leather smith apron over chainmail, giant forge hammer, laughing expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.72,
+  "why": "흰테두리 28%, 잘림 1, 차지 61%"
+ },
+ "lina": {
+  "seed": 8392,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, little girl with long black hair, simple white dress, holding a small brass music box, absent dreamy expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.52,
+  "why": "흰테두리 8%, 잘림 1, 차지 50%"
  }
 }

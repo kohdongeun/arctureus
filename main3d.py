@@ -46,6 +46,11 @@ def autoplay(game, out_dir):
         return False
 
     npc = {n.data["id"]: n for n in game.npcs}
+    game.encounters_enabled = False          # 자동 진행 중 무작위 전투가 끼어들지 않게 (전투는 아래에서 직접 시작)
+    bstate = {"skill_used": False, "fx_shot": False, "menu_shot": False, "keys": []}
+
+    def press(*keys):
+        bstate["keys"] += list(keys)
 
     def tick():
         state["f"] += 1
@@ -108,7 +113,64 @@ def autoplay(game, out_dir):
             state["wait"], state["step"] = 6, 13
         elif s == 13:
             shot("robot_dialogue")
+            d.advance()
+            state["step"], state["wait"] = 14, 20
+        elif s == 14:                               # 3D 전투
+            from src.entities.party import exp_to_next
+            for c in game.state.party:              # 결과 화면의 레벨업까지 확인하려고 경험치를 직전으로
+                c.exp = exp_to_next(c.level) - 5
+            game.start_battle(["hollow", "rust_crawler"])
+            state["step"], state["wait"] = 15, 70
+        elif s == 15:
+            shot("battle_start")
+            state["step"] = 16
+        elif s == 16:
+            b = game.battle
+            if b is None:
+                state["step"], state["wait"] = 18, 40
+                return
+            if bstate["keys"]:
+                if state["f"] % 4 == 0:
+                    game.input(bstate["keys"].pop(0))
+                return
+            if b.ui_state == "command":
+                if not bstate["skill_used"]:
+                    bstate["skill_used"] = True
+                    bstate["after_menu"] = True
+                    press("down arrow", "z")             # 스킬 메뉴
+                else:
+                    press("z", "z")                      # 공격 → 대상
+            elif b.ui_state == "sub" and bstate.get("after_menu"):
+                bstate["after_menu"] = False
+                if not bstate["menu_shot"]:
+                    bstate["menu_shot"] = True
+                    shot("battle_skill_menu")
+                usable = [i for i, (_, _, ok) in enumerate(b.sub) if ok]
+                press(*(["down arrow"] * usable[-1]), "z", "z")  # 마지막 사용 가능 스킬 → 대상
+            elif b.ui_state == "target":
+                press("z")
+            elif b.ui_state == "idle" and b.core.seq and not bstate["fx_shot"] and b.fx.items:
+                bstate["fx_shot"] = True
+                state["wait"] = 6
+                state["after_fx"] = True
+            elif state.get("after_fx"):
+                state["after_fx"] = False
+                shot("battle_effect")
+            elif b.ui_state == "result" and not state.get("result_shot"):
+                state["result_shot"] = True
+                state["wait"] = 50
+            elif b.ui_state == "result" and state.get("result_shot") is True:
+                state["result_shot"] = "done"
+                shot("battle_result")
+                press("z")
+            elif state["f"] > 20000:
+                print("전투가 끝나지 않음")
+                application.quit()
+        elif s == 18:
+            shot("after_battle")
+            st = game.state
             print("\n".join(log))
+            print("파티:", ", ".join(f"{c.name} Lv{c.level} HP{c.hp}/{c.max_hp}" for c in st.party), "| 승리", st.battles_won)
             print("BGM 전환:", " → ".join(getattr(game, "log_bgm", [])))
             print(f"autoplay OK ({state['f']} frames)")
             application.quit()

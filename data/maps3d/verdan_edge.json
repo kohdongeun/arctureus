@@ -58,6 +58,7 @@
   "flowers": 160,
   "start": [1.5, -26],
   "start_dir": "ne",
+  "encounters": {"table": "verdan_edge", "chance_per_meter": 0.03, "min_meters": 14, "safe_radius": 6},
   "intro_scene": "ch3_01",
   "npcs": [
     {

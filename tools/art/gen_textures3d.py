@@ -202,6 +202,24 @@ def tuft(flowers=False):
     img.save(os.path.join(TEX, "flower.png" if flowers else "tuft.png"))
 
 
+def fx_textures():
+    """전투 이펙트: 부드러운 빛 점, 링 (가산 합성용, 검은 배경 = 투명 효과)"""
+    n = 128
+    yy, xx = np.mgrid[0:n, 0:n]
+    r = np.hypot(xx - n / 2 + 0.5, yy - n / 2 + 0.5) / (n / 2)
+    glow = np.clip(1 - r, 0, 1) ** 2.2
+    core = np.clip(1 - r * 3.2, 0, 1)
+    a = np.clip(glow * 0.85 + core, 0, 1)
+    img = np.dstack([np.full((n, n), 255), np.full((n, n), 255), np.full((n, n), 255), a * 255]).astype(np.uint8)
+    Image.fromarray(img, "RGBA").save(os.path.join(TEX, "fx_glow.png"))
+    n = 256
+    yy, xx = np.mgrid[0:n, 0:n]
+    r = np.hypot(xx - n / 2 + 0.5, yy - n / 2 + 0.5) / (n / 2)
+    a = np.clip(1 - np.abs(r - 0.86) / 0.1, 0, 1) ** 1.5
+    img = np.dstack([np.full((n, n), 255)] * 3 + [a * 255]).astype(np.uint8)
+    Image.fromarray(img, "RGBA").save(os.path.join(TEX, "fx_ring.png"))
+
+
 def shadow():
     n = 256
     yy, xx = np.mgrid[0:n, 0:n]
@@ -298,6 +316,6 @@ if __name__ == "__main__":
     maps = sys.argv[1:] or ["verdan_edge"]
     for mid in maps:
         terrain_texture(mid)
-    leaves(); bark(); rock(); tuft(False); tuft(True); shadow()
+    leaves(); bark(); rock(); tuft(False); tuft(True); shadow(); fx_textures()
     dialog_panel(); name_plate(); banner(); next_icon(); bubble()
     print("  textures3d/*.png, ui3d/*.png")

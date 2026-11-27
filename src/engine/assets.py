@@ -1,12 +1,12 @@
 """이미지·폰트·사운드 로더 (캐시) 와 오디오 관리자."""
 from __future__ import annotations
 
-import json
 import os
 
 import pygame
 
 from src import config as cfg
+from src import datafiles as _datafiles
 
 _images: dict = {}
 _fonts: dict = {}
@@ -15,10 +15,8 @@ _json: dict = {}
 
 
 def load_json(rel: str):
-    if rel not in _json:
-        with open(os.path.join(cfg.DATA, rel), encoding="utf-8") as f:
-            _json[rel] = json.load(f)
-    return _json[rel]
+    """data/*.json (src/datafiles.py 와 같은 캐시를 공유)"""
+    return _datafiles.load_json(rel)
 
 
 def image(rel: str, scale: float = 1.0) -> pygame.Surface:

@@ -1,7 +1,7 @@
 """파티, 캐릭터 성장(레벨업), 인벤토리, 진행 플래그."""
 from __future__ import annotations
 
-from src.engine import assets
+from src import datafiles as assets      # pygame 없이도 쓰도록 (3D 버전 공용)
 
 STATS = ("hp", "mp", "atk", "def", "mag", "res", "spd")
 

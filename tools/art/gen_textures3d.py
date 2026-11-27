@@ -250,6 +250,99 @@ def magic_circle(n=512):
     out.save(os.path.join(TEX, "fx_circle.png"))
 
 
+def title_textures():
+    """타이틀 화면용: 황동 톱니 엠블럼(겉·속), 빛줄기, 비네트, 메뉴 강조 막대"""
+    n = 1024
+    c = n / 2
+    # 바깥 톱니 고리 + 시계 눈금 + 로마 숫자 자리
+    img = Image.new("RGBA", (n, n), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    teeth = []
+    for i in range(96):
+        a = i * math.tau / 96
+        r = 500 if i % 2 else 470
+        teeth.append((c + math.cos(a) * r, c + math.sin(a) * r))
+    d.polygon(teeth, fill=(196, 150, 70, 255))
+    d.ellipse([c - 455, c - 455, c + 455, c + 455], fill=(0, 0, 0, 0))
+    d.ellipse([c - 455, c - 455, c + 455, c + 455], outline=(240, 200, 120, 255), width=10)
+    d.ellipse([c - 400, c - 400, c + 400, c + 400], outline=(170, 120, 50, 255), width=26)
+    d.ellipse([c - 372, c - 372, c + 372, c + 372], outline=(240, 206, 130, 255), width=4)
+    for i in range(60):
+        a = math.radians(i * 6)
+        r0, r1 = 410, (440 if i % 5 == 0 else 425)
+        d.line([(c + math.cos(a) * r0, c + math.sin(a) * r0), (c + math.cos(a) * r1, c + math.sin(a) * r1)],
+               fill=(255, 230, 170, 255), width=6 if i % 5 == 0 else 3)
+    for i in range(12):                              # 리벳
+        a = math.radians(i * 30 + 15)
+        x, y = c + math.cos(a) * 386, c + math.sin(a) * 386
+        d.ellipse([x - 9, y - 9, x + 9, y + 9], fill=(255, 230, 160, 255), outline=(120, 80, 30, 255), width=3)
+    img = img.filter(ImageFilter.GaussianBlur(0.8))
+    img.save(os.path.join(UI, "title_gear_outer.png"))
+    # 안쪽 톱니 (반대로 돎)
+    img = Image.new("RGBA", (n, n), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    teeth = []
+    for i in range(48):
+        a = i * math.tau / 48
+        r = 330 if i % 2 else 296
+        teeth.append((c + math.cos(a) * r, c + math.sin(a) * r))
+    d.polygon(teeth, fill=(150, 110, 50, 230))
+    d.ellipse([c - 270, c - 270, c + 270, c + 270], fill=(0, 0, 0, 0))
+    d.ellipse([c - 270, c - 270, c + 270, c + 270], outline=(230, 190, 110, 255), width=8)
+    for i in range(6):                               # 바퀴살
+        a = math.radians(i * 60)
+        d.line([(c + math.cos(a) * 60, c + math.sin(a) * 60), (c + math.cos(a) * 270, c + math.sin(a) * 270)],
+               fill=(170, 125, 55, 200), width=22)
+    d.ellipse([c - 70, c - 70, c + 70, c + 70], fill=(200, 160, 80, 230), outline=(250, 220, 150, 255), width=8)
+    d.ellipse([c - 30, c - 30, c + 30, c + 30], fill=(90, 230, 255, 255))
+    img.save(os.path.join(UI, "title_gear_inner.png"))
+    # 빛줄기 (세로로 긴 부드러운 띠)
+    w, h = 128, 1024
+    ray = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    px = ray.load()
+    for y in range(h):
+        fy = min(1.0, y / (h * 0.15)) * (1 - y / h) ** 0.6
+        for x in range(w):
+            fx = max(0.0, 1 - abs(x - w / 2) / (w / 2)) ** 1.6
+            px[x, y] = (255, 236, 190, int(255 * fx * fy))
+    ray.save(os.path.join(UI, "title_ray.png"))
+    # 비네트 (가장자리 어둡게)
+    vw, vh = 512, 288
+    vig = Image.new("RGBA", (vw, vh), (0, 0, 0, 0))
+    px = vig.load()
+    for y in range(vh):
+        for x in range(vw):
+            dx, dy = (x - vw / 2) / (vw / 2), (y - vh / 2) / (vh / 2)
+            r = min(1.0, math.hypot(dx * 0.9, dy * 1.1))
+            px[x, y] = (8, 6, 14, int(255 * max(0.0, r - 0.45) / 0.55 * 0.92))
+    vig.save(os.path.join(UI, "title_vignette.png"))
+    # 세로 그라디언트 (위: 푸른 밤 → 가운데: 투명 → 아래: 노을빛)
+    gw, gh = 8, 256
+    grad = Image.new("RGBA", (gw, gh), (0, 0, 0, 0))
+    px = grad.load()
+    for y in range(gh):
+        t = y / (gh - 1)
+        if t < 0.5:
+            k = (0.5 - t) / 0.5
+            col = (14, 20, 52, int(170 * k ** 1.3))
+        else:
+            k = (t - 0.5) / 0.5
+            col = (110, 48, 16, int(120 * k ** 1.2))
+        for x in range(gw):
+            px[x, y] = col
+    grad.save(os.path.join(UI, "title_grad.png"))
+    # 메뉴 강조 막대 (가운데가 밝은 금빛, 양끝은 투명)
+    bw, bh = 512, 64
+    bar = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+    px = bar.load()
+    for y in range(bh):
+        for x in range(bw):
+            fx = max(0.0, 1 - abs(x - bw / 2) / (bw / 2)) ** 0.8
+            fy = max(0.0, 1 - abs(y - bh / 2) / (bh / 2)) ** 0.5
+            px[x, y] = (240, 190, 90, int(200 * fx * fy))
+    bar.save(os.path.join(UI, "title_bar.png"))
+
+
 def shadow():
     n = 256
     yy, xx = np.mgrid[0:n, 0:n]
@@ -347,5 +440,5 @@ if __name__ == "__main__":
     for mid in maps:
         terrain_texture(mid)
     leaves(); bark(); rock(); tuft(False); tuft(True); shadow(); fx_textures(); magic_circle()
-    dialog_panel(); name_plate(); banner(); next_icon(); bubble()
+    dialog_panel(); name_plate(); banner(); next_icon(); bubble(); title_textures()
     print("  textures3d/*.png, ui3d/*.png")

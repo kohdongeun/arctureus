@@ -52,6 +52,8 @@ def to_dict(st) -> dict:
         "flags": sorted(st.flags),
         "battles_won": st.battles_won,
         "gear": dict(getattr(st, "gear", {})),
+        "members": list(getattr(st, "members", [c.id for c in st.party])),
+        "objective": getattr(st, "objective", None),
         "key_items": sorted(getattr(st, "key_items", set())),
         "party": [{"id": c.id, "level": c.level, "exp": c.exp, "hp": c.hp, "mp": c.mp, "steam": c.steam,
                    "equip": dict(getattr(c, "equip", {}))} for c in st.party],
@@ -73,6 +75,9 @@ def apply_dict(st, d: dict):
     if "gear" in d:                       # 장비가 생기기 전 세이브는 시작 장비 그대로
         st.gear = {k: int(v) for k, v in d["gear"].items() if equipment.gear(k)}
     st.key_items = {k for k in d.get("key_items", []) if equipment.item_def(k)}
+    ids = {c.id for c in st.party}
+    st.members = [m for m in d.get("members", list(ids)) if m in ids] or list(ids)
+    st.objective = d.get("objective")
     by_id = {c.id: c for c in st.party}
     for p in d.get("party", []):
         c = by_id.get(p["id"])

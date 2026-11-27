@@ -98,6 +98,13 @@ class GameState:
         self.dir = "se"
         self.battles_won = 0
         self.playtime = 0.0       # 초 (세이브 슬롯에 표시)
+        self.members = [c.id for c in self.party]     # 지금 함께 다니는 동료 (3D 판은 루크 혼자 시작)
+        self.objective = None                         # {"text", "map", "pos"} — 화면 왼쪽 위 목표 + 표시등
+
+    @property
+    def active(self):
+        """함께 다니는 동료만 (전투·메뉴)"""
+        return [c for c in self.party if c.id in self.members]
 
     def member(self, cid):
         return next(c for c in self.party if c.id == cid)

@@ -1,0 +1,199 @@
+{
+ "_note": "3D 판 에피소드 대본. 맵 이벤트(data/maps3d/*.json)의 scene 이 여기 id 를 가리킨다. 루크는 자유분방하고 능청스러운 현상금 사냥꾼, 아이리스는 호기심 많고 직설적인 천재 소녀, 제드는 돈에 깐깐하고 잔소리 많은 선장(속은 따뜻함).",
+ "scenes": {
+  "op_01": [
+   {"speaker": "narration", "text": "증기력 127년. 거대한 굴뚝들이 하늘을 가린 제국 수도 황동하임의 하층, 굴뚝거리.", "bgm_mood": "town"},
+   {"speaker": "narration", "text": "해가 중천에 떴는데도, 광장 벤치 위의 청년은 일어날 생각이 없다."},
+   {"speaker": "morgan", "text": "루크 애쉬포드! 일어나! 석 달 치 방세, 오늘 안 내면 네 공구함을 고철상에 넘긴다!"},
+   {"speaker": "luke", "text": "……아, 모르간. 좋은 아침. 오늘 하늘 예쁘네. 그을음 때문에 하나도 안 보이지만."},
+   {"speaker": "morgan", "text": "말 돌리지 마라. 돈은?"},
+   {"speaker": "luke", "text": "돈이라. 철학적인 질문이네. 돈이란 결국 있다가도 없는 거고, 없다가도……"},
+   {"speaker": "morgan", "text": "없는 거지."},
+   {"speaker": "luke", "text": "……정답."},
+   {"speaker": "morgan", "text": "됐다. 마침 일거리가 하나 들어왔다. 가게 앞으로 와. 도망가면 진짜로 공구함 판다."},
+   {"speaker": "luke", "text": "뭐, 어떻게든 되겠지."}
+  ],
+  "op_02": [
+   {"speaker": "morgan", "text": "이거 봐라. 기술원에서 붙인 현상금 공고다."},
+   {"speaker": "system", "text": "【현상수배】 베르단 숲에 출몰한 폭주 채굴기 '그라인더' — 현상금 3,000 골드"},
+   {"speaker": "luke", "text": "삼천? 방세가 석 달이면 구백. 남는 걸로 맥주가 몇 잔이지?"},
+   {"speaker": "morgan", "text": "남는 건 없다. 밀린 수리비, 공구 대여료, 네가 부순 내 문짝 값까지 하면 딱 삼천이다."},
+   {"speaker": "luke", "text": "……모르간, 혹시 그 숫자 현상금 보고 거꾸로 맞춘 거 아냐?"},
+   {"speaker": "morgan", "text": "그래서, 갈 거냐 말 거냐."},
+   {"speaker": "luke", "text": "갈게. 숲 공기 좀 마시고 오지 뭐. 여기선 숨 쉬는 것도 돈이 드니까."},
+   {"speaker": "morgan", "text": "강장제 세 병 챙겨 주마. 죽지만 마라. 시체는 방세를 못 내."},
+   {"speaker": "morgan", "text": "숲까지는 남쪽 선착장에서 배를 얻어 타라. 요즘 '알바트로스'라는 해적선이 거기 붙어 있더라."}
+  ],
+  "op_03": [
+   {"speaker": "narration", "text": "큰길 모퉁이를 도는 순간, 무언가가 정면으로 날아들었다.", "bgm_mood": "tense"},
+   {"speaker": "iris", "text": "비켜 주세요오오오—!"},
+   {"speaker": "narration", "text": "쿵. 흰 연구복을 입은 소녀가 루크를 깔고 앉았다."},
+   {"speaker": "luke", "text": "……음. 하늘에서 여자애가 떨어지는 건 소설에서나 있는 일인 줄 알았는데."},
+   {"speaker": "iris", "text": "떨어진 게 아니라 뛰어내린 거예요! 지붕에서! 계산상으로는 착지 지점에 짚더미가 있어야 했는데……"},
+   {"speaker": "luke", "text": "짚더미 대신 나였네. 착지 점수는 몇 점이야?"},
+   {"speaker": "iris", "text": "육십 점이요. 당신이 좀 딱딱해서."},
+   {"speaker": "guard_rookie", "text": "거기 서라! 기술원 연구원 도주 사건…… 어? 루크 형?"},
+   {"speaker": "luke", "text": "피터잖아. 근위대 일은 할 만해? 여자애 쫓아다니는 게 업무야?"},
+   {"speaker": "guard_rookie", "text": "그, 그런 게 아니라요! 그 애가 기술원에서 뭘 갖고 도망쳤대요. 형, 넘겨 줘요."},
+   {"speaker": "iris", "text": "아무것도 안 훔쳤어요! 저 자신만 챙겨서 나왔을 뿐이에요."},
+   {"speaker": "luke", "text": "들었지? 자기 자신을 훔친 건 절도가 아니래. 법적으로 애매하잖아, 피터."},
+   {"speaker": "guard_rookie", "text": "에, 그런가……? 아니 잠깐, 아니죠!"},
+   {"speaker": "luke", "text": "자, 뛰자. 낙하 소녀."},
+   {"speaker": "iris", "text": "아이리스예요! 낙하 소녀 아니고요!"}
+  ],
+  "op_04": [
+   {"speaker": "narration", "text": "선착장 끝. 낡은 비행선 한 척이 증기를 뿜고 있었다. 뱃머리에 새겨진 이름은 '알바트로스'.", "bgm_mood": "mystery"},
+   {"speaker": "zed", "text": "멈춰. 승선 요금은 일 인당 이백 골드. 선불이다."},
+   {"speaker": "luke", "text": "이백? 하늘을 나는 값치곤 싸네. 외상 돼?"},
+   {"speaker": "zed", "text": "안 돼."},
+   {"speaker": "luke", "text": "그럼 할부."},
+   {"speaker": "zed", "text": "안 된다고. …그 연구복, 기술원 문장이군. 문제 덩어리를 데려왔어."},
+   {"speaker": "iris", "text": "문제가 아니라 아이리스예요. 그리고 그 매, 진짜 새가 아니죠? 날개 관절이 육각 볼트예요! 한 번만 만져 봐도 돼요?"},
+   {"speaker": "zed", "text": "……핀한테 손대지 마."},
+   {"speaker": "guard_rookie", "text": "거기 서라! 이번엔 지원 병력도 데려왔어요, 형!", "bgm_mood": "tense"},
+   {"speaker": "luke", "text": "피터, 너 오늘 진짜 열심히 산다. 승진하겠다."},
+   {"speaker": "zed", "text": "근위대까지 달고 왔어? …좋아. 저놈들 치우면 태워 주지. 요금은 나중에, 이자 붙여서."},
+   {"speaker": "luke", "text": "거래 성립. 이자는 나중에 협상하자고."},
+   {"speaker": "system", "text": "전투 — 차례가 오면 명령을 고른다. 스킬은 MP를 쓰고, 치명타가 터지면 컷인이 나온다!"}
+  ],
+  "op_05": [
+   {"speaker": "zed", "text": "……나쁘지 않군. 특히 그 하품하면서 칼 휘두르는 거."},
+   {"speaker": "luke", "text": "하품은 기술이야. 긴장을 풀어야 칼이 잘 나가거든."},
+   {"speaker": "iris", "text": "저 처음 싸워 봤는데요, 공명이 손끝에서 웅웅 울렸어요! 또 해 보고 싶어요!"},
+   {"speaker": "zed", "text": "타라. 목적지는?"},
+   {"speaker": "luke", "text": "베르단 숲. 거기 삼천 골드짜리 고철이 돌아다닌대."},
+   {"speaker": "zed", "text": "…삼천이라. 반 나누지."},
+   {"speaker": "luke", "text": "삼분의 일."},
+   {"speaker": "zed", "text": "운임이랑 이자 빼고 사분의 일."},
+   {"speaker": "luke", "text": "……이 사람, 모르간이랑 같은 학교 나왔나 봐."},
+   {"speaker": "iris", "text": "그럼 저는요? 저도 몫 있어요?"},
+   {"speaker": "zed", "text": "넌 화물이다."},
+   {"speaker": "iris", "text": "화물이 이렇게 귀여워도 돼요?"}
+  ],
+  "fo_01": [
+   {"speaker": "narration", "text": "알바트로스호가 녹안개 낀 숲 가장자리에 내려앉았다.", "bgm_mood": "default"},
+   {"speaker": "iris", "text": "우와아…… 초록색이에요! 진짜 나무예요! 굴뚝 말고 이렇게 큰 게 서 있는 건 처음 봐요!"},
+   {"speaker": "luke", "text": "숲이니까. 나무가 많은 게 숲의 본업이지."},
+   {"speaker": "zed", "text": "들떠 있을 때가 아니다. 저쪽 공기, 붉게 일렁이는 거 보이지? 녹안개다. 오래 마시면 기억이 녹슨다."},
+   {"speaker": "iris", "text": "기억이…… 녹슬어요?"},
+   {"speaker": "zed", "text": "이름, 얼굴, 좋아하던 음식까지. 하나씩 지워지다가 마지막엔 껍데기만 남지. 그걸 '홀로우'라고 부른다."},
+   {"speaker": "luke", "text": "다행이다. 난 잊고 싶은 게 많거든. 방세라든가."},
+   {"speaker": "zed", "text": "……농담할 기운 있으면 앞장서. 그라인더의 흔적부터 찾는다."}
+  ],
+  "fo_02": [
+   {"speaker": "narration", "text": "덤불이 바스락거리더니, 녹슨 금속 다리 여러 개가 튀어나왔다.", "bgm_mood": "tense"},
+   {"speaker": "iris", "text": "벌레예요! 기계 벌레! 다리가 열두 개, 아니 열네 개……!"},
+   {"speaker": "luke", "text": "세는 건 나중에 하자."}
+  ],
+  "fo_03": [
+   {"speaker": "zed", "text": "녹슨 기계벌레는 '공명'에 약하다. 아이리스, 네 지팡이가 제일 잘 먹힐 거다."},
+   {"speaker": "iris", "text": "약점이요? 그럼 제가 이 파티의 주인공이네요!"},
+   {"speaker": "luke", "text": "주인공은 낮잠 자는 사람이야. 아무튼 수고했어."},
+   {"speaker": "system", "text": "TIP — 적의 약점 속성으로 공격하면 '약점!'과 함께 1.5배 피해. 반짝이는 보물상자도 놓치지 말자."}
+  ],
+  "fo_elwin": [
+   {"speaker": "elwin", "text": "멈춰! …인간? 기술원 놈들이야?"},
+   {"speaker": "luke", "text": "보다시피 근면 성실한 시민이지. 셋 중에 성실한 건 저 안경 쓴 사람뿐이지만."},
+   {"speaker": "zed", "text": "외눈안경이다."},
+   {"speaker": "elwin", "text": "…난 엘윈. 녹색 서약회의 정찰병이었……던 것 같아. 미안, 기억이 자꾸 흐려져."},
+   {"speaker": "iris", "text": "녹안개 때문인가요? 괜찮아요, 제가 대신 기억해 둘게요. 엘윈 씨, 정찰병, 금발, 귀가 뾰족함!"},
+   {"speaker": "elwin", "text": "…고마워. 너 이상한 애구나."},
+   {"speaker": "luke", "text": "칭찬이야. 우리 업계에선."},
+   {"speaker": "elwin", "text": "숲 북쪽 끝에 '고목의 요람'이 있어. 대드루이드님이라면 녹안개도, 요즘 숲을 파먹는 거대한 기계도 알고 계실 거야."},
+   {"speaker": "zed", "text": "거대한 기계. 그라인더군."},
+   {"speaker": "luke", "text": "삼천 골드가 북쪽에 있대. 가자."}
+  ],
+  "fo_robot": [
+   {"speaker": "narration", "text": "녹슨 채굴 로봇 한 대가 덤불 속에 주저앉아 있다. 외눈이 희미하게 깜빡인다."},
+   {"speaker": "abandoned_robot", "text": "……삐. 작업 지시 없음. 주인 없음. 배터리 3퍼센트. 노래해도 되겠습니까."},
+   {"speaker": "iris", "text": "노래요? 로봇이 노래를 해요?!"},
+   {"speaker": "abandoned_robot", "text": "삐— 빠— 삐이— (음정이 하나도 맞지 않는다)"},
+   {"speaker": "luke", "text": "음치 로봇이라니. 마음에 드는데. 친구 하자, 꼬마."},
+   {"speaker": "zed", "text": "B-7형 채굴기다. 기술원이 버린 거지. 부품만 떼어 팔아도 꽤 값이……"},
+   {"speaker": "iris", "text": "제드 씨!"},
+   {"speaker": "zed", "text": "…농담이다. 반쯤은."},
+   {"speaker": "abandoned_robot", "text": "삐. 친구 등록 완료. 답례: 이 근처 상자에 비상용 코어가 있음. 가져가십시오."}
+  ],
+  "fo_hollow": [
+   {"speaker": "narration", "text": "안개 속에 엘프 하나가 우두커니 서 있다. 눈동자에 빛이 없다.", "bgm_mood": "sad"},
+   {"speaker": "iris", "text": "저기요…? 괜찮으세요?"},
+   {"speaker": "hollow_elf", "text": "……여기가 어디였더라. 나는…… 누구를 기다리고 있었는데."},
+   {"speaker": "zed", "text": "……"},
+   {"speaker": "luke", "text": "제드?"},
+   {"speaker": "zed", "text": "아무것도 아니다. …홀로우가 되기 직전이야. 지금 우리가 해 줄 수 있는 건 없어."},
+   {"speaker": "iris", "text": "없는 게 어디 있어요. 기억이 녹슨다면, 닦으면 되잖아요."},
+   {"speaker": "luke", "text": "녹 닦는 건 내 전문인데. 방법을 찾으면, 그때 다시 오자."},
+   {"speaker": "hollow_elf", "text": "……기다릴게. 무엇을 기다리는지는…… 모르겠지만."}
+  ],
+  "fo_rumble": [
+   {"speaker": "narration", "text": "숲이 갑자기 조용해졌다. 멀리서 쿵, 쿵— 땅이 울린다.", "bgm_mood": "tense"},
+   {"speaker": "iris", "text": "이 소리…… 심장 소리 같아요. 엄청 큰."},
+   {"speaker": "zed", "text": "채굴기 드릴이다. 그라인더가 가까이 있어. 저 북쪽 고목 쪽이다."},
+   {"speaker": "luke", "text": "좋아. 삼천 골드가 제 발로 걸어오는 소리네."},
+   {"speaker": "zed", "text": "죽으면 한 푼도 못 쓴다는 것만 기억해 둬. 특히 내 운임."}
+  ],
+  "cr_01": [
+   {"speaker": "narration", "text": "숲 북쪽 끝. 하늘을 가릴 만큼 거대한 고목 아래, 엘프들의 마을이 숨어 있었다.", "bgm_mood": "mystery"},
+   {"speaker": "silvaen", "text": "……이 공명. 이 음색. 설마……"},
+   {"speaker": "narration", "text": "백발의 엘프가 지팡이를 짚고 일어서더니, 아이리스 앞에 천천히 무릎을 꿇었다."},
+   {"speaker": "silvaen", "text": "천 년 만이군요, 아이리스 님. 엘레이온의 마지막 대마도사여."},
+   {"speaker": "iris", "text": "네? 저 그냥 아이리스예요. 열일곱 살이고, 좋아하는 건 오븐에 구운 감자고……"},
+   {"speaker": "luke", "text": "대마도사가 감자를 좋아하면 안 된다는 법은 없지."},
+   {"speaker": "silvaen", "text": "……기억하지 못하시는군요. 용서하십시오. 이 늙은이도 기억의 절반을 안개에 빼앗겼으니."},
+   {"speaker": "zed", "text": "대드루이드. 녹안개의 정체를 알려 줘. 반드시 알아야 할 이유가 있다."},
+   {"speaker": "silvaen", "text": "이 땅은 거인의 등입니다. 아르카누스, 옛 신들이 만든 태엽 거인이지요. 당신들이 캐내는 푸른 돌은 그의 피이고, 녹안개는 그가 꾸는 '잊고 싶다'는 꿈입니다."},
+   {"speaker": "zed", "text": "……그럼 기술원의 심장 펌프는, 신의 피를 빨아내고 있었다는 거군."},
+   {"speaker": "luke", "text": "이야기 규모가 갑자기 커졌네. 난 삼천 골드짜리 고철 잡으러 왔을 뿐인데."},
+   {"speaker": "silvaen", "text": "아이리스 님, 서쪽 '공명의 제단'으로 가 주십시오. 거인의 목소리를 들으실 수 있을 겁니다."}
+  ],
+  "cr_02": [
+   {"speaker": "silvaen", "text": "제단에 손을 얹으십시오, 아이리스 님."},
+   {"speaker": "iris", "text": "……네."},
+   {"speaker": "arcanus", "text": "……작은…… 태엽의…… 아이야……", "bgm_mood": "sad"},
+   {"speaker": "iris", "text": "꿈속에서 들리던 목소리예요……!"},
+   {"speaker": "arcanus", "text": "……무겁다…… 너무 오래 기억하고 있었다…… 이제 잊고 싶구나…… 전부……"},
+   {"speaker": "iris", "text": "잊으면 안 돼요! 당신이 잊으면 이 땅도, 사람들도 전부……!"},
+   {"speaker": "arcanus", "text": "……너는…… 천 년 전에도…… 같은 말을 했지……"},
+   {"speaker": "narration", "text": "빛이 꺼졌다. 루크의 귀에도, 거대한 심장 소리가 선명하게 울리고 있었다."},
+   {"speaker": "luke", "text": "……들었어. 나도. 아버지도 이 소리를 들었던 걸까."},
+   {"speaker": "luke", "text": "…뭐, 이런 건 나중에 생각하자. 진지한 건 체질에 안 맞아."},
+   {"speaker": "elwin", "text": "대드루이드님! 제국군이에요! 거대한 채굴기를 몰고 오고 있어요!", "bgm_mood": "tense"},
+   {"speaker": "cecil", "text": "녹색 서약회에 고한다. 이 숲은 제국 에테르 개발 구역으로 지정되었다. 즉시 퇴거하라."},
+   {"speaker": "luke", "text": "세실? 이야, 출세했네. 근위대장 갑옷 잘 어울린다. 너무 반짝여서 눈이 좀 아프지만."},
+   {"speaker": "cecil", "text": "루크 애쉬포드. 기술원의 연구체를 데리고 도주 중이라는 보고를 받았다. 변함없이 한심하군."},
+   {"speaker": "luke", "text": "변함없는 게 내 장점이지. 넌 많이 변했고."},
+   {"speaker": "cecil", "text": "……그라인더, 기동. 저항하는 자는 배제한다."},
+   {"speaker": "luke", "text": "다들 들었지? 저게 삼천 골드다. 흠집 내지 말고 잡자."},
+   {"speaker": "zed", "text": "흠집은 내도 된다. 현상금은 '파괴' 기준이니까."},
+   {"speaker": "system", "text": "BOSS — 숲 채굴기 그라인더"}
+  ],
+  "cr_03": [
+   {"speaker": "narration", "text": "그라인더가 검은 연기를 토하며 주저앉았다.", "bgm_mood": "default"},
+   {"speaker": "cecil", "text": "……그라인더가, 저런 고물 같은 대검에……?"},
+   {"speaker": "luke", "text": "고물 아니야. 아버지 검이야. 내가 칠 년 동안 고쳤어. 지금은 좀 아프다고 투덜대는 중이지만."},
+   {"speaker": "cecil", "text": "……퇴각한다. 다음엔 내가 직접 상대하겠다, 루크."},
+   {"speaker": "cecil", "text": "그리고 이 숲은…… 보고서에 '오염이 심해 채굴 불가'라고 적겠다. 그게 내가 할 수 있는 전부다."},
+   {"speaker": "luke", "text": "…역시 넌 변한 척만 하는구나."},
+   {"speaker": "iris", "text": "저 사람, 나쁜 사람은 아닌 것 같아요."},
+   {"speaker": "zed", "text": "근위대장한테 동정은 사치다. …그래도 이번엔 고맙군."},
+   {"speaker": "silvaen", "text": "기사의 아이여. 그대의 검은 아직 완성되지 않았소. 이 요람 동쪽의 '잊힌 서약의 사당'에 옛 서약 기사단이 남긴 것이 잠들어 있다 하오.", "bgm_mood": "mystery"},
+   {"speaker": "silvaen", "text": "세 개의 인장 조각을 모으면 사당이 열릴 것이오. 하나는 이 요람에, 하나는 베르단 숲에, 하나는…… 그대들의 마을에 있다 들었소."},
+   {"speaker": "luke", "text": "보물찾기라. 그건 체질에 맞지."},
+   {"speaker": "zed", "text": "그 전에 현상금부터 받자. 운임이 밀려 있으니까."},
+   {"speaker": "system", "text": "현상금 3,000 골드! …에서 모르간 몫과 운임과 이자를 떼고, 1,000 골드를 받았다."}
+  ],
+  "ev_first_chest": [
+   {"speaker": "luke", "text": "보물상자다. 이런 건 열어 보는 게 예의지."},
+   {"speaker": "iris", "text": "주인 있는 거 아니에요?"},
+   {"speaker": "luke", "text": "숲은 모두의 것이야. 그러니까 상자도 모두의 것이고, 지금은 내 거지."}
+  ],
+  "ev_first_inn": [
+   {"speaker": "zed", "text": "숙박비는 내가 내지. 장부에 적어 두고."},
+   {"speaker": "luke", "text": "…이 사람, 숨 쉬는 것도 장부에 적을 것 같아."}
+  ],
+  "ev_first_levelup": [
+   {"speaker": "luke", "text": "레벨 업이라. 나 오늘 좀 성실했나?"},
+   {"speaker": "iris", "text": "저 방금 몸이 반짝했어요! 성장기예요!"}
+  ]
+ }
+}

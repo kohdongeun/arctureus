@@ -403,15 +403,24 @@ class Altar:
 
 class Motion:
     """빌보드 한 장에 얹는 연출 채널 (전투 동작이 매 프레임 채워 넣고, Actor/EnemyView 가 셰이더로 반영)"""
-    __slots__ = ("lean", "hop", "sx", "sy", "flash", "off", "walk")
+    __slots__ = ("lean", "hop", "sx", "sy", "flash", "off", "walk", "arm", "cast", "down")
 
     def __init__(self):
         self.reset()
 
     def reset(self):
         self.lean, self.hop, self.sx, self.sy, self.flash = 0.0, 0.0, 1.0, 1.0, 0.0
+        self.arm, self.cast, self.down = 0.0, 0.0, 0.0     # 3D 캐릭터: 오른팔 휘두르기 / 양팔 시전 / 쓰러짐
         self.off = Vec3(0, 0, 0)
         self.walk = None                # None 이면 이동 여부로 자동
+
+
+def make_actor(world, sprite, x, z, facing="se", name=""):
+    """3D 캐릭터 정의가 있으면 3D 치비(src3d/chibi.py), 없으면 일러스트 빌보드"""
+    from src3d.chibi import Chibi, spec_for
+    if os.environ.get("ARCTURUS_BILLBOARD") != "1" and spec_for(sprite):
+        return Chibi(world, sprite, x, z, facing, name)
+    return Actor(world, sprite, x, z, facing, name)
 
 
 class Actor:
@@ -580,8 +589,46 @@ class Actor:
 
 
 # ====================================================================== 대화 UI
+def _em(ch):
+    """글자 폭 (한글 = 1)"""
+    o = ord(ch)
+    if o >= 0x1100 or ch in "…—「」『』":
+        return 1.0
+    if ch == " ":
+        return 0.32
+    if ch in ".,!?':;\"()[]":
+        return 0.38
+    return 0.58
+
+
+def wrap_text(text, max_em):
+    """단어 단위 줄바꿈 (한 단어가 한 줄보다 길면 글자 단위로 자름). 원래 줄바꿈 유지"""
+    out = []
+    for para in text.split("\n"):
+        line, w = "", 0.0
+        for word in para.split(" "):
+            ww = sum(_em(c) for c in word)
+            sep = 0.32 if line else 0.0
+            if w + sep + ww <= max_em:
+                line, w = (line + " " + word) if line else word, w + sep + ww
+                continue
+            if line:
+                out.append(line)
+            line, w = "", 0.0
+            for c in word:                       # 너무 긴 단어
+                if w + _em(c) > max_em:
+                    out.append(line)
+                    line, w = "", 0.0
+                line += c
+                w += _em(c)
+        out.append(line)
+    return out
+
+
 class DialogueUI:
     PANEL = (1.24, 0.29)
+    TEXT_SCALE = 1.12
+    MAX_LINES = 3
 
     def __init__(self, game):
         self.game = game
@@ -592,7 +639,7 @@ class DialogueUI:
         self.name = Text(parent=self.root, text="", font=font(FONT_UI), origin=(-0.5, 0.5), position=(-0.69, -0.215),
                          z=-0.1, scale=1.15, color=rgb(122, 66, 30))
         self.body = Text(parent=self.root, text=" ", font=font(FONT_TEXT), origin=(-0.5, 0.5), position=(-0.69, -0.262),
-                         z=-0.1, scale=1.22, color=rgb(58, 40, 26), wordwrap=34)
+                         z=-0.1, scale=self.TEXT_SCALE, color=rgb(58, 40, 26))
         self.body.line_height = 1.25
         self.next = Entity(parent=self.root, model="quad", texture=tex("ui3d/next.png"), scale=0.035,
                            position=(0.32, -0.44), z=-0.1)
@@ -606,8 +653,18 @@ class DialogueUI:
 
     def open(self, lines, on_done=None):
         flags = self.game.state.flags
-        self.lines = [l for l in lines if l.get("speaker") != "choice"
-                      and (not l.get("condition") or l["condition"] in flags)]
+        lines = [l for l in lines if l.get("speaker") != "choice"
+                 and (not l.get("condition") or l["condition"] in flags)]
+        # 긴 대사: 일러스트에 가리지 않는 폭으로 줄바꿈하고, 3줄이 넘으면 다음 페이지로 나눈다
+        self.lines = []
+        for l in lines:
+            wrapped = wrap_text(l["text"], self.text_width_em(l))
+            for k in range(0, len(wrapped), self.MAX_LINES):
+                page = dict(l)
+                page["text"] = "\n".join(wrapped[k:k + self.MAX_LINES])
+                if k:                                  # 이어지는 페이지는 효과음·BGM 바꾸지 않음
+                    page.pop("bgm_mood", None)
+                self.lines.append(page)
         if not self.lines:
             if on_done:
                 on_done()
@@ -615,6 +672,20 @@ class DialogueUI:
         self.i, self.shown, self.on_done = 0, 0.0, on_done
         self.root.enabled = True
         self.show_line()
+
+    def text_width_em(self, line):
+        """이 대사가 쓸 수 있는 줄 길이 (글자 수, 한글 기준)"""
+        sid = line.get("speaker")
+        right = 0.44                                   # 창 오른쪽 안쪽 여백
+        art = self.game.standing_art(sid, line.get("emotion", "normal")) if sid not in ("narration", "system") else None
+        if art:
+            t = tex(art)
+            aspect = t.width / t.height
+            h = 0.92 if aspect < 0.62 else 0.8
+            w = h * aspect
+            right = min(right, min(0.6, 0.875 - w / 2) - w / 2 - 0.03)
+        em = self.TEXT_SCALE * Text.size
+        return max(14, int((right - (-0.69)) / em))
 
     def show_line(self):
         line = self.lines[self.i]
@@ -668,7 +739,9 @@ class DialogueUI:
         full = len(line["text"])
         if self.shown < full:
             self.shown = min(full, self.shown + 38 * dt)
-            self.body.text = line["text"][: int(self.shown)]
+        want = line["text"][: int(self.shown)]
+        if self.body.text != want:                       # 건너뛰기(Z)로 한 번에 다 보여 줄 때도 갱신
+            self.body.text = want
         self.next.enabled = self.shown >= full
         self.next.y = -0.44 + abs(math.sin(self.t * 5)) * 0.008
         self.art_from = min(1.0, self.art_from + dt * 4)
@@ -705,7 +778,7 @@ class Game:
 
     FIELD_HINT = "WASD·방향키 이동   Z·Space 대화/조사   X·Esc 메뉴   Q/E 시점 회전   휠 확대"
 
-    def __init__(self, map_id="verdan_edge", size=(1280, 720), start="title"):
+    def __init__(self, map_id="chimney_ward", size=(1280, 720), start="title"):
         self.app = Ursina(title="황동의 심장 : 아스카론 연대기", size=size, development_mode=False,
                           borderless=False, vsync=True)
         check_support(self.app)          # GLSL 미지원 환경이면 셰이더 없이 그리도록
@@ -736,7 +809,8 @@ class Game:
         # 카메라
         self.yaw, self.yaw_goal = 35.0, 35.0
         self.pitch, self.dist = 50.0, 36.0
-        self.zoom = 36.0                  # 필드에서 플레이어가 고른 카메라 거리 (휠)
+        self.zoom = 22.0                  # 필드에서 플레이어가 고른 카메라 거리 (휠) — 3D 캐릭터가 잘 보이도록 가깝게
+        self.field_pitch = 30.0           # 필드 카메라 내려다보는 각도 (3D 캐릭터 얼굴이 보이도록 낮게)
         camera.fov = 30
         self.cam_target = Vec3(0, 0, 0)
         # 공용 UI
@@ -754,6 +828,11 @@ class Game:
         self.toast = Text(parent=camera.ui, text="", origin=(0, 0), y=0.3, scale=1.15, z=-0.5,
                           color=color.rgba32(255, 236, 190))
         self.toast_t = 0.0
+        self.obj_bg = Entity(parent=camera.ui, model=Quad(radius=0.01), origin=(-0.5, 0.5), position=(-0.875, 0.44),
+                             scale=(0.5, 0.05), color=color.rgba(0.08, 0.06, 0.04, 0.62), z=-0.1, enabled=False)
+        self.obj_text = Text(parent=camera.ui, text="", origin=(-0.5, 0.5), position=(-0.862, 0.432), scale=0.9, z=-0.11,
+                             color=color.rgba32(255, 226, 160), enabled=False)
+        self.beacon = None
         from src3d.battle3d import FX
         self.field_fx = FX(tex("textures3d/fx_glow.png"))
         self.fader = Entity(parent=camera.ui, model="quad", scale=(4, 2), color=color.rgba(0, 0, 0, 0), z=-0.98)
@@ -772,6 +851,9 @@ class Game:
     # ------------------------------------------------------------ 맵 불러오기/비우기
     def unload_map(self):
         self.field_fx.clear()
+        if getattr(self, "beacon", None) is not None:
+            destroy(self.beacon)
+            self.beacon = None
         if self.world:
             self.world.destroy()
         for a in ([self.player] if self.player else []) + self.followers + self.npcs:
@@ -796,17 +878,21 @@ class Game:
         facing = facing or m.get("start_dir", "ne")
         if party:
             # 파티 (루크가 앞장서고 아이리스·제드가 뒤따름)
-            self.player = Actor(self.world, "luke", sx, sz, facing, "luke")
+            self.player = make_actor(self.world, "luke", sx, sz, facing, "luke")
             self.player.on_step = self.footstep
-            self.followers = [Actor(self.world, "iris", sx, sz - 1.5, facing, "iris"),
-                              Actor(self.world, "zed", sx, sz - 3.0, facing, "zed")]
+            self.followers = [make_actor(self.world, cid, sx, sz - 1.5 * (i + 1), facing, cid)
+                              for i, cid in enumerate(m_ for m_ in ("iris", "zed") if m_ in self.state.members)]
             self.line_up()
             for n in m.get("npcs", []):
-                sprite = n["sprite"]
-                if not os.path.exists(os.path.join(FIELD_DIR, sprite + ".png")) and not os.path.exists(
+                if (n.get("hide_if") and n["hide_if"] in self.state.flags) or (
+                        n.get("show_if") and n["show_if"] not in self.state.flags):
+                    continue
+                from src3d.chibi import spec_for
+                sprite = n.get("model", n["sprite"])
+                if not spec_for(sprite) and not os.path.exists(os.path.join(FIELD_DIR, sprite + ".png")) and not os.path.exists(
                         os.path.join(IMG, "sprites3d", sprite + ".png")):
                     sprite = n.get("fallback", "morgan")          # 아직 그림이 없는 NPC
-                a = Actor(self.world, sprite, n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
+                a = make_actor(self.world, sprite, n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
                 a.data = n
                 a.talks = 0
                 self.npcs.append(a)
@@ -827,21 +913,44 @@ class Game:
             self.hint.text = self.FIELD_HINT
             self.hint.enabled = True
             self.cam_target = Vec3(sx, self.world.h(sx, sz) + 0.9, sz)
-            self.pitch, self.dist = 50.0, self.zoom
+            self.pitch, self.dist = self.field_pitch, self.zoom
             self.set_bgm(m.get("bgm"), fade=0.6)
             self.walked = 0.0
             self.inside_exit = True        # 도착 지점에서 곧바로 다시 나가지 않게, 출구 밖으로 한 번 나가야 작동
             self.update_camera(1.0)
             intro = m.get("intro_scene")
-            if intro and f"scene:{intro}" not in self.state.flags:
+            if intro and f"scene:{intro}" not in self.state.flags and all(
+                    r in self.state.flags for r in m.get("intro_requires", [])):
                 self.play_scene(intro)
+            for ev in m.get("events", []):            # 맵에 들어오면 바로 시작하는 이벤트
+                if ev.get("type") == "enter" and f"event:{ev['id']}" not in self.state.flags and self.requires_ok(ev):
+                    self.run_event(ev)
+                    break
 
     def refresh_weapons(self):
         """장착 무기를 필드·전투 캐릭터 그림에 반영"""
         if not self.player:
             return
-        for actor, ch in zip([self.player] + self.followers, self.state.party):
-            actor.set_weapon(ch.equip.get("weapon"))
+        for actor in [self.player] + self.followers:
+            actor.set_weapon(self.state.member(actor.name).equip.get("weapon"))
+
+    def add_member(self, cid):
+        """동료 합류: 파티에 넣고 루크 뒤에 세운다"""
+        if cid in self.state.members:
+            return
+        self.state.members.append(cid)
+        order = ["luke", "iris", "zed"]
+        self.state.members.sort(key=lambda c: order.index(c) if c in order else 9)
+        p = self.player
+        a = make_actor(self.world, cid, p.x, p.z - 1.0, "se", cid)
+        self.followers.append(a)
+        self.followers.sort(key=lambda f: order.index(f.name))
+        self.line_up()
+        self.refresh_weapons()
+        top = Vec3(a.x, self.world.h(a.x, a.z), a.z)
+        self.field_fx.pillar(top, color.rgb(1.0, 0.9, 0.55), 3.0, 24)
+        self.sfx("levelup", 0.7)
+        self.show_toast(f"{self.state.member(cid).name}이(가) 동료가 되었다!", 2.6)
 
     def footstep(self, actor):
         """발이 땅에 닿을 때: 작은 발소리 + 흙먼지"""
@@ -900,7 +1009,9 @@ class Game:
 
         def go():
             self.state = GameState(self.story)
-            self.load_map(self.first_map)
+            self.state.members = ["luke"]            # 동료는 이야기 속에서 합류
+            self.state.flags.add("new_story")
+            self.load_map("chimney_ward", (-2.5, 1.5), "se")
         self.fade_to(go, 0.6)
 
     def save_slot(self, slot):
@@ -924,6 +1035,8 @@ class Game:
             self.event = None
             self.dialogue.root.enabled = False
             self.state = save.apply_dict(GameState(self.story), d)
+            if "new_story" not in self.state.flags:      # 새 이야기 이전 세이브: 선착장·숲 길은 이미 열린 것으로
+                self.state.flags |= {"albatross", "scene:op_01", "scene:op_02", "scene:op_03", "scene:op_04"}
             self.load_map(d["map_id"], tuple(d["pos"]), d.get("dir"))
         self.fade_to(go, 0.5)
         return True
@@ -940,8 +1053,17 @@ class Game:
 
     # ------------------------------------------------------------ 이벤트 (스토리 장면·보스전)
     def scene_lines(self, scene_id):
+        scen = load_json("scenario3d.json")["scenes"]
+        if scene_id in scen:
+            return scen[scene_id]
         sc = next((s for c in self.story["chapters"] for s in c["scenes"] if s["id"] == scene_id), None)
         return sc["dialogue"] if sc else []
+
+    def banter(self, scene_id):
+        """처음 한 번만 나오는 동료 잡담 (보물상자·여관·레벨업 등)"""
+        if f"scene:{scene_id}" in self.state.flags or self.dialogue.active or self.battle or self.event:
+            return
+        self.play_scene(scene_id)
 
     def play_scene(self, scene_id, on_done=None):
         def done():
@@ -975,6 +1097,29 @@ class Game:
             self.start_battle(st["battle"], st.get("boss", False))
         elif "lines" in st:
             self.dialogue.open(st["lines"], self._next_step)
+        elif "objective" in st:
+            self.state.objective = st["objective"]
+            if st["objective"]:
+                self.sfx("menu", 0.6)
+                self.show_toast("새 목표:  " + st["objective"]["text"], 2.8)
+            self._next_step()
+        elif "join" in st:
+            self.add_member(st["join"])
+            self._next_step()
+        elif "gold" in st:
+            self.state.gold += st["gold"]
+            self.sfx("levelup", 0.6)
+            self.show_toast(f"{st['gold']} 골드를 받았다!", 2.4)
+            self._next_step()
+        elif "travel" in st:
+            tr = st["travel"]
+
+            def go():
+                self.load_map(tr["map"], tuple(tr["spawn"]), tr.get("dir"))
+                if tr.get("text"):
+                    self.show_toast(tr["text"], 2.8)
+                self._next_step()
+            self.fade_to(go, 0.6)
         elif "give" in st:
             from src.systems import equipment
             got = [equipment.give(self.state, iid) for iid in st["give"]]
@@ -1009,6 +1154,10 @@ class Game:
         for ex in m.get("exits", []):
             if math.hypot(p.x - ex["pos"][0], p.z - ex["pos"][1]) < ex.get("r", 2.5):
                 in_exit = ex
+        if in_exit and not self.inside_exit and not self.requires_ok(in_exit):
+            self.inside_exit = True
+            self.show_toast(in_exit.get("locked_text", "지금은 이 길로 갈 수 없다."), 2.4)
+            in_exit = None
         if in_exit and not self.inside_exit:
             self.inside_exit = True
             self.input_override = None
@@ -1167,7 +1316,7 @@ class Game:
         elif key == "e":
             self.yaw_goal += 45
         elif key == "scroll up":
-            self.zoom = max(20, self.zoom - 3)
+            self.zoom = max(14, self.zoom - 3)
         elif key == "scroll down":
             self.zoom = min(50, self.zoom + 3)
 
@@ -1252,7 +1401,49 @@ class Game:
             self.bubble.position = (near.x, self.world.h(near.x, near.z) + near.h + 0.55 + math.sin(self.clock * 4) * 0.08,
                                     near.z)
         self.update_props(dt)
+        self.update_objective(dt)
         self.update_camera(dt)
+
+    def update_objective(self, dt):
+        """왼쪽 위 '목표' 글씨 + 목표 지점의 빛기둥"""
+        ob = self.state.objective if self.mode == "field" and not self.dialogue.active else None
+        show = bool(ob) and not self.battle and not self.menu.active and not self.shop.active
+        self.obj_bg.enabled = self.obj_text.enabled = show
+        here = bool(ob) and ob.get("map") == (self.world.m["id"] if self.world else None) and ob.get("pos")
+        if show:
+            txt = "◆ 목표  " + ob["text"] + ("" if here or not ob.get("map") else "  (다른 지역)")
+            if self.obj_text.text != txt:
+                self.obj_text.text = txt
+                self.obj_bg.scale_x = len(txt) * 0.0232 + 0.04
+        if here and show:
+            from panda3d.core import ColorBlendAttrib
+            x, z = ob["pos"]
+            if self.beacon is None:
+                self.beacon = Entity()
+                for r in (0, 90):
+                    q = Entity(parent=self.beacon, model="quad", texture=tex("ui3d/title_ray.png"), rotation_y=r, scale=(1.6, 7),
+                               y=3.5, double_sided=True, shader=unlit_shader, color=color.rgba(1, 0.85, 0.45, 0.8))
+                    q.setTransparency(TransparencyAttrib.MAlpha)
+                    q.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd, ColorBlendAttrib.OIncomingAlpha, ColorBlendAttrib.OOne))
+                    q.setDepthWrite(False)
+                    q.hide(0b0001)
+                ring = Entity(parent=self.beacon, model="quad", texture=tex("textures3d/fx_circle.png"), rotation_x=90, y=0.08,
+                              scale=2.4, shader=unlit_shader, color=color.rgba(1, 0.85, 0.45, 0.9))
+                ring.setTransparency(TransparencyAttrib.MAlpha)
+                ring.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd, ColorBlendAttrib.OIncomingAlpha, ColorBlendAttrib.OOne))
+                ring.setDepthWrite(False)
+                self.beacon_ring = ring
+            self.beacon.enabled = True
+            self.beacon.position = (x, self.world.h(x, z), z)
+            self.beacon_ring.rotation_y += dt * 40
+            self.beacon_ring.scale = 2.4 + 0.2 * math.sin(self.clock * 3)
+            # 가까이 가면 흐려짐
+            dd = math.hypot(self.player.x - x, self.player.z - z)
+            a = min(1.0, max(0.15, (dd - 2) / 6))
+            for ch in self.beacon.children:
+                ch.alpha = a
+        elif self.beacon is not None:
+            self.beacon.enabled = False
 
     def update_props(self, dt):
         """상자 뚜껑, 반짝임, 굴뚝 연기, 제단 홈"""
@@ -1292,7 +1483,7 @@ class Game:
         self.yaw = lerp(self.yaw, self.yaw_goal, min(1, dt * 6))
         p = self.player
         goal = Vec3(p.x, self.world.h(p.x, p.z) + 0.9, p.z)
-        pitch_goal, dist_goal = 50.0, self.zoom
+        pitch_goal, dist_goal = self.field_pitch, self.zoom
         if self.battle:
             goal, pitch_goal, dist_goal = self.battle.camera_goal()
         self.pitch = lerp(self.pitch, pitch_goal, min(1, dt * 3))
@@ -1350,6 +1541,10 @@ class Game:
 
     def start_battle(self, enemy_ids, boss=False):
         from src3d.battle3d import Battle3D
+        self._levels_before = [c.level for c in self.state.active]
+        self.obj_bg.enabled = self.obj_text.enabled = False
+        if self.beacon is not None:
+            self.beacon.enabled = False
         self.walked = 0.0
         self.input_override = None
         self.menu.close()
@@ -1376,6 +1571,9 @@ class Game:
         cb, self.battle_cb = self.battle_cb, None
         if cb:
             cb(kind)
+        elif kind == "victory" and len(self.state.members) > 1 and [c.level for c in self.state.active] != getattr(
+                self, "_levels_before", []):
+            self.banter("ev_first_levelup")
 
     def stop_bgm(self):
         if self.bgm is not None:
@@ -1418,6 +1616,8 @@ class Game:
         self.field_fx.burst(top, 40, color.rgb(1.0, 0.85, 0.4), (1.5, 4.5), up=2.5, grav=4)
         self.field_fx.pillar(top - Vec3(0, 0.8, 0), color.rgb(1.0, 0.9, 0.55), 3.0, 20)
         self.show_toast("보물상자를 열었다!\n" + "\n".join(f"「{x}」을(를) 얻었다" for x in names), 3.6)
+        if len(self.state.members) > 1:
+            self.banter("ev_first_chest")
 
     def try_talk(self):
         c = self.nearest_chest()
@@ -1429,6 +1629,14 @@ class Game:
         if not n:
             return
         d = n.data
+        for ev in self.world.m.get("events", []):       # 이 NPC 에게 걸린 스토리 이벤트가 먼저
+            if (ev.get("type") == "talk" and ev.get("npc") == d["id"] and f"event:{ev['id']}" not in self.state.flags
+                    and self.requires_ok(ev)):
+                n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
+                self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)
+                self.sfx("sfx_confirm")
+                self.run_event(ev)
+                return
         if d.get("shop") or d.get("inn"):                 # 상점 주인·여관 주인
             n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
             self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)

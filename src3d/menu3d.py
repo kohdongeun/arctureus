@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import os
+import random
 
 from ursina import Entity, Text, Texture, application, camera, color, destroy
 
@@ -126,7 +127,7 @@ def apply_field_item(state, it, target):
     if it.get("damage"):
         return False, "전투에서만 쓸 수 있다."
     tgt = it.get("target", "ally")
-    chars = state.party if tgt in ("all_allies", "all_party") else [target]
+    chars = state.active if tgt in ("all_allies", "all_party") else [target]
     msgs, used = [], False
     for ch in chars:
         if not ch.alive:
@@ -221,7 +222,7 @@ class Menu3D:
             g.sfx("sfx_cursor")
             self.render()
         elif key in LEFT + RIGHT and p in ("status", "equip"):
-            self.cur[p] = (self.cur[p] + (1 if key in RIGHT else -1)) % len(g.state.party)
+            self.cur[p] = (self.cur[p] + (1 if key in RIGHT else -1)) % len(g.state.active)
             g.sfx("sfx_cursor")
             self.render()
         elif key in OK:
@@ -229,8 +230,8 @@ class Menu3D:
 
     def count(self):
         st = self.game.state
-        return {"main": len(self.COMMANDS), "status": len(st.party), "items": len(self.item_list()),
-                "target": len(st.party), "save": 3, "load": 3, "confirm": 2, "equip": 3,
+        return {"main": len(self.COMMANDS), "status": len(st.active), "items": len(self.item_list()),
+                "target": len(st.active), "save": 3, "load": 3, "confirm": 2, "equip": 3,
                 "elist": len(self.equip_choices())}[self.page]
 
     def item_list(self):
@@ -248,7 +249,7 @@ class Menu3D:
     def equip_choices(self):
         """지금 고른 캐릭터·칸에 낄 수 있는 가방 속 장비 + 해제"""
         from src.systems import equipment
-        ch = self.game.state.party[self.cur["equip"]]
+        ch = self.game.state.active[self.cur["equip"]]
         slot = equipment.SLOTS[self.cur["eslot"]]
         out = [(gid, equipment.gear(gid), n) for gid, n in sorted(self.game.state.gear.items())
                if n > 0 and equipment.gear(gid) and equipment.gear(gid)["slot"] == slot and equipment.can_equip(ch.id, gid)]
@@ -288,7 +289,7 @@ class Menu3D:
             self.render()
         elif p == "elist":
             from src.systems import equipment
-            ch = g.state.party[self.cur["equip"]]
+            ch = g.state.active[self.cur["equip"]]
             slot = equipment.SLOTS[self.cur["eslot"]]
             gid, gd, _ = self.equip_choices()[c]
             equipment.equip(g.state, ch, slot, gid)
@@ -314,7 +315,7 @@ class Menu3D:
             self.page = "target"
             self.render()
         elif p == "target":
-            self.use_item(g.state.party[c])
+            self.use_item(g.state.active[c])
         elif p == "save":
             g.save_slot(c)
             g.sfx("sfx_levelup")
@@ -391,7 +392,7 @@ class Menu3D:
                 Panel(1.12, 0.08, 0.16, -0.43, parent=c)
                 label(c, f"{it.get('name', '')} ({n}) — 누구에게 사용할까?", -0.38, -0.43, 0.95, GOLD)
         elif page == "status":
-            self.status_page(c, st.party[self.cur["status"]])
+            self.status_page(c, st.active[self.cur["status"]])
         elif page in ("equip", "elist"):
             self.equip_page(c)
         elif page == "items":
@@ -422,7 +423,7 @@ class Menu3D:
     def party_cards(self, c, sel=None):
         from src.entities.party import exp_to_next
 
-        for i, ch in enumerate(self.game.state.party):
+        for i, ch in enumerate(self.game.state.active):
             y = 0.27 - i * 0.235
             hi = sel == i
             Panel(1.12, 0.205, 0.16, y, parent=c, border=GOLD if hi or sel is None else color.rgba(0.4, 0.34, 0.24, 1),
@@ -484,7 +485,7 @@ class Menu3D:
 
         from src.systems import equipment
         g = self.game
-        ch = g.state.party[self.cur["equip"]]
+        ch = g.state.active[self.cur["equip"]]
         Panel(1.16, 0.86, 0.14, 0.0, parent=c)
         hero_picture(c, ch, 0.52, -0.4, 0.5, z=-0.001)
         shadow_label(c, ch.name, -0.4, 0.37, 1.4, CREAM, origin=(-0.5, 0), font="NanumMyeongjo-Bold.ttf")
@@ -698,6 +699,8 @@ class ShopUI:
                         ch.full_heal()
                     g.show_toast("푹 쉬었다! 모두의 HP·MP가 회복되었다.", 2.6)
                     g.sfx("heal")
+                    if len(st.members) > 1:
+                        g.banter("ev_first_inn")
                 g.fade_to(rest, 0.8)
                 return
         self.render()
@@ -792,7 +795,7 @@ class ShopUI:
         if d["slot"] in ("weapon", "armor", "accessory"):
             label(c, stat_text(d["stats"], d.get("crit", 0), d.get("element")), 0.16, -0.02, 0.82, color.rgba32(140, 220, 255))
             label(c, "동료별 비교", 0.16, -0.09, 0.85, GOLD)
-            for i, ch in enumerate(st.party):
+            for i, ch in enumerate(st.active):
                 y = -0.15 - i * 0.065
                 label(c, ch.name.split()[0], 0.16, y, 0.85, CREAM)
                 if not equipment.can_equip(ch.id, iid):
@@ -811,17 +814,21 @@ class ShopUI:
 
 # ====================================================================== 타이틀
 class TitleUI:
+    """2010년대 JRPG 풍 타이틀: 연출(페이드인 → 엠블럼 → 로고 섬광) → PRESS ANY KEY → 메뉴.
+    배경은 마을 위를 도는 카메라, 그 위에 따뜻한 색조·비네트·빛줄기·떠오르는 불씨·세 주인공 일러스트."""
     ITEMS = ["새 게임", "이어하기", "종료"]
 
     def __init__(self, game):
         self.game = game
         self.root = Entity(parent=camera.ui, z=-0.3, enabled=False)
         self.content = None
+        self.deco = None
         self.page = "main"
         self.cur = 0
         self.slot = 0
         self.t = 0.0
         self.msg = ""
+        self.state = "intro"         # intro / press / menu
 
     @property
     def active(self):
@@ -836,17 +843,86 @@ class TitleUI:
         self.page = "main"
         self.cur = 1 if self.has_save() else 0
         self.t = 0.0
+        self.state = "intro"
+        self.build_deco()
         self.render()
 
     def close(self):
         self.root.enabled = False
-        if self.content:
-            destroy(self.content)
-            self.content = None
+        for e in (self.content, self.deco):
+            if e:
+                destroy(e)
+        self.content = self.deco = None
 
+    # ------------------------------------------------------------ 장식 (한 번 짓고 update 에서 움직임)
+    def build_deco(self):
+        from panda3d.core import ColorBlendAttrib, TransparencyAttrib
+        from src3d.game import PORTRAIT_DIR, tex
+        if self.deco:
+            destroy(self.deco)
+        d = self.deco = Entity(parent=self.root, z=0.05)
+
+        def add(e):
+            e.setTransparency(TransparencyAttrib.MAlpha)
+            e.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd, ColorBlendAttrib.OIncomingAlpha, ColorBlendAttrib.OOne))
+            return e
+        # 노을빛 색조 (위는 푸른 밤, 아래는 주황빛) + 비네트
+        Entity(parent=d, model="quad", texture=tex("ui3d/title_grad.png"), scale=(2.2, 1.0), z=0.03)
+        Entity(parent=d, model="quad", texture=tex("ui3d/title_vignette.png"), scale=(1.9, 1.07), z=0.02)
+        # 빛줄기
+        self.rays = []
+        for k, (x, rot, w) in enumerate(((-0.55, 18, 0.22), (-0.2, 12, 0.3), (0.25, 8, 0.18), (0.6, 4, 0.26))):
+            r = add(Entity(parent=d, model="quad", texture=tex("ui3d/title_ray.png"), position=(x, 0.25), rotation_z=rot,
+                           scale=(w, 1.4), color=color.rgba(1, 0.92, 0.75, 0.0), z=0.019))
+            self.rays.append((r, k))
+        # 주인공 일러스트 (양옆에서 미끄러져 들어옴)
+        self.heroes = []
+        for cid, x, h, dark, z in (("zed", 0.56, 0.66, 0.5, 0.012), ("iris", -0.72, 0.7, 0.95, 0.011), ("luke", 0.76, 0.78, 1.0, 0.01)):
+            path = os.path.join(PORTRAIT_DIR, cid + ".png")
+            if os.path.exists(path):
+                e = picture(d, path, x, -0.5, h, origin=(0, -0.5), z=z)
+                if e:
+                    e.color = color.rgba(dark, dark, dark, 0)
+                    self.heroes.append((e, x, dark))
+        # 톱니 엠블럼 (로고 뒤에서 천천히 돎)
+        self.gear_o = Entity(parent=d, model="quad", texture=tex("ui3d/title_gear_outer.png"), position=(0, 0.2), scale=0.62,
+                             color=color.rgba(1, 1, 1, 0), z=0.008)
+        self.gear_i = Entity(parent=d, model="quad", texture=tex("ui3d/title_gear_inner.png"), position=(0, 0.2), scale=0.4,
+                             color=color.rgba(1, 1, 1, 0), z=0.007)
+        self.halo = add(Entity(parent=d, model="quad", texture=tex("textures3d/fx_glow.png"), position=(0, 0.2), scale=0.9,
+                               color=color.rgba(1, 0.75, 0.4, 0), z=0.0075))
+        # 로고
+        self.logo = Entity(parent=d, y=0.21, z=0.0)
+        shadow_label(self.logo, "황동의 심장", 0, 0.0, 6.2, color.rgba32(255, 222, 150), font="NanumMyeongjo-Bold.ttf", off=0.007)
+        shadow_label(self.logo, "─  아스카론 연대기  ─", 0, -0.095, 1.7, CREAM, font="NanumMyeongjo-Bold.ttf")
+        label(self.logo, "H E A R T   O F   B R A S S", 0, -0.145, 0.85, color.rgba32(226, 190, 120), origin=(0, 0)).z = -0.005
+        self.logo.scale = 1.0
+        self.glint = add(Entity(parent=d, model="quad", texture=tex("textures3d/fx_glow.png"), position=(-0.5, 0.21),
+                                scale=(0.16, 0.32), color=color.rgba(1, 1, 1, 0), z=-0.01))
+        # 불씨
+        self.embers = []
+        for _ in range(46):
+            e = add(Entity(parent=d, model="quad", texture=tex("textures3d/fx_glow.png"), scale=random.uniform(0.008, 0.022),
+                           position=(random.uniform(-0.9, 0.9), random.uniform(-0.5, 0.5)),
+                           color=color.rgba(1, random.uniform(0.6, 0.85), 0.35, 0), z=-0.006))
+            self.embers.append([e, random.uniform(0.03, 0.09), random.uniform(0, 6), random.uniform(0.3, 1.0)])
+        # 위아래 영화 띠
+        for y in (0.5, -0.5):
+            Entity(parent=d, model="quad", scale=(4, 0.07), y=y, color=color.rgba(0, 0, 0, 0.85), z=-0.02)
+        self.fade = Entity(parent=d, model="quad", scale=(4, 2), color=color.rgba(0, 0, 0, 1), z=-0.05)
+
+    # ------------------------------------------------------------ 입력
     def input(self, key):
         g = self.game
         if not self.active:
+            return
+        if self.state != "menu":
+            if key in OK + BACK + UP + DOWN or len(key) == 1:
+                g.sfx("sfx_confirm")
+                self.state = "menu"
+                self.t = max(self.t, 3.2)
+                self.menu_t = 0.0
+                self.render()
             return
         if self.page == "slots":
             if key in BACK:
@@ -883,39 +959,86 @@ class TitleUI:
             else:
                 application.quit()
 
+    # ------------------------------------------------------------ 움직임
     def update(self, dt):
         self.t += dt
-        if self.content:
-            self.logo.y = 0.2 + math.sin(self.t * 1.2) * 0.005
+        t = self.t
+        if not self.deco:
+            return
+        ease = lambda x: 1 - (1 - max(0.0, min(1.0, x))) ** 3  # noqa: E731
+        self.fade.color = color.rgba(0, 0, 0, max(0.0, 1 - t / 1.2))
+        # 엠블럼: 0.6초부터 커지며 나타나 계속 회전
+        k = ease((t - 0.6) / 1.0)
+        self.gear_o.color = color.rgba(1, 1, 1, 0.9 * k)
+        self.gear_i.color = color.rgba(1, 1, 1, 0.8 * k)
+        self.gear_o.scale = 0.62 * (0.7 + 0.3 * k)
+        self.gear_i.scale = 0.4 * (0.6 + 0.4 * k)
+        self.gear_o.rotation_z = t * 6
+        self.gear_i.rotation_z = -t * 11
+        self.halo.color = color.rgba(1, 0.75, 0.4, 0.35 * k + 0.1 * math.sin(t * 1.7) * k)
+        # 로고: 1.3초에 섬광과 함께 등장, 이후 숨쉬듯
+        lk = ease((t - 1.3) / 0.6)
+        self.logo.scale = 1.25 - 0.25 * lk + 0.006 * math.sin(t * 1.4)
+        self.logo.y = 0.21 + 0.004 * math.sin(t * 1.1)
+        for e in self.logo.children:
+            e.alpha = lk
+        gx = ((t - 1.6) % 4.5) / 1.2
+        self.glint.x = -0.55 + gx * 1.1
+        self.glint.color = color.rgba(1, 0.95, 0.8, 0.55 * max(0.0, 1 - abs(gx - 0.5) * 2) * lk if gx <= 1 else 0)
+        # 빛줄기·일러스트
+        for r, i in self.rays:
+            r.color = color.rgba(1, 0.92, 0.75, (0.1 + 0.06 * math.sin(t * 0.7 + i * 1.7)) * ease((t - 0.3) / 1.5))
+            r.rotation_z += math.sin(t * 0.3 + i) * dt * 2
+        for i, (e, x, dark) in enumerate(self.heroes):
+            hk = ease((t - 1.8 - i * 0.25) / 0.8)
+            e.color = color.rgba(dark, dark, dark, hk)
+            e.x = x + (0.25 if x > 0 else -0.25) * (1 - hk)
+            e.y = -0.5 + 0.004 * math.sin(t * 1.3 + i)
+        # 불씨
+        for em in self.embers:
+            e, sp, ph, a = em
+            e.y += sp * dt
+            e.x += math.sin(t * 0.8 + ph) * 0.01 * dt
+            if e.y > 0.5:
+                e.y, e.x = -0.5, random.uniform(-0.9, 0.9)
+            e.color = color.rgba(1, e.color.g, 0.35, a * (0.5 + 0.5 * math.sin(t * 3 + ph)) * ease((t - 0.5) / 1.5))
+        if self.content and self.state == "press":
+            self.press.alpha = 0.35 + 0.65 * abs(math.sin(t * 2.2))
+        if self.state == "intro" and t > 3.0:
+            self.state = "press"
+            self.render()
+        if self.state == "menu" and self.content:
+            self.menu_t = getattr(self, "menu_t", 1.0) + dt
+            self.content.y = -0.06 * (1 - ease(self.menu_t / 0.35))
 
     def render(self):
         if self.content:
             destroy(self.content)
-        c = self.content = Entity(parent=self.root)
-        # 위·아래 어둡게 (글씨가 숲 위에서도 읽히도록)
-        Entity(parent=c, model="quad", scale=(4, 2), color=color.rgba(0.03, 0.04, 0.06, 0.38), z=0.01)
-        Panel(0.42, 0.3, 0, -0.195, parent=c, fill=color.rgba(0.05, 0.05, 0.08, 0.6),
-              border=color.rgba32(226, 184, 102, 140)) if self.page == "main" else None
-        self.logo = Entity(parent=c, y=0.2)
-        shadow_label(self.logo, "황동의 심장", 0, 0.02, 5.0, color.rgba32(246, 214, 140), font="NanumMyeongjo-Bold.ttf",
-                     off=0.006)
-        shadow_label(self.logo, "— 아스카론 연대기 —", 0, -0.075, 1.6, CREAM, font="NanumMyeongjo-Bold.ttf")
+            self.content = None
+        if self.state == "intro":
+            return
+        c = self.content = Entity(parent=self.root, z=-0.01)
+        if self.state == "press":
+            self.press = shadow_label(c, "PRESS ANY KEY", 0, -0.26, 1.3, color.rgba32(255, 230, 170))
+            return
+        from src3d.game import tex
         if self.page == "main":
             can = self.has_save()
             for i, it in enumerate(self.ITEMS):
-                y = -0.12 - i * 0.075
+                y = -0.17 - i * 0.075
                 sel = i == self.cur
                 if sel:
-                    Entity(parent=c, model="quad", position=(0, y), scale=(0.34, 0.06), color=SEL_FILL, z=-0.001)
-                col = GOLD if sel else CREAM
+                    Entity(parent=c, model="quad", texture=tex("ui3d/title_bar.png"), position=(0, y), scale=(0.62, 0.075), z=0.001)
+                    label(c, "◆", -0.17, y, 0.8, color.rgba32(255, 230, 170), origin=(0, 0)).z = -0.002
+                    label(c, "◆", 0.17, y, 0.8, color.rgba32(255, 230, 170), origin=(0, 0)).z = -0.002
+                col = color.rgba32(255, 240, 210) if sel else CREAM
                 if it == "이어하기" and not can:
                     col = DIM
-                shadow_label(c, ("▶  " if sel else "") + it + ("  ◀" if sel else ""), 0, y, 1.3, col)
+                shadow_label(c, it, 0, y, 1.45 if sel else 1.25, col, font="NanumMyeongjo-Bold.ttf")
+            shadow_label(c, "↑↓ 선택    Z·Enter 결정", 0, -0.43, 0.75, DIM)
         else:
             Panel(1.16, 0.58, 0.0, -0.2, parent=c)
             label(c, "불러올 슬롯을 고르세요   (X: 돌아가기)", 0, 0.05, 0.95, GOLD, origin=(0, 0))
             slot_rows(c, self.game, self.slot, "load", x=0.0, y0=-0.05)
             if self.msg:
                 label(c, self.msg, 0, -0.47, 0.9, color.rgba32(230, 130, 110), origin=(0, 0))
-        if self.page == "main":
-            shadow_label(c, "↑↓ 선택    Z·Enter 결정", 0, -0.46, 0.8, DIM)

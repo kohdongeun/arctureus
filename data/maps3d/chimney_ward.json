@@ -489,14 +489,27 @@
    "sprite": "guard_rookie",
    "fallback": "elwin",
    "pos": [
-    3.0,
-    -16.0
+    4.0,
+    -12.5
    ],
    "dir": "sw",
    "town": "chimney_ward",
    "keys": [
     "default"
    ]
+  },
+  {
+   "id": "zed_dock",
+   "name": "제드",
+   "sprite": "zed",
+   "pos": [
+    1.6,
+    -20.2
+   ],
+   "dir": "sw",
+   "town": "chimney_ward",
+   "hide_if": "albatross",
+   "keys": []
   }
  ],
  "chests": [
@@ -567,7 +580,149 @@
     3.5
    ],
    "dir": "se",
-   "travel": "알바트로스호를 타고 베르단 숲으로 내려왔다."
+   "travel": "알바트로스호를 타고 베르단 숲으로 내려왔다.",
+   "requires": [
+    "albatross"
+   ],
+   "locked_text": "선착장의 비행선은 아직 탈 수 없다. (목표를 확인하자)"
+  }
+ ],
+ "events": [
+  {
+   "id": "op_intro",
+   "type": "enter",
+   "requires": [
+    "new_story"
+   ],
+   "steps": [
+    {
+     "scene": "op_01"
+    },
+    {
+     "objective": {
+      "text": "잡화점 앞의 모르간에게 말을 건다",
+      "map": "chimney_ward",
+      "pos": [
+       0,
+       13.2
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "op_morgan",
+   "type": "talk",
+   "npc": "morgan",
+   "requires": [
+    "scene:op_01"
+   ],
+   "steps": [
+    {
+     "scene": "op_02"
+    },
+    {
+     "give": [
+      "item_steam_tonic",
+      "item_steam_tonic",
+      "item_steam_tonic"
+     ]
+    },
+    {
+     "objective": {
+      "text": "남쪽 선착장으로 간다",
+      "map": "chimney_ward",
+      "pos": [
+       0,
+       -17
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "op_iris",
+   "type": "zone",
+   "pos": [
+    0,
+    -7.5
+   ],
+   "r": 3.6,
+   "requires": [
+    "scene:op_02"
+   ],
+   "steps": [
+    {
+     "scene": "op_03"
+    },
+    {
+     "join": "iris"
+    },
+    {
+     "objective": {
+      "text": "근위병을 따돌리고 선착장으로!",
+      "map": "chimney_ward",
+      "pos": [
+       0,
+       -17
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "op_dock",
+   "type": "zone",
+   "pos": [
+    0,
+    -16.8
+   ],
+   "r": 2.8,
+   "requires": [
+    "scene:op_03"
+   ],
+   "steps": [
+    {
+     "scene": "op_04"
+    },
+    {
+     "battle": [
+      "guard_trainee",
+      "guard_trainee"
+     ],
+     "boss": false
+    },
+    {
+     "scene": "op_05"
+    },
+    {
+     "join": "zed"
+    },
+    {
+     "flag": "albatross"
+    },
+    {
+     "objective": {
+      "text": "숲 안쪽에서 그라인더의 단서를 찾는다",
+      "map": "verdan_edge",
+      "pos": [
+       -4,
+       -4
+      ]
+     }
+    },
+    {
+     "travel": {
+      "map": "verdan_edge",
+      "spawn": [
+       -27.5,
+       3.5
+      ],
+      "dir": "se",
+      "text": "알바트로스호를 타고 베르단 숲에 도착했다."
+     }
+    }
+   ]
   }
  ]
 }

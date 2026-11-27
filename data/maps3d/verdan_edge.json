@@ -145,8 +145,8 @@
   "tufts": 650,
   "flowers": 160,
   "start": [
-    1.5,
-    -26
+    -27.5,
+    3.5
   ],
   "start_dir": "ne",
   "encounters": {
@@ -155,7 +155,7 @@
     "min_meters": 14,
     "safe_radius": 6
   },
-  "intro_scene": "ch3_01",
+  "intro_scene": "fo_01",
   "npcs": [
     {
       "id": "elwin",
@@ -224,7 +224,11 @@
         -26.0
       ],
       "dir": "ne",
-      "label": "고목의 요람"
+      "label": "고목의 요람",
+      "requires": [
+        "event:meet_elwin"
+      ],
+      "locked_text": "어디로 가야 할지 모르겠다. 숲 안쪽의 정찰병을 먼저 찾아보자."
     },
     {
       "pos": [
@@ -243,12 +247,88 @@
   ],
   "events": [
     {
+      "id": "fo_tutorial",
+      "type": "zone",
+      "pos": [
+        -17.0,
+        2.5
+      ],
+      "r": 3.0,
+      "requires": [
+        "scene:fo_01"
+      ],
+      "steps": [
+        {
+          "scene": "fo_02"
+        },
+        {
+          "battle": [
+            "rust_crawler"
+          ]
+        },
+        {
+          "scene": "fo_03"
+        }
+      ]
+    },
+    {
       "id": "meet_elwin",
       "type": "talk",
       "npc": "elwin",
       "steps": [
         {
-          "scene": "ch3_02"
+          "scene": "fo_elwin"
+        },
+        {
+          "objective": {
+            "text": "숲 북쪽 출구로 가서 '고목의 요람'을 찾는다",
+            "map": "verdan_edge",
+            "pos": [
+              9.0,
+              30.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fo_robot",
+      "type": "zone",
+      "pos": [
+        26.5,
+        -16.5
+      ],
+      "r": 4.2,
+      "steps": [
+        {
+          "scene": "fo_robot"
+        }
+      ]
+    },
+    {
+      "id": "fo_hollow",
+      "type": "talk",
+      "npc": "hollow_elf",
+      "steps": [
+        {
+          "scene": "fo_hollow"
+        }
+      ]
+    },
+    {
+      "id": "fo_rumble",
+      "type": "zone",
+      "pos": [
+        8.5,
+        21.5
+      ],
+      "r": 3.2,
+      "requires": [
+        "event:meet_elwin"
+      ],
+      "steps": [
+        {
+          "scene": "fo_rumble"
         }
       ]
     }

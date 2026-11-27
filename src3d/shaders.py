@@ -264,3 +264,55 @@ def check_support(app):
     if not GLSL["ok"]:
         app.render.setShaderOff(1000)
     return GLSL
+
+
+# ---------------------------------------------------------------- 3D 캐릭터용 툰 셰이더 (애니메이션 느낌)
+# 빛을 두 단계(밝음/그늘)로 끊고, 가장자리에 림 라이트를 더한다. 텍스처가 없으면 정점색·엔티티 색만 쓴다.
+_FRAG_TOON = """#version 130
+uniform sampler2D p3d_Texture0;
+uniform vec4 p3d_ColorScale;
+uniform vec3 sun_dir;
+uniform vec3 fog_color;
+uniform float fog_start;
+uniform float fog_end;
+uniform float use_tex;
+uniform vec3 camera_world_position;
+in vec2 uv;
+in vec4 vcolor;
+in vec3 wpos;
+in vec3 wnormal;
+out vec4 frag;
+void main() {
+    vec4 t = use_tex > 0.5 ? texture(p3d_Texture0, uv) : vec4(1.0);
+    vec4 c = t * p3d_ColorScale * vcolor;
+    if (c.a < 0.04) discard;
+    vec3 n = normalize(wnormal);
+    float ndl = dot(n, -sun_dir);
+    float lit = smoothstep(-0.08, 0.08, ndl);              // 밝음/그늘 두 단계
+    c.rgb *= mix(vec3(0.66, 0.64, 0.78), vec3(1.06, 1.03, 0.98), lit);
+    vec3 v = normalize(camera_world_position - wpos);
+    float edge = 1.0 - abs(dot(n, v));
+    c.rgb *= mix(1.0, 0.42, smoothstep(0.72, 0.9, edge));     // 실루엣 가장자리를 어둡게 (외곽선 느낌)
+    float rim = pow(edge, 3.0);
+    c.rgb += rim * 0.10 * lit;
+    float f = clamp((length(wpos - camera_world_position) - fog_start) / (fog_end - fog_start), 0.0, 1.0);
+    c.rgb = mix(c.rgb, fog_color, f);
+    frag = c;
+}
+"""
+
+_FRAG_FLAT = """#version 130
+uniform vec4 p3d_ColorScale;
+in vec4 vcolor;
+out vec4 frag;
+void main() {
+    frag = vec4(0.13, 0.09, 0.09, 1.0) * vec4(1.0, 1.0, 1.0, p3d_ColorScale.a);
+}
+"""
+
+toon_shader = Shader(name="chibi_toon", language=Shader.GLSL, vertex=_VERT, fragment=_FRAG_TOON,
+                     default_input={"texture_scale": Vec2(1, 1), "texture_offset": Vec2(0, 0), "use_tex": 0.0,
+                                    "camera_world_position": Vec3(0, 0, 0), **LIGHT})
+toon_shader.continuous_input["camera_world_position"] = _cam_pos
+outline_shader = Shader(name="chibi_outline", language=Shader.GLSL, vertex=_VERT, fragment=_FRAG_FLAT,
+                        default_input={"texture_scale": Vec2(1, 1), "texture_offset": Vec2(0, 0)})

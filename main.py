@@ -122,52 +122,72 @@ def autoplay(game, out_dir):
             else:
                 yield 1
 
+    def story(tag=None, limit=60000):
+        """이벤트가 끝날 때까지: 대사는 넘기고, 전투는 싸우고, 맵 이동은 기다린다"""
+        shot_done = False
+        for _ in range(limit):
+            d = game.dialogue
+            if game.battle is not None:
+                yield from fight(tag or "event", shots=False)
+                continue
+            if d.active:
+                d.shown = len(d.lines[d.i]["text"])
+                yield 3
+                if tag and not shot_done:
+                    shot(tag)
+                    shot_done = True
+                d.advance()
+                yield 3
+                continue
+            if game.event is None and game.fade is None and game.battle is None:
+                return
+            yield 1
+
     def script():
+        from src.entities.party import exp_to_next
+        from src.systems import save
         # ---- 타이틀
-        yield 90
+        yield 200
         shot("title")
         check("타이틀 화면", game.mode == "title" and game.title.active)
-        yield key("z", 10)                          # 새 게임 (세이브 없음 → 커서가 '새 게임')
+        yield key("z", 20)                          # PRESS ANY KEY
+        shot("title_menu")
+        yield key("z", 10)                          # 새 게임
         while game.fade or game.mode != "field":
             yield 1
         game.encounters_enabled = False             # 자동 진행 중 무작위 전투가 끼어들지 않게
-        yield 40
-        shot("intro_dialogue")
-        yield from finish_dialogue("intro_2", 10)
         yield 30
-        shot("field_start")
-        npc = {a.data["id"]: a for a in game.npcs}
-        # ---- 엘윈: 첫 대화는 스토리 장면 ch3_02
-        yield from walk([(npc["elwin"].x, npc["elwin"].z)], 2.0)
-        yield 10
-        shot("near_npc_bubble")
+        # ---- 굴뚝거리: 오프닝 (루크 혼자)
+        yield from story("op_intro")
+        check("오프닝·목표 표시", "scene:op_01" in game.state.flags and game.state.objective
+              and "모르간" in game.state.objective["text"] and game.state.members == ["luke"])
+        shot("town_objective")
+        yield from walk([(-1, 6), (0, 11.4)], 0.5)
         game.try_talk()
-        yield 40
-        shot("elwin_event")
-        yield from finish_dialogue(None, 6)
-        check("엘윈 이벤트(ch3_02)", "scene:ch3_02" in game.state.flags)
-        yield 20
-        # ---- 전투 (레벨업 확인용으로 경험치를 직전까지)
-        from src.entities.party import exp_to_next
-        for c in game.state.party:
-            c.exp = exp_to_next(c.level) - 5
-        game.start_battle(["hollow", "rust_crawler"])
-        yield 70
-        shot("battle_start")
-        yield from fight("battle")
-        while game.battle:
+        yield from story("morgan")
+        check("모르간 의뢰", "event:op_morgan" in game.state.flags and game.state.items.get("item_steam_tonic", 0) >= 8)
+        yield from walk([(0, 4), (0, -5)], 0.6)
+        yield from story("iris_meet")
+        check("아이리스 합류", "iris" in game.state.members)
+        yield from walk([(0, -15.5)], 0.6)
+        yield from story("dock")
+        while game.fade or game.world.m["id"] != "verdan_edge":
             yield 1
-        yield 40
-        check("전투 승리·레벨업", game.state.battles_won == 1 and game.state.party[0].level == 4)
+        yield 20
+        yield from story("forest_intro")
+        check("제드 합류·숲 도착", game.state.members == ["luke", "iris", "zed"] and game.world.m["id"] == "verdan_edge")
+        shot("forest_party")
+        # ---- 숲: 튜토리얼 전투
+        yield from walk([(-17, 2.5)], 0.6)
+        yield from story("tutorial")
+        check("튜토리얼 전투", game.state.battles_won >= 2 and "scene:fo_03" in game.state.flags)
         # ---- 메뉴
-        game.state.party[0].hp -= 120
+        game.state.party[0].hp = max(1, game.state.party[0].hp - 120)
         yield key("x", 20)
         shot("menu_main")
         check("메뉴 열림", game.menu.active)
         yield key("z", 12)                          # 상태
         shot("menu_status")
-        yield key("right arrow", 12)
-        shot("menu_status_iris")
         yield key("x", 8)
         yield key("down arrow", 6)
         yield key("z", 10)                          # 장비
@@ -175,59 +195,50 @@ def autoplay(game, out_dir):
         yield key("x", 8)
         yield key("down arrow", 6)
         yield key("z", 10)                          # 아이템
-        shot("menu_items")
         hp0 = game.state.party[0].hp
-        yield key("z", 10)                          # 증기 강장제 → 대상 선택
-        shot("menu_item_target")
+        yield key("z", 10)
         yield key("z", 12)                          # 루크에게
         check("아이템 사용(HP 회복)", game.state.party[0].hp > hp0)
-        shot("menu_item_used")
         yield key("x", 8)
         yield key("x", 8)
         yield key("down arrow", 6)
         yield key("z", 10)                          # 저장
         yield key("z", 12)                          # 슬롯 1
-        shot("menu_saved")
-        from src.systems import save
         d = save.read(0)
-        check("슬롯 1 저장", d is not None and d["map_id"] == "verdan_edge")
+        check("슬롯 1 저장", d is not None and d["map_id"] == "verdan_edge" and d.get("members") == ["luke", "iris", "zed"])
         saved_pos = tuple(d["pos"]) if d else None
+        saved_lv = game.state.party[0].level
         yield key("x", 8)
         yield key("x", 12)
         check("메뉴 닫힘", not game.menu.active)
-        # ---- 북쪽 출구 → 고목의 요람
-        yield from walk([(2, 6), (8, 16), (10, 27), (9, 31.5)], 1.0, 2500)
+        # ---- 엘윈 → 북쪽 출구
+        yield from walk([(-10, 0), (-4, -1.6)], 0.5)
+        game.try_talk()
+        yield from story("elwin")
+        check("엘윈 이벤트·다음 목표", "event:meet_elwin" in game.state.flags and "고목" in game.state.objective["text"])
+        yield from walk([(-2, -4), (2, 6), (8, 16), (8.5, 21.5)], 1.0)
+        yield from story("rumble")
+        yield from walk([(10, 27), (9, 31.5)], 1.0)
         while game.fade or game.world.m["id"] != "elder_cradle":
             yield 1
-        yield 50
-        shot("map_elder_cradle")
-        check("맵 이동(고목의 요람)", game.world.m["id"] == "elder_cradle")
-        yield from finish_dialogue("silvaen_scene", 6)
         yield 30
-        shot("elder_tree")
-        # ---- 공명의 제단 → 의식 → 보스전
+        yield from story("cradle")
+        check("맵 이동(고목의 요람)", game.world.m["id"] == "elder_cradle" and "scene:cr_01" in game.state.flags)
+        yield 20
+        shot("cradle_objective")
+        # ---- 제단 → 보스
         for c in game.state.party:                  # 보스전을 확실히 넘기려고 레벨을 올려 둔다 (테스트 편의)
             while c.level < 9:
                 c.gain_exp(exp_to_next(c.level))
             c.full_heal()
-        yield from walk([(0, -8), (-8, -5), (-15, -3)], 1.0, 2500)
-        yield 30
-        check("제단 이벤트 시작", game.event is not None)
-        yield from finish_dialogue("ritual_scene", 6)       # ch3_04
+        gold0 = game.state.gold
+        yield from walk([(0, -8), (-8, -5), (-15, -3)], 1.0)
         yield 10
-        yield from finish_dialogue("boss_pre", 6)            # ch3_05
-        while game.battle is None:
-            yield 1
-        yield 80
-        shot("boss_start")
-        yield from fight("boss")
-        while game.battle:
-            yield 1
-        yield 30
-        yield from finish_dialogue("boss_post", 6)           # ch3_06
-        yield 40
-        shot("chapter_clear")
-        check("보스 처치·제3장 완료", "ch3_clear" in game.state.flags and "event:ritual" in game.state.flags)
+        check("제단 이벤트 시작", game.event is not None)
+        yield from story("ritual")
+        check("보스 처치·제1부 완료", "ch3_clear" in game.state.flags and game.state.gold >= gold0 + 1000)
+        yield 60
+        shot("part1_clear")
         # ---- 타이틀로 → 이어하기
         yield key("x", 10)
         for _ in range(5):                          # 타이틀로
@@ -238,19 +249,19 @@ def autoplay(game, out_dir):
         while game.fade or game.mode != "title":
             yield 1
         yield 60
+        yield key("z", 20)                          # PRESS ANY KEY
         shot("title_continue")
         check("타이틀 복귀·이어하기 커서", game.title.cur == 1)
         yield key("z", 10)
-        shot("title_slots")
         yield key("z", 10)
         while game.fade or game.mode != "field":
             yield 1
         yield 40
         shot("loaded")
         p = game.player
-        check("불러오기(맵·위치·레벨)", game.world.m["id"] == "verdan_edge" and saved_pos is not None
-              and math.hypot(p.x - saved_pos[0], p.z - saved_pos[1]) < 0.1 and game.state.party[0].level == 4
-              and "ch3_clear" not in game.state.flags)
+        check("불러오기(맵·위치·동료)", game.world.m["id"] == "verdan_edge" and saved_pos is not None
+              and math.hypot(p.x - saved_pos[0], p.z - saved_pos[1]) < 0.6 and game.state.party[0].level == saved_lv
+              and len(game.followers) == 2 and "ch3_clear" not in game.state.flags)
         st = game.state
         print("\n".join(log))
         print("파티:", ", ".join(f"{c.name} Lv{c.level} HP{c.hp}/{c.max_hp}" for c in st.party), "| 승리", st.battles_won)

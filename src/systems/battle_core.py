@@ -71,7 +71,7 @@ class BattleCore:
         self.state = state
         self.boss = boss
         self.party = []
-        for i, ch in enumerate(state.party):
+        for i, ch in enumerate(getattr(state, "active", state.party)):
             stats = {k: ch.stat(k) for k in ("atk", "def", "mag", "res", "spd")}
             self.party.append(Fighter(ch.name, stats, ch.hp, ch.mp, ch.max_hp, ch.max_mp, True, i, ref=ch))
         self.enemies = []

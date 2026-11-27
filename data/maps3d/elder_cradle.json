@@ -158,7 +158,6 @@
       "label": "베르단 숲 어귀"
     }
   ],
-  "intro_scene": "ch3_03",
   "npcs": [
     {
       "id": "silvaen",
@@ -179,6 +178,25 @@
   },
   "events": [
     {
+      "id": "cr_intro",
+      "type": "enter",
+      "steps": [
+        {
+          "scene": "cr_01"
+        },
+        {
+          "objective": {
+            "text": "서쪽 '공명의 제단'으로 간다",
+            "map": "elder_cradle",
+            "pos": [
+              -15,
+              -3
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "ritual",
       "type": "zone",
       "pos": [
@@ -187,16 +205,12 @@
       ],
       "r": 2.6,
       "requires": [
-        "scene:ch3_03"
+        "scene:cr_01"
       ],
       "hint": "공명의 제단",
       "steps": [
         {
-          "scene": "ch3_04"
-        },
-        {
-          "scene": "ch3_05",
-          "repeat": true
+          "scene": "cr_02"
         },
         {
           "battle": [
@@ -205,15 +219,28 @@
           "boss": true
         },
         {
-          "scene": "ch3_06"
+          "scene": "cr_03"
+        },
+        {
+          "gold": 1000
         },
         {
           "flag": "ch3_clear"
         },
         {
+          "objective": {
+            "text": "서약의 인장 조각 3개를 모아 요람 동쪽 제단으로 (자유 탐색)",
+            "map": "elder_cradle",
+            "pos": [
+              17.6,
+              -6.0
+            ]
+          }
+        },
+        {
           "banner": [
-            "제3장 완료",
-            "다음 여정: 기어홀드 (3D 이식 예정)"
+            "제1부 완료",
+            "녹슨 숲의 서약 — 다음 이야기에 계속"
           ]
         }
       ]
@@ -227,7 +254,7 @@
       ],
       "r": 2.0,
       "requires": [
-        "scene:ch3_03"
+        "scene:cr_01"
       ],
       "requires_items": [
         "key_oath_seal_1",
@@ -335,6 +362,9 @@
             "잊힌 서약의 시련 완료",
             "최강의 무기와 갑옷을 손에 넣었다"
           ]
+        },
+        {
+          "objective": null
         }
       ]
     }

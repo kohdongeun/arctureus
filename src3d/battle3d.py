@@ -218,6 +218,13 @@ class EnemyView:
         destroy(self.shadow)
 
 
+def _remove(node):
+    if isinstance(node, Entity):
+        destroy(node)
+    else:
+        node.removeNode()
+
+
 def game_root(game):
     from src3d.game import ROOT
     return ROOT
@@ -517,6 +524,7 @@ class Battle3D:
             kind = a["k"]
             sw = math.sin(k * math.pi)
             if kind == "windup":            # 뒤로 젖히며 웅크림 (힘 모으기)
+                mo.arm -= sw
                 mo.lean -= 0.22 * sw
                 mo.sy *= 1 - 0.12 * sw
                 mo.sx *= 1 + 0.07 * sw
@@ -526,6 +534,7 @@ class Battle3D:
             elif kind == "strike":          # 내리치기: 확 숙였다가 복귀 + 늘어남
                 c = k / 0.18 if k < 0.18 else (1 - k) / 0.82
                 mo.lean += 0.5 * c * a.get("amp", 1.0)
+                mo.arm += c * 1.2 - (1 - c) * 0.0
                 mo.sx *= 1 + 0.14 * c
                 mo.sy *= 1 - 0.08 * c
             elif kind == "hop":             # 점프 (포물선)
@@ -538,6 +547,7 @@ class Battle3D:
             elif kind == "cast":            # 마법: 떠오르며 몸을 펴고 떨림
                 rise = min(1.0, k * 5) * min(1.0, (1 - k) * 6)
                 mo.hop += 0.32 * rise * a.get("amp", 1.0)
+                mo.cast = max(mo.cast, rise)
                 mo.sy *= 1 + 0.05 * rise
                 mo.lean -= 0.08 * rise
                 mo.off += self.R * math.sin(a["t"] * 55) * 0.015 * rise
@@ -550,6 +560,7 @@ class Battle3D:
                 mo.flash = max(mo.flash, 1 - k * 3.5)
             elif kind == "victory":         # 승리: 통통 뛰기
                 mo.hop += 0.45 * abs(math.sin(k * math.pi * 3))
+                mo.cast = max(mo.cast, abs(math.sin(k * math.pi * 3)))
                 mo.sy *= 1 + 0.06 * abs(math.sin(k * math.pi * 3))
             if k < 1.0:
                 keep.append(a)
@@ -558,9 +569,12 @@ class Battle3D:
         for f in self.core.party:
             mo = f.view.mo
             if not f.alive:
-                mo.sy *= 0.42
-                mo.sx *= 1.3
-                mo.lean += 0.25
+                if hasattr(f.view, "make_ghost"):   # 3D 캐릭터는 뒤로 눕는다
+                    mo.down = 1.0
+                else:
+                    mo.sy *= 0.42
+                    mo.sx *= 1.3
+                    mo.lean += 0.25
             elif f.hp < f.max_hp * 0.25:
                 mo.sy *= 0.9
                 mo.lean += 0.12
@@ -571,6 +585,9 @@ class Battle3D:
 
     def ghost(self, f):
         """잔상: 지금 모습 그대로 반투명 사본을 남긴다"""
+        if hasattr(f.view, "make_ghost"):
+            self.ghosts.append([f.view.make_ghost(), 0.3])
+            return
         b = f.view.body
         g = Entity(model=b.model, texture=b.texture, position=b.world_position, scale=b.world_scale, billboard=True,
                    double_sided=True, shader=unlit_shader, color=color.rgba(0.6, 0.85, 1.0, 0.5))
@@ -967,9 +984,12 @@ class Battle3D:
         for g in self.ghosts:
             g[1] -= rdt
             if g[1] <= 0:
-                destroy(g[0])
+                _remove(g[0])
                 continue
-            g[0].color = color.rgba(0.6, 0.85, 1.0, 0.5 * g[1] / 0.3)
+            if isinstance(g[0], Entity):
+                g[0].color = color.rgba(0.6, 0.85, 1.0, 0.5 * g[1] / 0.3)
+            else:
+                g[0].setColorScale(0.6, 0.85, 1.0, 0.45 * g[1] / 0.3)
             keep.append(g)
         self.ghosts = keep
         keep = []                                  # 마법진: 커지며 돌다가 사라짐
@@ -1165,7 +1185,7 @@ class Battle3D:
         if self.result_ui:
             destroy(self.result_ui)
         for g in self.ghosts:
-            destroy(g[0])
+            _remove(g[0])
         for c in self.circles:
             destroy(c["e"])
         if self.cutin:

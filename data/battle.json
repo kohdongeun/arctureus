@@ -650,6 +650,43 @@
      "drain_mp": 15
     }
    ]
+  },
+  "guard_trainee": {
+   "name": "견습 근위병",
+   "sprite": "../characters/monster/brass_guard.png",
+   "level": 2,
+   "height": 1.7,
+   "hp": 85,
+   "atk": 17,
+   "def": 8,
+   "mag": 4,
+   "res": 5,
+   "spd": 9,
+   "exp": 18,
+   "gold": 20,
+   "tags": [
+    "기계"
+   ],
+   "weak": [
+    "공명"
+   ],
+   "resist": [],
+   "actions": [
+    {
+     "name": "훈련용 창 찌르기",
+     "kind": "phys",
+     "power": 1.0,
+     "fx": "claw",
+     "weight": 3
+    },
+    {
+     "name": "방패 밀치기",
+     "kind": "phys",
+     "power": 0.7,
+     "fx": "claw",
+     "weight": 1
+    }
+   ]
   }
  },
  "encounters": {

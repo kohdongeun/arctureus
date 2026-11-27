@@ -2,8 +2,8 @@
  "luke": {
   "seed": 1200,
   "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 19-year-old boy steam knight, messy auburn hair, brass goggles on forehead, soot smudge on cheek, old knight breastplate with brass steam-piston pauldrons, copper-orange jacket, dark trousers, brown boots, large piston greatsword strapped on his back, confident smile, three-quarter view facing right, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 4.7
+  "model": "community/vendouple/animagine",
+  "seconds": 0.9
  },
  "iris": {
   "seed": 1201,
@@ -22,5 +22,47 @@
   "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
   "model": "flux",
   "seconds": 38.6
+ },
+ "balthazar": {
+  "seed": 1204,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 173.3
+ },
+ "morgan": {
+  "seed": 1205,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 64-year-old cheerful old woman mechanic, grey hair in a bun, leather apron over brown work clothes, brass peg leg, big wrench on her shoulder, hearty grin, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 4.6
+ },
+ "elwin": {
+  "seed": 1206,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, young elf scout, short blonde hair, long pointed ears, green hooded tunic, brown leggings, quiver of arrows on back, energetic expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 60.9
+ },
+ "silvaen": {
+  "seed": 1207,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 39.9
+ },
+ "torbin": {
+  "seed": 1208,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, stout dwarf king blacksmith, huge braided red beard, iron crown, leather smith apron over chainmail, giant forge hammer, laughing expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 4.5
+ },
+ "lina": {
+  "seed": 1209,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, little girl with long black hair, simple white dress, holding a small brass music box, absent dreamy expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 4.1
+ },
+ "mirel": {
+  "seed": 1210,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, pale faded elf girl, grey hood and grey tunic, long pointed ears, faint orange glowing eyes, ghostly melancholy expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 5.0
  }
 }

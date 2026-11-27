@@ -1,0 +1,1636 @@
+{
+  "meta": {
+    "title": "별이 지는 해 : 레비안 연대기",
+    "title_en": "The Year the Stars Fell : Chronicle of Levian",
+    "version": "0.1.0",
+    "language": "ko",
+    "genre": "2.5D 쿼터뷰 판타지 RPG",
+    "tagline": "일곱 개의 별이 세계를 지켰다. 그리고 지금, 마지막 별이 떨어지고 있다.",
+    "speaker_ids": {
+      "leon": "레온 하르벤",
+      "seria": "세리아",
+      "rowen": "로웬 다크밀",
+      "kalion": "칼리온 베스페르",
+      "orbis": "대주교 오르비스",
+      "narration": "내레이션",
+      "system": "시스템"
+    },
+    "emotion_tags": ["normal", "smile", "angry", "sad", "surprised", "serious", "shy", "smirk", "hurt", "determined"]
+  },
+
+  "world": {
+    "name": "레비안 대륙",
+    "overview": "레비안은 밤하늘에 박힌 일곱 개의 수호성, 즉 '아르케아 성좌'의 빛으로 유지되는 세계다. 별빛은 작물을 키우고, 마법의 근원이 되며, 무엇보다 대지 아래 잠든 공허의 신 '네하스'를 봉인한다. 사람들은 별을 신으로 섬기고, '성좌교단'은 천 년 동안 별의 뜻을 대변해 왔다. 그러나 왕국력 1207년, 수백 년간 한 번도 흔들리지 않던 별 하나가 빛을 잃고 하늘에서 떨어진다. 이후 매년 하나씩 별이 졌고, 이제 하늘에 남은 별은 단 하나뿐이다.",
+    "core_conflict": "별이 모두 지면 네하스가 깨어나 세계는 공허에 삼켜진다. 그러나 별을 다시 밝히는 방법에는 교단이 천 년간 감춰 온 끔찍한 대가가 숨어 있다.",
+    "themes": ["희생과 선택", "신앙과 진실", "물려받은 이름의 무게", "꺼져가는 빛을 지키는 사람들"],
+    "calendar": {
+      "current_year": "왕국력 1213년",
+      "note": "첫 번째 별 '이그나'가 떨어진 해(1207년)를 사람들은 '첫 낙성(落星)의 해'라 부른다."
+    },
+
+    "history": [
+      {
+        "era": "태초의 침묵",
+        "period": "기록 이전",
+        "description": "세계에는 빛도 이름도 없었고, 오직 공허의 신 네하스만이 존재했다. 네하스는 존재하는 모든 것을 '아무것도 아닌 것'으로 되돌리려는 갈망 그 자체였다."
+      },
+      {
+        "era": "별의 강림",
+        "period": "신화 시대",
+        "description": "하늘 저편에서 일곱 빛의 존재 '아르케아'가 내려와 네하스와 싸웠다. 그들은 신을 죽이지 못하고, 스스로 하늘에 못박혀 별이 됨으로써 네하스를 대지 깊숙이 봉인했다. 일곱 별의 이름은 이그나(불), 탈라스(물), 모르웬(숲), 사이라(바람), 쿠르드(대지), 엘세(서리), 그리고 가장 밝은 별 베르나(새벽)이다."
+      },
+      {
+        "era": "고대 천문 왕조",
+        "period": "약 2000년 전 ~ 1300년 전",
+        "description": "남부 사막의 '아스탈 왕조'는 별의 움직임을 연구하는 천문 마법을 발전시켜 대륙을 통일했다. 그들은 별에게 직접 말을 거는 '성음(星音)'의 기술을 가졌으나, 어느 날 하룻밤 사이에 모래 속으로 사라졌다."
+      },
+      {
+        "era": "성좌교단의 성립",
+        "period": "약 1000년 전",
+        "description": "예언자 '아우렐'이 별의 계시를 받았다며 성좌교단을 세웠다. 교단은 '별에게 기도를 바치면 별이 세계를 지킨다'는 교리를 퍼뜨렸고, 죽은 자의 영혼은 별로 올라가 영원한 안식을 얻는다고 가르쳤다."
+      },
+      {
+        "era": "실바레스 왕국력",
+        "period": "왕국력 1년 ~ 현재",
+        "description": "기사왕 '에드릭 1세'가 북방 야만족을 물리치고 실바레스 왕국을 세웠다. 왕국은 교단과 손을 잡고 번영했으며, 밤의 괴물로부터 백성을 지키는 '등불 기사단'이 창설되었다."
+      },
+      {
+        "era": "검은 원정",
+        "period": "왕국력 1189년",
+        "description": "교단은 북부 설원의 이단 수도원을 정벌하기 위해 등불 기사단을 파견했다. 기사단장 칼리온 베스페르와 부단장 가렛 하르벤이 이끈 원정대는 돌아오지 않았고, 교단은 원정이 '이단의 저주로 전멸했다'고 발표했다."
+      },
+      {
+        "era": "낙성의 시대",
+        "period": "왕국력 1207년 ~ 현재",
+        "description": "첫 번째 별 이그나가 떨어진 이래 해마다 별이 하나씩 졌다. 별이 진 땅에서는 작물이 시들고 '공허충'이라 불리는 괴물이 솟아났다. 이제 하늘에는 새벽별 베르나만이 깜빡이고 있다."
+      }
+    ],
+
+    "geography": [
+      {
+        "id": "roenport",
+        "name": "로엔포트",
+        "type": "해안 마을",
+        "region": "서부 하르벤 해안",
+        "description": "절벽 위 거대한 등대가 있는 작은 어촌. 등대의 불은 300년 동안 한 번도 꺼진 적이 없다고 전해진다. 주인공 레온의 고향.",
+        "atmosphere": "짠 바닷바람, 갈매기 울음, 석양이 비치는 하얀 돌집들",
+        "bgm": "bgm_roenport"
+      },
+      {
+        "id": "silvares",
+        "name": "왕도 실바레스",
+        "type": "수도",
+        "region": "중부 평원",
+        "description": "흰 대리석 성벽과 일곱 개의 첨탑을 가진 왕국의 수도. 중앙에는 성좌교단의 총본산 '천궁 대성당'이 서 있다. 겉으로는 화려하지만 빈민가에는 낙성 이후 몰려든 난민들이 넘쳐난다.",
+        "atmosphere": "종소리, 시장의 소음, 성가대의 노래와 빈민가의 기침 소리",
+        "bgm": "bgm_silvares"
+      },
+      {
+        "id": "morgwen",
+        "name": "잿빛 숲 모르그웬",
+        "type": "숲 / 던전",
+        "region": "동부 산림",
+        "description": "숲의 별 모르웬이 떨어진 뒤 나무들이 잿빛으로 굳어버린 거대한 숲. 한때 요정족 '실피드'의 왕국이 있었으며, 지금은 공허충과 미쳐버린 정령들이 배회한다.",
+        "atmosphere": "회색 낙엽, 소리 없는 바람, 가끔 들려오는 요정의 흐느낌",
+        "bgm": "bgm_ashforest"
+      },
+      {
+        "id": "karzan",
+        "name": "사막 도시 카르잔",
+        "type": "교역 도시",
+        "region": "남부 아스탈 사막",
+        "description": "사막의 오아시스 위에 세워진 상인들의 자유 도시. 교단의 힘이 약해 이단자와 도망자들의 피난처가 된다. 도시 아래에는 고대 아스탈 왕조의 천문대가 묻혀 있다.",
+        "atmosphere": "뜨거운 모래바람, 향신료 냄새, 밤에는 별빛을 반사하는 사구",
+        "bgm": "bgm_karzan"
+      },
+      {
+        "id": "astal_observatory",
+        "name": "매몰된 천문대",
+        "type": "고대 유적 / 던전",
+        "region": "카르잔 지하",
+        "description": "아스탈 왕조가 별과 대화하던 거대한 지하 천문대. 천장의 수정 돔에 고대의 성도(星圖)가 새겨져 있다.",
+        "atmosphere": "희미한 푸른빛, 기계 장치의 삐걱임, 모래가 흘러내리는 소리",
+        "bgm": "bgm_ruins"
+      },
+      {
+        "id": "istland",
+        "name": "북부 설원 이스트란드",
+        "type": "설원 / 던전",
+        "region": "북방 경계",
+        "description": "서리의 별 엘세가 떨어진 이후 영원한 눈보라에 갇힌 땅. 검은 원정이 벌어진 곳이며, 얼어붙은 '백야 수도원'이 있다.",
+        "atmosphere": "끝없는 눈보라, 얼음 속에 갇힌 기사들의 그림자",
+        "bgm": "bgm_istland"
+      },
+      {
+        "id": "arkea_stairs",
+        "name": "아르케아의 계단",
+        "type": "천공 섬 / 최종 던전 전반",
+        "region": "하늘",
+        "description": "떨어진 별들의 잔해가 모여 하늘에 떠오른 섬들. 별의 기억이 환영처럼 떠다닌다. 정상에는 마지막 별 베르나로 향하는 문이 있다.",
+        "atmosphere": "중력이 뒤섞인 바위섬, 별의 노래, 끝없는 구름바다",
+        "bgm": "bgm_stairs"
+      },
+      {
+        "id": "abyss",
+        "name": "공허의 심연",
+        "type": "최종 던전",
+        "region": "대지의 핵",
+        "description": "네하스가 잠든 세계의 밑바닥. 존재가 지워진 것들의 잔해가 떠도는 무(無)의 공간.",
+        "atmosphere": "소리도 색도 없는 공간, 지워진 이름들의 속삭임",
+        "bgm": "bgm_abyss"
+      }
+    ],
+
+    "factions": [
+      {
+        "id": "constellation_church",
+        "name": "성좌교단",
+        "leader": "대주교 오르비스",
+        "description": "별을 신으로 섬기는 대륙 최대의 종교 조직. 낙성 이후 '신앙이 부족해 별이 진다'며 헌금과 순례를 강요하고 있다. 그 이면에는 천 년간 지켜온 '별의 봉헌' 의식의 비밀이 있다.",
+        "public_goal": "기도로 마지막 별 베르나를 지켜내는 것",
+        "true_goal": "베르나를 지키는 것이 아니라 대주교가 별의 권능을 손에 넣는 것"
+      },
+      {
+        "id": "lantern_knights",
+        "name": "등불 기사단",
+        "leader": "공석 (전 단장 칼리온 베스페르)",
+        "description": "밤의 괴물로부터 백성을 지키기 위해 창설된 기사단. 검은 원정 이후 사실상 해체되어 지금은 늙은 기사 몇 명과 견습들만 남았다. 문장은 '어둠 속의 등불'.",
+        "motto": "별이 없는 밤에도, 우리가 불을 든다."
+      },
+      {
+        "id": "black_star",
+        "name": "흑성단",
+        "leader": "칼리온 베스페르",
+        "description": "검은 원정의 생존자들이 결성한 비밀 결사. 교단의 비밀을 알게 된 그들은 남은 별을 '해방'하기 위해 성소를 습격하고 있다. 세상은 그들을 별을 떨어뜨리는 테러리스트로 알고 있다."
+      },
+      {
+        "id": "sylphid",
+        "name": "실피드족",
+        "leader": "여왕 리네아 (행방불명)",
+        "description": "숲의 별 모르웬의 축복을 받은 요정족. 별이 진 이후 대부분 잿빛 나무 속에 잠들어 버렸다."
+      },
+      {
+        "id": "karzan_council",
+        "name": "카르잔 상인 평의회",
+        "leader": "의장 하심 알 무라드",
+        "description": "돈이 곧 법인 사막의 자유 도시를 다스리는 상인 연합. 교단과는 불편한 동맹 관계다."
+      }
+    ],
+
+    "magic_system": {
+      "name": "성휘(星輝) 마법",
+      "description": "모든 마법은 별에서 흘러내리는 빛, 성휘를 끌어다 쓰는 기술이다. 마법사마다 '수호성'이 정해져 있으며, 그 별의 속성 마법에 강하다. 별이 질 때마다 해당 속성의 마법이 약해지고 있어, 현재 대부분의 마법사는 힘을 잃은 상태다.",
+      "elements": [
+        {"star": "이그나", "element": "불", "color": "#E8553A", "status": "낙성 (1207년)"},
+        {"star": "탈라스", "element": "물", "color": "#3A8FE8", "status": "낙성 (1208년)"},
+        {"star": "모르웬", "element": "숲", "color": "#4FB548", "status": "낙성 (1209년)"},
+        {"star": "사이라", "element": "바람", "color": "#9EE0D6", "status": "낙성 (1210년)"},
+        {"star": "쿠르드", "element": "대지", "color": "#B08A4A", "status": "낙성 (1211년)"},
+        {"star": "엘세", "element": "서리", "color": "#BFD8F0", "status": "낙성 (1212년)"},
+        {"star": "베르나", "element": "새벽(빛)", "color": "#FFE9A8", "status": "명멸 중"}
+      ],
+      "star_fragments": "떨어진 별은 '성편(星片)'이라는 결정으로 흩어진다. 성편을 몸에 지니면 잃어버린 속성의 마법을 일시적으로 쓸 수 있다. 게임 내 스킬 해금 아이템."
+    },
+
+    "secret_lore": {
+      "the_offering": "교단의 가장 큰 비밀: 별은 스스로 빛나지 않는다. 아르케아의 힘은 오래전에 바닥났고, 교단은 천 년 동안 죽은 자들의 영혼을 '봉헌'하여 별을 태워 왔다. '죽으면 별로 올라가 안식을 얻는다'는 교리는 사실 영혼을 연료로 삼는다는 뜻이었다.",
+      "why_stars_fall": "대주교 오르비스는 20년 전부터 봉헌된 영혼을 별로 보내지 않고 자신의 몸에 모으고 있다. 연료를 잃은 별이 차례로 진 것이다. 그는 마지막 별 베르나마저 떨어지는 순간, 일곱 별의 권능을 흡수해 새로운 신이 되려 한다.",
+      "black_expedition_truth": "검은 원정은 이단 정벌이 아니었다. 백야 수도원의 수도사들은 봉헌의 비밀을 알아낸 자들이었고, 교단은 기사단을 보내 그들의 입을 막으려 했다. 진실을 알게 된 칼리온과 가렛은 교단에 반기를 들었고, 교단의 성기사들에게 습격당했다.",
+      "seria_origin": "17년 전, 베르나는 자신의 빛이 꺼져간다는 것을 깨닫고 마지막 힘으로 자신의 '핵'을 인간 아기의 모습으로 지상에 내려보냈다. 그 아기가 세리아다. 그녀가 살아 있는 한 베르나는 완전히 지지 않는다.",
+      "lighthouse_truth": "로엔포트 등대의 불은 300년 전 떨어진 '여덟 번째 별'의 파편이다. 기록에서 지워진 그 별의 이름은 '하르'. 하르벤 가문은 대대로 그 불을 지켜온 별지기의 후예다."
+    }
+  },
+
+  "protagonists": [
+    {
+      "id": "leon",
+      "name": "레온 하르벤",
+      "name_en": "Leon Harven",
+      "age": 18,
+      "gender": "남",
+      "class": "등불 검사",
+      "weapon": "장검 '하르의 등불'",
+      "guardian_star": "하르 (잊혀진 여덟 번째 별)",
+      "appearance": "짧게 자른 갈색 머리에 바닷바람에 그을린 피부. 왼쪽 눈썹에 작은 흉터가 있다. 아버지가 남긴 낡은 등불 기사단 망토를 늘 두르고 다닌다.",
+      "personality": "정의감이 강하고 직선적이다. 생각보다 몸이 먼저 나가는 타입이지만, 누군가를 지키겠다고 약속하면 절대 포기하지 않는다. 의외로 요리를 잘하고, 동물에게 약하다.",
+      "background": "로엔포트 등대지기의 아들. 아버지 가렛은 등불 기사단 부단장으로 검은 원정에 나섰다가 돌아오지 않았다. 당시 다섯 살이던 레온은 어머니 마르타와 함께 등대를 지키며 자랐고, 언젠가 아버지처럼 기사가 되겠다는 꿈을 품고 있다.",
+      "motivation": "아버지가 왜 돌아오지 않았는지 알고 싶다. 그리고 '불을 지키는 사람'이 되고 싶다.",
+      "secret": "레온의 몸에는 여덟 번째 별 '하르'의 불씨가 깃들어 있다. 위기의 순간 그의 검은 별빛으로 타오르며, 이 힘은 떨어진 별의 성편을 다시 점화할 수 있는 유일한 힘이다.",
+      "character_arc": "아버지의 그림자를 쫓던 소년이, 아버지가 지키지 못한 것을 자기 방식으로 지켜내는 기사가 된다.",
+      "combat_style": "근접 물리 딜러 겸 탱커. 도발과 반격 위주.",
+      "base_stats": {"hp": 320, "mp": 40, "atk": 28, "def": 22, "mag": 8, "res": 12, "spd": 14},
+      "skills": [
+        {"id": "sk_leon_01", "name": "등불 베기", "level": 1, "mp": 0, "description": "기본 2연격. 두 번째 타격에 화염 속성 추가."},
+        {"id": "sk_leon_02", "name": "파수꾼의 외침", "level": 3, "mp": 6, "description": "주변 적을 도발하고 3턴간 방어력 상승."},
+        {"id": "sk_leon_03", "name": "파도 가르기", "level": 7, "mp": 10, "description": "직선 범위 관통 공격. 쿼터뷰 대각선 방향으로 3칸."},
+        {"id": "sk_leon_04", "name": "역류", "level": 12, "mp": 12, "description": "다음 받는 공격을 반격한다."},
+        {"id": "sk_leon_05", "name": "점화", "level": 18, "mp": 20, "description": "성편을 소모해 무기에 별의 속성을 부여한다."},
+        {"id": "sk_leon_06", "name": "하르의 등불", "level": 30, "mp": 45, "description": "궁극기. 검에 별빛을 깃들여 화면 전체의 적에게 빛 속성 대미지. 공허 속성 적에게 3배."}
+      ],
+      "quotes": [
+        "별이 없는 밤에도, 우리가 불을 든다. …아버지가 하던 말이야.",
+        "어렵게 생각하지 마. 지키고 싶은 게 있으면, 지키면 돼.",
+        "배고프면 싸움도 안 돼. 일단 밥부터 먹자."
+      ]
+    },
+    {
+      "id": "seria",
+      "name": "세리아",
+      "name_en": "Seria",
+      "age": 17,
+      "gender": "여",
+      "class": "새벽의 무녀",
+      "weapon": "성구(星球) 지팡이 '아침이슬'",
+      "guardian_star": "베르나 (새벽)",
+      "appearance": "허리까지 오는 은백색 머리카락, 새벽 하늘 같은 연보라색 눈동자. 이마에 별 모양의 희미한 각인이 있으며, 감정이 격해지면 빛난다. 흰색과 금색의 견습 무녀복.",
+      "personality": "조용하고 수줍음이 많지만, 옳다고 믿는 일 앞에서는 놀라울 만큼 단호하다. 세상 물정에 어두워 엉뚱한 질문을 자주 한다. 별 이야기를 할 때는 눈이 반짝인다.",
+      "background": "로엔포트 근처 '새벽 신전'의 고아. 아기 때 별빛이 쏟아지던 밤 신전 계단에서 발견되었다. 늙은 신관 엘다의 손에 자랐으며, 별의 목소리를 꿈에서 듣는다. 교단 본부는 그녀의 각인을 오래전부터 주시해 왔다.",
+      "motivation": "꿈속에서 울고 있는 '누군가'를 도와주고 싶다. 그리고 신전 밖의 세상을 보고 싶다.",
+      "secret": "그녀는 새벽별 베르나의 핵이 인간의 몸으로 태어난 존재다. 대주교 오르비스는 그녀를 제물로 바쳐 베르나를 떨어뜨리고, 그 권능을 차지하려 한다. 세리아 자신은 5장에 이르러서야 이 사실을 알게 된다.",
+      "character_arc": "누군가에게 지켜지기만 하던 소녀가, 자신의 존재 이유를 받아들이고 스스로 운명을 선택하는 사람이 된다.",
+      "combat_style": "회복, 보조, 광역 빛 마법. 파티의 생명줄.",
+      "base_stats": {"hp": 210, "mp": 140, "atk": 10, "def": 12, "mag": 30, "res": 28, "spd": 16},
+      "skills": [
+        {"id": "sk_seria_01", "name": "새벽빛", "level": 1, "mp": 5, "description": "아군 1명 HP 회복."},
+        {"id": "sk_seria_02", "name": "별무리", "level": 4, "mp": 10, "description": "3x3 범위에 빛 속성 마법 공격."},
+        {"id": "sk_seria_03", "name": "가호의 장막", "level": 8, "mp": 14, "description": "아군 전체 마법 방어력 상승."},
+        {"id": "sk_seria_04", "name": "정화", "level": 11, "mp": 8, "description": "아군 1명의 상태이상 해제."},
+        {"id": "sk_seria_05", "name": "성음(星音)", "level": 20, "mp": 25, "description": "별의 노래로 적 전체를 수면 상태로. 공허충에게는 무효."},
+        {"id": "sk_seria_06", "name": "베르나의 기도", "level": 32, "mp": 80, "description": "궁극기. 아군 전체 완전 회복 및 전투불능 부활. 전투당 1회."}
+      ],
+      "quotes": [
+        "별님들은… 울고 있어요. 저만 들리는 걸까요?",
+        "레온 씨, 바다는 정말로 끝이 없나요? 그럼 바다 끝에는 뭐가 있어요?",
+        "제가 누구든 상관없어요. 저는, 제가 선택할 거예요."
+      ]
+    },
+    {
+      "id": "rowen",
+      "name": "로웬 다크밀",
+      "name_en": "Rowen Darkmill",
+      "age": 24,
+      "gender": "남",
+      "class": "떠돌이 연금술사",
+      "weapon": "쌍단검 '쌍둥이 독니' + 연금 폭탄",
+      "guardian_star": "없음 (별의 축복을 받지 못한 '무성자(無星者)')",
+      "appearance": "헝클어진 검은 머리, 피곤해 보이는 회색 눈. 오른팔 전체를 붕대로 감고 있으며, 허리에는 형형색색의 약병이 주렁주렁 달려 있다. 낡은 가죽 코트.",
+      "personality": "냉소적이고 말이 날카롭다. 돈과 이득을 따지는 척하지만 실은 누구보다 정이 많아, 곤경에 처한 사람을 보면 투덜대면서도 돕고 만다. 단 음식을 좋아하는 것을 들키면 화를 낸다.",
+      "background": "본명은 로웬 베스페르. 칼리온 베스페르의 배다른 동생이다. 어린 시절 교단의 고아원에서 자랐는데, 그곳은 사실 '영혼 정제' 실험을 하는 시설이었다. 실험의 유일한 생존자로, 오른팔에 영혼을 흡수하는 저주의 문양이 새겨졌다. 12살에 탈출한 뒤 이름을 버리고 연금술사로 떠돌았다.",
+      "motivation": "자신의 팔에 새겨진 문양을 지우는 방법을 찾는 것. 그리고 그가 결코 입에 담지 않는 목적: 형 칼리온을 찾아 왜 자신을 버렸는지 묻는 것.",
+      "secret": "그의 오른팔 문양은 대주교 오르비스의 몸에 새겨진 것과 같은 '흡혼 각인'의 시제품이다. 로웬만이 오르비스의 힘을 무력화할 수 있다. 그리고 칼리온은 로웬을 버린 것이 아니라, 그를 탈출시키기 위해 교단에 남아 미끼가 되었었다.",
+      "character_arc": "세상을 믿지 않던 남자가, 동료를 믿는 법을 배우고 형과 화해한다.",
+      "combat_style": "고속 연속 공격, 상태이상(독·마비·화상) 부여, 아이템 강화.",
+      "base_stats": {"hp": 260, "mp": 80, "atk": 24, "def": 15, "mag": 18, "res": 16, "spd": 26},
+      "skills": [
+        {"id": "sk_rowen_01", "name": "독니", "level": 1, "mp": 0, "description": "빠른 2연격. 일정 확률로 독."},
+        {"id": "sk_rowen_02", "name": "연막탄", "level": 3, "mp": 6, "description": "3x3 범위 적의 명중률 감소."},
+        {"id": "sk_rowen_03", "name": "속성 조합", "level": 6, "mp": 0, "description": "소지 중인 재료 2개를 조합해 즉석 폭탄을 만든다. 조합에 따라 효과 변화."},
+        {"id": "sk_rowen_04", "name": "그림자 걸음", "level": 10, "mp": 12, "description": "적의 배후로 순간이동 후 치명타 공격."},
+        {"id": "sk_rowen_05", "name": "약효 증폭", "level": 15, "mp": 15, "description": "3턴간 아군이 사용하는 회복 아이템 효과 2배."},
+        {"id": "sk_rowen_06", "name": "흡혼 해방", "level": 28, "mp": 0, "description": "궁극기. HP 30%를 소모해 오른팔의 봉인을 푼다. 적의 버프와 마력을 빨아들이고 그만큼 대미지. 오르비스 최종전 필수."}
+      ],
+      "quotes": [
+        "착한 일은 공짜가 아니야. …뭐, 이번만이다.",
+        "별님? 별님이 나한테 해준 게 뭔데.",
+        "단 거 좋아하는 게 아니라, 당 보충이야. 연금술은 머리를 쓰는 일이라고."
+      ]
+    }
+  ],
+
+  "major_characters": [
+    {
+      "id": "kalion",
+      "name": "칼리온 베스페르",
+      "role": "적대자 → 동료 (조건부)",
+      "age": 38,
+      "title": "흑성 기사",
+      "appearance": "검게 그을린 등불 기사단 갑주, 반쯤 부서진 투구. 회색으로 샌 머리와 깊은 눈매. 등에는 별을 베었다는 거대한 흑검 '야명(夜鳴)'.",
+      "description": "전 등불 기사단장이자 흑성단의 수장. 세상은 그를 별을 떨어뜨리는 마왕으로 알고 있다. 실제로는 교단의 봉헌 의식을 끝내고 영혼들을 해방하려 한다. 그러나 그 방법은 남은 별을 부숴 네하스의 봉인마저 깨뜨리는 위험한 길이다.",
+      "relation": "레온의 아버지 가렛의 절친이자 로웬의 형. 레온에게 아버지의 마지막을 전해줄 수 있는 유일한 사람.",
+      "quotes": [
+        "별은 신이 아니다. 별은 무덤이다.",
+        "가렛의 아들인가. 눈빛이 똑같군. 고집스럽고, 바보 같은.",
+        "로웬… 미안하다는 말로는 아무것도 돌려줄 수 없겠지."
+      ]
+    },
+    {
+      "id": "orbis",
+      "name": "대주교 오르비스",
+      "role": "진 최종보스",
+      "age": "외견 60대 (실제 나이 불명)",
+      "title": "천궁의 목소리",
+      "appearance": "온화한 미소를 띤 백발의 노인. 금실로 별자리가 수놓인 흰 법의. 법의 아래 온몸에 흡혼 각인이 문신처럼 새겨져 있다.",
+      "description": "성좌교단의 대주교. 백성들에게는 자애로운 성인으로 존경받는다. 그러나 그는 20년 전 봉헌의 진실을 알게 된 뒤 '별이 인간의 영혼으로 타오른다면, 인간이 별이 되지 못할 이유가 무엇인가'라는 결론에 이르렀다. 수십만의 영혼을 몸에 품은 그는 이미 인간이 아니다.",
+      "boss_phases": ["대주교 오르비스", "성좌의 찬탈자", "거짓 별 오르비스"],
+      "quotes": [
+        "아이야, 두려워 말거라. 별이 되는 것은 영광이란다.",
+        "신들은 지쳤다. 이제 인간이 하늘을 맡을 차례다.",
+        "천 년! 천 년 동안 우리는 별에게 아이들을 먹여왔다. 그런데도 나를 괴물이라 부르느냐!"
+      ]
+    },
+    {
+      "id": "nehas",
+      "name": "네하스",
+      "role": "봉인된 공허의 신",
+      "description": "형체도 의지도 분명하지 않은, 소멸을 향한 갈망 그 자체. 별이 질수록 그 속삭임이 지상에 스며든다. 악의를 가진 존재라기보다 '모든 것이 끝나기를 바라는 세계의 피로'에 가깝다.",
+      "quotes": [
+        "……쉬고 싶지 않니?",
+        "빛나는 것은 모두 지친다. 나는 그 피로다."
+      ]
+    },
+    {
+      "id": "garret",
+      "name": "가렛 하르벤",
+      "role": "레온의 아버지 (회상/영혼)",
+      "description": "등불 기사단 부단장. 검은 원정에서 칼리온과 함께 진실을 알게 되었고, 동료들을 탈출시키기 위해 홀로 교단의 성기사단을 막아서다 얼음 속에 갇혔다. 그의 영혼은 5장 백야 수도원에서 레온을 기다리고 있다."
+    },
+    {
+      "id": "elda",
+      "name": "신관 엘다",
+      "role": "세리아의 양어머니",
+      "description": "새벽 신전의 늙은 여신관. 세리아가 평범한 아이가 아님을 알면서도 교단에 보고하지 않고 숨겨 키웠다. 1장에서 세리아를 지키다 부상을 입는다."
+    },
+    {
+      "id": "lineia",
+      "name": "실피드 여왕 리네아",
+      "role": "3장 핵심 NPC",
+      "description": "잿빛 숲의 요정 여왕. 숲의 별 모르웬이 떨어질 때 그 성편을 품고 스스로 나무가 되어 숲의 마지막 생명을 지키고 있다."
+    },
+    {
+      "id": "sabine",
+      "name": "성기사 사비네",
+      "role": "라이벌 / 조건부 동료",
+      "description": "교단 직속 성기사단 '백은의 창'의 젊은 대장. 교단을 진심으로 믿는 고지식한 기사. 세리아를 '보호'하라는 명령을 받고 일행을 추격한다. 4장에서 진실을 알게 되며 갈등한다."
+    }
+  ],
+
+  "chapters": [
+    {
+      "id": "prologue",
+      "number": 0,
+      "title": "프롤로그",
+      "subtitle": "여섯 번째 별이 지던 밤",
+      "region": "roenport",
+      "synopsis": "왕국력 1212년 겨울. 서리의 별 엘세가 떨어지는 밤, 로엔포트의 등대지기 소년 레온은 등대 꼭대기에서 하늘을 가르는 은빛 선을 바라본다. 같은 시각, 새벽 신전의 소녀 세리아는 별이 우는 꿈에서 깨어난다.",
+      "objectives": ["등대 꼭대기로 올라가기 (조작 튜토리얼)", "어머니와 대화하기", "등대의 불 지피기"],
+      "scenes": [
+        {
+          "id": "pro_01",
+          "location": "로엔포트 등대 꼭대기",
+          "trigger": "game_start",
+          "dialogue": [
+            {"speaker": "narration", "text": "옛날 옛적, 일곱 개의 별이 하늘에 못박혀 세계를 지켰다."},
+            {"speaker": "narration", "text": "사람들은 별에게 기도했고, 별은 대답하지 않았지만, 언제나 그 자리에 있었다."},
+            {"speaker": "narration", "text": "…그 별들이, 떨어지기 전까지는."},
+            {"speaker": "leon", "emotion": "surprised", "text": "또… 또 하나 떨어진다."},
+            {"speaker": "leon", "emotion": "sad", "text": "이그나, 탈라스, 모르웬, 사이라, 쿠르드… 그리고 엘세. 이제 하나 남았네."},
+            {"speaker": "leon", "emotion": "determined", "text": "그래도 우리 등대 불은 안 꺼져. 아버지가 돌아올 때까지는, 절대로."}
+          ]
+        },
+        {
+          "id": "pro_02",
+          "location": "하르벤가 집",
+          "trigger": "enter_house",
+          "dialogue": [
+            {"speaker": "marta", "text": "레온, 또 등대에서 밤을 샜니? 얼굴이 꽁꽁 얼었구나."},
+            {"speaker": "leon", "emotion": "normal", "text": "엘세가 떨어졌어요, 어머니. 북쪽 하늘로."},
+            {"speaker": "marta", "text": "……그래. 북쪽이구나. 네 아버지가 마지막으로 간 곳도 북쪽이었지."},
+            {"speaker": "leon", "emotion": "serious", "text": "어머니. 저 이번 봄에 왕도로 갈게요. 등불 기사단 견습 시험이 있대요."},
+            {"speaker": "marta", "text": "기사단은 이제 이름만 남았다는 거, 너도 알잖니."},
+            {"speaker": "leon", "emotion": "determined", "text": "이름이 남아 있으면 된 거예요. 불씨가 남아 있으면 다시 타오를 수 있잖아요."},
+            {"speaker": "marta", "text": "…정말 그 사람을 닮았구나. 일단 스프부터 먹으렴."}
+          ]
+        },
+        {
+          "id": "pro_03",
+          "location": "새벽 신전 침실",
+          "trigger": "cutscene",
+          "dialogue": [
+            {"speaker": "narration", "text": "같은 밤. 해안 언덕 위 작은 신전."},
+            {"speaker": "unknown_voice", "text": "……추워…… 어두워……"},
+            {"speaker": "unknown_voice", "text": "……찾아줘…… 나를…… 너를……"},
+            {"speaker": "seria", "emotion": "surprised", "text": "…! 또 그 꿈…"},
+            {"speaker": "seria", "emotion": "sad", "text": "당신은 누구예요? 왜 그렇게 슬프게 울어요…?"},
+            {"speaker": "narration", "text": "소녀의 이마에서 별 모양의 각인이 희미하게 빛나다가 사라졌다."}
+          ]
+        }
+      ],
+      "boss": null,
+      "rewards": {"exp": 0, "gold": 50, "items": ["item_potion_small x3", "item_father_cloak"]}
+    },
+
+    {
+      "id": "chapter_1",
+      "number": 1,
+      "title": "제1장",
+      "subtitle": "등대와 무녀",
+      "region": "roenport",
+      "synopsis": "봄이 오고, 레온은 왕도로 떠나기 전 새벽 신전에 작별 인사를 하러 간다. 그곳에서 은발의 무녀 세리아를 만난다. 그날 밤, 교단의 성기사를 가장한 정체불명의 자들이 신전을 습격해 세리아를 납치하려 한다. 레온은 우연히 마을에 머물던 떠돌이 연금술사 로웬과 함께 습격자들을 막아낸다. 습격자의 시체는 검은 연기가 되어 사라지고, 신관 엘다는 쓰러지며 세리아를 왕도의 '천궁 대성당'이 아닌 다른 곳으로 데려가 달라고 부탁한다.",
+      "objectives": [
+        "새벽 신전 방문하기",
+        "세리아와 신전 정원 대화",
+        "마을 여관에서 로웬 만나기",
+        "습격받은 신전으로 돌아가기",
+        "보스: 가면 쓴 성기사 처치",
+        "해안 동굴을 통해 마을 탈출"
+      ],
+      "scenes": [
+        {
+          "id": "ch1_01",
+          "location": "새벽 신전 정원",
+          "trigger": "enter_temple_garden",
+          "dialogue": [
+            {"speaker": "seria", "emotion": "surprised", "text": "앗…! 누, 누구세요?"},
+            {"speaker": "leon", "emotion": "normal", "text": "아, 미안. 놀라게 했네. 엘다 할머니께 인사드리러 왔어. 나는 레온. 저 아래 등대지기 집 아들이야."},
+            {"speaker": "seria", "emotion": "shy", "text": "등대… 매일 밤 창문으로 보이는 그 불빛이요? 저, 그 불 정말 좋아해요."},
+            {"speaker": "seria", "emotion": "smile", "text": "별이 하나씩 없어질 때마다 무서웠는데, 저 불은 한 번도 꺼진 적이 없으니까요."},
+            {"speaker": "leon", "emotion": "smile", "text": "하하, 그렇다면 내가 매일 밤 장작 나르느라 고생한 보람이 있네."},
+            {"speaker": "seria", "emotion": "normal", "text": "저는 세리아예요. 이 신전에서 자랐어요. 신전 밖으로 나가 본 적은… 거의 없지만요."},
+            {"speaker": "leon", "emotion": "normal", "text": "한 번도? 로엔포트 시장에도?"},
+            {"speaker": "seria", "emotion": "sad", "text": "엘다 님이 위험하다고 하셨어요. 제 이마의 이것 때문에…"},
+            {"speaker": "narration", "text": "세리아가 앞머리를 걷자 희미한 별 모양 각인이 드러났다."},
+            {"speaker": "leon", "emotion": "surprised", "text": "별 모양…? 신기하다. 아니, 그보다 예쁘네."},
+            {"speaker": "seria", "emotion": "shy", "text": "예, 예쁘다고요…? 처음 들어봐요, 그런 말."}
+          ]
+        },
+        {
+          "id": "ch1_02",
+          "location": "로엔포트 여관 '취한 갈매기'",
+          "trigger": "enter_inn_evening",
+          "dialogue": [
+            {"speaker": "innkeeper_bram", "text": "어이 레온! 마침 잘 왔다. 저 구석 손님 좀 어떻게 해봐라. 사흘째 방값도 안 내고 이상한 냄새 나는 걸 끓이고 있어!"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "이상한 냄새라니. 이건 해초 추출 해독제야. 이 마을 생선, 공허충 독이 조금씩 섞여 있거든."},
+            {"speaker": "leon", "emotion": "surprised", "text": "뭐? 생선에 독이?"},
+            {"speaker": "rowen", "emotion": "normal", "text": "북쪽 별이 떨어진 뒤로 바다 밑에서 뭔가 올라오고 있어. 당장은 배탈 정도지만, 한 달 지나면 사람이 죽어 나갈걸."},
+            {"speaker": "rowen", "emotion": "smirk", "text": "그러니 이 해독제를 마을에 팔면 방값은 내고도 남지. 사업이야, 사업."},
+            {"speaker": "leon", "emotion": "angry", "text": "사람 목숨으로 장사를 해?"},
+            {"speaker": "rowen", "emotion": "normal", "text": "공짜로 나눠주면 사람들이 믿겠냐? 떠돌이가 주는 수상한 물약을? 값을 매겨야 가치가 생기는 거야, 꼬마."},
+            {"speaker": "leon", "emotion": "serious", "text": "…꼬마 아니야. 레온 하르벤이다."},
+            {"speaker": "rowen", "emotion": "surprised", "text": "하르벤…? 등불 기사단의 그 하르벤?"},
+            {"speaker": "rowen", "emotion": "normal", "text": "…흥. 로웬이다. 로웬 다크밀. 기억할 필요는 없어."}
+          ]
+        },
+        {
+          "id": "ch1_03",
+          "location": "로엔포트 광장",
+          "trigger": "night_event",
+          "dialogue": [
+            {"speaker": "villager_tom", "text": "레, 레온! 신전 쪽에서 불길이…! 흰 갑옷 입은 놈들이 신전을 둘러쌌어!"},
+            {"speaker": "leon", "emotion": "surprised", "text": "흰 갑옷…? 교단 성기사가 왜 신전을?"},
+            {"speaker": "rowen", "emotion": "serious", "text": "성기사가 한밤중에 횃불 들고 신전을 태워? 그건 성기사가 아니라 다른 뭔가야."},
+            {"speaker": "leon", "emotion": "determined", "text": "세리아가 위험해!"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "야, 잠깐! …아오, 저런 녀석들은 꼭 먼저 뛰어간다니까."},
+            {"speaker": "system", "text": "로웬 다크밀이 일시적으로 파티에 합류했습니다."}
+          ]
+        },
+        {
+          "id": "ch1_04",
+          "location": "불타는 새벽 신전",
+          "trigger": "boss_pre",
+          "dialogue": [
+            {"speaker": "masked_knight", "text": "각인의 아이를 내놓아라. 신관 노파, 더 이상 숨길 수 없다."},
+            {"speaker": "elda", "text": "이 아이는… 교단의 물건이 아니야. 별의 아이다…!"},
+            {"speaker": "seria", "emotion": "hurt", "text": "엘다 님!"},
+            {"speaker": "leon", "emotion": "angry", "text": "거기까지다! 무녀와 신관에게 칼을 겨누는 게 성기사가 할 짓이냐!"},
+            {"speaker": "masked_knight", "text": "등대지기의 아들인가. 불을 지키는 일이나 하거라. 이건 하늘의 일이다."},
+            {"speaker": "leon", "emotion": "determined", "text": "불을 지키는 게 내 일이야. 그리고 지금 내 눈앞에서 꺼지려는 불이 있어!"},
+            {"speaker": "system", "text": "BOSS - 가면 쓴 성기사"}
+          ]
+        },
+        {
+          "id": "ch1_05",
+          "location": "불타는 새벽 신전",
+          "trigger": "boss_post",
+          "dialogue": [
+            {"speaker": "masked_knight", "text": "크윽… 대주교 성하의… 뜻은… 막을 수…"},
+            {"speaker": "narration", "text": "쓰러진 기사의 몸이 검은 연기가 되어 흩어졌다. 갑옷 안에는 아무것도 없었다."},
+            {"speaker": "rowen", "emotion": "serious", "text": "……영혼을 갑옷에 묶어 부리는 술법. 이런 짓을 하는 놈들은 하나밖에 없어."},
+            {"speaker": "leon", "emotion": "surprised", "text": "로웬? 뭔가 알고 있어?"},
+            {"speaker": "rowen", "emotion": "normal", "text": "…몰라. 그보다 할머니부터 봐."},
+            {"speaker": "elda", "text": "세리아… 잘 들어라. 왕도의 대성당으로 가선 안 된다. 그들은 너를 지키려는 게 아니야…"},
+            {"speaker": "seria", "emotion": "sad", "text": "엘다 님, 말씀하지 마세요. 지금 치료할게요…!"},
+            {"speaker": "elda", "text": "레온… 네 아버지 가렛은… 이 아이를 지켜달라고 내게 맡겼었다. 이제 네 차례다…"},
+            {"speaker": "leon", "emotion": "surprised", "text": "아버지가…? 할머니, 그게 무슨…"},
+            {"speaker": "elda", "text": "남쪽… 카르잔의 '별을 읽는 자'를 찾아라… 그 전에 왕도에서… 기사단의 노인 '브란트'를…"},
+            {"speaker": "narration", "text": "엘다는 정신을 잃었다. 숨은 붙어 있었지만, 깨어나려면 오랜 시간이 필요해 보였다."},
+            {"speaker": "seria", "emotion": "determined", "text": "레온 씨. 저… 가겠어요. 엘다 님이 지키려던 게 뭔지 알아야겠어요."},
+            {"speaker": "rowen", "emotion": "smirk", "text": "왕도라. 마침 나도 그쪽에 볼일이 있지. 호위비는 나중에 청구하겠어."}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_masked_knight",
+        "name": "가면 쓴 성기사",
+        "level": 5,
+        "hp": 1200,
+        "element": "공허",
+        "weakness": ["빛", "불"],
+        "patterns": ["성창 찌르기 (직선 3칸)", "흑염 방패 (2턴간 물리 무효)", "HP 50% 이하: 그림자 기사 2체 소환"],
+        "drop": ["item_hollow_crest", "weapon_harvest_longsword"]
+      },
+      "rewards": {"exp": 450, "gold": 300, "items": ["item_dawn_charm", "item_potion_small x5"]},
+      "party_after": ["leon", "seria", "rowen"]
+    },
+
+    {
+      "id": "chapter_2",
+      "number": 2,
+      "title": "제2장",
+      "subtitle": "일곱 첨탑의 도시",
+      "region": "silvares",
+      "synopsis": "왕도 실바레스에 도착한 일행은 화려한 대성당과 비참한 빈민가의 대비에 충격을 받는다. 레온은 등불 기사단의 마지막 노기사 브란트를 찾아가 견습 시험을 받고, 아버지와 검은 원정에 대한 단서를 얻는다. 한편 교단은 '각인의 무녀'를 찾는 수배령을 내리고, 성기사 사비네가 일행을 추격한다. 그리고 대성당 지하 기록 보관소에 잠입한 일행 앞에, 흑성 기사 칼리온이 나타난다.",
+      "objectives": [
+        "왕도 성문 통과하기 (검문 회피 미니게임)",
+        "빈민가에서 숙소 구하기",
+        "등불 기사단 옛 막사에서 브란트 찾기",
+        "견습 시험 3단계 클리어",
+        "대성당 기록 보관소 잠입",
+        "보스: 흑성 기사 칼리온 (패배 이벤트)",
+        "왕도 탈출"
+      ],
+      "scenes": [
+        {
+          "id": "ch2_01",
+          "location": "실바레스 정문 앞",
+          "trigger": "arrive_silvares",
+          "dialogue": [
+            {"speaker": "seria", "emotion": "surprised", "text": "와아……! 성벽이 하늘까지 닿아요! 저 첨탑들 좀 보세요, 레온 씨!"},
+            {"speaker": "leon", "emotion": "smile", "text": "나도 처음 봐. 아버지가 매일 말해주던 그 도시야."},
+            {"speaker": "rowen", "emotion": "normal", "text": "감탄은 짧게. 저기 성문 앞 수배지 보여? 은발에 보라색 눈. 너야, 무녀님."},
+            {"speaker": "seria", "emotion": "sad", "text": "제가… 수배를?"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "'성녀 후보 보호를 위한 수색'이라고 쓰여 있네. 보호라. 아주 친절하셔라."},
+            {"speaker": "rowen", "emotion": "normal", "text": "자, 이거 써. 머리색 바꾸는 염색약. 냄새는 좀 참아."}
+          ]
+        },
+        {
+          "id": "ch2_02",
+          "location": "빈민가 '재의 골목'",
+          "trigger": "enter_slum",
+          "dialogue": [
+            {"speaker": "refugee_child", "text": "누나… 빵 있어요? 하루 종일 아무것도 못 먹었어요."},
+            {"speaker": "seria", "emotion": "sad", "text": "여기… 이렇게 많은 사람들이…"},
+            {"speaker": "refugee_old", "text": "숲의 별이 떨어지고 고향 땅이 잿빛이 됐지. 왕도에 오면 교단이 거둬준다더니, 헌금 낼 돈이 없으면 성당 문턱도 못 넘는다네."},
+            {"speaker": "leon", "emotion": "angry", "text": "저기 저 금빛 대성당은 뭐야. 저 금 한 조각이면 이 사람들 한 달은 먹일 수 있잖아."},
+            {"speaker": "rowen", "emotion": "serious", "text": "원래 그런 거야. 별이 많이 떨어질수록 교단은 부자가 되지. 두려움은 제일 잘 팔리는 상품이거든."},
+            {"speaker": "seria", "emotion": "determined", "text": "……레온 씨, 우리 가진 빵, 다 나눠줘도 될까요?"},
+            {"speaker": "leon", "emotion": "smile", "text": "물론이지. 로웬, 너도 그 단 과자 좀 내놔."},
+            {"speaker": "rowen", "emotion": "angry", "text": "……그건 비상식량이야! …칫, 가져가."}
+          ]
+        },
+        {
+          "id": "ch2_03",
+          "location": "등불 기사단 옛 막사",
+          "trigger": "meet_brandt",
+          "dialogue": [
+            {"speaker": "brandt", "text": "견습 지원자? 허허, 이 폐가에 아직도 그런 바보가 찾아오다니."},
+            {"speaker": "leon", "emotion": "determined", "text": "레온 하르벤입니다. 등불 기사단에 입단하러 왔습니다."},
+            {"speaker": "brandt", "text": "…하르벤. 그 망토, 가렛의 것이로군."},
+            {"speaker": "brandt", "text": "좋다. 기사단에 들어오고 싶다면 세 가지 시험을 통과해라. 검, 등불, 그리고 맹세."},
+            {"speaker": "brandt", "text": "검은 강함을, 등불은 지혜를, 맹세는 각오를 본다. 하나라도 실패하면 고향으로 돌아가 등대나 지키거라."},
+            {"speaker": "system", "text": "서브 퀘스트 [등불 기사단 견습 시험]이 시작되었습니다."}
+          ]
+        },
+        {
+          "id": "ch2_04",
+          "location": "등불 기사단 옛 막사",
+          "trigger": "trial_complete",
+          "dialogue": [
+            {"speaker": "brandt", "text": "마지막 질문이다. 별이 모두 떨어진다면, 기사는 무엇을 지키는가?"},
+            {"speaker": "leon", "emotion": "serious", "text": "……사람입니다. 별이 없어도 사람들은 불을 피우고 밥을 짓고 살아갑니다. 기사는 그 불을 지킵니다."},
+            {"speaker": "brandt", "text": "……허허. 가렛 녀석, 스무 해 전에 그 녀석도 똑같은 대답을 했지."},
+            {"speaker": "brandt", "text": "좋다, 레온 하르벤. 오늘부로 너는 등불 기사단 견습이다. 이 검을 받아라."},
+            {"speaker": "brandt", "text": "그리고 네 아버지 이야기를 해주마. 검은 원정은… 이단 정벌이 아니었다. 교단의 지하 기록 보관소에 진짜 원정 명령서가 있을 거다."},
+            {"speaker": "system", "text": "레온의 칭호가 '등불 기사단 견습'으로 바뀌었습니다."}
+          ]
+        },
+        {
+          "id": "ch2_05",
+          "location": "천궁 대성당 지하 기록 보관소",
+          "trigger": "find_document",
+          "dialogue": [
+            {"speaker": "rowen", "emotion": "serious", "text": "찾았다. 왕국력 1189년, 백야 수도원 정벌 명령서. …이건 정벌이 아니라 '정리' 명령이군."},
+            {"speaker": "leon", "emotion": "surprised", "text": "'수도원의 이단자들과 함께, 진실을 접한 기사단원 전원을 처분할 것.' …뭐야 이게. 자기 편을 죽이라고?"},
+            {"speaker": "seria", "emotion": "sad", "text": "서명이… 대주교 오르비스 성하…"},
+            {"speaker": "kalion", "text": "그래. 그 진실을 지키기 위해, 교단은 백 명의 기사를 얼음 속에 묻었다."},
+            {"speaker": "leon", "emotion": "surprised", "text": "누구냐!"},
+            {"speaker": "rowen", "emotion": "hurt", "text": "……그 목소리……"},
+            {"speaker": "kalion", "text": "흑성 기사 칼리온. 너희가 말하는 '별을 떨어뜨리는 마왕'이다."},
+            {"speaker": "kalion", "text": "각인의 아이를 넘겨라. 교단의 손에 들어가기 전에 내가 끝을 내겠다."},
+            {"speaker": "leon", "emotion": "angry", "text": "끝을 내? 세리아를 죽이겠다는 거냐!"},
+            {"speaker": "kalion", "text": "…가렛의 아들인가. 눈빛이 똑같군. 고집스럽고, 바보 같은."},
+            {"speaker": "system", "text": "BOSS - 흑성 기사 칼리온"}
+          ]
+        },
+        {
+          "id": "ch2_06",
+          "location": "천궁 대성당 지하 기록 보관소",
+          "trigger": "boss_post_forced_loss",
+          "dialogue": [
+            {"speaker": "leon", "emotion": "hurt", "text": "크윽… 하나도… 안 통해…"},
+            {"speaker": "kalion", "text": "그 정도로는 아무것도 지킬 수 없다."},
+            {"speaker": "rowen", "emotion": "angry", "text": "……칼리온 베스페르!!"},
+            {"speaker": "kalion", "text": "……!"},
+            {"speaker": "rowen", "emotion": "hurt", "text": "12년이야. 그 지옥 같은 고아원에 날 버리고 간 지 12년. 이제 와서 마왕 놀이냐, 형!"},
+            {"speaker": "kalion", "text": "로웬… 살아 있었구나."},
+            {"speaker": "narration", "text": "그 순간, 계단 위에서 수십 개의 발소리가 울려 퍼졌다."},
+            {"speaker": "sabine", "text": "침입자다! 백은의 창, 포위해라! 각인의 무녀를 확보하라!"},
+            {"speaker": "kalion", "text": "…오늘은 여기까지다. 로웬. 그 아이를 지킬 생각이라면, 카르잔의 별을 읽는 자를 찾아라. 그가 진실을 알려줄 것이다."},
+            {"speaker": "narration", "text": "칼리온은 흑검으로 벽을 베어 지하 수로로 향하는 길을 열고는 어둠 속으로 사라졌다."},
+            {"speaker": "leon", "emotion": "determined", "text": "로웬, 세리아! 저 수로로!"}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_kalion_1",
+        "name": "흑성 기사 칼리온",
+        "level": 40,
+        "hp": 99999,
+        "element": "어둠",
+        "weakness": [],
+        "forced_loss": true,
+        "forced_loss_condition": "5턴 경과 또는 파티 전멸",
+        "patterns": ["야명 일섬 (전체 공격)", "별 베기 (아군 1명 버프 전부 제거)"],
+        "drop": []
+      },
+      "rewards": {"exp": 1200, "gold": 800, "items": ["weapon_lantern_squire_sword", "item_expedition_order", "key_slum_backdoor"]}
+    },
+
+    {
+      "id": "chapter_3",
+      "number": 3,
+      "title": "제3장",
+      "subtitle": "잿빛 숲의 여왕",
+      "region": "morgwen",
+      "synopsis": "왕도를 탈출해 남쪽으로 가려면 잿빛 숲 모르그웬을 지나야 한다. 숲에서 일행은 공허충에 오염되어 미쳐버린 정령들과 싸우며, 세리아는 별의 목소리를 점점 더 선명하게 듣기 시작한다. 숲 중심에서 스스로 나무가 된 요정 여왕 리네아를 만나고, 그녀로부터 '별은 무엇으로 빛나는가'라는 질문과 함께 첫 번째 성편을 받는다. 레온의 검이 처음으로 별빛으로 타오른다.",
+      "objectives": [
+        "숲의 입구 '침묵의 문' 열기",
+        "요정 소녀 피피를 구출하고 길 안내받기",
+        "정령의 샘 3곳 정화하기",
+        "숲 중심 '여왕의 나무' 도달",
+        "보스: 썩은 고목왕 그라우트 처치",
+        "숲의 성편 획득"
+      ],
+      "scenes": [
+        {
+          "id": "ch3_01",
+          "location": "모르그웬 입구",
+          "trigger": "enter_forest",
+          "dialogue": [
+            {"speaker": "leon", "emotion": "surprised", "text": "…나무가 전부 돌처럼 굳어 있어. 새소리 하나 안 들리네."},
+            {"speaker": "rowen", "emotion": "serious", "text": "숲의 별 모르웬이 떨어진 자리야. 생명이 빠져나간 땅은 이렇게 되지. 3년 전엔 대륙에서 가장 푸른 숲이었는데."},
+            {"speaker": "seria", "emotion": "sad", "text": "……들려요. 나무들이… 숨을 쉬지 못해서 괴로워해요."},
+            {"speaker": "leon", "emotion": "normal", "text": "세리아, 괜찮아? 얼굴이 창백해."},
+            {"speaker": "seria", "emotion": "determined", "text": "괜찮아요. 이번엔… 제가 들어야 할 것 같아요. 이 숲이 하고 싶은 말을."}
+          ]
+        },
+        {
+          "id": "ch3_02",
+          "location": "가시덤불 감옥",
+          "trigger": "rescue_pipi",
+          "dialogue": [
+            {"speaker": "pipi", "text": "꺄아악! 오지 마! 오지 마! 나 맛없어! 요정은 쓰고 떫다고!"},
+            {"speaker": "leon", "emotion": "smile", "text": "안 먹어, 안 먹어. 우린 공허충 아니야."},
+            {"speaker": "pipi", "text": "……정말? 인간이야? 인간이 이 숲에 들어오는 건 3년 만이야!"},
+            {"speaker": "pipi", "text": "나는 피피! 실피드족 정찰병이야! …정찰병 중에 마지막으로 깨어 있는 요정이기도 하고."},
+            {"speaker": "seria", "emotion": "smile", "text": "반가워요, 피피. 저는 세리아예요."},
+            {"speaker": "pipi", "text": "어? 너… 너한테서 별 냄새가 나! 엄청 진한 별 냄새! 여왕님이 말씀하신 '새벽의 아이'가 너야?!"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "별 냄새라. 내 코엔 그냥 염색약 냄새밖에 안 나는데."},
+            {"speaker": "pipi", "text": "따라와! 여왕님께 데려다줄게! 대신 샘을 정화해 줘야 해. 안 그러면 여왕님 나무까지 길이 안 열려!"},
+            {"speaker": "system", "text": "피피가 안내 NPC로 동행합니다."}
+          ]
+        },
+        {
+          "id": "ch3_03",
+          "location": "야영지",
+          "trigger": "camp_event",
+          "dialogue": [
+            {"speaker": "narration", "text": "잿빛 나무 사이, 작은 모닥불이 타오른다."},
+            {"speaker": "leon", "emotion": "smile", "text": "자, 버섯 스튜 완성. 숲이 이래서 재료가 별로 없지만."},
+            {"speaker": "seria", "emotion": "smile", "text": "맛있어요! 레온 씨는 어떻게 요리를 그렇게 잘해요?"},
+            {"speaker": "leon", "emotion": "normal", "text": "어머니가 등대에서 밤샐 때가 많았거든. 아버지 없는 동안 내가 밥 담당이었어."},
+            {"speaker": "rowen", "emotion": "normal", "text": "……"},
+            {"speaker": "leon", "emotion": "normal", "text": "로웬. 칼리온… 정말 네 형이야?"},
+            {"speaker": "rowen", "emotion": "serious", "text": "……배다른 형. 어머니가 죽고, 난 교단 고아원에 보내졌어. 형은 기사단에 있었고. 데리러 오겠다고 했지."},
+            {"speaker": "rowen", "emotion": "hurt", "text": "안 왔어. 그 고아원에서 무슨 일이 있었는지는… 이 팔이 말해주지."},
+            {"speaker": "seria", "emotion": "sad", "text": "로웬 씨……"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "동정은 사양이야. 스튜 더 있어? …당 보충 좀 하게 꿀도 넣어서."}
+          ]
+        },
+        {
+          "id": "ch3_04",
+          "location": "여왕의 나무",
+          "trigger": "meet_lineia",
+          "dialogue": [
+            {"speaker": "lineia", "text": "……오랜만에 듣는구나. 새벽의 발소리를."},
+            {"speaker": "seria", "emotion": "surprised", "text": "나무가… 말을…?"},
+            {"speaker": "lineia", "text": "나는 리네아. 한때 이 숲의 여왕이었고, 지금은 이 숲의 마지막 뿌리다."},
+            {"speaker": "lineia", "text": "새벽의 아이야. 하나 묻겠다. 별은, 무엇으로 빛난다고 생각하느냐?"},
+            {"speaker": "seria", "emotion": "normal", "text": "…사람들의 기도로, 라고 배웠어요."},
+            {"speaker": "lineia", "text": "반은 맞고 반은 틀렸다. 별을 태우는 것은 기도가 아니라… 기도하던 자들 그 자체란다."},
+            {"speaker": "rowen", "emotion": "surprised", "text": "……설마."},
+            {"speaker": "lineia", "text": "그 답은 남쪽의 별을 읽는 자에게서 마저 들어라. 나는 이 이상 말할 힘이 없구나."},
+            {"speaker": "lineia", "text": "하지만 숲을 좀먹는 저것만은… 저것만은 너희가 베어다오. 내 남편이었던 자를."}
+          ]
+        },
+        {
+          "id": "ch3_05",
+          "location": "여왕의 나무",
+          "trigger": "boss_post",
+          "dialogue": [
+            {"speaker": "graut", "text": "리… 네아…… 빛이…… 보고 싶었…"},
+            {"speaker": "lineia", "text": "그래요, 그라우트. 이제 쉬어요. 내가 곧 따라갈게요."},
+            {"speaker": "narration", "text": "썩은 고목이 무너진 자리에서, 녹색으로 빛나는 결정 하나가 떠올랐다."},
+            {"speaker": "lineia", "text": "모르웬의 성편이다. 등대의 아이야, 그것을 쥐어보아라."},
+            {"speaker": "leon", "emotion": "surprised", "text": "내가…? 검이… 뜨거워…!"},
+            {"speaker": "narration", "text": "레온의 검이 처음으로 하얀 별빛으로 타올랐다. 성편이 그 빛에 반응해 공명했다."},
+            {"speaker": "lineia", "text": "……하르의 불씨. 잊혀진 여덟 번째 별의 후예가 아직 살아 있었구나."},
+            {"speaker": "leon", "emotion": "surprised", "text": "여덟 번째… 별?"},
+            {"speaker": "lineia", "text": "별은 일곱이 아니었단다. 기록에서 지워졌을 뿐. 아이들아, 서둘러라. 마지막 새벽이 오기 전에."},
+            {"speaker": "system", "text": "레온이 스킬 [점화]를 습득했습니다."},
+            {"speaker": "system", "text": "[모르웬의 성편]을 획득했습니다. 숲 속성 스킬이 해금됩니다."}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_graut",
+        "name": "썩은 고목왕 그라우트",
+        "level": 18,
+        "hp": 6800,
+        "element": "숲 (오염)",
+        "weakness": ["불", "빛"],
+        "patterns": ["뿌리 속박 (랜덤 2명 행동불가 1턴)", "포자 폭발 (전체 독)", "재생 (매 턴 HP 3% 회복, 불 속성 피격 시 정지)", "HP 30% 이하: 공허의 꽃 개화 - 피피가 위험해지는 연출"],
+        "drop": ["accessory_sylph_tear", "material_ash_wood x5"]
+      },
+      "rewards": {"exp": 4500, "gold": 1500, "items": ["shard_morwen", "item_elixir x2"]}
+    },
+
+    {
+      "id": "chapter_4",
+      "number": 4,
+      "title": "제4장",
+      "subtitle": "모래 아래의 성도(星圖)",
+      "region": "karzan",
+      "synopsis": "사막의 자유 도시 카르잔에 도착한 일행은 '별을 읽는 자'라 불리는 눈먼 천문학자 노인 자이드를 찾아간다. 그는 고대 아스탈 왕조의 매몰된 천문대에 진실이 있다고 말한다. 천문대 깊은 곳, 고대의 성음 장치를 통해 일행은 별의 목소리를 직접 듣게 되고, 천 년간 감춰진 '봉헌'의 진실을 알게 된다. 한편 뒤쫓아온 성기사 사비네 역시 그 진실을 함께 목격한다. 신앙이 무너진 사비네와의 결투, 그리고 그 결과에 따라 운명이 갈린다.",
+      "objectives": [
+        "카르잔 상인 평의회에서 통행증 얻기",
+        "투기장에서 상금 획득 (선택)",
+        "별을 읽는 자 자이드 찾기",
+        "매몰된 천문대 4개 층 돌파",
+        "성음 장치 재가동 퍼즐",
+        "보스: 성기사 사비네",
+        "선택지: 사비네를 살려 보낸다 / 동료로 받아들인다"
+      ],
+      "scenes": [
+        {
+          "id": "ch4_01",
+          "location": "카르잔 대시장",
+          "trigger": "arrive_karzan",
+          "dialogue": [
+            {"speaker": "merchant_yusuf", "text": "어서 오시오, 어서 오시오! 사막 전갈 꼬치! 별빛 선인장 주스! 교단 몰래 들여온 성편 조각도 있소이다!"},
+            {"speaker": "seria", "emotion": "surprised", "text": "성편을 시장에서 팔아요?!"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "대부분 가짜야. 유리에 형광 이끼 바른 거. …저 상인, 날 봤으니 값을 올리겠군."},
+            {"speaker": "merchant_yusuf", "text": "오오! 로웬 선생! 지난번 그 해독제 덕에 우리 낙타가 살았소! 이번엔 뭘 팔러 왔소?"},
+            {"speaker": "leon", "emotion": "smile", "text": "의외네. 너 여기서 인기 많구나."},
+            {"speaker": "rowen", "emotion": "angry", "text": "…시끄러. 장사 단골일 뿐이야."}
+          ]
+        },
+        {
+          "id": "ch4_02",
+          "location": "자이드의 천막",
+          "trigger": "meet_zaid",
+          "dialogue": [
+            {"speaker": "zaid", "text": "왔구나. 세 개의 발소리. 하나는 파도 소리, 하나는 새벽빛, 하나는… 별이 없는 그림자."},
+            {"speaker": "leon", "emotion": "normal", "text": "당신이 별을 읽는 자입니까? 엘다 할머니께서 찾아가라고 하셨습니다."},
+            {"speaker": "zaid", "text": "엘다… 그 고집쟁이가 아직 살아 있구먼. 나는 자이드. 눈은 잃었지만, 덕분에 별 소리는 더 잘 들리지."},
+            {"speaker": "zaid", "text": "너희가 알고 싶은 건 별이 왜 떨어지는가, 그리고 이 소녀가 누구인가겠지."},
+            {"speaker": "zaid", "text": "답은 내 입이 아니라 별의 입으로 들어야 한다. 이 도시 아래, 아스탈 왕조의 천문대로 가라. 그곳의 성음 장치라면 별과 직접 말할 수 있다."},
+            {"speaker": "seria", "emotion": "determined", "text": "별과… 직접."}
+          ]
+        },
+        {
+          "id": "ch4_03",
+          "location": "매몰된 천문대 최심부 - 성음의 방",
+          "trigger": "activate_starvoice",
+          "dialogue": [
+            {"speaker": "narration", "text": "수정 돔에 빛이 들어오자, 천 년 묵은 성도(星圖)가 천장 가득 펼쳐졌다. 그리고 목소리가 들려왔다."},
+            {"speaker": "verna_voice", "text": "……들리니…… 나의 아이……"},
+            {"speaker": "seria", "emotion": "surprised", "text": "꿈속의… 그 목소리!"},
+            {"speaker": "verna_voice", "text": "우리는 신이 아니야. 오래전, 우리의 빛은 이미 다했어. 지금 우리를 태우는 것은…… 너희 인간들이 '봉헌'이라 부르며 보내온 영혼들이야."},
+            {"speaker": "leon", "emotion": "surprised", "text": "……영혼이… 별의 연료라고?"},
+            {"speaker": "verna_voice", "text": "천 년 동안 우리는 원치 않는 불꽃으로 타올랐어. 그것이 세계를 지키는 유일한 방법이었으니까. 그런데 20년 전부터, 영혼들이 오지 않아. 누군가 그것들을 가로채고 있어."},
+            {"speaker": "rowen", "emotion": "angry", "text": "……오르비스. 그 고아원의 실험. 영혼을 모으는 각인. 처음부터 그거였어."},
+            {"speaker": "verna_voice", "text": "나는 꺼져가며 마지막 핵을 지상으로 보냈어. 나를 대신해 살아달라고. 내 빛이 완전히 꺼지기 전에…… 세계가 다른 길을 찾을 수 있도록."},
+            {"speaker": "seria", "emotion": "shy", "text": "……그 핵이, 저인가요?"},
+            {"speaker": "verna_voice", "text": "……미안해. 너에게 너무 무거운 것을 맡겼구나."},
+            {"speaker": "narration", "text": "빛이 사그라들었다. 성음의 방에는 무거운 침묵만이 남았다."}
+          ]
+        },
+        {
+          "id": "ch4_04",
+          "location": "성음의 방 입구",
+          "trigger": "boss_pre",
+          "dialogue": [
+            {"speaker": "sabine", "text": "……거짓말이다."},
+            {"speaker": "leon", "emotion": "surprised", "text": "사비네…! 언제부터…"},
+            {"speaker": "sabine", "text": "거짓말이다! 별이 영혼을 먹는다니, 교단이 천 년 동안 우릴 속였다니! 내 어머니는… 내 어머니는 별로 올라가 안식을 얻으셨단 말이다!"},
+            {"speaker": "seria", "emotion": "sad", "text": "사비네 씨……"},
+            {"speaker": "sabine", "text": "이건 이단의 환술이다. 그래야만 해. 무녀를 넘겨라, 하르벤. 내가 믿어온 것이 거짓이 아니라는 걸, 이 창으로 증명하겠다!"},
+            {"speaker": "leon", "emotion": "serious", "text": "…알았어. 네가 그렇게밖에 할 수 없다면, 받아줄게. 대신 끝나면 내 말도 들어."},
+            {"speaker": "system", "text": "BOSS - 백은의 창 사비네"}
+          ]
+        },
+        {
+          "id": "ch4_05",
+          "location": "성음의 방 입구",
+          "trigger": "boss_post",
+          "dialogue": [
+            {"speaker": "sabine", "text": "……졌다. 내 창도, 내 믿음도."},
+            {"speaker": "leon", "emotion": "normal", "text": "믿음이 틀렸던 게 아니야. 네가 지키고 싶었던 건 사람들이었잖아. 그건 지금도 틀리지 않았어."},
+            {"speaker": "sabine", "text": "……하르벤. 너는 이상한 녀석이구나."},
+            {"speaker": "choice", "text": "사비네에게 뭐라고 말할까?", "options": [
+              {"id": "sabine_join", "text": "같이 가자. 진실을 네 눈으로 끝까지 확인해.", "flag": "sabine_ally", "effect": "4장 이후 사비네 게스트 파티 합류, 진 엔딩 조건 1"},
+              {"id": "sabine_leave", "text": "돌아가. 그리고 네가 본 걸 다른 기사들에게 전해줘.", "flag": "sabine_messenger", "effect": "6장에서 백은의 창 일부가 지원군으로 등장"}
+            ]}
+          ]
+        },
+        {
+          "id": "ch4_06",
+          "location": "카르잔 오아시스의 밤",
+          "trigger": "night_talk",
+          "dialogue": [
+            {"speaker": "narration", "text": "사막의 밤. 별 하나만 남은 하늘이 쓸쓸하게 깜빡인다."},
+            {"speaker": "seria", "emotion": "sad", "text": "……레온 씨. 저, 사람이 아니었대요."},
+            {"speaker": "leon", "emotion": "normal", "text": "그래서?"},
+            {"speaker": "seria", "emotion": "surprised", "text": "그래서라니요…"},
+            {"speaker": "leon", "emotion": "smile", "text": "세리아는 바다 끝에 뭐가 있는지 궁금해하고, 빵을 나눠주고, 버섯 스튜를 세 그릇이나 먹는 애야. 내가 아는 세리아는 그거면 충분해."},
+            {"speaker": "seria", "emotion": "shy", "text": "…세 그릇은 아니었어요. 두 그릇 반이었어요."},
+            {"speaker": "leon", "emotion": "smile", "text": "하하, 미안."},
+            {"speaker": "seria", "emotion": "smile", "text": "……고마워요, 레온 씨. 정말로."},
+            {"speaker": "rowen", "emotion": "smirk", "text": "(멀리서) …쳇, 단 과자보다 달달하네. 이가 썩겠어."}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_sabine",
+        "name": "백은의 창 사비네",
+        "level": 28,
+        "hp": 11000,
+        "element": "빛",
+        "weakness": ["어둠", "바람"],
+        "patterns": ["성창 연무 (전방 부채꼴)", "신앙의 방패 (마법 반사 2턴)", "돌격 (대각선 끝까지 이동하며 경로상 적 공격)", "HP 25% 이하: 흔들리는 신념 - 방어력 대폭 하락, 대사 연출"],
+        "drop": ["accessory_silver_rosary", "weapon_spear_of_faith"]
+      },
+      "rewards": {"exp": 9000, "gold": 3000, "items": ["shard_kurd", "item_star_map", "key_ancient_lens"]}
+    },
+
+    {
+      "id": "chapter_5",
+      "number": 5,
+      "title": "제5장",
+      "subtitle": "백야 수도원의 얼음 기사들",
+      "region": "istland",
+      "synopsis": "자이드의 안내에 따라 일행은 검은 원정이 벌어진 북부 설원으로 향한다. 얼음 속에 갇힌 기사들의 영혼, 그리고 칼리온과의 재회. 칼리온은 남은 별을 부숴 영혼들을 해방하겠다고 하지만, 그것은 세리아의 죽음을 의미한다. 백야 수도원 최심부에서 레온은 얼음 속에 잠든 아버지 가렛의 영혼과 마주하고, 로웬은 형이 자신을 버린 것이 아니었다는 진실을 알게 된다. 그러나 그 순간, 대주교 오르비스가 직접 나타나 세리아를 빼앗아 간다.",
+      "objectives": [
+        "눈보라 협곡 횡단 (체온 게이지 시스템)",
+        "얼음 기사의 영혼 7명 위로하기 (서브)",
+        "백야 수도원 진입",
+        "칼리온과 대화 / 결투",
+        "수도원 최심부 '얼음 성소' 도달",
+        "가렛의 영혼과 재회",
+        "보스: 대주교 오르비스 (1차, 패배 이벤트)"
+      ],
+      "scenes": [
+        {
+          "id": "ch5_01",
+          "location": "눈보라 협곡",
+          "trigger": "enter_istland",
+          "dialogue": [
+            {"speaker": "leon", "emotion": "serious", "text": "……여기가 아버지가 마지막으로 온 곳."},
+            {"speaker": "seria", "emotion": "sad", "text": "얼음 속에… 사람들이 있어요. 갑옷을 입은 사람들이."},
+            {"speaker": "rowen", "emotion": "serious", "text": "등불 기사단 문장이다. 검은 원정의 기사들이 그대로 얼어붙은 거야. 20년 넘게."},
+            {"speaker": "frozen_knight_soul", "text": "……춥다…… 단장님…… 부단장님…… 아직…… 불이……"},
+            {"speaker": "leon", "emotion": "determined", "text": "……걱정 마세요. 등불 기사단은 아직 안 꺼졌습니다. 제가 왔으니까요."}
+          ]
+        },
+        {
+          "id": "ch5_02",
+          "location": "백야 수도원 정문",
+          "trigger": "meet_kalion_2",
+          "dialogue": [
+            {"speaker": "kalion", "text": "결국 여기까지 왔나."},
+            {"speaker": "rowen", "emotion": "serious", "text": "형. 이번엔 도망치지 마."},
+            {"speaker": "kalion", "text": "…진실을 알았겠지. 별이 영혼을 먹고, 오르비스가 그 영혼을 가로챈다는 것을."},
+            {"speaker": "kalion", "text": "나는 남은 별 베르나를 부순다. 그러면 오르비스는 권능을 얻지 못하고, 천 년간 갇혀 있던 영혼들도 풀려난다."},
+            {"speaker": "leon", "emotion": "angry", "text": "그러면 네하스의 봉인이 풀리잖아! 그리고 베르나를 부순다는 건… 세리아를 죽인다는 거야!"},
+            {"speaker": "kalion", "text": "알고 있다. 그래서 내가 마왕이 되기로 한 거다. 누군가는 그 죄를 짊어져야 하니까."},
+            {"speaker": "seria", "emotion": "determined", "text": "……칼리온 씨. 저를 죽이는 게 정말 영혼들을 구하는 길인가요? 아니면 그 길밖에 생각하지 못한 건가요?"},
+            {"speaker": "kalion", "text": "……"},
+            {"speaker": "kalion", "text": "가렛도 그런 말을 했었지. '다른 길이 반드시 있다'고. 그리고 이 수도원 안에서 혼자 남았다."},
+            {"speaker": "kalion", "text": "따라와라. 가렛이 너에게 남긴 것이 있다."}
+          ]
+        },
+        {
+          "id": "ch5_03",
+          "location": "얼음 성소",
+          "trigger": "meet_garret",
+          "dialogue": [
+            {"speaker": "narration", "text": "거대한 얼음 기둥 속, 검을 땅에 꽂은 채 서 있는 기사가 있었다. 그의 망토는 레온의 것과 같았다."},
+            {"speaker": "leon", "emotion": "hurt", "text": "……아버지."},
+            {"speaker": "garret", "text": "……레온이냐. 많이 컸구나. 목소리가 굵어졌어."},
+            {"speaker": "leon", "emotion": "hurt", "text": "왜… 왜 안 돌아왔어요. 어머니랑 나는 매일 밤 불을 켜고 기다렸는데……!"},
+            {"speaker": "garret", "text": "알고 있다. 이 얼음 속에서도 그 불빛은 보였단다. 매일 밤, 아주 멀리서."},
+            {"speaker": "garret", "text": "미안하다. 나는 여기서 교단의 성기사들을 막아야 했다. 칼리온과 동료들이 진실을 가지고 도망칠 시간을 벌어야 했으니까."},
+            {"speaker": "garret", "text": "그리고 너에게 하르의 불씨를 물려줬다. 하르는 영혼을 먹지 않고 스스로 빛났던 유일한 별이었다. 그래서 교단이 기록에서 지웠지."},
+            {"speaker": "garret", "text": "레온. 하르의 불은 '빼앗는 불'이 아니라 '나누는 불'이다. 그 불이라면… 다른 길을 만들 수 있을지도 모른다."},
+            {"speaker": "leon", "emotion": "determined", "text": "……알겠어요. 아버지가 못 한 거, 제가 할게요."},
+            {"speaker": "garret", "text": "아니. 내가 못 한 게 아니라, 네가 할 일이다. 너의 불을 들어라, 등불 기사 레온 하르벤."},
+            {"speaker": "system", "text": "레온의 칭호가 '등불 기사'로 바뀌었습니다. 궁극기 [하르의 등불]의 봉인이 일부 해제되었습니다."}
+          ]
+        },
+        {
+          "id": "ch5_04",
+          "location": "얼음 성소",
+          "trigger": "brothers",
+          "dialogue": [
+            {"speaker": "kalion", "text": "로웬. 그날 고아원에 가지 못한 건… 내가 그곳의 정체를 알았기 때문이다."},
+            {"speaker": "kalion", "text": "나는 교단에 순종하는 척하며 실험 기록을 빼돌렸고, 그걸 미끼로 너를 탈출시킬 경비 교대 시간을 알아냈다. 그날 밤 뒷문이 열려 있었던 거, 기억하나?"},
+            {"speaker": "rowen", "emotion": "surprised", "text": "……그 문을, 형이."},
+            {"speaker": "kalion", "text": "너를 직접 데리러 갔다면 우리 둘 다 잡혔을 거다. 그 뒤로 나는 교단의 감시를 받았고, 검은 원정으로 보내졌지."},
+            {"speaker": "rowen", "emotion": "hurt", "text": "……바보 같은 형. 그럼 말을 했어야지. 12년 동안, 나는……!"},
+            {"speaker": "kalion", "text": "미안하다는 말로는 아무것도 돌려줄 수 없겠지."},
+            {"speaker": "rowen", "emotion": "hurt", "text": "……돌려받을 생각 없어. 대신 살아서 갚아. 마왕 놀이 같은 거 집어치우고."}
+          ]
+        },
+        {
+          "id": "ch5_05",
+          "location": "얼음 성소",
+          "trigger": "orbis_appears",
+          "dialogue": [
+            {"speaker": "orbis", "text": "아름다운 재회로구나. 눈물이 날 것 같군."},
+            {"speaker": "kalion", "text": "오르비스……!"},
+            {"speaker": "orbis", "text": "칼리온, 20년간 수고했다. 네가 별들을 습격해 준 덕에 내가 손을 더럽히지 않고도 백성들의 분노를 너에게 돌릴 수 있었지."},
+            {"speaker": "orbis", "text": "그리고 새벽의 아이야. 이리 오너라. 두려워 말거라. 별이 되는 것은 영광이란다."},
+            {"speaker": "seria", "emotion": "determined", "text": "……싫어요. 저는 당신의 연료가 되지 않을 거예요."},
+            {"speaker": "orbis", "text": "선택권이 있다고 생각하느냐? 귀엽구나."},
+            {"speaker": "system", "text": "BOSS - 대주교 오르비스"}
+          ]
+        },
+        {
+          "id": "ch5_06",
+          "location": "얼음 성소",
+          "trigger": "boss_post_forced_loss",
+          "dialogue": [
+            {"speaker": "narration", "text": "오르비스의 몸에서 수만 개의 영혼이 비명처럼 쏟아져 나왔다. 일행은 그 압도적인 힘 앞에 무릎을 꿇었다."},
+            {"speaker": "orbis", "text": "천 년! 천 년 동안 우리는 별에게 아이들을 먹여왔다. 그런데도 나를 괴물이라 부르느냐!"},
+            {"speaker": "orbis", "text": "신들은 지쳤다. 이제 인간이 하늘을 맡을 차례다. 아르케아의 계단에서 새로운 신의 탄생을 지켜보거라."},
+            {"speaker": "seria", "emotion": "hurt", "text": "레온 씨……!"},
+            {"speaker": "leon", "emotion": "hurt", "text": "세리아!! 세리아아——!!"},
+            {"speaker": "narration", "text": "빛의 기둥이 하늘을 꿰뚫고, 세리아와 오르비스는 사라졌다."},
+            {"speaker": "narration", "text": "그날 밤, 마지막 별 베르나가 처음으로 붉게 물들었다."}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_orbis_1",
+        "name": "대주교 오르비스",
+        "level": 70,
+        "hp": 99999,
+        "element": "영혼",
+        "weakness": [],
+        "forced_loss": true,
+        "forced_loss_condition": "3턴 경과",
+        "patterns": ["영혼의 홍수 (전체 즉사급 대미지, 연출상 1 HP 남김)"],
+        "drop": []
+      },
+      "rewards": {"exp": 15000, "gold": 0, "items": ["shard_else", "item_garret_badge"]},
+      "party_after": ["leon", "rowen", "kalion"]
+    },
+
+    {
+      "id": "chapter_6",
+      "number": 6,
+      "title": "제6장",
+      "subtitle": "아르케아의 계단",
+      "region": "arkea_stairs",
+      "synopsis": "세리아를 잃은 일행은 로엔포트로 돌아온다. 레온은 등대의 불이 여덟 번째 별 하르의 파편이라는 진실을 알게 되고, 지금까지 모은 성편과 하르의 불로 하늘로 향하는 길을 연다. 칼리온과 로웬, (조건에 따라) 사비네와 백은의 창, 브란트와 기사단 견습들, 피피와 실피드, 카르잔의 상인들까지. 레온이 여정 중 만난 사람들이 각자의 불을 들고 모여든다. 떨어진 별들의 잔해로 이루어진 하늘섬을 오르며, 일행은 여섯 별의 기억과 마주한다.",
+      "objectives": [
+        "로엔포트로 귀환, 어머니와 대화",
+        "등대의 비밀 방 조사",
+        "동료들 소집 (서브 결과에 따라 지원군 변화)",
+        "하르의 불로 성편 6개 점화 → 하늘길 개방",
+        "여섯 별의 시련 (각 속성 던전)",
+        "보스: 별을 삼킨 자 - 오르비스의 그림자 6체",
+        "계단 정상 '새벽의 문' 도달"
+      ],
+      "scenes": [
+        {
+          "id": "ch6_01",
+          "location": "하르벤가 집",
+          "trigger": "return_home",
+          "dialogue": [
+            {"speaker": "marta", "text": "레온…! 너, 이 상처는…"},
+            {"speaker": "leon", "emotion": "hurt", "text": "어머니. 아버지를 만났어요. …그리고 지켜야 할 사람을, 지키지 못했어요."},
+            {"speaker": "marta", "text": "……그래. 그 사람, 뭐라고 하든?"},
+            {"speaker": "leon", "emotion": "sad", "text": "매일 밤, 등대 불빛이 보였대요. 얼음 속에서도."},
+            {"speaker": "marta", "text": "…그럼 됐다. 그거면 됐어. 이십 년 동안 불을 켠 보람이 있구나."},
+            {"speaker": "marta", "text": "레온, 등대 맨 아래 잠긴 방이 있지. 네 아버지가 '레온이 진짜 기사가 되면 열어주라'고 남긴 열쇠다."},
+            {"speaker": "system", "text": "[등대 지하실 열쇠]를 획득했습니다."}
+          ]
+        },
+        {
+          "id": "ch6_02",
+          "location": "등대 지하 성소",
+          "trigger": "lighthouse_secret",
+          "dialogue": [
+            {"speaker": "narration", "text": "등대 지하. 300년 동안 타오른 불꽃의 뿌리에, 별 모양의 결정이 박혀 있었다."},
+            {"speaker": "kalion", "text": "……이건 성편이다. 그것도 지금까지 본 어떤 것보다 크고, 오래된."},
+            {"speaker": "rowen", "emotion": "surprised", "text": "영혼을 태우는 기척이 없어. 스스로 타고 있다고? 그런 건 불가능할 텐데."},
+            {"speaker": "leon", "emotion": "serious", "text": "하르. 사람들의 영혼을 먹지 않고, 스스로 빛났던 여덟 번째 별."},
+            {"speaker": "hal_voice", "text": "……기다렸다, 불지기의 아이여."},
+            {"speaker": "hal_voice", "text": "나는 빛을 나누는 별이었다. 사람들의 영혼을 먹는 대신, 사람들이 서로에게 나눈 마음의 온기로 빛났지. 그것이 교단에게는 위협이었다. 사람들이 서로를 믿으면, 신은 필요 없어지니까."},
+            {"speaker": "hal_voice", "text": "너의 불은 나의 마지막 불씨다. 그리고 너는 이미 많은 불을 모아왔다. 너와 함께 걸었던 이들의 불을."},
+            {"speaker": "leon", "emotion": "determined", "text": "……그럼 그 불로, 하늘까지 길을 놓을 수 있어?"},
+            {"speaker": "hal_voice", "text": "네가 믿는다면."}
+          ]
+        },
+        {
+          "id": "ch6_03",
+          "location": "로엔포트 절벽",
+          "trigger": "rally",
+          "dialogue": [
+            {"speaker": "brandt", "text": "늦어서 미안하다, 레온 기사. 이 늙은이도 마지막 불 한번 들어보려고 견습 꼬맹이들 끌고 왔다."},
+            {"speaker": "pipi", "text": "레온! 여왕님이 실피드 모두를 깨워줬어! 하늘 길은 우리가 바람으로 받쳐줄게!"},
+            {"speaker": "merchant_yusuf", "text": "로웬 선생! 카르잔 평의회에서 보급품 실어 왔소! 외상이오, 외상! 꼭 살아서 갚으시오!"},
+            {"speaker": "sabine", "condition": "sabine_ally OR sabine_messenger", "text": "백은의 창 중 진실을 믿는 자 마흔 명. 지금부터 너의 지휘를 따르겠다, 하르벤."},
+            {"speaker": "rowen", "emotion": "smirk", "text": "…하. 이게 다 네가 여기저기 오지랖 부린 결과라는 거지?"},
+            {"speaker": "kalion", "text": "가렛도 이랬다. 그 녀석 주변에는 늘 사람이 모였지."},
+            {"speaker": "leon", "emotion": "determined", "text": "다들… 고마워요. 그럼 가자. 세리아를 데리러."},
+            {"speaker": "leon", "emotion": "determined", "text": "별이 없는 밤에도, 우리가 불을 든다!"},
+            {"speaker": "all", "text": "우리가 불을 든다!!"},
+            {"speaker": "narration", "text": "수백 개의 등불이 절벽 위에서 일제히 타올랐다. 그 빛이 성편들과 공명하며, 하늘을 향해 빛의 계단을 그려냈다."}
+          ]
+        },
+        {
+          "id": "ch6_04",
+          "location": "아르케아의 계단 - 별의 기억",
+          "trigger": "star_memories",
+          "dialogue": [
+            {"speaker": "igna_memory", "text": "나는 불의 별 이그나. 천 년간 타올랐다. 내가 태운 것이 누구였는지, 나는 하나하나 기억한다."},
+            {"speaker": "talas_memory", "text": "나는 물의 별 탈라스. 나는 울 수가 없었다. 내 눈물조차 그들의 것이었으니."},
+            {"speaker": "morwen_memory", "text": "나는 숲의 별 모르웬. 리네아에게 고맙다고 전해주렴."},
+            {"speaker": "saira_memory", "text": "나는 바람의 별 사이라. 쉬고 싶었어. 정말로, 쉬고 싶었어."},
+            {"speaker": "kurd_memory", "text": "나는 대지의 별 쿠르드. 무거웠다. 세계도, 영혼들도."},
+            {"speaker": "else_memory", "text": "나는 서리의 별 엘세. 얼음 속의 기사들을 지켜봤다. 그들의 불은 끝까지 꺼지지 않더구나."},
+            {"speaker": "all_stars", "text": "등불의 아이야. 우리의 막내를, 베르나를…… 부탁한다."}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_orbis_shadows",
+        "name": "별을 삼킨 자 - 오르비스의 그림자",
+        "level": 55,
+        "hp": 18000,
+        "count": 6,
+        "element": "각 별의 속성 (반전)",
+        "weakness": ["각 그림자마다 다름"],
+        "patterns": ["각 층마다 하나씩 등장. 해당 층의 성편을 점화하면 약화."],
+        "drop": ["accessory_star_memory x6"]
+      },
+      "rewards": {"exp": 30000, "gold": 10000, "items": ["weapon_hal_lantern", "armor_lantern_knight_plate"]}
+    },
+
+    {
+      "id": "chapter_7",
+      "number": 7,
+      "title": "최종장",
+      "subtitle": "새벽이 오는 곳",
+      "region": "abyss",
+      "synopsis": "새벽의 문 너머, 오르비스는 세리아를 제단에 묶고 베르나를 떨어뜨리는 의식을 진행하고 있다. 일행은 오르비스와의 최종 결전에 돌입한다. 로웬의 흡혼 해방이 오르비스가 품은 영혼들을 풀어내고, 레온의 하르의 불이 그 영혼들을 별이 아닌 '집'으로 돌려보낸다. 그러나 오르비스가 쓰러진 순간 베르나는 끝내 떨어지고, 봉인이 풀린 네하스가 깨어난다. 공허의 심연에서, 세리아는 마지막 선택을 한다.",
+      "objectives": [
+        "새벽의 제단 도달",
+        "보스: 대주교 오르비스 → 성좌의 찬탈자 → 거짓 별 오르비스",
+        "공허의 심연으로 추락",
+        "보스: 공허의 신 네하스",
+        "엔딩 분기"
+      ],
+      "scenes": [
+        {
+          "id": "ch7_01",
+          "location": "새벽의 제단",
+          "trigger": "final_altar",
+          "dialogue": [
+            {"speaker": "orbis", "text": "왔구나, 불지기. 늦었다. 베르나의 빛은 이제 이 아이의 심장 하나에 매달려 있을 뿐이다."},
+            {"speaker": "seria", "emotion": "hurt", "text": "레온… 씨……"},
+            {"speaker": "leon", "emotion": "angry", "text": "세리아에게서 떨어져, 오르비스!"},
+            {"speaker": "orbis", "text": "너희는 이해하지 못한다. 천 년간 별은 영혼을 먹었고, 사람들은 그것을 몰랐기에 행복했다. 나는 그 고리를 끊고 영원한 질서를 세우려는 것이다. 내가 유일한 별이 되어, 모든 영혼을 영원히 품겠다."},
+            {"speaker": "rowen", "emotion": "angry", "text": "품는다고? 네 몸에 갇혀서 비명 지르는 저 영혼들이 안 들리냐? 나한텐 들려. 이 팔이 똑같은 비명을 12년 동안 내 귀에 속삭였으니까!"},
+            {"speaker": "kalion", "text": "오르비스. 등불 기사단의 이름으로, 20년 전 끝내지 못한 일을 끝내러 왔다."},
+            {"speaker": "orbis", "text": "좋다. 그렇다면 모두 나의 빛이 되어라!"},
+            {"speaker": "system", "text": "FINAL BOSS - 대주교 오르비스"}
+          ]
+        },
+        {
+          "id": "ch7_02",
+          "location": "새벽의 제단",
+          "trigger": "orbis_phase3",
+          "dialogue": [
+            {"speaker": "rowen", "emotion": "determined", "text": "레온! 내가 놈의 각인을 열게. 쏟아져 나오는 영혼들을, 네 불로 받아줘!"},
+            {"speaker": "leon", "emotion": "surprised", "text": "그러다 네 팔이……!"},
+            {"speaker": "rowen", "emotion": "smirk", "text": "착한 일은 공짜가 아니라고 했잖아. …이번엔 내가 값을 치를 차례야."},
+            {"speaker": "kalion", "text": "로웬, 내가 버텨주마. 이번엔 형이 문을 열어줄 차례다."},
+            {"speaker": "system", "text": "로웬의 [흡혼 해방]이 활성화되었습니다. 오르비스의 방어가 해제됩니다."}
+          ]
+        },
+        {
+          "id": "ch7_03",
+          "location": "새벽의 제단",
+          "trigger": "orbis_defeated",
+          "dialogue": [
+            {"speaker": "orbis", "text": "어째서…… 영혼들이…… 나를…… 떠나……"},
+            {"speaker": "leon", "emotion": "serious", "text": "영혼은 누군가의 연료가 아니야. 다들 돌아갈 집이 있어."},
+            {"speaker": "narration", "text": "하르의 불이 수십만의 영혼을 감싸 안았다. 영혼들은 별이 아닌, 그들이 사랑했던 땅 위로 반딧불처럼 흩어져 내려갔다."},
+            {"speaker": "orbis", "text": "……나도…… 그저…… 사라지기 싫었을 뿐이었다……"},
+            {"speaker": "narration", "text": "오르비스의 몸이 빛의 재가 되어 흩어졌다. 그리고 그 순간——"},
+            {"speaker": "seria", "emotion": "hurt", "text": "……아. 베르나가……"},
+            {"speaker": "narration", "text": "하늘에 남은 마지막 별이, 소리 없이 떨어졌다."},
+            {"speaker": "nehas", "text": "……이제야…… 조용해지는구나……"}
+          ]
+        },
+        {
+          "id": "ch7_04",
+          "location": "공허의 심연",
+          "trigger": "abyss",
+          "dialogue": [
+            {"speaker": "nehas", "text": "……쉬고 싶지 않니? 빛나는 것은 모두 지친다. 별도, 사람도, 너희도."},
+            {"speaker": "nehas", "text": "나는 그 피로다. 모든 것이 끝나기를 바라는, 세계의 한숨이다."},
+            {"speaker": "seria", "emotion": "determined", "text": "……알아요. 별님들도 지쳐 있었어요. 저도 무서웠어요. 차라리 아무것도 몰랐으면 했어요."},
+            {"speaker": "seria", "emotion": "smile", "text": "그래도요. 바다 끝에 뭐가 있는지 아직 못 봤어요. 레온 씨가 만든 버섯 스튜도 한 그릇 더 먹고 싶어요."},
+            {"speaker": "seria", "emotion": "determined", "text": "그러니까 끝낼 수 없어요. 지쳐도, 무서워도… 저는 계속 빛나고 싶어요!"},
+            {"speaker": "leon", "emotion": "determined", "text": "혼자 빛날 필요 없어, 세리아. 우리가 불을 나눠줄게."},
+            {"speaker": "system", "text": "TRUE FINAL BOSS - 공허의 신 네하스"}
+          ]
+        }
+      ],
+      "boss": {
+        "id": "boss_final",
+        "phases": [
+          {"name": "대주교 오르비스", "level": 60, "hp": 40000, "element": "영혼", "patterns": ["성광의 심판", "영혼 흡수 (아군 MP 흡수)", "신도 소환"]},
+          {"name": "성좌의 찬탈자", "level": 62, "hp": 55000, "element": "칠성", "patterns": ["일곱 속성을 턴마다 순환", "성좌 낙하 (전체 공격)", "약점 속성이 턴마다 바뀜"]},
+          {"name": "거짓 별 오르비스", "level": 65, "hp": 70000, "element": "영혼", "patterns": ["로웬의 흡혼 해방 전까지 모든 대미지 90% 감소", "영혼의 비명 (전체 혼란)", "최후의 빛 (5턴 카운트다운 전멸기)"]},
+          {"name": "공허의 신 네하스", "level": 70, "hp": 120000, "element": "공허", "weakness": ["하르(빛)"], "patterns": ["망각 (아군 1명의 스킬 1개 봉인)", "무(無)의 파도 (전체 HP 50% 감소)", "속삭임 (매 턴 랜덤 아군 수면)", "동료들의 등불: 6장 소집한 지원군 수에 따라 매 턴 아군 버프"]}
+        ],
+        "drop": []
+      },
+      "rewards": {"exp": 0, "gold": 0, "items": []}
+    }
+  ],
+
+  "endings": [
+    {
+      "id": "ending_true",
+      "name": "새벽의 별, 하르",
+      "condition": "사비네 동료화(sabine_ally) + 얼음 기사 영혼 7명 위로 완료 + 6장 지원군 전원 소집 + 로웬·칼리온 친밀도 일정 이상",
+      "summary": "세리아는 베르나의 힘을 받아들이되, 영혼을 먹는 대신 레온의 하르의 불을 나누어 받아 새로운 별이 된다. 그것은 사람들이 서로 나누는 마음으로 빛나는 별이다. 네하스는 다시 잠들지만 이번엔 봉인이 아니라 '안식'이다. 1년 뒤, 하늘에는 단 하나의 새로운 별이 떠 있고, 로엔포트 등대 위에서 레온은 그 별을 바라본다. 그리고 등 뒤에서 들려오는 목소리. '레온 씨, 바다 끝에 뭐가 있는지 보러 가요.' 별은 하늘과 지상을 오갈 수 있게 된 것이다.",
+      "epilogue_dialogue": [
+        {"speaker": "narration", "text": "왕국력 1214년, 봄."},
+        {"speaker": "narration", "text": "교단은 해체되었다. 사비네와 백은의 창은 등불 기사단에 합류했고, 브란트는 다시 견습들을 가르친다."},
+        {"speaker": "narration", "text": "카르잔에서는 로웬이라는 연금술사가 무료 진료소를 열었다는 소문이 돈다. 물론 본인은 '사업'이라고 우긴다. 그 옆에는 흑검 대신 장작을 패는 덩치 큰 형이 있다."},
+        {"speaker": "narration", "text": "잿빛 숲에는 3년 만에 첫 새싹이 돋았다."},
+        {"speaker": "leon", "emotion": "smile", "text": "새로운 별이 떴는데, 아직도 이름이 없네."},
+        {"speaker": "seria", "emotion": "smile", "text": "지어주세요, 레온 씨. 제 이름이니까요."},
+        {"speaker": "leon", "emotion": "smile", "text": "……'등불'. 별이 없는 밤에도 우리가 들었던 불이니까."},
+        {"speaker": "seria", "emotion": "smile", "text": "좋아요. 그럼 가요! 바다 끝으로!"},
+        {"speaker": "narration", "text": "— 별이 지는 해 : 레비안 연대기 — 끝"}
+      ]
+    },
+    {
+      "id": "ending_normal",
+      "name": "마지막 새벽",
+      "condition": "진 엔딩 조건 미충족",
+      "summary": "세리아는 혼자 베르나의 빛을 짊어지고 하늘로 올라가 네하스를 다시 봉인한다. 영혼을 먹지 않는 별이 되었지만, 그녀는 더 이상 지상에 내려올 수 없다. 레온은 매일 밤 등대의 불을 켜고 하늘의 별에게 말을 건다. 별은 대답하지 않지만, 언제나 그 자리에서 깜빡인다.",
+      "epilogue_dialogue": [
+        {"speaker": "leon", "emotion": "sad", "text": "세리아. 오늘은 바다가 잔잔했어. 바다 끝에 뭐가 있는지는… 아직 모르겠어."},
+        {"speaker": "leon", "emotion": "smile", "text": "그래도 언젠가 보러 갈 거야. 그리고 와서 다 말해줄게."},
+        {"speaker": "narration", "text": "별이 한 번, 반짝였다."},
+        {"speaker": "narration", "text": "— 별이 지는 해 : 레비안 연대기 — 끝"}
+      ]
+    },
+    {
+      "id": "ending_bad",
+      "name": "고요한 세계",
+      "condition": "네하스전 패배 후 '포기한다' 선택",
+      "summary": "모든 빛이 꺼진다. 네하스의 품 안에서 세계는 아무 고통도, 아무 기억도 없는 영원한 고요에 잠긴다. 마지막까지 꺼지지 않은 것은 로엔포트 등대의 작은 불 하나였다.",
+      "epilogue_dialogue": [
+        {"speaker": "nehas", "text": "……쉬렴. 이제 아무도 지치지 않아도 돼."},
+        {"speaker": "narration", "text": "어딘가에서, 아주 작은 불씨가 깜빡였다."},
+        {"speaker": "system", "text": "다시 불을 들겠습니까? [최종장 시작 지점에서 재시작]"}
+      ]
+    }
+  ],
+
+  "npc_dialogues": {
+    "roenport": {
+      "town_name": "로엔포트",
+      "npcs": [
+        {
+          "id": "marta",
+          "name": "마르타",
+          "role": "레온의 어머니",
+          "location": "하르벤가 집",
+          "sprite": "npc_marta",
+          "dialogues": {
+            "prologue": ["등대 불은 내가 볼 테니, 넌 좀 자거라.", "네 아버지 망토, 또 꿰매야겠구나. 어디서 굴렀니?"],
+            "chapter_1": ["신전 엘다 할머니께 이 빵 좀 갖다 드리렴.", "세리아라는 아이? 착하고 조용한 아이지. 한 번도 신전 밖으로 나온 걸 본 적이 없구나."],
+            "chapter_6": ["다녀오렴. 그리고 꼭 돌아와. 이번엔 기다리는 게 너무 길지 않았으면 좋겠구나.", "스프는 데워 둘게. 세 그릇… 아니, 네 그릇 데워 둘게."]
+          }
+        },
+        {
+          "id": "innkeeper_bram",
+          "name": "브람",
+          "role": "여관 '취한 갈매기' 주인",
+          "location": "여관",
+          "sprite": "npc_innkeeper",
+          "shop": "inn",
+          "dialogues": {
+            "default": ["어서 와! 하룻밤 30골드, 생선 스튜 포함!", "요즘 생선 맛이 좀 이상하다고? …저 연금술사가 뭐라 하던데, 쉿."],
+            "chapter_1": ["그 연금술사 놈, 결국 해독제를 마을 우물에 몰래 풀었더라고. 공짜로. 말이랑 행동이 다른 녀석이야."],
+            "chapter_6": ["돈은 됐다! 오늘은 다 공짜야! 우리 마을 기사님이 하늘로 간다는데!"]
+          }
+        },
+        {
+          "id": "villager_tom",
+          "name": "톰",
+          "role": "어부",
+          "location": "선착장",
+          "sprite": "npc_fisherman",
+          "dialogues": {
+            "default": ["별이 떨어진 뒤로 물고기가 영 안 잡혀. 그물에 걸리는 건 이상한 까만 해파리뿐이야.", "레온, 네 아버지가 떠나기 전에 내 배를 고쳐줬었지. 손재주가 좋은 사람이었어."],
+            "chapter_6": ["하늘에 계단이 생겼다니! 우리 할아버지가 들었으면 기절초풍했을 거다!"]
+          }
+        },
+        {
+          "id": "kid_mina",
+          "name": "미나",
+          "role": "마을 아이",
+          "location": "광장",
+          "sprite": "npc_girl_child",
+          "dialogues": {
+            "default": ["레온 오빠! 기사 되면 나도 등에 태워줘!", "별이 다 떨어지면 밤이 깜깜해져? 그럼 나 무서워서 못 자."],
+            "chapter_6": ["오빠! 이거, 내가 만든 등불이야. 가져가! 하늘은 깜깜할 거 아니야."]
+          }
+        },
+        {
+          "id": "elda",
+          "name": "엘다",
+          "role": "새벽 신전 신관",
+          "location": "새벽 신전",
+          "sprite": "npc_elda",
+          "dialogues": {
+            "chapter_1": ["어서 오너라, 레온. 마르타는 잘 지내니?", "세리아와 말동무가 되어 주렴. 그 아이에게는 또래가 없단다.", "별을 너무 믿지 말거라. …신관인 내가 할 말은 아니지만."],
+            "chapter_6": ["(침대에 누운 채) ……세리아를… 데려와 다오… 그 아이의… 웃음소리가… 그립구나…"]
+          }
+        }
+      ]
+    },
+
+    "silvares": {
+      "town_name": "왕도 실바레스",
+      "npcs": [
+        {
+          "id": "brandt",
+          "name": "브란트",
+          "role": "등불 기사단 노기사",
+          "location": "기사단 옛 막사",
+          "sprite": "npc_old_knight",
+          "dialogues": {
+            "default": ["기사단 막사가 이 꼴이 된 지 20년이다. 그래도 매일 아침 검은 닦지.", "가렛과 칼리온은 기사단의 쌍둥이 별이었지. 하나는 등불, 하나는 칼날."],
+            "after_trial": ["견습 레온! 허리를 펴라! 기사는 쓰러져도 허리는 굽히지 않는다!", "검은 원정 이후로 나는 교단을 믿지 않았다. 증거가 없었을 뿐이지."],
+            "chapter_6": ["이 늙은 몸으로 하늘까지 갈 줄은 몰랐구나. 허허, 오래 살고 볼 일이다."]
+          }
+        },
+        {
+          "id": "refugee_child",
+          "name": "난민 아이 루크",
+          "role": "빈민가 아이",
+          "location": "재의 골목",
+          "sprite": "npc_boy_child",
+          "dialogues": {
+            "default": ["누나가 준 빵, 동생이랑 나눠 먹었어요. 고맙습니다!", "우리 고향은 숲 옆이었어요. 이제 다 잿빛이래요."],
+            "chapter_6": ["기사님! 나도 커서 등불 기사단 들어갈 거예요!"]
+          }
+        },
+        {
+          "id": "refugee_old",
+          "name": "늙은 난민 호레이스",
+          "role": "빈민가 노인",
+          "location": "재의 골목",
+          "sprite": "npc_old_man",
+          "dialogues": {
+            "default": ["헌금 낼 돈이 없으면 기도도 못 하는 세상이야. 별님도 돈을 밝히시나 보지.", "내 마누라는 작년에 죽었네. 교단 사람들이 영혼을 별로 보내준다며 시신을 가져갔지. …그 뒤로 별이 더 빨리 떨어지더군."]
+          }
+        },
+        {
+          "id": "priest_corvin",
+          "name": "사제 코빈",
+          "role": "대성당 하급 사제",
+          "location": "천궁 대성당",
+          "sprite": "npc_priest",
+          "dialogues": {
+            "default": ["별이 지는 것은 신앙이 부족하기 때문입니다. 헌금함은 저쪽입니다.", "대주교 성하께서는 사흘째 금식 기도 중이십니다. 참으로 성스러운 분이시지요."],
+            "chapter_4_after": ["…솔직히 말하면, 저도 의심이 듭니다. 봉헌실 안쪽엔 하급 사제는 들어갈 수 없거든요. 거기서 뭘 하는지 아무도 몰라요."]
+          }
+        },
+        {
+          "id": "guard_hans",
+          "name": "경비병 한스",
+          "role": "성문 경비병",
+          "location": "실바레스 정문",
+          "sprite": "npc_guard",
+          "dialogues": {
+            "default": ["통행증을 보여주시오. …없다고? 그럼 뒤로 물러서시오.", "은발 소녀 수배라니, 은발이 어디 한둘인가. 위에서 시키니 하는 거지 뭐."],
+            "bribe": ["…험험. 오늘따라 눈이 침침하군. 아무것도 못 봤소."]
+          }
+        },
+        {
+          "id": "weapon_smith_greta",
+          "name": "그레타",
+          "role": "대장장이",
+          "location": "장인 거리",
+          "sprite": "npc_smith",
+          "shop": "weapon",
+          "dialogues": {
+            "default": ["무기 사러 왔나? 교단 성기사들한테 납품하고 남은 거라 품질은 보장하지.", "그 망토… 등불 기사단? 아직도 남아 있었어? 우리 할아버지가 기사단 검을 만들었었는데."]
+          }
+        },
+        {
+          "id": "bard_lucio",
+          "name": "음유시인 루치오",
+          "role": "광장 음유시인",
+          "location": "중앙 광장",
+          "sprite": "npc_bard",
+          "dialogues": {
+            "default": ["♪ 일곱 별이 하늘에 걸렸네~ 하나 둘 떨어져 바다에 잠겼네~ ♪ 어때, 팁 좀?", "흑성 기사 칼리온의 노래를 들려줄까? 별을 벤 마왕의 노래! …교단 사람 없을 때만 부르는 버전도 있지."],
+            "chapter_6": ["♪ 별이 없는 밤에도, 등불을 든 기사가 있었네~ ♪ 새 노래야. 주인공이 누군지 알 것 같지?"]
+          }
+        }
+      ]
+    },
+
+    "morgwen": {
+      "town_name": "잿빛 숲 모르그웬",
+      "npcs": [
+        {
+          "id": "pipi",
+          "name": "피피",
+          "role": "실피드족 정찰병",
+          "location": "숲 전역",
+          "sprite": "npc_pipi",
+          "dialogues": {
+            "default": ["이쪽이야, 이쪽! 회색 나무 사이로 빛나는 이끼를 따라가!", "인간은 왜 그렇게 느려? 날개가 없어서 불편하지 않아?", "여왕님은 엄청 예쁘셔! 지금은 나무지만! 나무여도 예쁘셔!"],
+            "chapter_6": ["실피드 모두가 깨어났어! 숲이 다시 숨을 쉬기 시작했다고!"]
+          }
+        },
+        {
+          "id": "sleeping_sylph",
+          "name": "잠든 실피드",
+          "role": "나무 속에 잠든 요정",
+          "location": "정령의 샘 주변",
+          "sprite": "npc_sylph_tree",
+          "dialogues": {
+            "default": ["……zzZ……", "……여왕님…… 아직…… 봄이…… 아닌가요……"],
+            "after_purify": ["……따뜻해…… 고마워…… 인간…… 아니, 별의 아이……"]
+          }
+        },
+        {
+          "id": "hermit_oswin",
+          "name": "은둔자 오스윈",
+          "role": "숲의 약초꾼",
+          "location": "숲속 오두막",
+          "sprite": "npc_hermit",
+          "shop": "item",
+          "dialogues": {
+            "default": ["숲이 죽어도 나는 안 떠나. 40년을 여기서 살았으니까.", "잿빛 나무 껍질을 달이면 공허충 독에 듣는다네. 이 연금술사 친구라면 알겠지."]
+          }
+        }
+      ]
+    },
+
+    "karzan": {
+      "town_name": "사막 도시 카르잔",
+      "npcs": [
+        {
+          "id": "merchant_yusuf",
+          "name": "유수프",
+          "role": "대시장 상인",
+          "location": "대시장",
+          "sprite": "npc_merchant",
+          "shop": "general",
+          "dialogues": {
+            "default": ["카르잔에선 모든 게 거래요! 정보든, 물건이든, 비밀이든!", "교단? 여기선 교단도 손님일 뿐이오. 돈만 내면 말이지."],
+            "chapter_6": ["외상 장부에 '세계 구원 비용'이라고 적어 두었소. 이자는 안 받겠소!"]
+          }
+        },
+        {
+          "id": "zaid",
+          "name": "자이드",
+          "role": "별을 읽는 자",
+          "location": "자이드의 천막",
+          "sprite": "npc_zaid",
+          "dialogues": {
+            "default": ["별에도 숨소리가 있단다. 요즘 베르나의 숨은 아주 얕구나.", "아스탈 왕조는 별과 너무 많은 이야기를 나눴지. 그래서 하룻밤 사이에 사라졌다. 진실을 너무 많이 알아버렸거든."],
+            "chapter_4_after": ["새벽의 아이야. 네가 무엇으로 태어났든, 무엇이 될지는 네가 정하는 것이다.", "하르… 그 이름을 다시 듣게 될 줄이야. 내 스승의 스승도 그 별은 전설이라 했는데."]
+          }
+        },
+        {
+          "id": "hasim",
+          "name": "하심 알 무라드",
+          "role": "상인 평의회 의장",
+          "location": "평의회 궁전",
+          "sprite": "npc_council",
+          "dialogues": {
+            "default": ["통행증? 물론 줄 수 있지. 대신 투기장에서 우리 평의회 선수로 뛰어주게.", "세상이 끝나면 돈도 쓸모없지. 그러니 나는 세상이 끝나지 않는 쪽에 걸겠네."]
+          }
+        },
+        {
+          "id": "arena_master",
+          "name": "투기장 관리인 다르",
+          "role": "투기장 주인",
+          "location": "모래 투기장",
+          "sprite": "npc_arena",
+          "dialogues": {
+            "default": ["도전자인가? 5연승하면 상금 5000골드! 죽어도 책임은 안 지지!", "흑성 기사? 몇 년 전에 여기서 10연승 하고 상금도 안 받고 가버린 녀석이 있었지. 이상한 녀석이었어."]
+          }
+        },
+        {
+          "id": "dancer_leila",
+          "name": "무희 레일라",
+          "role": "주점 무희",
+          "location": "주점 '별 없는 밤'",
+          "sprite": "npc_dancer",
+          "dialogues": {
+            "default": ["어머, 귀여운 기사님. 춤 한 곡 어때요?", "저 회색 눈 연금술사, 매번 혼자 와서 꿀술만 마시고 가요. 단 걸 엄청 좋아하더라고요. 비밀이래요."]
+          }
+        }
+      ]
+    },
+
+    "istland": {
+      "town_name": "북부 설원 이스트란드",
+      "npcs": [
+        {
+          "id": "frozen_knight_soul",
+          "name": "얼음 기사의 영혼",
+          "role": "검은 원정의 희생자 (7명)",
+          "location": "눈보라 협곡 각지",
+          "sprite": "npc_ghost_knight",
+          "dialogues": {
+            "default": ["……춥다…… 불을…… 불을 다오……", "……집에…… 딸이…… 생일이었는데……", "……단장님…… 우리는…… 옳은 일을 한 겁니까……"],
+            "after_comfort": ["……따뜻하다…… 등불 기사단은…… 아직 있구나…… 고맙다, 후배……", "……이제…… 집에 갈 수 있겠어……"]
+          }
+        },
+        {
+          "id": "monk_ivar",
+          "name": "수도사 이바르",
+          "role": "백야 수도원 최후의 생존자",
+          "location": "수도원 지하 서고",
+          "sprite": "npc_monk",
+          "dialogues": {
+            "default": ["우리는 단지 별의 기록을 연구했을 뿐이오. 그것이 이단이라면, 진실이 이단이겠지.", "가렛 경은 우리를 지키기 위해 혼자 남았소. 그분의 검이 꽂힌 자리는 20년째 얼지 않았다오."]
+          }
+        },
+        {
+          "id": "black_star_member",
+          "name": "흑성단원 미라",
+          "role": "칼리온의 부하",
+          "location": "수도원 정문 캠프",
+          "sprite": "npc_black_star",
+          "dialogues": {
+            "default": ["단장님은 마왕이 아니야. 세상 모든 욕을 혼자 먹고 계실 뿐이지.", "우리 흑성단은 모두 검은 원정 생존자의 가족이야. 진실을 묻는 대가로 이름을 잃은 사람들."]
+          }
+        }
+      ]
+    },
+
+    "arkea_stairs": {
+      "town_name": "아르케아의 계단",
+      "npcs": [
+        {
+          "id": "star_spirit",
+          "name": "떠도는 별의 파편",
+          "role": "세이브 포인트 / 회복 지점",
+          "location": "각 층 휴식처",
+          "sprite": "npc_star_wisp",
+          "dialogues": {
+            "default": ["……쉬어가렴. 여기는 아직 빛이 남아 있어.", "……네 불은 따뜻하구나. 영혼을 태우지 않는 불이라니, 천 년 만이야."]
+          }
+        },
+        {
+          "id": "lost_soul",
+          "name": "길 잃은 영혼",
+          "role": "오르비스에게서 흘러나온 영혼",
+          "location": "계단 곳곳",
+          "sprite": "npc_soul",
+          "dialogues": {
+            "default": ["……여긴 어디지? 나는 분명 별로 올라간다고 들었는데……", "……엄마…… 엄마 어딨어……"],
+            "after_ending": ["……이제 알겠어. 돌아갈 곳이 있었구나."]
+          }
+        }
+      ]
+    }
+  },
+
+  "party_banter": [
+    {"id": "banter_01", "trigger": "walk_silvares", "lines": [
+      {"speaker": "seria", "text": "로웬 씨, 그 약병들은 다 뭐예요?"},
+      {"speaker": "rowen", "text": "빨간 건 회복약, 파란 건 해독제, 초록은 폭탄, 노란 건… 묻지 마."},
+      {"speaker": "leon", "text": "노란 거 뭔데?"},
+      {"speaker": "rowen", "text": "묻지 말라고 했지."}
+    ]},
+    {"id": "banter_02", "trigger": "walk_morgwen", "lines": [
+      {"speaker": "pipi", "text": "레온, 너 세리아 좋아하지?"},
+      {"speaker": "leon", "text": "뭐, 뭐어?! 갑자기 무슨 소리야!"},
+      {"speaker": "pipi", "text": "요정은 다 알아. 귀가 빨개지는 냄새가 나거든!"},
+      {"speaker": "rowen", "text": "귀가 빨개지는 냄새라는 게 뭐야. …근데 맞는 말이네."}
+    ]},
+    {"id": "banter_03", "trigger": "walk_karzan", "lines": [
+      {"speaker": "seria", "text": "사막은 바다랑 닮았어요. 끝이 안 보이는 것도, 바람이 노래하는 것도."},
+      {"speaker": "leon", "text": "그럼 바다 끝 다음엔 사막 끝도 보러 가야겠네."},
+      {"speaker": "seria", "text": "약속이에요!"}
+    ]},
+    {"id": "banter_04", "trigger": "walk_istland", "lines": [
+      {"speaker": "kalion", "text": "……로웬. 아직도 단 걸 좋아하나."},
+      {"speaker": "rowen", "text": "……좋아하는 거 아니라니까."},
+      {"speaker": "kalion", "text": "어릴 때 내 꿀과자를 몰래 다 먹고 울었던 것도 기억한다."},
+      {"speaker": "rowen", "text": "그 얘기 한 번만 더 하면 폭탄 던진다, 형."}
+    ]},
+    {"id": "banter_05", "trigger": "walk_arkea", "lines": [
+      {"speaker": "leon", "text": "로웬, 칼리온. 끝나면 다들 뭐 할 거야?"},
+      {"speaker": "rowen", "text": "…가게나 하나 차릴까. 약방. 돈 많이 받는 약방."},
+      {"speaker": "kalion", "text": "나는 장작이나 패며 살고 싶군. 검은 이제 지긋지긋하다."},
+      {"speaker": "leon", "text": "그럼 나는 등대 지키면서, 세리아랑 바다 끝 보러 갈래."},
+      {"speaker": "rowen", "text": "……그러려면 살아서 돌아가야지. 다들."}
+    ]}
+  ],
+
+  "side_quests": [
+    {
+      "id": "sq_lantern_trial",
+      "name": "등불 기사단 견습 시험",
+      "chapter": "chapter_2",
+      "giver": "brandt",
+      "steps": ["검의 시험: 허수아비 기사 3체 연속 격파", "등불의 시험: 지하 수로 미로에서 꺼진 등불 5개 밝히기", "맹세의 시험: 브란트의 질문에 답하기"],
+      "reward": {"exp": 800, "items": ["weapon_lantern_squire_sword"], "title": "등불 기사단 견습"}
+    },
+    {
+      "id": "sq_bread_for_slum",
+      "name": "재의 골목에 빵을",
+      "chapter": "chapter_2",
+      "giver": "refugee_child",
+      "steps": ["빵 10개 구매하기", "빈민가 아이들에게 나눠주기"],
+      "reward": {"exp": 300, "karma": 10, "items": ["accessory_child_drawing"]}
+    },
+    {
+      "id": "sq_sylph_awaken",
+      "name": "잠든 숲의 노래",
+      "chapter": "chapter_3",
+      "giver": "pipi",
+      "steps": ["잠든 실피드 10명에게 세리아의 [정화] 사용"],
+      "reward": {"exp": 1500, "items": ["accessory_sylph_wing"], "flag": "sylph_support"}
+    },
+    {
+      "id": "sq_arena",
+      "name": "모래 투기장의 전설",
+      "chapter": "chapter_4",
+      "giver": "arena_master",
+      "steps": ["1~5연전 승리", "숨겨진 6전: 가면의 투사 (정체: 젊은 시절 칼리온의 갑옷을 입은 환영)"],
+      "reward": {"gold": 5000, "items": ["weapon_desert_fang"]}
+    },
+    {
+      "id": "sq_frozen_souls",
+      "name": "얼음 속의 일곱 등불",
+      "chapter": "chapter_5",
+      "giver": "frozen_knight_soul",
+      "steps": ["설원 각지에 흩어진 얼음 기사의 영혼 7명 찾기", "각 영혼의 유품을 찾아 돌려주기"],
+      "reward": {"exp": 5000, "items": ["armor_frost_knight_cape"], "flag": "frozen_souls_comforted"}
+    },
+    {
+      "id": "sq_rowen_sweets",
+      "name": "연금술사의 비밀",
+      "chapter": "chapter_4",
+      "giver": "dancer_leila",
+      "steps": ["카르잔 최고의 꿀과자 '사막의 별' 구하기", "로웬에게 몰래 건네기"],
+      "reward": {"exp": 500, "affinity": {"rowen": 20}, "items": ["item_honey_bomb"]}
+    }
+  ],
+
+  "system_messages": {
+    "game_over": "불이 꺼졌습니다…… 다시 불을 들겠습니까?",
+    "save": "별빛에 기억을 새겼습니다.",
+    "load": "새겨진 기억을 불러옵니다.",
+    "level_up": "{name}의 불꽃이 더 밝아졌다! (Lv.{level})",
+    "item_get": "[{item}]을(를) 손에 넣었다.",
+    "shard_get": "성편이 공명한다… [{shard}]을(를) 획득했다!",
+    "not_enough_gold": "골드가 부족합니다.",
+    "inn_rest": "따뜻한 밤을 보냈다. 모두의 HP와 MP가 회복되었다."
+  }
+}

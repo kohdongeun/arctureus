@@ -82,6 +82,7 @@ class GameState:
         self.pos = None
         self.dir = "se"
         self.battles_won = 0
+        self.playtime = 0.0       # 초 (세이브 슬롯에 표시)
 
     def member(self, cid):
         return next(c for c in self.party if c.id == cid)

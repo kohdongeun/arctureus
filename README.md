@@ -23,6 +23,9 @@ python main.py
   상태이상(화상·정지·실명·도발·방어↑·약점노출), 루크 증기압 게이지(MAX 시 1.5배 → 다음 턴 과열), 보스 폭주 패턴
 - **이펙트**: 가산 합성 파티클·링·빔·빛기둥·시계 정지 등 스킬별 연출, 대미지 숫자, 피격 흔들림
 - **성장**: 경험치, 레벨업(능력치 상승·스킬 습득 표시), 결과 화면
+- **세이브/로드**: 필드 메뉴(X) → 저장 (슬롯 3개, 덮어쓰기 확인), 타이틀 → 이어하기.
+  저장 위치: Windows `%APPDATA%\\Arcturus_RPG\\saves`, macOS `~/Library/Application Support/Arcturus_RPG/saves`,
+  Linux `~/.local/share/Arcturus_RPG/saves` (`ARCTURUS_SAVE_DIR` 로 변경 가능)
 - **사운드**: 직접 작곡·합성한 BGM 4곡(마을/배수로/전투/승리, `.mid` 동봉)과 효과음 21종
 
 ## 폴더

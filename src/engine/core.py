@@ -139,6 +139,8 @@ class Game:
     def tick(self, dt):
         self.time += dt
         self.frame += 1
+        if self.state is not None:
+            self.state.playtime += dt
         if self.fade:
             if not self.fade.update(dt):
                 self.fade = None

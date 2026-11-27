@@ -12,6 +12,7 @@ import collections
 import os
 import random
 import sys
+import tempfile
 import time
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
@@ -27,7 +28,9 @@ from src.scenes.battle import BattleScene  # noqa: E402
 from src.scenes.dialogue import Dialogue  # noqa: E402
 from src.scenes.field import FieldScene, KEY_DIR  # noqa: E402
 from src.scenes.menu import MenuScene  # noqa: E402
+from src.scenes.saveload import SaveLoadScene  # noqa: E402
 from src.scenes.title import TitleScene  # noqa: E402
+from src.systems import save as saves  # noqa: E402
 
 DT = 1 / 60
 DIR_KEY = {v: k for k, v in KEY_DIR.items()}
@@ -51,7 +54,7 @@ class Pilot:
             self.levelups.append(data["levelups"])
         if ev == "action" and data.get("kind") == "skill":
             self.skills_used[data["skill"]] += 1
-        if ev in ("map_enter", "encounter", "victory", "defeat", "battle_end", "talk"):
+        if ev in ("map_enter", "encounter", "victory", "defeat", "battle_end", "talk", "save", "load"):
             self.log.append(f"[{self.frame / 60:6.1f}s] {ev} {data}")
 
     def shot(self, name):
@@ -292,6 +295,7 @@ class Pilot:
         # --- 보스
         for c in self.g.state.party:          # 보스 전 정비 (여관 대신)
             c.full_heal()
+        yield from self.save_via_menu(0, "save_slot_empty")
         # 보스 트리거(x>=22)까지 전진. 가는 길의 랜덤 전투는 먼저 처리한다.
         for _ in range(60):
             if isinstance(self.scene, Dialogue):
@@ -318,25 +322,58 @@ class Pilot:
             yield from self.advance_dialogue({0: "boss_post_dialogue"})
         yield from self.frames(20)
         self.shot("ending_field")
+        yield from self.save_via_menu(0, "save_overwrite", overwrite=True)
+        self.snapshot = snapshot(self.g.state)
+
+    # ---------------------------------------------------------------- 세이브 / 로드
+    def save_via_menu(self, slot, shot_name, overwrite=False):
+        """필드 메뉴(X) → 저장 → 슬롯 선택 → (덮어쓰기 확인) → 저장"""
+        yield from self.until(lambda: isinstance(self.scene, FieldScene) and not self.g.fade
+                              and not self.field().player.moving, 300)
+        yield from self.press("cancel")
+        yield from self.until(lambda: isinstance(self.scene, MenuScene), 60)
+        for _ in range(3):
+            yield from self.press("down", 2)
+        yield from self.press("confirm")
+        yield from self.until(lambda: isinstance(self.scene, SaveLoadScene), 60)
+        for _ in range(slot):
+            yield from self.press("down", 2)
+        before = self.events["save"]
+        yield from self.press("confirm", 3)
+        if overwrite:
+            assert self.scene.confirm, "덮어쓰기 확인 창이 뜨지 않음"
+            self.shot(shot_name + "_confirm")
+            yield from self.press("confirm", 3)
+        assert self.events["save"] == before + 1, "저장 이벤트가 발생하지 않음"
+        self.shot(shot_name)
+        yield from self.until(lambda: isinstance(self.scene, MenuScene), 200)   # 완료 메시지 자동 닫힘
+        yield from self.press("cancel")
+        yield from self.until(lambda: isinstance(self.scene, FieldScene), 60)
+
+    def script_load(self):
+        """새로 띄운 게임: 타이틀 → 이어하기 → 가장 최근 슬롯 불러오기"""
+        yield from self.frames(30)
+        title = self.scene
+        assert title.menu.items[1][1], "세이브가 있는데 '이어하기'가 비활성"
+        assert title.menu.index == 1, "세이브가 있으면 커서가 '이어하기'에 있어야 함"
+        self.shot("title_continue")
+        yield from self.press("confirm")
+        yield from self.until(lambda: isinstance(self.scene, SaveLoadScene), 60)
+        yield from self.frames(5)
+        self.shot("load_slots")
+        yield from self.press("confirm")
+        yield from self.until(lambda: isinstance(self.scene, FieldScene) and not self.g.fade, 300)
+        yield from self.frames(30)
+        self.shot("loaded_field")
 
 
-def main():
-    shots = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else os.path.join(ROOT, "saves", "autotest")
-    seed = int(sys.argv[sys.argv.index("--seed") + 1]) if "--seed" in sys.argv else 3
-    random.seed(seed)
-    os.makedirs(shots, exist_ok=True)
-    pygame.mixer.pre_init(22050, -16, 1, 512)
-    pygame.init()
-    try:
-        pygame.mixer.init(22050, -16, 1, 512)
-    except pygame.error:
-        pass
-    game = Game(headless=True)
-    game.push(TitleScene(game))
-    pilot = Pilot(game, shots)
-    script = pilot.script()
-    t0 = time.time()
-    error = None
+def snapshot(st):
+    d = saves.to_dict(st)
+    d.pop("playtime"), d.pop("saved_at")
+    return d
+
+
+def run(game, pilot, script, limit=60 * 60 * 20):
     try:
         while game.running:
             game.input.begin_frame()
@@ -347,20 +384,56 @@ def main():
                 break
             game.tick(DT)
             pilot.frame += 1
-            if pilot.frame > 60 * 60 * 20:
-                raise TimeoutError("20분(게임 시간) 초과")
+            if pilot.frame > limit:
+                raise TimeoutError("게임 시간 제한 초과")
     except Exception as e:  # noqa: BLE001
         import traceback
         traceback.print_exc()
-        error = e
         pilot.shot("error")
+        return e
+    return None
 
+
+def main():
+    shots = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else os.path.join(ROOT, "saves", "autotest")
+    seed = int(sys.argv[sys.argv.index("--seed") + 1]) if "--seed" in sys.argv else 3
+    random.seed(seed)
+    os.makedirs(shots, exist_ok=True)
+    os.environ["ARCTURUS_SAVE_DIR"] = tempfile.mkdtemp(prefix="arcturus_saves_")   # 실제 세이브를 건드리지 않음
+    pygame.mixer.pre_init(22050, -16, 1, 512)
+    pygame.init()
+    try:
+        pygame.mixer.init(22050, -16, 1, 512)
+    except pygame.error:
+        pass
+    t0 = time.time()
+
+    # 1부: 새 게임 → 보스까지 플레이 (도중 저장, 보스 후 덮어쓰기 저장)
+    game = Game(headless=True)
+    game.push(TitleScene(game))
+    pilot = Pilot(game, shots)
+    pilot.snapshot = None
+    error = run(game, pilot, pilot.script())
     st = game.state
-    print("\n".join(pilot.log))
-    print(f"\n게임 시간 {pilot.frame / 60:.0f}초 / 실제 {time.time() - t0:.0f}초, 오디오 {'켜짐' if game.audio.enabled else '꺼짐'}")
+    saved_play = st.playtime if st else 0
+
+    # 2부: 게임을 새로 띄워 타이틀 → 이어하기 → 불러오기
+    game2 = Game(headless=True)
+    game2.push(TitleScene(game2))
+    pilot2 = Pilot(game2, shots)
+    pilot2.shot_names = pilot.shot_names        # 스크린샷 번호 이어서
+    error2 = None if error else run(game2, pilot2, pilot2.script_load(), 60 * 60)
+    loaded = snapshot(game2.state) if game2.state else None
+    diff = {k: (pilot.snapshot.get(k), loaded.get(k)) for k in pilot.snapshot if pilot.snapshot.get(k) != loaded.get(k)} \
+        if (pilot.snapshot and loaded) else {"state": "없음"}
+    files = sorted(os.listdir(os.environ["ARCTURUS_SAVE_DIR"]))
+
+    print("\n".join(pilot.log + pilot2.log))
+    print(f"\n게임 시간 {(pilot.frame + pilot2.frame) / 60:.0f}초 / 실제 {time.time() - t0:.0f}초, 오디오 {'켜짐' if game.audio.enabled else '꺼짐'}")
     if st:
         print("파티:", ", ".join(f"{c.name} Lv{c.level} HP{c.hp}/{c.max_hp}" for c in st.party))
     print("사용한 스킬:", dict(pilot.skills_used))
+    print("세이브 파일:", files, "/ 불러온 뒤 달라진 값:", diff or "없음")
     checks = {
         "타이틀→필드 진입": pilot.events["map_enter"] >= 1,
         "대화창 열림(일러스트/NPC)": pilot.events["dialogue_open"] >= 3,
@@ -372,7 +445,11 @@ def main():
         "전투 승리": pilot.events["victory"] >= 1,
         "레벨업": bool(pilot.levelups),
         "보스 격파": bool(st and "boss_rusted_claw_defeated" in st.flags),
-        "오류 없음": error is None,
+        "저장(빈 슬롯 + 덮어쓰기)": pilot.events["save"] == 2 and files == ["slot1.sav"],
+        "이어하기로 불러오기": pilot2.events["load"] == 1 and isinstance(game2.scene, FieldScene),
+        "불러온 상태 = 저장한 상태": not diff,
+        "플레이 시간 복원": bool(game2.state) and abs(game2.state.playtime - saved_play) < 5,
+        "오류 없음": error is None and error2 is None,
     }
     for k, v in checks.items():
         print(f"  [{'OK' if v else 'FAIL'}] {k}")

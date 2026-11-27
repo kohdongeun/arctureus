@@ -1,0 +1,20 @@
+{
+  "_note": "3D 필드용 SD(3~3.5등신) 전신 캐릭터 생성 프롬프트. 이미지 생성 도구에 style + description 을 이어 붙여 1024x1024 로 생성하고, assets_src/characters/field/<id>.png 로 저장한 뒤 python tools/art/prepare_field_chars.py 를 실행한다.",
+  "style": "2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "negative": "background scenery, floor, shadow on background, text, watermark, multiple characters, cropped feet",
+  "size": [1024, 1024],
+  "characters": {
+    "luke": {"name": "루크 애쉬포드", "role": "주인공", "description": "19-year-old boy steam knight, messy auburn hair, brass goggles on forehead, soot smudge on cheek, old knight breastplate with brass steam-piston pauldrons, copper-orange jacket, dark trousers, brown boots, large piston greatsword strapped on his back, confident smile, three-quarter view facing right"},
+    "iris": {"name": "아이리스", "role": "주인공", "description": "17-year-old girl resonance mage, shoulder-length platinum blonde hair, teal eyes, small brass clockwork gear hair ornament, white research coat with cyan trim over a faded teal cloak with ancient patterns, teal skirt, white stockings, holding a tuning-fork staff, curious gentle expression, three-quarter view facing right"},
+    "zed": {"name": "제드 레이븐홀트", "role": "주인공", "description": "27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, three-quarter view facing right"},
+    "cecil": {"name": "세실 노블", "role": "라이벌", "description": "19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, three-quarter view facing left"},
+    "balthazar": {"name": "발타자르 그림웰", "role": "최종 적대자", "description": "58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, three-quarter view facing left"},
+    "morgan": {"name": "마담 모르간", "role": "NPC", "description": "64-year-old cheerful old woman mechanic, grey hair in a bun, leather apron over brown work clothes, brass peg leg, big wrench on her shoulder, hearty grin, three-quarter view facing left"},
+    "elwin": {"name": "엘윈", "role": "NPC", "description": "young elf scout, short blonde hair, long pointed ears, green hooded tunic, brown leggings, quiver of arrows on back, energetic expression, three-quarter view facing left"},
+    "silvaen": {"name": "대드루이드 실바엔", "role": "NPC", "description": "ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, three-quarter view facing left"},
+    "torbin": {"name": "강철왕 토르빈", "role": "NPC", "description": "stout dwarf king blacksmith, huge braided red beard, iron crown, leather smith apron over chainmail, giant forge hammer, laughing expression, three-quarter view facing left"},
+    "lina": {"name": "리나 레이븐홀트", "role": "NPC", "description": "little girl with long black hair, simple white dress, holding a small brass music box, absent dreamy expression, three-quarter view facing left"},
+    "mirel": {"name": "기억을 잃은 엘프", "role": "NPC", "description": "pale faded elf girl, grey hood and grey tunic, long pointed ears, faint orange glowing eyes, ghostly melancholy expression, three-quarter view facing left"},
+    "b7": {"name": "버려진 채굴 로봇 B-7", "role": "NPC", "description": "cute rusty boxy mining robot, single round cyan glowing eye, small antenna with red light, brass and rust-orange body, piston legs, three-quarter view facing left"}
+  }
+}

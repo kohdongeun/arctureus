@@ -23,6 +23,11 @@ python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NP
 - 항상 카메라를 바라보는 빌보드 캐릭터 + 발밑 그림자, 동료 2명이 발자취를 따라 걸음, 카메라 회전 시 앞/뒷모습 자동 전환
 - 반투명 양피지 대화창 + 우측 하단 대형 스탠딩 일러스트(감정별, 인물이 바뀌면 슬라이드 인), 맵 이름 배너
 - 맵 정의: `data/maps3d/*.json`, 그래픽: `python tools/art/gen_hd_chars.py`, `python tools/art/gen_textures3d.py`
+- **SD 캐릭터 일러스트 교체**: `data/art_prompts/field_chars.json` 의 프롬프트로 1024x1024 흰 배경 이미지를 생성해
+  `assets_src/characters/field/<id>.png` 에 넣고 `python tools/art/prepare_field_chars.py` 실행
+  (rembg `isnet-anime` 모델로 누끼 → 흰 테두리 색 복원 → 다리 사이 같은 배경 구멍 제거 → 여백 자르기 →
+  `assets/characters/field/<id>.png`). 이미지가 있는 캐릭터는 자동으로 전신 일러스트 빌보드로, 없는 캐릭터는 기존 시트 스프라이트로 표시된다.
+  도구 설치: `pip install "rembg[cpu]"` (게임 실행에는 필요 없음)
 - 자동 촬영 테스트: `python main3d.py --shots 폴더` (화면 없는 리눅스에서는 `xvfb-run -a` 로 실행)
 - 조명은 `src3d/shaders.py` 의 자체 셰이더(방향광·환경광·안개). ursina 기본 그림자 셰이더는 일부 드라이버에서 크래시가 나서 쓰지 않는다.
 

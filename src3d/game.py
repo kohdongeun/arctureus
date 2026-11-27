@@ -184,8 +184,20 @@ class World:
 ROW = {"se": 0, "sw": 1, "ne": 2, "nw": 3}
 
 
+FIELD_DIR = os.environ.get("ARCTURUS_FIELD_DIR") or os.path.join(ROOT, "assets", "characters", "field")
+
+
+def field_manifest():
+    try:
+        with open(os.path.join(FIELD_DIR, "manifest.json"), encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
 class Actor:
-    HEIGHT = 2.3
+    HEIGHT = 1.85                 # 참고 스크린샷 비율: 나무(수관 지름 4~6) 대비 아담한 3~3.5등신
+    _manifest = None
 
     def __init__(self, world, sprite, x, z, facing="se", name=""):
         self.world = world
@@ -194,24 +206,57 @@ class Actor:
         self.face_dir = None          # 월드 기준 바라보는 방향 (카메라가 돌면 스프라이트 방향도 다시 계산)
         self.cam_yaw = 0.0
         self.anim = 0.0
+        self.t = random.uniform(0, 6)
         self.moving = False
         self.name = name
-        self.shadow = Entity(model="quad", texture=tex("textures3d/shadow.png"), rotation_x=90, scale=(1.3, 0.8),
-                             color=color.rgba(1, 1, 1, 0.9), shader=unlit_shader)
-        self.shadow.setTransparency(TransparencyAttrib.MAlpha)
-        self.shadow.hide(0b0001)
-        self.body = Entity(model="quad", texture=tex(f"sprites3d/{sprite}.png", mipmap=False), billboard=True,
-                           origin_y=-0.5, scale=(self.HEIGHT * 0.64, self.HEIGHT), texture_scale=(0.25, 0.25),
-                           shader=unlit_shader)
+        if Actor._manifest is None:
+            Actor._manifest = field_manifest()
+        info = Actor._manifest.get(sprite, {})
+        self.h = self.HEIGHT * info.get("height_scale", 1.0)
+        path = os.path.join(FIELD_DIR, sprite + ".png")
+        self.single = os.path.exists(path)
+        if self.single:
+            # 생성한 SD 전신 일러스트 한 장 (tools/art/prepare_field_chars.py 결과)
+            t = Texture(path)
+            t.filtering = "mipmap"
+            self.native = info.get("faces", "front")
+            self.w = self.h * t.width / t.height
+            self.body = Entity(model="quad", texture=t, billboard=True, origin_y=-0.5, scale=(self.w, self.h),
+                               double_sided=True, shader=unlit_shader)
+        else:
+            # 아직 일러스트가 없으면 4방향 시트 스프라이트
+            self.w = self.h * 0.64
+            self.body = Entity(model="quad", texture=tex(f"sprites3d/{sprite}.png", mipmap=False), billboard=True,
+                               origin_y=-0.5, scale=(self.w, self.h), texture_scale=(0.25, 0.25), shader=unlit_shader)
         self.body.setTransparency(TransparencyAttrib.MDual)
         self.body.hide(0b0001)
+        # 발밑 반투명 원형 그림자
+        sw = max(0.9, self.w * (0.72 if self.single else 0.95))
+        self.shadow = Entity(model="quad", texture=tex("textures3d/shadow.png"), rotation_x=90, scale=(sw, sw * 0.55),
+                             color=color.rgba(1, 1, 1, 0.62), shader=unlit_shader)
+        self.shadow.setTransparency(TransparencyAttrib.MAlpha)
+        self.shadow.hide(0b0001)
         self.sync()
 
-    def sync(self):
+    def sync(self, dt=0.0):
+        self.t += dt
         if self.face_dir:
             self._pick_row(*self.face_dir)
         y = self.world.h(self.x, self.z)
         self.shadow.position = (self.x, y + 0.04, self.z)
+        if self.single:
+            left = self.facing in ("sw", "nw")
+            flip = left != (self.native == "left") if self.native != "front" else left
+            if self.moving:
+                ph = self.anim * math.pi / 2
+                bob = abs(math.sin(ph)) * 0.07 * self.h
+                sq = 1 + 0.035 * math.sin(ph * 2)
+            else:
+                bob, sq = 0.0, 1 + 0.012 * math.sin(self.t * 2.4)      # 숨쉬기
+            self.body.scale = (-self.w if flip else self.w, self.h * sq)
+            self.body.position = (self.x, y - 0.03 + bob, self.z)
+            self.shadow.scale_x = self.shadow.scale_y / 0.55 * (1 - bob / self.h)
+            return
         self.body.position = (self.x, y - 0.05, self.z)
         frame = int(self.anim) % 4 if self.moving else 0
         row = ROW[self.facing]
@@ -239,7 +284,7 @@ class Actor:
         if self.moving:
             self.face_vector(vx, vz, cam_yaw)
             self.anim += dt * speed * 1.6
-        self.sync()
+        self.sync(dt)
 
 
 # ====================================================================== 대화 UI
@@ -525,7 +570,7 @@ class Game:
         near = self.nearest_npc()
         self.bubble.enabled = bool(near) and not self.dialogue.active
         if near:
-            self.bubble.position = (near.x, self.world.h(near.x, near.z) + Actor.HEIGHT + 0.55 + math.sin(self.clock * 4) * 0.08,
+            self.bubble.position = (near.x, self.world.h(near.x, near.z) + near.h + 0.55 + math.sin(self.clock * 4) * 0.08,
                                     near.z)
         self.update_camera(dt)
 

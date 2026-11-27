@@ -28,11 +28,11 @@
   "why": "흰테두리 18%, 잘림 3, 차지 56%"
  },
  "balthazar": {
-  "seed": 8440,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, old man, 1boy, male, gold-rimmed round glasses, upper body on plain white background, no circle, no ring, no frame, no border, no medallion, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8642,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, old man, 1boy, male, gold-rimmed round glasses, waist-up, simple flat light grey studio backdrop, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": -1.0,
-  "why": "인물 없음"
+  "score": 0.02,
+  "why": "흰테두리 2%, 잘림 0, 차지 41%"
  },
  "morgan": {
   "seed": 8351,
@@ -49,11 +49,11 @@
   "why": "흰테두리 0%, 잘림 0, 차지 30%"
  },
  "silvaen": {
-  "seed": 8471,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, plain pure white background, no forest, no leaves frame, no scenery, no circle, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8671,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, waist-up, simple flat light grey studio backdrop, ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": -1.17,
-  "why": "흰테두리 43%, 잘림 2, 차지 74%"
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 41%"
  },
  "torbin": {
   "seed": 8381,

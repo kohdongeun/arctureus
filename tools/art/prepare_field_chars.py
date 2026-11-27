@@ -103,12 +103,14 @@ def trim(img: Image.Image, pad=2) -> Image.Image:
     return img.crop((max(0, l - pad), max(0, t - pad), min(img.width, r + pad), min(img.height, b + pad)))
 
 
-def process(cid, method, src_dir, dst_dir):
+def process(cid, method, src_dir, dst_dir, crop_bottom=0.0):
     path = next((os.path.join(src_dir, cid + ext) for ext in (".png", ".jpg", ".jpeg", ".webp")
                  if os.path.exists(os.path.join(src_dir, cid + ext))), None)
     if not path:
         return None
     img = Image.open(path).convert("RGB")
+    if crop_bottom > 0:      # 반신 초상화: 아래쪽 워터마크 띠를 통째로 잘라낸다 (몸과 붙어 있어도 확실히 제거)
+        img = img.crop((0, 0, img.width, int(img.height * (1 - crop_bottom))))
     rgb = np.asarray(img, np.float32)
     a = mask_rembg(img) if method == "rembg" else mask_white(img)
     out = trim(Image.fromarray(refine(rgb, a), "RGBA"))
@@ -125,9 +127,11 @@ def main():
     ap.add_argument("--method", choices=["rembg", "white"], default="rembg")
     ap.add_argument("--src", default=SRC)
     ap.add_argument("--out", default=DST)
+    ap.add_argument("--crop-bottom", type=float, default=0.0, help="원본 아래쪽을 이 비율만큼 잘라냄 (초상화 0.06)")
     a = ap.parse_args()
     with open(PROMPTS, encoding="utf-8") as f:
-        chars = json.load(f)["characters"]
+        P = json.load(f)
+        chars = {**P["characters"], **P.get("monsters", {})}
     ids = a.ids or list(chars)
     man_path = os.path.join(a.out, "manifest.json")
     manifest = {}
@@ -136,7 +140,7 @@ def main():
             manifest = json.load(f)
     done, missing = [], []
     for cid in ids:
-        size = process(cid, a.method, a.src, a.out)
+        size = process(cid, a.method, a.src, a.out, a.crop_bottom)
         if size is None:
             missing.append(cid)
             continue

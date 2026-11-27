@@ -1,0 +1,51 @@
+{
+  "luke": {
+    "size": [
+      694,
+      712
+    ],
+    "faces": "right"
+  },
+  "iris": {
+    "size": [
+      566,
+      692
+    ],
+    "faces": "right"
+  },
+  "elwin": {
+    "size": [
+      442,
+      667
+    ],
+    "faces": "left"
+  },
+  "lina": {
+    "size": [
+      577,
+      716
+    ],
+    "faces": "left"
+  },
+  "mirel": {
+    "size": [
+      438,
+      688
+    ],
+    "faces": "left"
+  },
+  "morgan": {
+    "size": [
+      460,
+      699
+    ],
+    "faces": "left"
+  },
+  "torbin": {
+    "size": [
+      722,
+      702
+    ],
+    "faces": "left"
+  }
+}

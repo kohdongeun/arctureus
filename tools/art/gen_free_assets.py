@@ -2,6 +2,7 @@
 
     python tools/art/gen_free_assets.py field [id ...]      → assets_src/characters/field/<id>.png
     python tools/art/gen_free_assets.py portrait [id ...]   → assets_src/characters/portrait/<id>.png
+    python tools/art/gen_free_assets.py monster [id ...]    → assets_src/monsters/<id>.png
     python tools/art/gen_free_assets.py prompts             → 무료 웹 AI 에 직접 붙여 넣을 프롬프트 목록 출력
 
 - 유료 엔드포인트(gen.pollinations.ai)는 쓰지 않는다.
@@ -31,7 +32,12 @@ NEG_HINT = "isolated on plain white, simple background, no scenery, no shapes be
 HEROES = ("luke", "iris", "zed")
 
 
-def prompt_for(kind, desc):
+def prompt_for(kind, desc, hint=""):
+    if kind == "monster":
+        return (f"anime style, 2000s JRPG battle monster sprite, {desc}, full body entirely visible, centered, "
+                f"clean dark lineart, cel shading, dramatic colors, single monster only, {NEG_HINT}")
+    if hint and kind == "portrait":
+        desc = f"{hint}, {desc}"
     desc = desc.replace(", three-quarter view facing right", "").replace(", three-quarter view facing left", "")
     if kind == "field":
         return (f"{KEYWORDS}, cute chibi, big head small body, 3 heads tall, SD anime character, {desc}, "
@@ -92,7 +98,7 @@ def main():
     kind = sys.argv[1]
     with open(PROMPTS, encoding="utf-8") as f:
         P = json.load(f)
-    chars = P["characters"]
+    chars = P["monsters"] if kind == "monster" else P["characters"]
     if kind == "prompts":
         for k in ("field", "portrait"):
             print(f"\n## {k}  (파일명: assets_src/characters/{k}/<id>.png, 1024x1024, 흰 배경)")
@@ -100,15 +106,15 @@ def main():
                 print(f"- {cid}.png  [{c['name']}]\n  {prompt_for(k, c['description'])}")
         return
     names = sys.argv[2:] or [c for c in chars if not (kind == "field" and c in HEROES)]
-    out_dir = os.path.join(ROOT, "assets_src", "characters", kind)
+    out_dir = os.path.join(ROOT, "assets_src", "monsters" if kind == "monster" else "characters/" + kind)
     os.makedirs(out_dir, exist_ok=True)
     log_path = os.path.join(out_dir, "generation_log.json")
     log = json.load(open(log_path, encoding="utf-8")) if os.path.exists(log_path) else {}
-    base = {"field": 7100, "portrait": 8300}[kind]
+    base = {"field": 7100, "portrait": 8300, "monster": 9100}[kind] + int(os.environ.get("SEED_SHIFT", "0"))
     for idx, cid in enumerate(chars):
         if cid not in names:
             continue
-        prompt = prompt_for(kind, chars[cid]["description"])
+        prompt = prompt_for(kind, chars[cid]["description"], chars[cid].get("portrait_hint", ""))
         best = None
         for cand in range(3):
             seed = base + idx * 10 + cand

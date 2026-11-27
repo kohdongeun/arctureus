@@ -1,0 +1,23 @@
+{
+  "luke": {
+    "size": [
+      369,
+      677
+    ],
+    "faces": "right"
+  },
+  "iris": {
+    "size": [
+      407,
+      704
+    ],
+    "faces": "right"
+  },
+  "zed": {
+    "size": [
+      395,
+      707
+    ],
+    "faces": "right"
+  }
+}

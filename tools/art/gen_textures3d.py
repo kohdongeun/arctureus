@@ -82,6 +82,14 @@ def terrain_texture(map_id, n=3072):
         blob(x + sun[0] * 0.6, z + sun[2] * 0.6, 1.4 * s, 0.35)
     for x, z, s, _ in sc["rock"]:
         blob(x + sun[0] * 0.6 * s, z + sun[2] * 0.6 * s, 1.5 * s, 0.4)
+    # 타일 텍스처용 분포 맵 (R: 흙길, G: 돌바닥, B: 그림자) → src3d/shaders.py terrain_shader
+    stone = np.zeros((n, n), np.float32)
+    for sx, sz, sr in m.get("stone_areas", []):
+        ds = np.hypot(wx - sx, wz - sz) - sr + (nz2 - 0.5) * 1.2
+        stone = np.maximum(stone, np.clip(0.5 - ds / 0.6, 0, 1))
+    splat = np.dstack([dirt_t * (1 - stone), stone, np.clip(ao / 0.55, 0, 1)]) * 255
+    Image.fromarray(splat.astype(np.uint8), "RGB").resize((1024, 1024), Image.BILINEAR).save(
+        os.path.join(TEX, f"terrain_{map_id}_splat.png"))
     img = img * (1 - ao[..., None])
     out = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8), "RGB")
     # 풀잎 획과 조약돌

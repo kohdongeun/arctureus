@@ -106,3 +106,47 @@ def _make(name, frag):
 
 lit_shader = _make("field_lit", _FRAG_LIT)
 unlit_shader = _make("field_unlit", _FRAG_UNLIT)
+
+
+# ---------------------------------------------------------------- 타일 텍스처 지형 (splat)
+# p3d_Texture0 = 분포 맵 (R: 흙길, G: 돌바닥, B: 구워 둔 그림자), 잔디/흙/돌 타일은 월드 좌표로 반복
+_FRAG_TERRAIN = """#version 130
+uniform sampler2D p3d_Texture0;
+uniform sampler2D grass_tex;
+uniform sampler2D dirt_tex;
+uniform sampler2D stone_tex;
+uniform float tile;
+uniform vec3 sun_dir;
+uniform vec3 sun_color;
+uniform vec3 ambient;
+uniform vec3 fog_color;
+uniform float fog_start;
+uniform float fog_end;
+uniform vec3 camera_world_position;
+in vec2 uv;
+in vec4 vcolor;
+in vec3 wpos;
+in vec3 wnormal;
+out vec4 frag;
+void main() {
+    vec4 sp = texture(p3d_Texture0, uv);
+    vec2 t = wpos.xz / tile;
+    // 같은 타일을 두 배율로 섞어 반복 무늬가 덜 보이게
+    vec3 g = mix(texture(grass_tex, t).rgb, texture(grass_tex, t * 0.37 + 0.21).rgb, 0.35);
+    vec3 d = mix(texture(dirt_tex, t).rgb, texture(dirt_tex, t * 0.41 + 0.6).rgb, 0.3);
+    vec3 s = texture(stone_tex, t * 0.8).rgb;
+    vec3 c = mix(g, d, sp.r);
+    c = mix(c, s, sp.g);
+    c *= 1.0 - sp.b * 0.55;
+    vec3 n = normalize(wnormal);
+    float lambert = max(dot(n, -sun_dir), 0.0);
+    c *= ambient * 0.95 + sun_color * lambert * 0.85;
+    float f = clamp((length(wpos - camera_world_position) - fog_start) / (fog_end - fog_start), 0.0, 1.0);
+    frag = vec4(mix(c, fog_color, f), 1.0);
+}
+"""
+
+terrain_shader = Shader(name="field_terrain", language=Shader.GLSL, vertex=_VERT, fragment=_FRAG_TERRAIN,
+                        default_input={"texture_scale": Vec2(1, 1), "texture_offset": Vec2(0, 0), "tile": 4.0,
+                                       "camera_world_position": Vec3(0, 0, 0), **LIGHT})
+terrain_shader.continuous_input["camera_world_position"] = _cam_pos

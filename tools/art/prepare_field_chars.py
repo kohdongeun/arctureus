@@ -11,7 +11,7 @@
     (설치: pip install "rembg[cpu]", 첫 실행 시 모델 176MB 자동 다운로드)
     --method white 를 주면 모델 없이 '테두리와 이어진 흰색' 을 지우는 방식만 사용
  2) 흰 배경이 반투명 경계에 섞여 생기는 흰 테두리 제거 (색 복원: c = (c - (1-a)·흰색) / a)
- 3) 몸에서 떨어져 나온 작은 얼룩 제거 (가장 큰 덩어리 기준 0.3% 미만 삭제)
+ 3) 몸에서 떨어져 나온 작은 얼룩 제거 (가장 큰 덩어리 기준 1.5% 미만 삭제)
  4) 알파 기준으로 여백을 딱 맞게 잘라냄 (패딩 2px)
 """
 from __future__ import annotations
@@ -50,13 +50,15 @@ def mask_white(img: Image.Image, tol=18.0) -> np.ndarray:
 
 def refine(rgb: np.ndarray, a: np.ndarray) -> np.ndarray:
     from scipy import ndimage
+    # 모델이 천·머리카락 안쪽을 반투명으로 판단해 배경이 비치는 것을 막는다 (가장자리 부드러움은 유지)
+    a = np.clip((a - 0.12) / 0.5, 0, 1)
     # 3) 떨어진 얼룩 제거
     solid = a > 0.5
     lab, n = ndimage.label(solid)
     if n > 1:
         sizes = ndimage.sum(solid, lab, range(1, n + 1))
         keep = np.zeros(n + 1, bool)
-        keep[1:] = sizes >= sizes.max() * 0.003
+        keep[1:] = sizes >= sizes.max() * 0.015        # 몸과 떨어진 작은 소품·얼룩 제거
         a = a * ndimage.binary_dilation(keep[lab], iterations=3)
     # 다리 사이·팔과 몸 사이처럼 몸에 둘러싸인 배경 구멍: 순백(≥252)이면서 일정 크기 이상인 덩어리는 배경
     # (눈 하이라이트처럼 작은 흰색, 음영이 들어간 흰 옷은 순백이 아니거나 작아서 남는다)
@@ -69,6 +71,12 @@ def refine(rgb: np.ndarray, a: np.ndarray) -> np.ndarray:
         holes[1:] = sizes >= min_area
         hole_mask = ndimage.binary_dilation(holes[lab], iterations=1)
         a = np.where(hole_mask, 0.0, a)
+    # 생성 API 워터마크: 오른쪽 아래 영역 안에 '통째로' 들어 있는 조각만 지운다 (캐릭터 발과 이어져 있으면 보존)
+    h, w = a.shape
+    lab, n = ndimage.label(a > 0.3)
+    for i, sl in enumerate(ndimage.find_objects(lab), start=1):
+        if sl and sl[0].start >= h * 0.86 and sl[1].start >= w * 0.55:
+            a = np.where(lab == i, 0.0, a)
     # 순수 흰 배경에 가까운 거의-투명 픽셀은 완전 투명으로
     whiteness = rgb.min(axis=2) / 255.0
     a = np.where((a < 0.08) | ((a < 0.5) & (whiteness > 0.97)), 0.0, a)

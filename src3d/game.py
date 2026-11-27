@@ -18,7 +18,7 @@ from ursina import (Cylinder, Entity, Mesh, Text, Texture, Ursina, Vec3, applica
                     held_keys, lerp, window)
 
 from src3d import terrain
-from src3d.shaders import LIGHT, lit_shader, unlit_shader
+from src3d.shaders import LIGHT, lit_shader, terrain_shader, unlit_shader
 
 ROOT = getattr(sys, "_MEIPASS", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 IMG = os.path.join(ROOT, "assets", "images")
@@ -32,7 +32,7 @@ _tex_cache = {}
 
 def tex(rel, mipmap=True):
     if rel not in _tex_cache:
-        t = Texture(os.path.join(IMG, rel))
+        t = Texture(rel if os.path.isabs(rel) else os.path.join(IMG, rel))
         t.filtering = "mipmap" if mipmap else "bilinear"
         _tex_cache[rel] = t
     return _tex_cache[rel]
@@ -86,8 +86,17 @@ class World:
                 a, b, c, d = j * w + i, j * w + i + 1, (j + 1) * w + i, (j + 1) * w + i + 1
                 tris += [a, b, c, b, d, c]      # 위에서 볼 때 앞면이 되도록 감김 방향 지정
         mesh = Mesh(vertices=verts, triangles=tris, uvs=uvs, normals=norms, static=True)
-        self.ground = Entity(model=mesh, texture=tex(f"textures3d/terrain_{self.m['id']}.jpg"),
-                             shader=lit_shader)
+        tiles = {k: f"textures3d/tile_{k}.jpg" for k in ("grass", "dirt", "stone")}
+        splat = f"textures3d/terrain_{self.m['id']}_splat.png"
+        if all(os.path.exists(os.path.join(IMG, v)) for v in list(tiles.values()) + [splat]):
+            # 잔디·흙길·돌바닥 타일 텍스처를 월드 좌표로 반복 + 분포 맵으로 섞기 (가까이서도 선명)
+            self.ground = Entity(model=mesh, texture=tex(splat), shader=terrain_shader)
+            for k, v in tiles.items():
+                self.ground.set_shader_input(f"{k}_tex", tex(v)._texture)
+            self.ground.set_shader_input("tile", 4.5)
+        else:
+            self.ground = Entity(model=mesh, texture=tex(f"textures3d/terrain_{self.m['id']}.jpg"),
+                                 shader=lit_shader)
 
     def build_trees(self):
         trunks = Entity()
@@ -185,6 +194,7 @@ ROW = {"se": 0, "sw": 1, "ne": 2, "nw": 3}
 
 
 FIELD_DIR = os.environ.get("ARCTURUS_FIELD_DIR") or os.path.join(ROOT, "assets", "characters", "field")
+PORTRAIT_DIR = os.path.join(ROOT, "assets", "characters", "portrait")
 
 
 def field_manifest():
@@ -332,10 +342,13 @@ class DialogueUI:
         art = g.standing_art(sid, line.get("emotion", "normal"))
         if art:
             t = tex(art)
-            h = 0.92
+            aspect = t.width / t.height
+            h = 0.92 if aspect < 0.62 else 0.8          # 반신 일러스트(가로가 넓음)는 조금 작게
+            w = h * aspect
+            self.art_x = min(0.6, 0.875 - w / 2)          # 화면 오른쪽 밖으로 잘리지 않게
             prev = self.art.texture
             self.art.texture = t
-            self.art.scale = (h * t.width / t.height, h)
+            self.art.scale = (w, h)
             self.art.enabled = True
             if prev is None or getattr(prev, "path", None) != t.path:
                 self.art_from = 0.0          # 다른 인물이면 슬라이드 인
@@ -370,7 +383,7 @@ class DialogueUI:
         self.next.y = -0.44 + abs(math.sin(self.t * 5)) * 0.008
         self.art_from = min(1.0, self.art_from + dt * 4)
         k = 1 - (1 - self.art_from) ** 3
-        self.art.x = 0.6 + (1 - k) * 0.12
+        self.art.x = getattr(self, "art_x", 0.6) + (1 - k) * 0.12
         self.art.alpha = k
 
 
@@ -468,6 +481,11 @@ class Game:
     def standing_art(self, sid, emotion):
         sprite = self.world.m.get("standing", {}).get(sid, sid)
         emotion = EMO_MAP.get(emotion, emotion)
+        # 1순위: 생성한 반신 일러스트 assets/characters/portrait/<id>[_<감정>].png
+        for name in (f"{sprite}_{emotion}.png", f"{sprite}.png"):
+            p = os.path.join(PORTRAIT_DIR, name)
+            if os.path.exists(p):
+                return p
         for emo in (emotion, "normal"):
             rel = f"standing/stand_{sprite}_{emo}.png"
             if os.path.exists(os.path.join(IMG, rel)):

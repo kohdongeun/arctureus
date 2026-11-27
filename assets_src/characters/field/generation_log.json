@@ -1,0 +1,26 @@
+{
+ "luke": {
+  "seed": 1200,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 19-year-old boy steam knight, messy auburn hair, brass goggles on forehead, soot smudge on cheek, old knight breastplate with brass steam-piston pauldrons, copper-orange jacket, dark trousers, brown boots, large piston greatsword strapped on his back, confident smile, three-quarter view facing right, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 4.7
+ },
+ "iris": {
+  "seed": 1201,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 17-year-old girl resonance mage, shoulder-length platinum blonde hair, teal eyes, small brass clockwork gear hair ornament, white research coat with cyan trim over a faded teal cloak with ancient patterns, teal skirt, white stockings, holding a tuning-fork staff, curious gentle expression, three-quarter view facing right, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 37.1
+ },
+ "zed": {
+  "seed": 1202,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, three-quarter view facing right, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 16.8
+ },
+ "cecil": {
+  "seed": 1203,
+  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
+  "model": "flux",
+  "seconds": 38.6
+ }
+}

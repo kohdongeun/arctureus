@@ -6,12 +6,51 @@
   "seed": 11,
   "bgm": "bgm_sewer",
   "paths": [
-    {"points": [[2, -40], [1, -28], [-3, -16], [-2, -4], [2, 6], [8, 16], [10, 28], [7, 40]], "width": 5.5},
-    {"points": [[-2, -4], [-12, -1], [-22, 4], [-34, 3], [-40, 1]], "width": 4.2},
-    {"points": [[2, 6], [14, 4], [24, -6], [30, -18]], "width": 3.6}
+    {
+      "points": [
+        [2, -40],
+        [1, -28],
+        [-3, -16],
+        [-2, -4],
+        [2, 6],
+        [8, 16],
+        [10, 28],
+        [7, 40]
+      ],
+      "width": 5.5
+    },
+    {
+      "points": [
+        [-2, -4],
+        [-12, -1],
+        [-22, 4],
+        [-34, 3],
+        [-40, 1]
+      ],
+      "width": 4.2
+    },
+    {
+      "points": [
+        [2, 6],
+        [14, 4],
+        [24, -6],
+        [30, -18]
+      ],
+      "width": 3.6
+    }
   ],
-  "clearings": [[-1, -6, 6.5], [-24, 4, 4.0], [28, -16, 3.5]],
-  "hills": [[-20, -22, 9, 3.2], [22, 22, 10, 3.8], [-26, 24, 8, 2.6], [26, -30, 7, 2.2], [14, -12, 5, 1.2]],
+  "clearings": [
+    [-1, -6, 6.5],
+    [-24, 4, 4.0],
+    [28, -16, 3.5]
+  ],
+  "hills": [
+    [-20, -22, 9, 3.2],
+    [22, 22, 10, 3.8],
+    [-26, 24, 8, 2.6],
+    [26, -30, 7, 2.2],
+    [14, -12, 5, 1.2]
+  ],
   "trees": 74,
   "bushes": 46,
   "rocks": 20,
@@ -21,9 +60,45 @@
   "start_dir": "ne",
   "intro_scene": "ch3_01",
   "npcs": [
-    {"id": "elwin", "sprite": "elwin", "pos": [-4, -4], "dir": "se", "town": "rusted_woods", "keys": ["default"]},
-    {"id": "hollow_elf", "sprite": "mirel", "pos": [-25, 5.5], "dir": "se", "town": "rusted_woods", "keys": ["default", "after_purify"]},
-    {"id": "abandoned_robot", "sprite": "b7", "pos": [28.5, -17.5], "dir": "sw", "town": "rusted_woods", "keys": ["default", "after_iris_talk"]}
+    {
+      "id": "elwin",
+      "sprite": "elwin",
+      "pos": [-4, -4],
+      "dir": "se",
+      "town": "rusted_woods",
+      "keys": [
+        "default"
+      ]
+    },
+    {
+      "id": "hollow_elf",
+      "sprite": "mirel",
+      "pos": [-25, 5.5],
+      "dir": "se",
+      "town": "rusted_woods",
+      "keys": [
+        "default",
+        "after_purify"
+      ]
+    },
+    {
+      "id": "abandoned_robot",
+      "sprite": "b7",
+      "pos": [28.5, -17.5],
+      "dir": "sw",
+      "town": "rusted_woods",
+      "keys": [
+        "default",
+        "after_iris_talk"
+      ]
+    }
   ],
-  "standing": {"elwin": "elwin", "hollow_elf": "mirel", "abandoned_robot": "b7"}
+  "standing": {
+    "elwin": "elwin",
+    "hollow_elf": "mirel",
+    "abandoned_robot": "b7"
+  },
+  "stone_areas": [
+    [-1, -6, 5.2]
+  ]
 }

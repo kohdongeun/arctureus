@@ -21,11 +21,11 @@
   "why": "흰테두리 7%, 잘림 0, 차지 1%"
  },
  "boss_grinder": {
-  "seed": 9230,
-  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant forest mining machine boss monster, massive spinning drill arm, armored brass and iron tank body on caterpillar treads, glowing blue ether tank on its back, smokestacks venting steam, menacing red sensor eyes, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 9330,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated on plain pure white background, no sky, no clouds, no ground, no city, mechanical monster only, compact giant mining machine on caterpillar treads with a huge spinning drill arm in front, brass and iron plates, glowing blue ether tank on its back, two smokestacks, menacing red sensor eyes, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": 0.65,
-  "why": "흰테두리 65%, 잘림 0, 차지 1%"
+  "score": -1.0,
+  "why": "인물 없음"
  },
  "brass_guard": {
   "seed": 9240,

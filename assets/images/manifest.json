@@ -1,0 +1,281 @@
+{
+  "backgrounds/bg_chimney_ward_plaza.png": {
+    "category": "backgrounds",
+    "size": [
+      1280,
+      720
+    ],
+    "source": "assets_src/raw/backgrounds/bg_chimney_ward_plaza.png",
+    "transparent": false
+  },
+  "monsters/boss_grinder.png": {
+    "category": "monsters",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/monsters/boss_grinder.png",
+    "transparent": true
+  },
+  "monsters/boss_rusted_claw.png": {
+    "category": "monsters",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/monsters/boss_rusted_claw.png",
+    "transparent": true
+  },
+  "monsters/mon_hollow.png": {
+    "category": "monsters",
+    "size": [
+      128,
+      128
+    ],
+    "source": "assets_src/raw/monsters/mon_hollow.png",
+    "transparent": true
+  },
+  "monsters/mon_rust_crawler.png": {
+    "category": "monsters",
+    "size": [
+      128,
+      128
+    ],
+    "source": "assets_src/raw/monsters/mon_rust_crawler.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_angry.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_angry_large.png": {
+    "category": "portraits",
+    "size": [
+      517,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_normal.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_normal_large.png": {
+    "category": "portraits",
+    "size": [
+      517,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_sad.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_sad_large.png": {
+    "category": "portraits",
+    "size": [
+      517,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_smile.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_smile.png",
+    "transparent": true
+  },
+  "portraits/portrait_iris_smile_large.png": {
+    "category": "portraits",
+    "size": [
+      517,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_iris_smile.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_angry.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_angry_large.png": {
+    "category": "portraits",
+    "size": [
+      544,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_normal.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_normal_large.png": {
+    "category": "portraits",
+    "size": [
+      544,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_sad.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_sad_large.png": {
+    "category": "portraits",
+    "size": [
+      544,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_smile.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_smile.png",
+    "transparent": true
+  },
+  "portraits/portrait_luke_smile_large.png": {
+    "category": "portraits",
+    "size": [
+      544,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_luke_smile.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_angry.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_angry_large.png": {
+    "category": "portraits",
+    "size": [
+      557,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_angry.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_normal.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_normal_large.png": {
+    "category": "portraits",
+    "size": [
+      557,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_normal.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_sad.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_sad_large.png": {
+    "category": "portraits",
+    "size": [
+      557,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_sad.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_smile.png": {
+    "category": "portraits",
+    "size": [
+      256,
+      256
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_smile.png",
+    "transparent": true
+  },
+  "portraits/portrait_zed_smile_large.png": {
+    "category": "portraits",
+    "size": [
+      557,
+      640
+    ],
+    "source": "assets_src/raw/portraits/portrait_zed_smile.png",
+    "transparent": true
+  },
+  "ui/ui_dialogue_box.png": {
+    "category": "ui",
+    "size": [
+      1280,
+      204
+    ],
+    "source": "assets_src/raw/ui/ui_dialogue_box.png",
+    "transparent": true
+  },
+  "ui/ui_window_menu.png": {
+    "category": "ui",
+    "size": [
+      1106,
+      720
+    ],
+    "source": "assets_src/raw/ui/ui_window_menu.png",
+    "transparent": true
+  }
+}

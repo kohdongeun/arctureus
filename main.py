@@ -10,6 +10,15 @@ import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# 영어권 Windows 콘솔(cp1252)에서 한글 출력 때문에 죽지 않도록 UTF-8 로 고정
+# (PyInstaller 로 묶인 exe 는 PYTHONUTF8 환경변수를 따르지 않음)
+for _s in (sys.stdout, sys.stderr):
+    if _s is not None and hasattr(_s, "reconfigure"):
+        try:
+            _s.reconfigure(encoding="utf-8", errors="replace")
+        except (OSError, ValueError):
+            pass
+
 import pygame  # noqa: E402
 
 from src.engine.core import Game  # noqa: E402
@@ -38,7 +47,7 @@ def smoke():
         game.tick(1 / 60)
     ok = any(isinstance(s, FieldScene) for s in game.scenes)
     n_img = len(os.listdir(os.path.join(sys.modules["src.config"].IMAGES, "tiles")))
-    print(f"smoke: {'OK' if ok else 'FAIL'} (필드 진입={ok}, 타일 이미지 {n_img}개, 오디오={game.audio.enabled})")
+    print(f"smoke: {'OK' if ok else 'FAIL'} (field={ok}, tiles={n_img}, audio={game.audio.enabled})")
     return 0 if ok else 1
 
 

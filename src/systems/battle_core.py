@@ -15,6 +15,8 @@
   {"t": "die", "who"}
   {"t": "flash", "color"}
   {"t": "wait", "s"}                   다음 이벤트까지 대기(초)
+  {"t": "skill", "who", "tier", "name", "targets"}   스킬 발동 (tier 1~6: 상위 스킬일수록 큰 연출)
+  {"t": "crit", "who", "to", "cutin"}  치명타 (cutin=True 면 아군 컷인 — 공격 동작 전에 미리 판정)
 """
 from __future__ import annotations
 
@@ -195,6 +197,16 @@ class BattleCore:
             return None
 
     # ------------------------------------------------------------ 행동
+    CRIT_PARTY, CRIT_ENEMY = 0.12, 0.05
+
+    def roll_crit(self, a, bonus=0.0):
+        return random.random() < (self.CRIT_PARTY if a.party else self.CRIT_ENEMY) + bonus
+
+    def skill_tier(self, ch, sk):
+        """캐릭터 스킬 목록에서 몇 번째 스킬인지 (1~6) — 상위 스킬일수록 연출이 커진다"""
+        ids = [x["id"] for x in ch.profile["skills"]]
+        return ids.index(sk["id"]) + 1 if sk["id"] in ids else 1
+
     def party_action(self, a, payload, targets):
         kind, data = payload
         ch = a.ref
@@ -233,11 +245,15 @@ class BattleCore:
             spec = self.B["attack"][ch.id]
             t = targets[0]
             ranged = spec.get("ranged") or spec.get("stat") == "mag"
+            crit = self.roll_crit(a)
             yield {"t": "lunge", "who": a, "to": t, "dist": 1.2 if ranged else None}
+            if crit:
+                yield {"t": "crit", "who": a, "to": t, "cutin": True}
             yield {"t": "sfx", "id": spec["sfx"]}
-            yield {"t": "fx", "fx": spec["fx"], "src": a, "dst": t, "big": False}
+            yield {"t": "fx", "fx": spec["fx"], "src": a, "dst": t, "big": crit, "tier": 0}
             yield {"t": "wait", "s": 0.12}
-            yield from self.hit(a, t, "mag" if spec.get("stat") == "mag" else "phys", spec["power"], spec["element"])
+            yield from self.hit(a, t, "mag" if spec.get("stat") == "mag" else "phys", spec["power"], spec["element"],
+                                crit=crit)
             yield {"t": "wait", "s": 0.2}
             yield {"t": "back", "who": a}
             yield {"t": "wait", "s": 0.25}
@@ -247,25 +263,32 @@ class BattleCore:
                 ch.steam = 0
             else:
                 a.mp -= sk["mp"]
+            tier = self.skill_tier(ch, sk)
             yield {"t": "say", "text": sk["name"]}
+            yield {"t": "skill", "who": a, "tier": tier, "name": sk["name"], "targets": list(targets)}
             yield {"t": "wait", "s": 0.25}
             main = targets[0]
+            single = len(targets) == 1 and sk["kind"] in ("phys", "mag")
+            crit = self.roll_crit(a, sk.get("crit_bonus", 0)) if single else None
             if sk["target"] == "enemy" and sk["kind"] == "phys" and ch.id == "luke":
                 yield {"t": "lunge", "who": a, "to": main, "dist": None}
             elif sk["target"] not in ("self", "ally", "all_allies"):
                 yield {"t": "lunge", "who": a, "to": main, "dist": 1.4}
+            if crit:
+                yield {"t": "crit", "who": a, "to": main, "cutin": tier < 5}      # 5단계 이상은 스킬 컷인이 이미 나옴
             yield {"t": "sfx", "id": sk["sfx"]}
             if sk["target"] in ("all_enemies", "all_allies") and len(targets) > 1:
                 for t in targets:
-                    yield {"t": "fx", "fx": sk["fx"], "src": a, "dst": t, "big": sk["fx"] == "ultimate"}
+                    yield {"t": "fx", "fx": sk["fx"], "src": a, "dst": t, "big": sk["fx"] == "ultimate", "tier": tier}
             else:
-                yield {"t": "fx", "fx": sk["fx"], "src": a, "dst": main, "big": True}
+                yield {"t": "fx", "fx": sk["fx"], "src": a, "dst": main, "big": True, "tier": tier}
             yield {"t": "wait", "s": 0.3}
             for t in targets:
                 if not t.alive and sk["kind"] != "heal":
                     continue
                 if sk["kind"] in ("phys", "mag"):
-                    yield from self.hit(a, t, sk["kind"], sk["power"], sk.get("element"), sk.get("crit_bonus", 0))
+                    yield from self.hit(a, t, sk["kind"], sk["power"], sk.get("element"), sk.get("crit_bonus", 0),
+                                        crit=crit if t is main else None)
                     for k, v in sk.get("status", {}).items():
                         if t.alive:
                             yield from self.add_status(t, k, v)
@@ -308,7 +331,7 @@ class BattleCore:
         yield {"t": "lunge", "who": e, "to": targets[0], "dist": 1.6}
         yield {"t": "sfx", "id": "slash" if act["fx"] == "claw" else "fire"}
         for t in targets:
-            yield {"t": "fx", "fx": act["fx"], "src": e, "dst": t, "big": False}
+            yield {"t": "fx", "fx": act["fx"], "src": e, "dst": t, "big": e.enemy.get("boss", False), "tier": 0}
         yield {"t": "wait", "s": 0.15}
         for t in targets:
             yield from self.hit(e, t, act["kind"], act["power"], None)
@@ -324,7 +347,7 @@ class BattleCore:
         yield {"t": "wait", "s": 0.3}
 
     # ------------------------------------------------------------ 계산
-    def hit(self, a, t, kind, power, element, crit_bonus=0.0):
+    def hit(self, a, t, kind, power, element, crit_bonus=0.0, crit=None):
         if kind == "phys" and "blind" in a.status and random.random() < 0.5:
             yield {"t": "float", "who": t, "text": "MISS", "color": GRAY, "size": 28}
             return
@@ -350,7 +373,11 @@ class BattleCore:
                 tags.append(("내성", GRAY))
         if "exposed" in t.status:
             dmg *= 1.3
-        if random.random() < 0.08 + crit_bonus:
+        if crit is None:                       # 미리 판정하지 않은 경우(전체 공격의 다른 대상, 적의 공격)
+            crit = self.roll_crit(a, crit_bonus)
+            if crit:
+                yield {"t": "crit", "who": a, "to": t, "cutin": False}
+        if crit:
             dmg *= 1.6
             tags.append(("치명타!", (255, 120, 90)))
         if "guard" in t.status:

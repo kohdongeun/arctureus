@@ -108,6 +108,100 @@ lit_shader = _make("field_lit", _FRAG_LIT)
 unlit_shader = _make("field_unlit", _FRAG_UNLIT)
 
 
+# ---------------------------------------------------------------- 캐릭터 빌보드 (종이 인형 리그)
+# 일러스트 한 장짜리 캐릭터를 정점 셰이더로 움직인다. 메시는 가로 4칸 x 세로 12칸 격자(sprite_mesh),
+# 좌표 x: -0.5~0.5, y: 0(발)~1(머리).
+#   walk/phase : 걷기 — 아래 34%(다리)를 좌우 번갈아 들어 올리고 앞뒤로 흔듦, 몸은 위아래로 출렁
+#   lean       : 위로 갈수록 옆으로 밀어 몸을 기울임 (앞으로 숙이기 +, 뒤로 젖히기 -)
+#   hop        : 통째로 띄우기 (점프)
+#   flash      : 하얗게 번쩍 (피격)
+_VERT_SPRITE = """#version 130
+uniform mat4 p3d_ModelViewProjectionMatrix;
+uniform mat4 p3d_ModelMatrix;
+in vec4 p3d_Vertex;
+in vec2 p3d_MultiTexCoord0;
+in vec4 p3d_Color;
+uniform vec2 texture_scale;
+uniform vec2 texture_offset;
+uniform float walk;
+uniform float phase;
+uniform float lean;
+uniform float hop;
+out vec2 uv;
+out vec4 vcolor;
+out vec3 wpos;
+void main() {
+    vec4 p = p3d_Vertex;
+    float v = p3d_MultiTexCoord0.y;
+    float leg = clamp((0.34 - v) / 0.34, 0.0, 1.0);
+    float side = clamp(p.x * 5.0, -1.0, 1.0);            // 왼다리 -1, 오른다리 +1
+    float s = sin(phase);
+    p.y += walk * leg * 0.16 * max(0.0, -s * side);      // 번갈아 발 들기
+    p.x += walk * leg * 0.10 * s * (side < 0.0 ? 1.0 : -1.0);   // 다리 앞뒤 흔들기
+    p.y += walk * abs(cos(phase)) * 0.045;               // 걸음마다 몸 출렁
+    p.x += (lean + walk * 0.05) * p.y;                   // 기울이기 (걸을 땐 살짝 앞으로)
+    p.y += hop;
+    gl_Position = p3d_ModelViewProjectionMatrix * p;
+    uv = p3d_MultiTexCoord0 * texture_scale + texture_offset;
+    vcolor = p3d_Color;
+    wpos = (p3d_ModelMatrix * p).xyz;
+}
+"""
+
+_FRAG_SPRITE = """#version 130
+uniform sampler2D p3d_Texture0;
+uniform vec4 p3d_ColorScale;
+uniform vec3 fog_color;
+uniform float fog_start;
+uniform float fog_end;
+uniform float flash;
+uniform vec3 camera_world_position;
+in vec2 uv;
+in vec4 vcolor;
+in vec3 wpos;
+out vec4 frag;
+void main() {
+    vec4 c = texture(p3d_Texture0, uv) * p3d_ColorScale * vcolor;
+    if (c.a < 0.02) discard;
+    c.rgb = mix(c.rgb, vec3(1.0), clamp(flash, 0.0, 1.0));
+    float t = clamp((length(wpos - camera_world_position) - fog_start) / (fog_end - fog_start), 0.0, 1.0);
+    c.rgb = mix(c.rgb, fog_color, t);
+    frag = c;
+}
+"""
+
+sprite_shader = Shader(name="sprite_rig", language=Shader.GLSL, vertex=_VERT_SPRITE, fragment=_FRAG_SPRITE,
+                       default_input={"texture_scale": Vec2(1, 1), "texture_offset": Vec2(0, 0),
+                                      "camera_world_position": Vec3(0, 0, 0), "walk": 0.0, "phase": 0.0,
+                                      "lean": 0.0, "hop": 0.0, "flash": 0.0, **LIGHT})
+sprite_shader.continuous_input["camera_world_position"] = _cam_pos
+
+_sprite_geo = None
+
+
+def sprite_mesh():
+    """종이 인형 리그용 격자 메시. ursina 의 Mesh 는 노드라서 엔티티마다 새로 만들어야 한다
+    (하나를 여러 엔티티에 주면 마지막 엔티티로 옮겨 가 버림). 정점 목록만 한 번 계산해 둔다."""
+    global _sprite_geo
+    from ursina import Mesh
+    if _sprite_geo is None:
+        cols, rows = 4, 12
+        verts, uvs, tris = [], [], []
+        for j in range(rows + 1):
+            for i in range(cols + 1):
+                u, v = i / cols, j / rows
+                verts.append((u - 0.5, v, 0))
+                uvs.append((u, v))
+        for j in range(rows):
+            for i in range(cols):
+                a = j * (cols + 1) + i
+                b, c, d = a + 1, a + cols + 1, a + cols + 2
+                tris += [a, b, d, a, d, c]
+        _sprite_geo = (verts, uvs, tris)
+    verts, uvs, tris = _sprite_geo
+    return Mesh(vertices=verts, uvs=uvs, triangles=tris, static=True)
+
+
 # ---------------------------------------------------------------- 타일 텍스처 지형 (splat)
 # p3d_Texture0 = 분포 맵 (R: 흙길, G: 돌바닥, B: 구워 둔 그림자), 잔디/흙/돌 타일은 월드 좌표로 반복
 _FRAG_TERRAIN = """#version 130

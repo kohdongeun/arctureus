@@ -220,6 +220,36 @@ def fx_textures():
     Image.fromarray(img, "RGBA").save(os.path.join(TEX, "fx_ring.png"))
 
 
+def magic_circle(n=512):
+    """스킬 발동 마법진 (흰색, 가산 합성으로 색을 입힘): 이중 원 + 육망성 + 룬 눈금 + 톱니"""
+    img = Image.new("RGBA", (n, n), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    c = n / 2
+    W = (255, 255, 255, 255)
+    for r, w in ((0.48, 6), (0.44, 3), (0.30, 4), (0.27, 2), (0.12, 3)):
+        d.ellipse([c - r * n, c - r * n, c + r * n, c + r * n], outline=W, width=w)
+    for k in range(2):                                   # 육망성
+        pts = [(c + math.cos(math.radians(90 + k * 60 + i * 120)) * 0.44 * n,
+                c + math.sin(math.radians(90 + k * 60 + i * 120)) * 0.44 * n) for i in range(3)]
+        d.polygon(pts, outline=W, width=3)
+    for i in range(48):                                  # 바깥 눈금(룬 자리)
+        a = math.radians(i * 7.5)
+        r0, r1 = 0.445 * n, (0.47 if i % 4 else 0.48) * n
+        d.line([(c + math.cos(a) * r0, c + math.sin(a) * r0), (c + math.cos(a) * r1, c + math.sin(a) * r1)], fill=W, width=3)
+    for i in range(12):                                  # 안쪽 톱니(스팀펑크)
+        a = math.radians(i * 30)
+        x, y = c + math.cos(a) * 0.285 * n, c + math.sin(a) * 0.285 * n
+        d.rectangle([x - 6, y - 6, x + 6, y + 6], fill=W)
+    for i in range(6):                                   # 작은 원 6개
+        a = math.radians(30 + i * 60)
+        x, y = c + math.cos(a) * 0.37 * n, c + math.sin(a) * 0.37 * n
+        d.ellipse([x - 16, y - 16, x + 16, y + 16], outline=W, width=3)
+    img = img.filter(ImageFilter.GaussianBlur(1.2))
+    glow = img.filter(ImageFilter.GaussianBlur(6))
+    out = Image.alpha_composite(glow, img)
+    out.save(os.path.join(TEX, "fx_circle.png"))
+
+
 def shadow():
     n = 256
     yy, xx = np.mgrid[0:n, 0:n]
@@ -316,6 +346,6 @@ if __name__ == "__main__":
     maps = sys.argv[1:] or ["verdan_edge"]
     for mid in maps:
         terrain_texture(mid)
-    leaves(); bark(); rock(); tuft(False); tuft(True); shadow(); fx_textures()
+    leaves(); bark(); rock(); tuft(False); tuft(True); shadow(); fx_textures(); magic_circle()
     dialog_panel(); name_plate(); banner(); next_icon(); bubble()
     print("  textures3d/*.png, ui3d/*.png")

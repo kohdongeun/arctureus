@@ -65,10 +65,7 @@ class Dialogue(Scene):
         self.t += dt
         full = len(self.line["text"])
         if self.shown < full:
-            before = int(self.shown)
             self.shown = min(full, self.shown + CPS * dt)
-            if int(self.shown) // 3 != before // 3:
-                self.game.audio.sfx("sfx_text")
         if self.game.input.was_pressed("confirm") or self.game.input.was_pressed("cancel"):
             if self.shown < full:
                 self.shown = full

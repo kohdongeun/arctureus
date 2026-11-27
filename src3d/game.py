@@ -18,7 +18,8 @@ from ursina import (Entity, Mesh, Text, Texture, Ursina, Vec3, application, came
                     held_keys, lerp, window)
 
 from src3d import terrain
-from src3d.shaders import GLSL, LIGHT, check_support, lit_shader, terrain_shader, unlit_shader
+from src3d.shaders import (GLSL, LIGHT, check_support, lit_shader, sprite_mesh, sprite_shader, terrain_shader,
+                           unlit_shader)
 
 ROOT = getattr(sys, "_MEIPASS", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 IMG = os.path.join(ROOT, "assets", "images")
@@ -283,8 +284,22 @@ def field_manifest():
         return {}
 
 
+class Motion:
+    """빌보드 한 장에 얹는 연출 채널 (전투 동작이 매 프레임 채워 넣고, Actor/EnemyView 가 셰이더로 반영)"""
+    __slots__ = ("lean", "hop", "sx", "sy", "flash", "off", "walk")
+
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.lean, self.hop, self.sx, self.sy, self.flash = 0.0, 0.0, 1.0, 1.0, 0.0
+        self.off = Vec3(0, 0, 0)
+        self.walk = None                # None 이면 이동 여부로 자동
+
+
 class Actor:
     HEIGHT = 1.85                 # 참고 스크린샷 비율: 나무(수관 지름 4~6) 대비 아담한 3~3.5등신
+    TURN_TIME = 0.16              # 좌우 방향 전환(종이 뒤집기) 시간
     _manifest = None
 
     def __init__(self, world, sprite, x, z, facing="se", name=""):
@@ -293,10 +308,13 @@ class Actor:
         self.facing = facing
         self.face_dir = None          # 월드 기준 바라보는 방향 (카메라가 돌면 스프라이트 방향도 다시 계산)
         self.cam_yaw = 0.0
-        self.anim = 0.0
+        self.anim = 0.0               # 걸음 위상 (π 마다 한 걸음)
+        self.walk_amt = 0.0           # 걷기 동작 세기 (멈추면 부드럽게 0으로)
         self.t = random.uniform(0, 6)
         self.moving = False
         self.name = name
+        self.on_step = None           # 발이 땅에 닿을 때마다 호출 (발소리·먼지)
+        self.mo = Motion()
         if Actor._manifest is None:
             Actor._manifest = field_manifest()
         info = Actor._manifest.get(sprite, {})
@@ -304,51 +322,77 @@ class Actor:
         path = os.path.join(FIELD_DIR, sprite + ".png")
         self.single = os.path.exists(path)
         if self.single:
-            # 생성한 SD 전신 일러스트 한 장 (tools/art/prepare_field_chars.py 결과)
+            # 생성한 SD 전신 일러스트 한 장 (tools/art/prepare_field_chars.py 결과) + 종이 인형 리그
             t = Texture(path)
             t.filtering = "mipmap"
             self.native = info.get("faces", "front")
             self.w = self.h * t.width / t.height
-            self.body = Entity(model="quad", texture=t, billboard=True, origin_y=-0.5, scale=(self.w, self.h),
-                               double_sided=True, shader=unlit_shader)
+            self.body = Entity(model=sprite_mesh(), texture=t, billboard=True, scale=(self.w, self.h),
+                               double_sided=True, shader=sprite_shader)
         else:
             # 아직 일러스트가 없으면 4방향 시트 스프라이트
+            self.native = "front"
             self.w = self.h * 0.64
             self.body = Entity(model="quad", texture=tex(f"sprites3d/{sprite}.png", mipmap=False), billboard=True,
                                origin_y=-0.5, scale=(self.w, self.h), texture_scale=(0.25, 0.25), shader=unlit_shader)
+        self.sx = self.w if not self._flip() else -self.w        # 화면상 가로 배율 (뒤집기 애니메이션용)
         self.body.setTransparency(TransparencyAttrib.MDual)
         self.body.hide(0b0001)
         # 발밑 반투명 원형 그림자
         sw = max(0.9, self.w * (0.72 if self.single else 0.95))
+        self.shadow_w = sw
         self.shadow = Entity(model="quad", texture=tex("textures3d/shadow.png"), rotation_x=90, scale=(sw, sw * 0.55),
                              color=color.rgba(1, 1, 1, 0.62), shader=unlit_shader)
         self.shadow.setTransparency(TransparencyAttrib.MAlpha)
         self.shadow.hide(0b0001)
         self.sync()
 
+    def _flip(self):
+        left = self.facing in ("sw", "nw")
+        if self.native == "front":
+            return left
+        return left != (self.native == "left")
+
+    @property
+    def forward_sign(self):
+        """모델 좌표 +x 가 화면에서 바라보는 쪽이면 1 (기울이기 방향 보정)"""
+        return -1.0 if self.native == "left" else 1.0
+
     def sync(self, dt=0.0):
         self.t += dt
         if self.face_dir:
             self._pick_row(*self.face_dir)
+        mo = self.mo
         y = self.world.h(self.x, self.z)
-        self.shadow.position = (self.x, y + 0.04, self.z)
-        if self.single:
-            left = self.facing in ("sw", "nw")
-            flip = left != (self.native == "left") if self.native != "front" else left
-            if self.moving:
-                ph = self.anim * math.pi / 2
-                bob = abs(math.sin(ph)) * 0.07 * self.h
-                sq = 1 + 0.035 * math.sin(ph * 2)
-            else:
-                bob, sq = 0.0, 1 + 0.012 * math.sin(self.t * 2.4)      # 숨쉬기
-            self.body.scale = (-self.w if flip else self.w, self.h * sq)
-            self.body.position = (self.x, y - 0.03 + bob, self.z)
-            self.shadow.scale_x = self.shadow.scale_y / 0.55 * (1 - bob / self.h)
+        px, pz = self.x + mo.off.x, self.z + mo.off.z
+        self.shadow.position = (px, self.world.h(px, pz) + 0.04, pz)
+        if not self.single:
+            self.body.position = (px, y - 0.05 + mo.hop, pz)
+            frame = int(self.anim) % 4 if self.moving else 0
+            self.body.texture_offset = (frame * 0.25, 1 - (ROW[self.facing] + 1) * 0.25)
             return
-        self.body.position = (self.x, y - 0.05, self.z)
-        frame = int(self.anim) % 4 if self.moving else 0
-        row = ROW[self.facing]
-        self.body.texture_offset = (frame * 0.25, 1 - (row + 1) * 0.25)
+        # 좌우 전환: 가로 배율이 0 을 지나 반대로 (종이 인형을 뒤집듯)
+        target = -self.w if self._flip() else self.w
+        step = 2 * self.w / self.TURN_TIME * dt if dt else 2 * self.w
+        self.sx = target if abs(target - self.sx) <= step else self.sx + math.copysign(step, target - self.sx)
+        # 걷기: 위상이 π 를 지날 때마다 한 걸음
+        goal = (1.0 if self.moving else 0.0) if mo.walk is None else mo.walk
+        self.walk_amt += (goal - self.walk_amt) * min(1.0, dt * 10)
+        if self.walk_amt < 0.02 and not self.moving:
+            self.anim = 0.0
+        breath = 1 + 0.012 * math.sin(self.t * 2.4) * (1 - self.walk_amt)       # 가만히 있을 땐 숨쉬기
+        turn = abs(self.sx) / self.w                                              # 뒤집는 중엔 얇아짐
+        self.body.scale = (self.sx * mo.sx, self.h * breath * mo.sy)
+        self.body.position = (px, y - 0.03, pz)
+        b = self.body
+        b.set_shader_input("walk", self.walk_amt)
+        b.set_shader_input("phase", self.anim)
+        b.set_shader_input("lean", mo.lean * self.forward_sign)
+        b.set_shader_input("hop", mo.hop / max(0.01, self.h))
+        b.set_shader_input("flash", mo.flash)
+        bob = abs(math.cos(self.anim)) * 0.035 * self.h * self.walk_amt + mo.hop
+        self.shadow.scale = (self.shadow_w * (1 - min(0.5, bob / self.h)) * (0.85 + 0.15 * turn),
+                             self.shadow_w * 0.55 * (1 - min(0.5, bob / self.h)))
 
     def destroy(self):
         destroy(self.body)
@@ -371,14 +415,21 @@ class Actor:
         if abs(right) < 1e-4 and abs(fwd) < 1e-4:
             return
         back = fwd > 0.15
-        self.facing = ("ne" if right >= 0 else "nw") if back else ("se" if right >= 0 else "sw")
+        if abs(right) < 0.2:                       # 거의 위/아래로만 움직이면 좌우는 그대로
+            is_right = self.facing in ("ne", "se")
+        else:
+            is_right = right > 0
+        self.facing = ("ne" if is_right else "nw") if back else ("se" if is_right else "sw")
 
     def step(self, vx, vz, dt, cam_yaw, speed):
         self.cam_yaw = cam_yaw
         self.moving = bool(vx or vz)
         if self.moving:
             self.face_vector(vx, vz, cam_yaw)
-            self.anim += dt * speed * 1.6
+            before = int(self.anim / math.pi)
+            self.anim += dt * speed * 1.25          # 걸음 위상 (속도 5.2 기준 초당 약 2걸음)
+            if int(self.anim / math.pi) != before and self.on_step:
+                self.on_step(self)                  # 발이 땅에 닿음
         self.sync(dt)
 
 
@@ -447,7 +498,6 @@ class DialogueUI:
                 self.art_from = 0.0          # 다른 인물이면 슬라이드 인
         else:
             self.art.enabled = False
-        g.sfx("sfx_text")
 
     def advance(self):
         full = len(self.lines[self.i]["text"])
@@ -555,6 +605,8 @@ class Game:
         self.toast = Text(parent=camera.ui, text="", origin=(0, 0), y=-0.08, scale=1.1, z=-0.5,
                           color=color.rgba32(255, 236, 190))
         self.toast_t = 0.0
+        from src3d.battle3d import FX
+        self.field_fx = FX(tex("textures3d/fx_glow.png"))
         self.fader = Entity(parent=camera.ui, model="quad", scale=(4, 2), color=color.rgba(0, 0, 0, 0), z=-0.98)
         from src3d.menu3d import Menu3D, TitleUI
         self.menu = Menu3D(self)
@@ -569,6 +621,7 @@ class Game:
 
     # ------------------------------------------------------------ 맵 불러오기/비우기
     def unload_map(self):
+        self.field_fx.clear()
         if self.world:
             self.world.destroy()
         for a in ([self.player] if self.player else []) + self.followers + self.npcs:
@@ -594,6 +647,7 @@ class Game:
         if party:
             # 파티 (루크가 앞장서고 아이리스·제드가 뒤따름)
             self.player = Actor(self.world, "luke", sx, sz, facing, "luke")
+            self.player.on_step = self.footstep
             self.followers = [Actor(self.world, "iris", sx, sz - 1.5, facing, "iris"),
                               Actor(self.world, "zed", sx, sz - 3.0, facing, "zed")]
             self.line_up()
@@ -618,6 +672,13 @@ class Game:
             intro = m.get("intro_scene")
             if intro and f"scene:{intro}" not in self.state.flags:
                 self.play_scene(intro)
+
+    def footstep(self, actor):
+        """발이 땅에 닿을 때: 작은 발소리 + 흙먼지"""
+        self.sfx("step", 0.22)
+        on_path = float(terrain.path_distance(self.world.m, actor.x, actor.z)) < 0.5
+        self.field_fx.dust(Vec3(actor.x, self.world.h(actor.x, actor.z) + 0.05, actor.z),
+                           (0.62, 0.52, 0.38) if on_path else (0.55, 0.62, 0.42))
 
     def line_up(self):
         """동료를 루크 뒤로 한 줄 세운다"""
@@ -858,12 +919,12 @@ class Game:
                 snd.stop()
         self.fading = keep
 
-    def sfx(self, name):
+    def sfx(self, name, volume=0.6):
         try:
             if name not in self._sfx:
                 self._sfx[name] = self.app.loader.loadSfx(
                     Filename.fromOsSpecific(os.path.join(ROOT, "assets", "sfx", name.replace("sfx_", "") + ".ogg")))
-                self._sfx[name].setVolume(0.6)
+            self._sfx[name].setVolume(volume)
             self._sfx[name].play()
         except Exception:  # noqa: BLE001
             pass
@@ -939,6 +1000,7 @@ class Game:
         self.menu.update(dt)
         if self.banner:
             self.banner.update(dt)
+        self.field_fx.update(dt)
         if self.battle:
             self.battle.update(dt)
             self.update_camera(dt)
@@ -1007,6 +1069,8 @@ class Game:
         hd = math.cos(pr) * self.dist
         camera.position = self.cam_target + Vec3(-math.sin(r) * hd, math.sin(pr) * self.dist, -math.cos(r) * hd)
         camera.look_at(self.cam_target)
+        if self.battle:                       # 타격감: 카메라 흔들림
+            camera.position += self.battle.shake_offset()
 
     # ------------------------------------------------------------ 전투
     def check_encounter(self, meters):

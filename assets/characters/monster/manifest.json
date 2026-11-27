@@ -82,5 +82,12 @@
       585
     ],
     "faces": "right"
+  },
+  "boss_grinder": {
+    "size": [
+      555,
+      658
+    ],
+    "faces": "front"
   }
 }

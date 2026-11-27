@@ -14,11 +14,11 @@
   "why": "흰테두리 2%, 잘림 0, 차지 54%"
  },
  "zed": {
-  "seed": 8371,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, handsome adult man, 1boy, male, masculine face, sharp jawline, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8422,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, handsome adult man, 1boy, male, long jet black hair tied in a low ponytail, black hair, monocle lens over right eye, navy blue coat, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": 0.27,
-  "why": "흰테두리 27%, 잘림 0, 차지 45%"
+  "score": -0.59,
+  "why": "흰테두리 1%, 잘림 1, 차지 47%"
  },
  "cecil": {
   "seed": 8380,

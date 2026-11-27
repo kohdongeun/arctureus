@@ -1,4 +1,4 @@
-"""Pollinations 이미지 API 로 캐릭터·텍스처 원본을 생성한다.
+"""Pollinations 이미지 API(gen.pollinations.ai, API 키 필요)로 캐릭터·텍스처 원본을 생성한다.
 
     python tools/art/gen_ai_assets.py field [id ...]      → assets_src/characters/field/<id>.png
     python tools/art/gen_ai_assets.py portrait [id ...]   → assets_src/characters/portrait/<id>.png
@@ -6,8 +6,7 @@
 
 프롬프트: data/art_prompts/field_chars.json
 - 무료 API 한도(503/429)에 걸리면 기다렸다가 다시 시도한다.
-- 무료 API 는 오른쪽 아래에 워터마크를 넣는다. 캐릭터는 누끼 단계(prepare_field_chars.py)에서
-  그 영역 안에만 있는 떨어진 조각을 지우고, 텍스처는 아래 띠를 잘라 낸다.
+- 모델: 캐릭터는 애니메이션 특화 community/vendouple/animagine, 텍스처는 flux (GEN_MODEL 로 변경 가능)
 - 텍스처는 반쯤 밀어 겹친 사본을 가장자리에서 섞어 이음매 없이 타일링되게 만든다.
 - 생성 결과(시드·프롬프트)는 같은 폴더의 generation_log.json 에 남는다.
 """
@@ -22,22 +21,26 @@ import urllib.parse
 import urllib.request
 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PROMPTS = os.path.join(ROOT, "data", "art_prompts", "field_chars.json")
-API = "https://image.pollinations.ai/prompt/"
+# 새 API (gen.pollinations.ai): API 키 필요. 키는 코드에 넣지 않는다 — 클라우드 환경의 네트워크 비밀값으로
+# 프록시가 Authorization 헤더를 붙여 준다. 로컬 PC 에서는 POLLINATIONS_KEY 환경변수를 쓴다.
+API = "https://gen.pollinations.ai/image/"
+MODELS = {"field": "community/vendouple/animagine", "portrait": "community/vendouple/animagine", "texture": "flux"}
 SEEDS = {"field": 1200, "portrait": 3400, "texture": 5600}
 
 
-def fetch(prompt, w, h, seed, tries=12):
-    q = urllib.parse.urlencode({"width": w, "height": h, "seed": seed, "model": "flux", "nologo": "true",
-                                "enhance": "false"})
+def fetch(prompt, w, h, seed, tries=12, model="flux"):
+    q = urllib.parse.urlencode({"width": w, "height": h, "seed": seed, "model": model, "nologo": "true"})
     url = API + urllib.parse.quote(prompt) + "?" + q
+    headers = {"User-Agent": "game-asset-tool"}
+    if os.environ.get("POLLINATIONS_KEY"):
+        headers["Authorization"] = "Bearer " + os.environ["POLLINATIONS_KEY"]
     for i in range(tries):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "game-asset-tool"}),
-                                        timeout=240) as r:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=300) as r:
                 data = r.read()
                 if r.headers.get("Content-Type", "").startswith("image/"):
                     return Image.open(io.BytesIO(data)).convert("RGB")
@@ -50,14 +53,6 @@ def fetch(prompt, w, h, seed, tries=12):
         print(f"    재시도 {i + 1}/{tries} ({err}) {wait}초 대기", flush=True)
         time.sleep(wait)
     raise RuntimeError("이미지 생성 실패: " + prompt[:60])
-
-
-def whiten_watermark(img: Image.Image) -> Image.Image:
-    """오른쪽 아래 워터마크 영역을 흰색으로 (캐릭터는 프롬프트로 가운데에 배치)"""
-    w, h = img.size
-    d = ImageDraw.Draw(img)
-    d.rectangle([int(w * 0.62), int(h * 0.90), w, h], fill=(255, 255, 255))
-    return img
 
 
 def make_seamless(img: Image.Image, blend=0.22) -> Image.Image:
@@ -107,17 +102,16 @@ def main():
             w, h = 1024, 1024
         print(f"  [{kind}] {name} (seed {seed}) 생성 중...", flush=True)
         t0 = time.time()
-        img = fetch(prompt, w, h, seed)
+        model = os.environ.get("GEN_MODEL") or MODELS[kind]
+        img = fetch(prompt, w, h, seed, model=model)
         if kind == "texture":
-            # 워터마크가 있는 아래 띠를 잘라 낸 뒤 이음매 없이
-            img = img.crop((0, 0, w, int(h * 0.88))).resize((w, h), Image.LANCZOS)
             img = make_seamless(img)
             path = os.path.join(out_dir, f"tile_{name}.jpg")
             img.save(path, quality=92)
         else:
             path = os.path.join(out_dir, f"{name}.png")
             img.save(path)
-        log[name] = {"seed": seed, "prompt": prompt, "model": "flux", "seconds": round(time.time() - t0, 1)}
+        log[name] = {"seed": seed, "prompt": prompt, "model": model, "seconds": round(time.time() - t0, 1)}
         with open(log_path, "w", encoding="utf-8") as f:
             json.dump(log, f, ensure_ascii=False, indent=1)
         print(f"    → {os.path.relpath(path, ROOT)} ({time.time() - t0:.0f}초)", flush=True)

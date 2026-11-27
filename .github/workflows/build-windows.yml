@@ -1,0 +1,50 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "main.py"
+      - "src/**"
+      - "assets/**"
+      - "data/**"
+      - "Arcturus_RPG.spec"
+      - "tools/build_exe.py"
+      - ".github/workflows/build-windows.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pygame-ce Pillow pyinstaller
+
+      - name: Build single-file EXE
+        run: python tools/build_exe.py
+
+      - name: Smoke test the EXE (title -> new game -> field)
+        shell: pwsh
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: |
+          $p = Start-Process -FilePath "dist\Arcturus_RPG.exe" -ArgumentList "--smoke" -Wait -PassThru -NoNewWindow
+          Write-Host "exit code: $($p.ExitCode)"
+          if (Test-Path "dist\Arcturus_RPG_error.log") { Get-Content "dist\Arcturus_RPG_error.log" }
+          exit $p.ExitCode
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: Arcturus_RPG-windows
+          path: dist/Arcturus_RPG.exe
+          if-no-files-found: error

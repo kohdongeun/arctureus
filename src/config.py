@@ -1,7 +1,12 @@
 """전역 설정과 경로."""
 import os
+import sys
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# PyInstaller 단일 실행 파일로 실행 중이면 에셋이 풀린 임시 폴더(sys._MEIPASS)가 기준
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+    ROOT = sys._MEIPASS
+else:
+    ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
 ASSETS = os.path.join(ROOT, "assets")
 IMAGES = os.path.join(ASSETS, "images")

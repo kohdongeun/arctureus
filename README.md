@@ -56,3 +56,19 @@ python tools/autotest.py               # 화면 없이 타이틀~보스까지 �
 ## 라이선스 메모
 - 폰트: Galmuri (SIL OFL 1.1, `assets/fonts/OFL-Galmuri.md`)
 - 그 외 그래픽·사운드는 이 저장소의 스크립트로 생성한 것
+
+## 실행 파일(.exe) 빌드
+파이썬이 없는 PC 에서도 더블클릭으로 실행되는 단일 실행 파일을 만든다. 모든 그래픽·사운드·폰트·데이터가 포함된다.
+
+- **자동 (권장)**: 이 저장소에 push 하면 GitHub Actions(`.github/workflows/build-windows.yml`)가 Windows 에서
+  `Arcturus_RPG.exe` 를 빌드하고 실행 검증까지 한 뒤, 실행 결과 페이지의 Artifacts 에 `Arcturus_RPG-windows` 로 올린다.
+- **직접 (Windows PC)**:
+  ```bat
+  pip install pygame-ce Pillow pyinstaller
+  python tools\build_exe.py
+  ```
+  결과: `dist\Arcturus_RPG.exe`
+
+PyInstaller 는 크로스 컴파일을 지원하지 않으므로 `.exe` 는 반드시 Windows 에서 빌드해야 한다
+(리눅스·macOS 에서 같은 명령을 실행하면 그 OS 용 실행 파일이 나온다).
+실행 중 오류가 나면 실행 파일 옆에 `Arcturus_RPG_error.log` 가 남는다.

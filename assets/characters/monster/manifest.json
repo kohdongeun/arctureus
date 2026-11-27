@@ -47,5 +47,40 @@
       697
     ],
     "faces": "right"
+  },
+  "boss_iron_legion": {
+    "size": [
+      451,
+      688
+    ],
+    "faces": "right"
+  },
+  "boss_balthazar": {
+    "size": [
+      333,
+      606
+    ],
+    "faces": "right"
+  },
+  "boss_time_warden": {
+    "size": [
+      727,
+      716
+    ],
+    "faces": "right"
+  },
+  "boss_chrono_armor": {
+    "size": [
+      393,
+      707
+    ],
+    "faces": "right"
+  },
+  "boss_rust_king": {
+    "size": [
+      657,
+      585
+    ],
+    "faces": "right"
   }
 }

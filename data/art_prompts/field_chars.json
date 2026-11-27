@@ -33,7 +33,7 @@
       "name": "발타자르 그림웰",
       "role": "최종 적대자",
       "description": "58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, three-quarter view facing left",
-      "portrait_hint": "old man, 1boy, male, gold-rimmed round glasses, upper body on plain white background, no circle, no ring, no frame, no border, no medallion"
+      "portrait_hint": "old man, 1boy, male, gold-rimmed round glasses, waist-up, simple flat light grey studio backdrop"
     },
     "morgan": {
       "name": "마담 모르간",
@@ -49,7 +49,7 @@
       "name": "대드루이드 실바엔",
       "role": "NPC",
       "description": "ancient elf archdruid, very long white hair, long pointed ears, flowing green and white robes with leaf embroidery, wooden staff covered in moss, kind wise expression, three-quarter view facing left",
-      "portrait_hint": "plain pure white background, no forest, no leaves frame, no scenery, no circle"
+      "portrait_hint": "waist-up, simple flat light grey studio backdrop"
     },
     "torbin": {
       "name": "강철왕 토르빈",

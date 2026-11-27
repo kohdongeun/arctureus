@@ -54,5 +54,12 @@
       713
     ],
     "faces": "left"
+  },
+  "zed": {
+    "size": [
+      633,
+      706
+    ],
+    "faces": "right"
   }
 }

@@ -16,6 +16,11 @@ import sys
 
 from PIL import Image
 
+# 영어권 Windows 콘솔(cp1252)에서도 한글 출력이 죽지 않도록 UTF-8 로 고정
+for stream in (sys.stdout, sys.stderr):
+    if stream is not None and hasattr(stream, "reconfigure"):
+        stream.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 

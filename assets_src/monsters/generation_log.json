@@ -75,5 +75,12 @@
   "endpoint": "image.pollinations.ai (free)",
   "score": 0.35,
   "why": "흰테두리 35%, 잘림 0, 차지 19%"
+ },
+ "boss_chrono_armor": {
+  "seed": 9310,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant clockwork battle armor mech piloted by an old scholar, huge brass suit with a giant clock dial on the chest, twelve clock-hand cannons, gears and steam, menacing, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.03,
+  "why": "흰테두리 3%, 잘림 0, 차지 34%"
  }
 }

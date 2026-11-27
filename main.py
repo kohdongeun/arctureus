@@ -284,8 +284,10 @@ def smoke(game):
         if cnt["f"] == 300:
             ok = (cnt["title"] and game.mode == "field" and game.player is not None and len(game.npcs) > 0
                   and game.world.ground is not None)
+            from src3d.shaders import GLSL
             print(f"smoke: {'OK' if ok else 'FAIL'} (title={cnt['title']}, mode={game.mode}, "
-                  f"map={game.world.m['id'] if game.world else None}, npcs={len(game.npcs)})", flush=True)
+                  f"map={game.world.m['id'] if game.world else None}, npcs={len(game.npcs)}, "
+                  f"glsl={GLSL['ok']}, renderer={GLSL['renderer']})", flush=True)
             os._exit(0 if ok else 1)
     Entity(update=tick)
 
@@ -307,6 +309,12 @@ def log_crash():
 
 def frozen_setup():
     """PyInstaller 로 묶인 실행 파일: Panda3D 가 렌더러·오디오 플러그인을 풀린 폴더에서 찾도록"""
+    gl = os.environ.get("ARCTURUS_PRELOAD_GL")
+    if gl and sys.platform.startswith("win"):
+        # 테스트용: GPU 없는 빌드 서버에서 Mesa 소프트웨어 OpenGL(opengl32.dll)을 먼저 올려 두면
+        # 이후 Panda3D 가 이름으로 불러올 때 이 DLL 이 쓰인다
+        import ctypes
+        ctypes.WinDLL(gl)
     if not getattr(sys, "frozen", False):
         return
     from panda3d.core import loadPrcFileData

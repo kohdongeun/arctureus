@@ -18,7 +18,7 @@ from ursina import (Entity, Mesh, Text, Texture, Ursina, Vec3, application, came
                     held_keys, lerp, window)
 
 from src3d import terrain
-from src3d.shaders import LIGHT, lit_shader, terrain_shader, unlit_shader
+from src3d.shaders import GLSL, LIGHT, check_support, lit_shader, terrain_shader, unlit_shader
 
 ROOT = getattr(sys, "_MEIPASS", os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 IMG = os.path.join(ROOT, "assets", "images")
@@ -141,7 +141,7 @@ class World:
         mesh = Mesh(vertices=verts, triangles=tris, uvs=uvs, normals=norms, static=True)
         tiles = {k: f"textures3d/tile_{k}.jpg" for k in ("grass", "dirt", "stone")}
         splat = f"textures3d/terrain_{self.m['id']}_splat.png"
-        if all(os.path.exists(os.path.join(IMG, v)) for v in list(tiles.values()) + [splat]):
+        if GLSL["ok"] and all(os.path.exists(os.path.join(IMG, v)) for v in list(tiles.values()) + [splat]):
             # 잔디·흙길·돌바닥 타일 텍스처를 월드 좌표로 반복 + 분포 맵으로 섞기 (가까이서도 선명)
             self.ground = Entity(model=mesh, texture=tex(splat), shader=terrain_shader)
             for k, v in tiles.items():
@@ -512,6 +512,7 @@ class Game:
     def __init__(self, map_id="verdan_edge", size=(1280, 720), start="title"):
         self.app = Ursina(title="황동의 심장 : 아스카론 연대기", size=size, development_mode=False,
                           borderless=False, vsync=True)
+        check_support(self.app)          # GLSL 미지원 환경이면 셰이더 없이 그리도록
         window.color = rgb(150, 182, 210)
         window.fps_counter.enabled = False
         window.exit_button.enabled = False

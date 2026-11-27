@@ -152,3 +152,21 @@ terrain_shader = Shader(name="field_terrain", language=Shader.GLSL, vertex=_VERT
                         default_input={"texture_scale": Vec2(1, 1), "texture_offset": Vec2(0, 0), "tile": 4.0,
                                        "camera_world_position": Vec3(0, 0, 0), **LIGHT})
 terrain_shader.continuous_input["camera_world_position"] = _cam_pos
+
+
+# ---------------------------------------------------------------- GLSL 를 못 쓰는 그래픽 환경 대비
+GLSL = {"ok": True, "renderer": ""}
+
+
+def check_support(app):
+    """창을 연 직후 호출. GLSL 을 못 쓰는 렌더러(예: 그래픽 드라이버가 없어 Direct3D 9 로 떨어진 경우)면
+    모든 자체 셰이더를 끄고 고정 파이프라인(텍스처 + 정점 색)으로 그린다 — 조명·안개는 빠지지만 화면은 정상."""
+    gsg = app.win.getGsg() if app.win else None
+    if gsg is None:
+        return GLSL
+    GLSL["renderer"] = f"{gsg.getDriverVendor()} / {gsg.getDriverRenderer()} ({type(gsg).__name__})"
+    import os
+    GLSL["ok"] = bool(gsg.getSupportsGlsl()) and not os.environ.get("ARCTURUS_NO_SHADERS")   # 환경변수: 대비 경로 시험용
+    if not GLSL["ok"]:
+        app.render.setShaderOff(1000)
+    return GLSL

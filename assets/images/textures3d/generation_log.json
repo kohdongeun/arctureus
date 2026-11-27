@@ -1,0 +1,20 @@
+{
+ "grass": {
+  "seed": 5600,
+  "prompt": "seamless tileable top-down texture of lush green grass lawn, hand-painted stylized anime JRPG game texture, even lighting, no shadows, no objects, flat orthographic view",
+  "model": "flux",
+  "seconds": 8.1
+ },
+ "dirt": {
+  "seed": 5601,
+  "prompt": "seamless tileable top-down texture of sandy beige dirt path with small pebbles, hand-painted stylized anime JRPG game texture, even lighting, flat orthographic view",
+  "model": "flux",
+  "seconds": 8.0
+ },
+ "stone": {
+  "seed": 5602,
+  "prompt": "seamless tileable top-down texture of old grey cobblestone paving with moss in the gaps, hand-painted stylized anime JRPG game texture, even lighting, flat orthographic view",
+  "model": "flux",
+  "seconds": 6.5
+ }
+}

@@ -1,22 +1,22 @@
 {
   "luke": {
     "size": [
-      369,
-      677
+      792,
+      970
     ],
     "faces": "right"
   },
   "iris": {
     "size": [
-      407,
-      704
+      513,
+      820
     ],
     "faces": "right"
   },
   "zed": {
     "size": [
-      395,
-      707
+      864,
+      922
     ],
     "faces": "right"
   }

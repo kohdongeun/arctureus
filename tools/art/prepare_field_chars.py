@@ -50,6 +50,14 @@ def mask_white(img: Image.Image, tol=18.0) -> np.ndarray:
 
 def refine(rgb: np.ndarray, a: np.ndarray) -> np.ndarray:
     from scipy import ndimage
+    # 생성 이미지의 바닥 그림자 제거: 캐릭터 아래쪽 14% 띠에서 '무채색이면서 반투명'인 픽셀 (게임이 그림자를 따로 깐다)
+    rows = np.where((a > 0.5).any(axis=1))[0]
+    if len(rows):
+        top, bot = rows[0], rows[-1]
+        band = np.zeros_like(a, bool)
+        band[int(top + (bot - top) * 0.86):] = True
+        neutral = (rgb.max(axis=2) - rgb.min(axis=2)) < 22
+        a = np.where(band & neutral & (a < 0.9), 0.0, a)
     # 모델이 천·머리카락 안쪽을 반투명으로 판단해 배경이 비치는 것을 막는다 (가장자리 부드러움은 유지)
     a = np.clip((a - 0.12) / 0.5, 0, 1)
     # 3) 떨어진 얼룩 제거

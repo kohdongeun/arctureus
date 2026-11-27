@@ -135,6 +135,8 @@ void main() {
     vec3 g = mix(texture(grass_tex, t).rgb, texture(grass_tex, t * 0.37 + 0.21).rgb, 0.35);
     vec3 d = mix(texture(dirt_tex, t).rgb, texture(dirt_tex, t * 0.41 + 0.6).rgb, 0.3);
     vec3 s = texture(stone_tex, t * 0.8).rgb;
+    g *= vec3(0.86, 0.84, 0.8);                      // 생성 잔디의 높은 채도를 숲 색감에 맞춰 낮춤
+    d *= vec3(0.86, 0.84, 0.8);                      // 흙길이 하얗게 뜨지 않게
     vec3 c = mix(g, d, sp.r);
     c = mix(c, s, sp.g);
     c *= 1.0 - sp.b * 0.55;

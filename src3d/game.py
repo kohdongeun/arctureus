@@ -584,6 +584,11 @@ class Game:
         self.world = World(map_id)
         m = self.world.m
         sx, sz = pos or m["start"]
+        if pos and self.world.blocked(sx, sz):
+            # 세이브 이후 맵이 바뀌어 저장 위치에 나무·바위가 생겼으면 가장 가까운 빈 자리로 (없으면 시작 지점)
+            sx, sz = next(((sx + math.cos(a) * r, sz + math.sin(a) * r) for r in (1, 2, 3, 4, 6)
+                           for a in (k * math.tau / 12 for k in range(12))
+                           if not self.world.blocked(sx + math.cos(a) * r, sz + math.sin(a) * r)), m["start"])
         facing = facing or m.get("start_dir", "ne")
         if party:
             # 파티 (루크가 앞장서고 아이리스·제드가 뒤따름)

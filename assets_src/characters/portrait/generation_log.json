@@ -1,0 +1,23 @@
+{
+ "luke": {
+  "seed": 8300,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 19-year-old boy steam knight, messy auburn hair, brass goggles on forehead, soot smudge on cheek, old knight breastplate with brass steam-piston pauldrons, copper-orange jacket, dark trousers, brown boots, large piston greatsword strapped on his back, confident smile, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -1.0,
+  "why": "흰테두리 0%, 잘림 1, 차지 55%"
+ },
+ "iris": {
+  "seed": 8312,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 17-year-old girl resonance mage, shoulder-length platinum blonde hair, teal eyes, small brass clockwork gear hair ornament, white research coat with cyan trim over a faded teal cloak with ancient patterns, teal skirt, white stockings, holding a tuning-fork staff, curious gentle expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.02,
+  "why": "흰테두리 2%, 잘림 0, 차지 54%"
+ },
+ "zed": {
+  "seed": 8320,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.5,
+  "why": "흰테두리 50%, 잘림 0, 차지 2%"
+ }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "sewer",
+  "name": "지하 배수로",
+  "bgm": "bgm_sewer",
+  "size": [28, 13],
+  "dark": 150,
+  "battle_floor": "grate",
+  "ground": {
+    "fill": "grate",
+    "rects": [
+      {"x": 0, "y": 5, "w": 28, "h": 2, "tile": "water"},
+      {"x": 7, "y": 5, "w": 2, "h": 2, "tile": "plank"},
+      {"x": 18, "y": 5, "w": 2, "h": 2, "tile": "plank"},
+      {"x": 10, "y": 8, "w": 5, "h": 3, "tile": "rust"},
+      {"x": 20, "y": 1, "w": 6, "h": 4, "tile": "rust"},
+      {"x": 3, "y": 1, "w": 4, "h": 3, "tile": "rust"}
+    ]
+  },
+  "blocked_tiles": ["water"],
+  "buildings": [
+    {"x": 0, "y": 0, "w": 28, "l": 1, "h": 2, "wall": "metal", "roof": "metal"},
+    {"x": 0, "y": 1, "w": 1, "l": 8, "h": 2, "wall": "metal", "roof": "metal"},
+    {"x": 0, "y": 10, "w": 1, "l": 3, "h": 2, "wall": "metal", "roof": "metal"}
+  ],
+  "props": [
+    {"type": "pipe", "x": 5, "y": 1}, {"type": "pipe", "x": 12, "y": 1}, {"type": "pipe", "x": 17, "y": 1},
+    {"type": "lamp", "x": 3, "y": 8}, {"type": "lamp", "x": 9, "y": 4}, {"type": "lamp", "x": 16, "y": 8},
+    {"type": "lamp", "x": 22, "y": 7}, {"type": "barrel", "x": 14, "y": 2}, {"type": "crate", "x": 15, "y": 2},
+    {"type": "vent", "x": 11, "y": 11}, {"type": "barrel", "x": 25, "y": 10}, {"type": "crate", "x": 26, "y": 9}
+  ],
+  "lights": [[3, 8], [9, 4], [16, 8], [22, 7]],
+  "npcs": [],
+  "exits": [
+    {"tiles": [[1, 9]], "to": "chimney_ward", "pos": [11, 22], "dir": "ne", "label": "굴뚝거리"}
+  ],
+  "encounters": {"table": "sewer", "rate": 0.11, "min_steps": 5, "safe_x_below": 4},
+  "boss": {
+    "id": "boss_rusted_claw", "x": 25, "y": 3, "trigger_x_from": 22, "flag": "boss_rusted_claw_defeated",
+    "pre_scene": "ch1_04",
+    "post": [
+      {"speaker": "narration", "text": "녹슨 집게는 마지막으로 삐걱이더니 조용히 멈췄다."},
+      {"speaker": "iris", "emotion": "sad", "text": "……이제 아프지 않을 거예요. 편히 쉬세요."},
+      {"speaker": "luke", "emotion": "serious", "text": "가자. 저 너머가 폐수 방출구야. 제드의 배가 기다리고 있어."},
+      {"speaker": "system", "text": "데모 플레이는 여기까지입니다. 배수로를 더 돌아다니며 레벨을 올려도 좋습니다."}
+    ]
+  },
+  "start": {"pos": [2, 9], "dir": "se"}
+}

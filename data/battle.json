@@ -1,0 +1,76 @@
+{
+  "_note": "스킬 이름/설명/습득 레벨/MP 는 story.json 의 protagonists[].skills 에서 가져오고, 여기서는 실제 전투 동작만 정의한다.",
+  "start_level": 3,
+  "exp_curve": {"base": 30, "power": 1.5},
+  "atb": {"fill_per_spd": 2.4, "base": 14, "max": 100},
+  "steam_pressure": {"on_hit_dealt": 15, "on_hit_taken": 10, "max": 100, "power_bonus": 1.5},
+
+  "growth": {
+    "luke": {"hp": 34, "mp": 3, "atk": 3.2, "def": 2.4, "mag": 0.6, "res": 1.2, "spd": 0.9},
+    "iris": {"hp": 22, "mp": 11, "atk": 0.8, "def": 1.2, "mag": 3.4, "res": 3.0, "spd": 1.0},
+    "zed": {"hp": 26, "mp": 7, "atk": 2.9, "def": 1.4, "mag": 1.4, "res": 1.4, "spd": 1.6}
+  },
+
+  "attack": {
+    "luke": {"element": "증기", "fx": "slash", "sfx": "sfx_slash", "power": 1.0},
+    "iris": {"element": "공명", "fx": "wave_small", "sfx": "sfx_magic", "power": 1.0, "stat": "mag"},
+    "zed": {"element": "관통", "fx": "shot", "sfx": "sfx_shot", "power": 1.0, "ranged": true}
+  },
+
+  "skills": {
+    "sk_luke_01": {"target": "enemy", "kind": "phys", "power": 1.7, "element": "증기", "fx": "piston", "sfx": "sfx_hit", "steam": 20},
+    "sk_luke_02": {"target": "self", "kind": "buff", "status": {"taunt": 3, "def_up": 3}, "fx": "buff", "sfx": "sfx_buff"},
+    "sk_luke_03": {"target": "all_enemies", "kind": "phys", "power": 0.8, "element": "증기", "fx": "steam", "sfx": "sfx_steam", "status": {"burn": 3}, "reset_steam": true},
+    "sk_luke_04": {"target": "enemy", "kind": "phys", "power": 0.9, "element": "증기", "fx": "wrench", "sfx": "sfx_hit", "status_if_mech": {"stop": 1}},
+    "sk_luke_05": {"target": "all_enemies", "kind": "phys", "power": 1.4, "element": "증기", "fx": "charge", "sfx": "sfx_hit"},
+    "sk_luke_06": {"target": "all_enemies", "kind": "phys", "power": 3.0, "element": "증기", "fx": "ultimate", "sfx": "sfx_fire"},
+
+    "sk_iris_01": {"target": "ally", "kind": "heal", "power": 2.4, "fx": "heal", "sfx": "sfx_heal"},
+    "sk_iris_02": {"target": "enemy", "kind": "mag", "power": 1.6, "element": "공명", "fx": "wave", "sfx": "sfx_wave"},
+    "sk_iris_03": {"target": "all_allies", "kind": "heal", "power": 1.1, "fx": "heal", "sfx": "sfx_heal", "cleanse": true},
+    "sk_iris_04": {"target": "enemy", "kind": "mag", "power": 0.4, "element": "공명", "fx": "stop", "sfx": "sfx_magic", "status": {"stop": 2}},
+    "sk_iris_05": {"target": "all_allies", "kind": "heal", "power": 0.9, "fx": "heal", "sfx": "sfx_heal", "cleanse": true},
+    "sk_iris_06": {"target": "all_allies", "kind": "heal", "power": 9.0, "fx": "heal", "sfx": "sfx_heal", "cleanse": true},
+
+    "sk_zed_01": {"target": "enemy", "kind": "phys", "power": 1.6, "element": "관통", "fx": "shot", "sfx": "sfx_shot", "crit_bonus": 0.35},
+    "sk_zed_02": {"target": "enemy", "kind": "phys", "power": 0.5, "element": "관통", "fx": "hawk", "sfx": "sfx_slash", "status": {"blind": 3}},
+    "sk_zed_03": {"target": "all_enemies", "kind": "phys", "power": 0.9, "element": "관통", "fx": "pellets", "sfx": "sfx_shot"},
+    "sk_zed_04": {"target": "enemy", "kind": "phys", "power": 0.6, "element": "관통", "fx": "steam", "sfx": "sfx_steam", "status": {"stop": 2}},
+    "sk_zed_05": {"target": "enemy", "kind": "debuff", "fx": "buff", "sfx": "sfx_buff", "status": {"exposed": 3}},
+    "sk_zed_06": {"target": "all_enemies", "kind": "phys", "power": 3.2, "element": "관통", "fx": "shot", "sfx": "sfx_shot"}
+  },
+
+  "items": {
+    "item_steam_tonic": {"name": "증기 강장제", "desc": "HP를 120 회복한다.", "target": "ally", "heal_hp": 120, "fx": "heal", "sfx": "sfx_heal"},
+    "item_ether_flask": {"name": "에테르 플라스크", "desc": "에테르(MP)를 40 회복한다.", "target": "ally", "heal_mp": 40, "fx": "heal", "sfx": "sfx_magic"}
+  },
+  "start_items": {"item_steam_tonic": 5, "item_ether_flask": 2},
+
+  "enemies": {
+    "rust_crawler": {"name": "녹슨 기계벌레", "sprite": "monsters/mon_rust_crawler.png", "level": 2,
+      "hp": 110, "atk": 22, "def": 10, "mag": 4, "res": 6, "spd": 11, "exp": 20, "gold": 14,
+      "tags": ["기계"], "weak": ["공명"], "resist": [],
+      "actions": [{"name": "물어뜯기", "kind": "phys", "power": 1.0, "fx": "claw", "weight": 3},
+                  {"name": "녹물 뱉기", "kind": "mag", "power": 0.8, "fx": "rust", "weight": 1, "status": {"burn": 2}}]},
+    "hollow": {"name": "홀로우", "sprite": "monsters/mon_hollow.png", "level": 3,
+      "hp": 130, "atk": 14, "def": 8, "mag": 20, "res": 14, "spd": 13, "exp": 26, "gold": 18,
+      "tags": ["망각"], "weak": ["증기", "공명"], "resist": ["관통"],
+      "actions": [{"name": "망각의 손길", "kind": "mag", "power": 1.1, "fx": "rust", "weight": 2, "drain_mp": 6},
+                  {"name": "할퀴기", "kind": "phys", "power": 0.9, "fx": "claw", "weight": 2}]},
+    "boss_rusted_claw": {"name": "녹슨 집게", "sprite": "monsters/boss_rusted_claw.png", "level": 6, "boss": true,
+      "hp": 900, "atk": 30, "def": 16, "mag": 18, "res": 12, "spd": 12, "exp": 160, "gold": 300,
+      "tags": ["기계"], "weak": ["공명", "증기"], "resist": [],
+      "rage": {"hp_ratio": 0.4, "spd_mult": 1.6, "def_mult": 0.7, "line": "녹슨 집게가 폭주한다!"},
+      "actions": [{"name": "집게 내려찍기", "kind": "phys", "power": 1.35, "fx": "claw", "weight": 3},
+                  {"name": "녹물 분사", "kind": "mag", "power": 0.75, "fx": "rust", "target": "all", "weight": 2, "status": {"burn": 2}}]}
+  },
+
+  "encounters": {
+    "sewer": [
+      {"enemies": ["rust_crawler"], "weight": 2},
+      {"enemies": ["rust_crawler", "rust_crawler"], "weight": 3},
+      {"enemies": ["hollow", "rust_crawler"], "weight": 2},
+      {"enemies": ["hollow", "hollow"], "weight": 1}
+    ]
+  }
+}

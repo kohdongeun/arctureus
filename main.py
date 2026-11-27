@@ -1,41 +1,30 @@
-"""별이 지는 해 : 레비안 연대기 - 진입점 (엔진 구현 전 임시 버전)."""
-import json
+"""황동의 심장 : 아스카론 연대기 — 실행 진입점.
+
+    python main.py            # 게임 실행
+    python tools/autotest.py  # 자동 플레이 테스트 (스크린샷 저장)
+"""
 import os
 import sys
 
-import pygame
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-SCREEN_SIZE = (1280, 720)
+import pygame  # noqa: E402
 
-
-def load_story():
-    with open(os.path.join(ROOT, "data", "story.json"), encoding="utf-8") as f:
-        return json.load(f)
+from src.engine.core import Game  # noqa: E402
+from src.scenes.title import TitleScene  # noqa: E402
 
 
 def main():
-    story = load_story()
+    pygame.mixer.pre_init(22050, -16, 1, 512)
     pygame.init()
-    screen = pygame.display.set_mode(SCREEN_SIZE)
-    pygame.display.set_caption(story["meta"]["title"])
-    clock = pygame.time.Clock()
-
-    # --smoke: 몇 프레임만 돌고 종료 (CI/헤드리스 확인용)
-    frames = 3 if "--smoke" in sys.argv else None
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        screen.fill((12, 14, 32))
-        pygame.display.flip()
-        clock.tick(60)
-        if frames is not None:
-            frames -= 1
-            running = frames > 0
+    try:
+        pygame.mixer.init(22050, -16, 1, 512)
+    except pygame.error:
+        pass  # 사운드 장치가 없어도 게임은 실행
+    game = Game()
+    game.push(TitleScene(game))
+    game.run()
     pygame.quit()
-    print(f"OK: '{story['meta']['title']}' - 챕터 {len(story['chapters'])}개 로드")
 
 
 if __name__ == "__main__":

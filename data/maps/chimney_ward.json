@@ -1,0 +1,53 @@
+{
+  "id": "chimney_ward",
+  "name": "굴뚝거리",
+  "bgm": "bgm_chimney_ward",
+  "size": [24, 24],
+  "ground": {
+    "fill": "cobble",
+    "rects": [
+      {"x": 10, "y": 0, "w": 3, "h": 24, "tile": "road"},
+      {"x": 0, "y": 10, "w": 24, "h": 3, "tile": "road"},
+      {"x": 1, "y": 14, "w": 7, "h": 8, "tile": "moss"},
+      {"x": 14, "y": 1, "w": 8, "h": 7, "tile": "dirt"},
+      {"x": 14, "y": 14, "w": 8, "h": 7, "tile": "plank"}
+    ]
+  },
+  "buildings": [
+    {"name": "모르간 수리점", "x": 2, "y": 2, "w": 5, "l": 4, "h": 3, "wall": "brick", "door": [4, 5]},
+    {"name": "돌집", "x": 15, "y": 2, "w": 5, "l": 4, "h": 4, "wall": "stone", "door": [16, 5]},
+    {"name": "선술집 검은 폐", "x": 15, "y": 15, "w": 6, "l": 4, "h": 3, "wall": "brick", "door": [17, 18]},
+    {"name": "창고", "x": 3, "y": 19, "w": 3, "l": 2, "h": 2, "wall": "plank_wall"}
+  ],
+  "props": [
+    {"type": "lamp", "x": 9, "y": 9}, {"type": "lamp", "x": 13, "y": 9},
+    {"type": "lamp", "x": 9, "y": 13}, {"type": "lamp", "x": 13, "y": 13},
+    {"type": "lamp", "x": 9, "y": 21}, {"type": "lamp", "x": 13, "y": 21},
+    {"type": "barrel", "x": 7, "y": 3}, {"type": "barrel", "x": 7, "y": 4}, {"type": "crate", "x": 8, "y": 3},
+    {"type": "pipe", "x": 7, "y": 2}, {"type": "pipe", "x": 14, "y": 2}, {"type": "pipe", "x": 21, "y": 14},
+    {"type": "crate", "x": 8, "y": 12}, {"type": "barrel", "x": 21, "y": 19},
+    {"type": "tree", "x": 2, "y": 15}, {"type": "tree", "x": 6, "y": 16}, {"type": "tree", "x": 1, "y": 18},
+    {"type": "sign", "x": 8, "y": 6}, {"type": "vent", "x": 20, "y": 8}, {"type": "vent", "x": 4, "y": 8},
+    {"type": "crate", "x": 22, "y": 15}, {"type": "barrel", "x": 14, "y": 16}
+  ],
+  "npcs": [
+    {"id": "morgan", "sprite": "morgan", "x": 4, "y": 6, "dir": "se", "keys": ["prologue"]},
+    {"id": "kid_tobi", "sprite": "tobi", "x": 13, "y": 5, "dir": "sw", "keys": ["default"], "wander": 2},
+    {"id": "granny_bess", "sprite": "bess", "x": 8, "y": 11, "dir": "se", "keys": ["default", "chapter_1"]},
+    {"id": "worker_hank", "sprite": "hank", "x": 17, "y": 19, "dir": "se", "keys": ["default"]},
+    {"id": "guard_rookie", "sprite": "peter", "x": 13, "y": 20, "dir": "sw", "keys": ["default"]}
+  ],
+  "exits": [
+    {"tiles": [[10, 23], [11, 23], [12, 23]], "to": "sewer", "pos": [2, 9], "dir": "se", "label": "지하 배수로"}
+  ],
+  "start": {"pos": [11, 8], "dir": "se"},
+  "on_first_enter": [
+    {"speaker": "narration", "text": "증기력 203년. 황동 도시 브라스하임 하층, 굴뚝거리."},
+    {"speaker": "narration", "text": "근위대의 수색을 피해 모르간 수리점에 숨어든 지 하룻밤. 세 사람은 도시를 빠져나갈 길을 찾고 있다."},
+    {"speaker": "zed", "emotion": "normal", "text": "남쪽 끝 배수로 입구로 내려가면 도시 밖 폐수 방출구까지 이어져. 거기 내 배를 숨겨 뒀지."},
+    {"speaker": "luke", "emotion": "angry", "text": "배수로라면… 요즘 녹슨 것들이 우글거린다던 데잖아."},
+    {"speaker": "iris", "emotion": "smile", "text": "괜찮아요. 저도 싸울 수 있어요. 책에서 전투 이론은 전부 읽었거든요!"},
+    {"speaker": "zed", "emotion": "smile", "text": "…이론이라. 든든하네. 출발 전에 마을 사람들한테 인사라도 하고 가."},
+    {"speaker": "system", "text": "방향키: 이동  /  Z·Enter·Space: 대화·결정  /  X·Esc: 취소·메뉴"}
+  ]
+}

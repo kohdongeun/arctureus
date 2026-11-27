@@ -26,10 +26,10 @@ from src.scenes.title import TitleScene  # noqa: E402
 
 
 def init():
-    pygame.mixer.pre_init(22050, -16, 1, 512)
+    pygame.mixer.pre_init(44100, -16, 2, 1024)
     pygame.init()
     try:
-        pygame.mixer.init(22050, -16, 1, 512)
+        pygame.mixer.init(44100, -16, 2, 1024)
     except pygame.error:
         pass  # 사운드 장치가 없어도 게임은 실행
 

@@ -10,7 +10,8 @@ else:
 DATA = os.path.join(ROOT, "data")
 ASSETS = os.path.join(ROOT, "assets")
 IMAGES = os.path.join(ASSETS, "images")
-SOUNDS = os.path.join(ASSETS, "sounds")
+BGM = os.path.join(ASSETS, "bgm")       # 오케스트라 테마곡 (tools/audio/compose_orchestra.py)
+SFX = os.path.join(ASSETS, "sfx")
 FONTS = os.path.join(ASSETS, "fonts")
 
 SCREEN_W, SCREEN_H = 1280, 720

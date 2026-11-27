@@ -30,7 +30,7 @@ class TitleScene(Scene):
         self.bg.blit(veil, (0, 0))
 
     def on_enter(self):
-        self.game.audio.play_bgm("bgm_chimney_ward")
+        self.game.audio.play_bgm("title")
 
     def update(self, dt):
         self.t += dt

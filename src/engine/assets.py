@@ -65,11 +65,21 @@ class Audio:
         self.music_volume = 0.55
         self.sfx_volume = 0.7
 
+    @staticmethod
+    def _path(name):
+        """테마 이름(town, battle ...) → assets/bgm/<name>.ogg, 짧은 곡(victory)은 assets/sfx 에서도 찾는다"""
+        name = name.replace("bgm_", "")
+        for d in (cfg.BGM, cfg.SFX):
+            p = os.path.join(d, name + ".ogg")
+            if os.path.exists(p):
+                return p
+        return None
+
     def play_bgm(self, bgm_id: str, loop: bool = True, fade_ms: int = 400):
         if not self.enabled or bgm_id == self.current:
             return
-        path = os.path.join(cfg.SOUNDS, "bgm", bgm_id + ".wav")
-        if not os.path.exists(path):
+        path = self._path(bgm_id)
+        if not path:
             return
         self.current = bgm_id
         pygame.mixer.music.load(path)
@@ -85,7 +95,7 @@ class Audio:
         if not self.enabled or not sfx_id:
             return
         if sfx_id not in _sounds:
-            path = os.path.join(cfg.SOUNDS, "sfx", sfx_id + ".wav")
+            path = os.path.join(cfg.SFX, sfx_id.replace("sfx_", "") + ".ogg")
             _sounds[sfx_id] = pygame.mixer.Sound(path) if os.path.exists(path) else None
             if _sounds[sfx_id]:
                 _sounds[sfx_id].set_volume(self.sfx_volume)

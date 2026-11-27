@@ -1,7 +1,7 @@
 {
   "id": "sewer",
   "name": "지하 배수로",
-  "bgm": "bgm_sewer",
+  "bgm": "mystery",
   "size": [28, 13],
   "dark": 150,
   "battle_floor": "grate",

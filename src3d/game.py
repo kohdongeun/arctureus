@@ -500,7 +500,7 @@ class Game:
         if not bgm:
             return
         try:
-            snd = self.app.loader.loadMusic(Filename.fromOsSpecific(os.path.join(ROOT, "assets", "sounds", "bgm", bgm + ".wav")))
+            snd = self.app.loader.loadMusic(Filename.fromOsSpecific(os.path.join(ROOT, "assets", "bgm", bgm + ".ogg")))
             snd.setLoop(True)
             snd.setVolume(0.5)
             snd.play()
@@ -512,7 +512,7 @@ class Game:
         try:
             if name not in self._sfx:
                 self._sfx[name] = self.app.loader.loadSfx(
-                    Filename.fromOsSpecific(os.path.join(ROOT, "assets", "sounds", "sfx", name + ".wav")))
+                    Filename.fromOsSpecific(os.path.join(ROOT, "assets", "sfx", name.replace("sfx_", "") + ".ogg")))
                 self._sfx[name].setVolume(0.6)
             self._sfx[name].play()
         except Exception:  # noqa: BLE001

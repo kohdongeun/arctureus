@@ -1,7 +1,7 @@
 {
   "id": "chimney_ward",
   "name": "굴뚝거리",
-  "bgm": "bgm_chimney_ward",
+  "bgm": "town",
   "size": [24, 24],
   "ground": {
     "fill": "cobble",

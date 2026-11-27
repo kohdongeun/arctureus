@@ -18,28 +18,32 @@
   "seconds": 16.8
  },
  "cecil": {
-  "seed": 1203,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 38.6
+  "seed": 7132,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.26,
+  "why": "흰테두리 86%, 잘림 1, 차지 49%"
  },
  "balthazar": {
-  "seed": 1204,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 173.3
+  "seed": 7142,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.39,
+  "why": "흰테두리 61%, 잘림 1, 차지 57%"
  },
  "morgan": {
-  "seed": 1205,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, 64-year-old cheerful old woman mechanic, grey hair in a bun, leather apron over brown work clothes, brass peg leg, big wrench on her shoulder, hearty grin, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 4.6
+  "seed": 7150,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, 64-year-old cheerful old woman mechanic, grey hair in a bun, leather apron over brown work clothes, brass peg leg, big wrench on her shoulder, hearty grin, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.6,
+  "why": "흰테두리 0%, 잘림 1, 차지 15%"
  },
  "elwin": {
-  "seed": 1206,
-  "prompt": "super deformed chibi figure, big head, tiny body, 3 heads tall, cute SD anime game character, young elf scout, short blonde hair, long pointed ears, green hooded tunic, brown leggings, quiver of arrows on back, energetic expression, three-quarter view facing left, full body standing, single character centered, 2000s classic Korean JRPG Arcturus style, 3.5-head-tall cute anime chibi character full body, clean dark outlines, vibrant cel-shaded coloring, standing on solid pure white background, no background clutter, high detail",
-  "model": "flux",
-  "seconds": 60.9
+  "seed": 7161,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, young elf scout, short blonde hair, long pointed ears, green hooded tunic, brown leggings, quiver of arrows on back, energetic expression, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.59,
+  "why": "흰테두리 1%, 잘림 1, 차지 18%"
  },
  "silvaen": {
   "seed": 1207,

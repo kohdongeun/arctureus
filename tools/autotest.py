@@ -400,10 +400,10 @@ def main():
     random.seed(seed)
     os.makedirs(shots, exist_ok=True)
     os.environ["ARCTURUS_SAVE_DIR"] = tempfile.mkdtemp(prefix="arcturus_saves_")   # 실제 세이브를 건드리지 않음
-    pygame.mixer.pre_init(22050, -16, 1, 512)
+    pygame.mixer.pre_init(44100, -16, 2, 1024)
     pygame.init()
     try:
-        pygame.mixer.init(22050, -16, 1, 512)
+        pygame.mixer.init(44100, -16, 2, 1024)
     except pygame.error:
         pass
     t0 = time.time()

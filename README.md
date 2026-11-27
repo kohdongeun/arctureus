@@ -47,7 +47,7 @@ python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NP
 - **세이브/로드**: 필드 메뉴(X) → 저장 (슬롯 3개, 덮어쓰기 확인), 타이틀 → 이어하기.
   저장 위치: Windows `%APPDATA%\\Arcturus_RPG\\saves`, macOS `~/Library/Application Support/Arcturus_RPG/saves`,
   Linux `~/.local/share/Arcturus_RPG/saves` (`ARCTURUS_SAVE_DIR` 로 변경 가능)
-- **사운드**: 직접 작곡·합성한 BGM 4곡(마을/배수로/전투/승리, `.mid` 동봉)과 효과음 21종
+- **사운드**: 직접 작곡해 FluidSynth + FluidR3_GM 오케스트라 사운드폰트로 렌더링한 BGM 8곡(title/town/field/battle/tense/sad/mystery/epic, `.mid` 원본 동봉)과 효과음 22종 (`assets/bgm`, `assets/sfx`)
 
 ## 폴더
 ```
@@ -69,7 +69,7 @@ tools/autotest.py       자동 플레이 테스트
 ```bash
 python tools/art/gen_pixel_art.py      # 캐릭터 스프라이트·타일·블록·소품
 python tools/art/process_assets.py     # assets_src/raw 의 일러스트 → assets/images
-python tools/audio/gen_audio.py        # BGM(.wav + .mid)·효과음
+python tools/audio/compose_orchestra.py  # 오케스트라 BGM 8곡(assets/bgm)·효과음(assets/sfx), FluidSynth + FluidR3_GM 필요
 ```
 
 ## 테스트
@@ -79,6 +79,7 @@ python tools/autotest.py               # 화면 없이 타이틀~보스까지 �
 
 ## 라이선스 메모
 - 폰트: Galmuri (SIL OFL 1.1, `assets/fonts/OFL-Galmuri.md`), 나눔명조·나눔고딕 (SIL OFL 1.1, `assets/fonts/OFL-Nanum.txt`)
+- 사운드폰트: FluidR3_GM (MIT) — 렌더링에만 사용, 저장소에는 결과 OGG 만 포함
 - 그 외 그래픽·사운드는 이 저장소의 스크립트로 생성한 것
 
 ## 실행 파일(.exe) 빌드

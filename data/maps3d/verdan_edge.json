@@ -4,7 +4,7 @@
   "subtitle": "녹안개가 닿기 직전의 마지막 푸른 숲",
   "size": 80,
   "seed": 11,
-  "bgm": "bgm_sewer",
+  "bgm": "field",
   "paths": [
     {
       "points": [

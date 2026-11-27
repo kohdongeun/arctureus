@@ -119,7 +119,7 @@ class BattleScene(Scene):
         self.say(f"{names} 이(가) 나타났다!", 1.6)
 
     def on_enter(self):
-        self.game.audio.play_bgm("bgm_battle", fade_ms=200)
+        self.game.audio.play_bgm("tense" if self.boss else "battle", fade_ms=200)
         self.game.emit("battle_start", enemies=[e.enemy["id"] for e in self.enemies])
 
     # ------------------------------------------------------------ 유틸
@@ -588,7 +588,7 @@ class BattleScene(Scene):
 
     def victory(self):
         self.state = "victory"
-        self.game.audio.play_bgm("bgm_victory", loop=False, fade_ms=0)
+        self.game.audio.play_bgm("victory", loop=False, fade_ms=0)
         exp = sum(e.enemy["exp"] for e in self.enemies)
         gold = sum(e.enemy["gold"] for e in self.enemies)
         st = self.game.state

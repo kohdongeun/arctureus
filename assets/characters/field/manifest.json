@@ -61,5 +61,40 @@
       645
     ],
     "faces": "left"
+  },
+  "kid_tobi": {
+    "size": [
+      492,
+      724
+    ],
+    "faces": "left"
+  },
+  "granny_bess": {
+    "size": [
+      320,
+      609
+    ],
+    "faces": "left"
+  },
+  "guard_rookie": {
+    "size": [
+      320,
+      689
+    ],
+    "faces": "left"
+  },
+  "innkeeper": {
+    "size": [
+      405,
+      712
+    ],
+    "faces": "left"
+  },
+  "blacksmith": {
+    "size": [
+      578,
+      708
+    ],
+    "faces": "left"
   }
 }

@@ -1,0 +1,573 @@
+{
+ "id": "chimney_ward",
+ "name": "굴뚝거리",
+ "subtitle": "증기와 그을음의 하층 마을",
+ "size": 64,
+ "seed": 41,
+ "bgm": "town",
+ "flat": 0.12,
+ "paths": [
+  {
+   "points": [
+    [
+     0,
+     -32
+    ],
+    [
+     0,
+     -12
+    ],
+    [
+     0,
+     4
+    ]
+   ],
+   "width": 5.0
+  },
+  {
+   "points": [
+    [
+     -26,
+     4
+    ],
+    [
+     -10,
+     5
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     10,
+     5
+    ],
+    [
+     26,
+     4
+    ]
+   ],
+   "width": 4.4
+  },
+  {
+   "points": [
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     12
+    ]
+   ],
+   "width": 4.0
+  }
+ ],
+ "clearings": [
+  [
+   0,
+   4,
+   8.5
+  ],
+  [
+   -11,
+   10,
+   4.0
+  ],
+  [
+   11,
+   10,
+   4.0
+  ],
+  [
+   0,
+   12,
+   3.5
+  ]
+ ],
+ "stone_areas": [
+  [
+   0,
+   4,
+   8.0
+  ],
+  [
+   -11,
+   10,
+   3.6
+  ],
+  [
+   11,
+   10,
+   3.6
+  ],
+  [
+   0,
+   12,
+   3.2
+  ],
+  [
+   0,
+   -8,
+   3.0
+  ],
+  [
+   0,
+   -18,
+   3.0
+  ]
+ ],
+ "hills": [
+  [
+   -24,
+   24,
+   7,
+   2.6
+  ],
+  [
+   24,
+   24,
+   7,
+   2.6
+  ],
+  [
+   -26,
+   -24,
+   6,
+   2.0
+  ],
+  [
+   26,
+   -26,
+   6,
+   2.0
+  ]
+ ],
+ "trees": 12,
+ "bushes": 22,
+ "rocks": 5,
+ "tufts": 220,
+ "flowers": 140,
+ "start": [
+  0.0,
+  -20.5
+ ],
+ "start_dir": "ne",
+ "buildings": [
+  {
+   "pos": [
+    -11,
+    15
+   ],
+   "size": [
+    8,
+    5.5
+   ],
+   "height": 5.4,
+   "floors": 2,
+   "wall": "plaster",
+   "roof": "red",
+   "sign": "inn",
+   "chimney": true,
+   "pipes": true
+  },
+  {
+   "pos": [
+    0,
+    17.5
+   ],
+   "size": [
+    7,
+    5
+   ],
+   "height": 4.2,
+   "wall": "brick",
+   "roof": "copper",
+   "sign": "item",
+   "chimney": true,
+   "pipes": true
+  },
+  {
+   "pos": [
+    11,
+    15
+   ],
+   "size": [
+    7.5,
+    5.5
+   ],
+   "height": 4.4,
+   "wall": "brick",
+   "roof": "slate",
+   "sign": "weapon",
+   "chimney": true
+  },
+  {
+   "pos": [
+    -18.5,
+    -2
+   ],
+   "size": [
+    3.6,
+    3.6
+   ],
+   "height": 10.5,
+   "wall": "brick",
+   "roof": "copper",
+   "door": false,
+   "windows": false,
+   "clock": true,
+   "chimney": false,
+   "pipes": true
+  },
+  {
+   "pos": [
+    -18.5,
+    6.5
+   ],
+   "size": [
+    6,
+    5
+   ],
+   "height": 4.0,
+   "rot": 270,
+   "wall": "wood",
+   "roof": "red",
+   "chimney": true
+  },
+  {
+   "pos": [
+    18.5,
+    6.5
+   ],
+   "size": [
+    6,
+    5
+   ],
+   "height": 4.6,
+   "rot": 90,
+   "floors": 2,
+   "wall": "plaster",
+   "roof": "slate",
+   "chimney": true
+  },
+  {
+   "pos": [
+    18.5,
+    -4.5
+   ],
+   "size": [
+    5.5,
+    5
+   ],
+   "height": 3.8,
+   "rot": 90,
+   "wall": "brick",
+   "roof": "red",
+   "chimney": true,
+   "pipes": true
+  },
+  {
+   "pos": [
+    -9.5,
+    -12
+   ],
+   "size": [
+    6,
+    5
+   ],
+   "height": 4.0,
+   "rot": 270,
+   "wall": "brick",
+   "roof": "slate",
+   "chimney": true
+  },
+  {
+   "pos": [
+    9.5,
+    -12
+   ],
+   "size": [
+    6,
+    5
+   ],
+   "height": 4.6,
+   "rot": 90,
+   "floors": 2,
+   "wall": "plaster",
+   "roof": "red",
+   "chimney": true,
+   "pipes": true
+  },
+  {
+   "pos": [
+    -9.5,
+    -20.5
+   ],
+   "size": [
+    5,
+    4.5
+   ],
+   "height": 3.6,
+   "rot": 270,
+   "wall": "wood",
+   "roof": "copper",
+   "chimney": true
+  },
+  {
+   "pos": [
+    9.5,
+    -20.5
+   ],
+   "size": [
+    5,
+    4.5
+   ],
+   "height": 3.6,
+   "rot": 90,
+   "wall": "brick",
+   "roof": "slate",
+   "chimney": true
+  }
+ ],
+ "lamps": [
+  [
+   -4.5,
+   9.5
+  ],
+  [
+   4.5,
+   9.5
+  ],
+  [
+   -6,
+   -1
+  ],
+  [
+   6,
+   -1
+  ],
+  [
+   -3,
+   -9
+  ],
+  [
+   3,
+   -9
+  ],
+  [
+   -3,
+   -17
+  ],
+  [
+   3,
+   -17
+  ]
+ ],
+ "crates": [
+  [
+   15.2,
+   11.6,
+   0.8
+  ],
+  [
+   16.2,
+   12.6,
+   0.6
+  ],
+  [
+   8.6,
+   -3.6,
+   0.7
+  ],
+  [
+   9.5,
+   -4.4,
+   0.55
+  ],
+  [
+   -15.4,
+   11.4,
+   0.7
+  ],
+  [
+   -3.4,
+   -23.0,
+   0.8
+  ],
+  [
+   3.4,
+   -23.2,
+   0.7
+  ]
+ ],
+ "npcs": [
+  {
+   "id": "innkeeper",
+   "name": "여관 주인 마사",
+   "sprite": "innkeeper",
+   "fallback": "lina",
+   "pos": [
+    -11,
+    10.6
+   ],
+   "dir": "se",
+   "town": "chimney_ward",
+   "inn": true,
+   "greeting": "어서 와요, 증기 주전자 여관이에요! 따끈한 침대랑 수프가 기다리고 있어요."
+  },
+  {
+   "id": "morgan",
+   "sprite": "morgan",
+   "pos": [
+    0,
+    13.2
+   ],
+   "dir": "se",
+   "town": "chimney_ward",
+   "shop": "item_shop",
+   "greeting": "왔구나, 루크. 약이든 옷이든 쓸 만한 건 다 있다. 단, 외상은 안 된다."
+  },
+  {
+   "id": "blacksmith",
+   "name": "대장장이 브론",
+   "sprite": "blacksmith",
+   "fallback": "torbin",
+   "pos": [
+    11,
+    10.6
+   ],
+   "dir": "sw",
+   "town": "chimney_ward",
+   "shop": "weapon_shop",
+   "greeting": "톱니 대장간이다. 좋은 쇠는 좋은 주인을 알아보지. 골라 봐라."
+  },
+  {
+   "id": "kid_tobi",
+   "sprite": "kid_tobi",
+   "fallback": "elwin",
+   "pos": [
+    4.5,
+    2.5
+   ],
+   "dir": "sw",
+   "town": "chimney_ward",
+   "keys": [
+    "default"
+   ]
+  },
+  {
+   "id": "worker_hank",
+   "sprite": "worker_hank",
+   "fallback": "torbin",
+   "pos": [
+    -6.5,
+    -1.5
+   ],
+   "dir": "se",
+   "town": "chimney_ward",
+   "keys": [
+    "default"
+   ]
+  },
+  {
+   "id": "granny_bess",
+   "sprite": "granny_bess",
+   "fallback": "morgan",
+   "pos": [
+    7.4,
+    -5.0
+   ],
+   "dir": "sw",
+   "town": "chimney_ward",
+   "keys": [
+    "default"
+   ]
+  },
+  {
+   "id": "guard_rookie",
+   "sprite": "guard_rookie",
+   "fallback": "elwin",
+   "pos": [
+    3.0,
+    -16.0
+   ],
+   "dir": "sw",
+   "town": "chimney_ward",
+   "keys": [
+    "default"
+   ]
+  }
+ ],
+ "chests": [
+  {
+   "id": "t1",
+   "pos": [
+    -21.5,
+    14.5
+   ],
+   "items": [
+    "key_oath_seal_3",
+    "x_lucky_nut"
+   ]
+  },
+  {
+   "id": "t2",
+   "pos": [
+    22.0,
+    -11.5
+   ],
+   "items": [
+    "w_pirate_king"
+   ]
+  },
+  {
+   "id": "t3",
+   "pos": [
+    -22.0,
+    -9.5
+   ],
+   "items": [
+    "a_rusted_knight_mail"
+   ]
+  },
+  {
+   "id": "t4",
+   "pos": [
+    19.5,
+    20.0
+   ],
+   "items": [
+    "w_frost_fang",
+    "item_grand_elixir"
+   ]
+  },
+  {
+   "id": "t5",
+   "pos": [
+    -14.5,
+    -23.0
+   ],
+   "gold": 500,
+   "items": [
+    "a_shadow_cloak"
+   ]
+  }
+ ],
+ "exits": [
+  {
+   "pos": [
+    0.0,
+    -24.0
+   ],
+   "r": 2.0,
+   "to": "verdan_edge",
+   "spawn": [
+    -27.5,
+    3.5
+   ],
+   "dir": "se",
+   "travel": "알바트로스호를 타고 베르단 숲으로 내려왔다."
+  }
+ ]
+}

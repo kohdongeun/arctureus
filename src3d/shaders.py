@@ -132,7 +132,7 @@ out vec4 vcolor;
 out vec3 wpos;
 void main() {
     vec4 p = p3d_Vertex;
-    float v = p3d_MultiTexCoord0.y;
+    float v = p.y;                                       // 몸 기준 높이 (0=발, 1=머리) — 무기 층도 같은 좌표계
     float leg = clamp((0.34 - v) / 0.34, 0.0, 1.0);
     float side = clamp(p.x * 5.0, -1.0, 1.0);            // 왼다리 -1, 오른다리 +1
     float s = sin(phase);

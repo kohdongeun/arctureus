@@ -1,0 +1,1612 @@
+{
+ "_note": "python tools/data/make_equipment.py 로 생성. 무기 그림은 tools/art/gen_equipment.py 가 art 값으로 그린다.",
+ "weapons": {
+  "w_ashbringer_raw": {
+   "id": "w_ashbringer_raw",
+   "name": "애쉬브링어(미완성)",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 0,
+   "stats": {
+    "atk": 8
+   },
+   "art": {
+    "type": "sword",
+    "shape": "straight",
+    "metal": "steel",
+    "guard": "bar",
+    "hilt": "leather",
+    "gem": null
+   },
+   "desc": "아버지의 부러진 기사검을 7년 동안 고쳐 만든 증기 대검.",
+   "price": 0,
+   "source": "start"
+  },
+  "w_broadsword": {
+   "id": "w_broadsword",
+   "name": "강철 브로드소드",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 1,
+   "stats": {
+    "atk": 10
+   },
+   "art": {
+    "type": "sword",
+    "shape": "straight",
+    "metal": "steel",
+    "guard": "bar",
+    "hilt": "leather",
+    "gem": null,
+    "width": 0.85
+   },
+   "desc": "굴뚝거리 대장간의 기본 대검. 튼튼하고 정직하다.",
+   "price": 180,
+   "source": "shop"
+  },
+  "w_rivet_claymore": {
+   "id": "w_rivet_claymore",
+   "name": "리벳 클레이모어",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 2,
+   "stats": {
+    "atk": 18,
+    "def": 2
+   },
+   "art": {
+    "type": "sword",
+    "shape": "straight",
+    "metal": "iron",
+    "guard": "wing",
+    "hilt": "leather",
+    "gem": null,
+    "rivets": true
+   },
+   "desc": "리벳으로 덧댄 철판이 무게를 더한다.",
+   "price": 520,
+   "source": "shop"
+  },
+  "w_piston_blade": {
+   "id": "w_piston_blade",
+   "name": "증기 피스톤 블레이드",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 3,
+   "stats": {
+    "atk": 28
+   },
+   "art": {
+    "type": "sword",
+    "shape": "piston",
+    "metal": "steel",
+    "guard": "gear",
+    "hilt": "brass",
+    "gem": "amber",
+    "pipes": true
+   },
+   "desc": "피스톤이 칼날을 밀어내 일격의 무게를 더한다. 증기 속성.",
+   "price": 1300,
+   "source": "shop",
+   "element": "증기"
+  },
+  "w_gear_greatsword": {
+   "id": "w_gear_greatsword",
+   "name": "황동 톱니 대검",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 4,
+   "stats": {
+    "atk": 38,
+    "spd": 2
+   },
+   "art": {
+    "type": "sword",
+    "shape": "serrated",
+    "metal": "brass",
+    "guard": "gear",
+    "hilt": "brass",
+    "gem": "amber"
+   },
+   "desc": "톱니 칼날이 기계의 이음새를 물어뜯는다.",
+   "price": 2900,
+   "source": "shop"
+  },
+  "w_ether_buster": {
+   "id": "w_ether_buster",
+   "name": "에테르 버스터",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 5,
+   "stats": {
+    "atk": 52,
+    "mag": 6
+   },
+   "art": {
+    "type": "sword",
+    "shape": "cleaver",
+    "metal": "dark",
+    "guard": "wing",
+    "hilt": "brass",
+    "gem": "cyan",
+    "glow": "cyan",
+    "runes": true
+   },
+   "desc": "칼날 속 에테르 관이 푸르게 빛난다.",
+   "price": 6200,
+   "source": "shop"
+  },
+  "w_furnace_zanbato": {
+   "id": "w_furnace_zanbato",
+   "name": "용광로 참마도",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 6,
+   "stats": {
+    "atk": 66
+   },
+   "art": {
+    "type": "sword",
+    "shape": "flame",
+    "metal": "dark",
+    "guard": "gear",
+    "hilt": "brass",
+    "gem": "ruby",
+    "glow": "orange",
+    "runes": true
+   },
+   "desc": "용광로의 열을 품은 거대한 참마도. 증기 속성.",
+   "price": 11500,
+   "source": "shop",
+   "element": "증기",
+   "crit": 0.05
+  },
+  "w_rusted_knight": {
+   "id": "w_rusted_knight",
+   "name": "녹슨 기사의 대검",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 3,
+   "stats": {
+    "atk": 26,
+    "res": 6
+   },
+   "art": {
+    "type": "sword",
+    "shape": "straight",
+    "metal": "rust",
+    "guard": "wing",
+    "hilt": "leather",
+    "gem": "jade"
+   },
+   "desc": "숲에 잠든 옛 서약 기사의 검. 녹 아래 서약의 문장이 보인다.",
+   "price": 900,
+   "source": "chest"
+  },
+  "w_frost_fang": {
+   "id": "w_frost_fang",
+   "name": "서리 송곳니",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 4,
+   "stats": {
+    "atk": 40,
+    "spd": 3
+   },
+   "art": {
+    "type": "sword",
+    "shape": "fang",
+    "metal": "ice",
+    "guard": "wing",
+    "hilt": "silver",
+    "gem": "cyan",
+    "glow": "white"
+   },
+   "desc": "차가운 공명이 깃든 검. 공명 속성.",
+   "price": 2000,
+   "source": "chest",
+   "element": "공명",
+   "crit": 0.04
+  },
+  "w_oath_oscar": {
+   "id": "w_oath_oscar",
+   "name": "서약검 오스카",
+   "slot": "weapon",
+   "chars": [
+    "luke"
+   ],
+   "tier": 7,
+   "stats": {
+    "atk": 110,
+    "def": 10
+   },
+   "art": {
+    "type": "sword",
+    "shape": "holy",
+    "metal": "gold",
+    "guard": "wing",
+    "hilt": "gold",
+    "gem": "white",
+    "glow": "gold",
+    "runes": true
+   },
+   "desc": "마지막 서약 기사 오스카의 진짜 검. 맹세의 빛이 녹을 태운다. 맹세 속성.",
+   "price": 30000,
+   "source": "legend",
+   "element": "맹세",
+   "crit": 0.1
+  },
+  "w_tuning_fork": {
+   "id": "w_tuning_fork",
+   "name": "공명 소리굽쇠",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 0,
+   "stats": {
+    "mag": 8
+   },
+   "art": {
+    "type": "staff",
+    "head": "fork",
+    "shaft": "iron",
+    "gem": null
+   },
+   "desc": "아이리스가 처음부터 들고 있던 소리굽쇠 지팡이.",
+   "price": 0,
+   "source": "start"
+  },
+  "w_oak_staff": {
+   "id": "w_oak_staff",
+   "name": "참나무 지팡이",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 1,
+   "stats": {
+    "mag": 10,
+    "mp": 10
+   },
+   "art": {
+    "type": "staff",
+    "head": "knot",
+    "shaft": "wood",
+    "gem": "jade"
+   },
+   "desc": "숲 참나무로 깎은 소박한 지팡이.",
+   "price": 180,
+   "source": "shop"
+  },
+  "w_bronze_rod": {
+   "id": "w_bronze_rod",
+   "name": "청동 공명봉",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 2,
+   "stats": {
+    "mag": 18,
+    "res": 3
+   },
+   "art": {
+    "type": "staff",
+    "head": "ring",
+    "shaft": "brass",
+    "gem": "cyan"
+   },
+   "desc": "고리가 맑게 울린다.",
+   "price": 520,
+   "source": "shop"
+  },
+  "w_crystal_fork": {
+   "id": "w_crystal_fork",
+   "name": "수정 소리굽쇠",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 3,
+   "stats": {
+    "mag": 28,
+    "mp": 20
+   },
+   "art": {
+    "type": "staff",
+    "head": "crystal_fork",
+    "shaft": "silver",
+    "gem": "cyan",
+    "glow": "cyan"
+   },
+   "desc": "수정 갈래가 공명을 증폭한다.",
+   "price": 1300,
+   "source": "shop"
+  },
+  "w_clock_scepter": {
+   "id": "w_clock_scepter",
+   "name": "시계태엽 셉터",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 4,
+   "stats": {
+    "mag": 38,
+    "spd": 2
+   },
+   "art": {
+    "type": "staff",
+    "head": "gear",
+    "shaft": "brass",
+    "gem": "amber",
+    "glow": "amber"
+   },
+   "desc": "끝에서 작은 태엽이 쉬지 않고 돈다.",
+   "price": 2900,
+   "source": "shop"
+  },
+  "w_ether_harp": {
+   "id": "w_ether_harp",
+   "name": "에테르 하프 스태프",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 5,
+   "stats": {
+    "mag": 52,
+    "res": 8
+   },
+   "art": {
+    "type": "staff",
+    "head": "harp",
+    "shaft": "silver",
+    "gem": "violet",
+    "glow": "violet"
+   },
+   "desc": "에테르 현이 바람에 노래한다.",
+   "price": 6200,
+   "source": "shop"
+  },
+  "w_constellation": {
+   "id": "w_constellation",
+   "name": "성좌의 지휘봉",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 6,
+   "stats": {
+    "mag": 66,
+    "mp": 40
+   },
+   "art": {
+    "type": "staff",
+    "head": "star",
+    "shaft": "gold",
+    "gem": "white",
+    "glow": "gold"
+   },
+   "desc": "별자리를 지휘하듯 공명을 다룬다.",
+   "price": 11500,
+   "source": "shop",
+   "crit": 0.03
+  },
+  "w_elder_branch": {
+   "id": "w_elder_branch",
+   "name": "고목의 가지",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 3,
+   "stats": {
+    "mag": 26,
+    "hp": 40
+   },
+   "art": {
+    "type": "staff",
+    "head": "leaf",
+    "shaft": "wood",
+    "gem": "jade",
+    "glow": "green"
+   },
+   "desc": "고목이 스스로 내어 준 가지. 생명이 깃들어 있다.",
+   "price": 900,
+   "source": "chest"
+  },
+  "w_moon_rod": {
+   "id": "w_moon_rod",
+   "name": "달빛 공명봉",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 4,
+   "stats": {
+    "mag": 40,
+    "res": 6
+   },
+   "art": {
+    "type": "staff",
+    "head": "crescent",
+    "shaft": "silver",
+    "gem": "white",
+    "glow": "white"
+   },
+   "desc": "달빛을 머금은 초승달 지팡이.",
+   "price": 2000,
+   "source": "chest",
+   "crit": 0.05
+  },
+  "w_eleion": {
+   "id": "w_eleion",
+   "name": "천년의 공명봉 엘레이온",
+   "slot": "weapon",
+   "chars": [
+    "iris"
+   ],
+   "tier": 7,
+   "stats": {
+    "mag": 110,
+    "mp": 80,
+    "res": 15
+   },
+   "art": {
+    "type": "staff",
+    "head": "halo",
+    "shaft": "gold",
+    "gem": "cyan",
+    "glow": "cyan"
+   },
+   "desc": "천 년 전 대마도사가 녹안개를 봉인할 때 쓴 지팡이.",
+   "price": 30000,
+   "source": "legend",
+   "crit": 0.06
+  },
+  "w_old_rifle": {
+   "id": "w_old_rifle",
+   "name": "구식 에테르 소총",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 0,
+   "stats": {
+    "atk": 8
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "walnut",
+    "metal": "iron",
+    "barrels": 2,
+    "scope": false
+   },
+   "desc": "제드가 오래 써 온 에테르 소총.",
+   "price": 0,
+   "source": "start"
+  },
+  "w_musket": {
+   "id": "w_musket",
+   "name": "사냥용 머스킷",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 1,
+   "stats": {
+    "atk": 10
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "oak",
+    "metal": "iron",
+    "barrels": 1,
+    "scope": false
+   },
+   "desc": "흔한 사냥총이지만 잘 맞는다.",
+   "price": 180,
+   "source": "shop"
+  },
+  "w_double_barrel": {
+   "id": "w_double_barrel",
+   "name": "쌍열 엽총",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 2,
+   "stats": {
+    "atk": 17,
+    "spd": 2
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "walnut",
+    "metal": "steel",
+    "barrels": 2,
+    "scope": false,
+    "short": true
+   },
+   "desc": "두 발을 연달아 쏜다.",
+   "price": 520,
+   "source": "shop"
+  },
+  "w_brass_sniper": {
+   "id": "w_brass_sniper",
+   "name": "황동 저격총",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "atk": 27
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "walnut",
+    "metal": "brass",
+    "barrels": 1,
+    "scope": true
+   },
+   "desc": "황동 망원 조준경이 달린 저격총.",
+   "price": 1300,
+   "source": "shop",
+   "crit": 0.05
+  },
+  "w_steam_repeater": {
+   "id": "w_steam_repeater",
+   "name": "스팀 리피터",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "atk": 37,
+    "spd": 3
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "dark",
+    "metal": "brass",
+    "barrels": 1,
+    "scope": false,
+    "drum": true,
+    "pipes": true
+   },
+   "desc": "증기압으로 연사하는 회전 탄창 소총.",
+   "price": 2900,
+   "source": "shop"
+  },
+  "w_ether_railgun": {
+   "id": "w_ether_railgun",
+   "name": "에테르 레일건",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 5,
+   "stats": {
+    "atk": 51,
+    "mag": 6
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "dark",
+    "metal": "dark",
+    "barrels": 1,
+    "scope": true,
+    "coils": true,
+    "glow": "cyan"
+   },
+   "desc": "에테르 코일이 탄환을 가속한다. 공명 속성.",
+   "price": 6200,
+   "source": "shop",
+   "element": "공명"
+  },
+  "w_sky_hunter": {
+   "id": "w_sky_hunter",
+   "name": "천공의 사냥꾼",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 6,
+   "stats": {
+    "atk": 65
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "red",
+    "metal": "gold",
+    "barrels": 1,
+    "scope": true,
+    "coils": true,
+    "glow": "gold",
+    "bayonet": true
+   },
+   "desc": "하늘해적들 사이에서 전설로 불리는 장총.",
+   "price": 11500,
+   "source": "shop",
+   "crit": 0.08
+  },
+  "w_pirate_king": {
+   "id": "w_pirate_king",
+   "name": "해적왕의 장총",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "atk": 29,
+    "spd": 4
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "red",
+    "metal": "gold",
+    "barrels": 1,
+    "scope": false,
+    "bayonet": true
+   },
+   "desc": "옛 해적왕의 금박 장총.",
+   "price": 900,
+   "source": "chest",
+   "crit": 0.03
+  },
+  "w_hawk_eye": {
+   "id": "w_hawk_eye",
+   "name": "매의 눈",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "atk": 40
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "oak",
+    "metal": "silver",
+    "barrels": 1,
+    "scope": true,
+    "glow": "white"
+   },
+   "desc": "핀의 시야와 연결되는 조준경.",
+   "price": 2000,
+   "source": "chest",
+   "crit": 0.1
+  },
+  "w_albatross_nova": {
+   "id": "w_albatross_nova",
+   "name": "알바트로스 노바",
+   "slot": "weapon",
+   "chars": [
+    "zed"
+   ],
+   "tier": 7,
+   "stats": {
+    "atk": 108,
+    "spd": 10
+   },
+   "art": {
+    "type": "rifle",
+    "wood": "dark",
+    "metal": "gold",
+    "barrels": 2,
+    "scope": true,
+    "coils": true,
+    "glow": "violet",
+    "bayonet": true
+   },
+   "desc": "알바트로스호의 주포를 줄여 만든 전설의 장총.",
+   "price": 30000,
+   "source": "legend",
+   "crit": 0.12
+  }
+ },
+ "armors": {
+  "a_old_oath_plate": {
+   "id": "a_old_oath_plate",
+   "name": "낡은 서약 흉갑",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 0,
+   "stats": {
+    "def": 6
+   },
+   "desc": "아버지의 흉갑에 피스톤 견갑을 덧댔다.",
+   "price": -20,
+   "source": "start",
+   "color": "brass"
+  },
+  "a_padded_plate": {
+   "id": "a_padded_plate",
+   "name": "가죽 덧댐 흉갑",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 1,
+   "stats": {
+    "def": 8,
+    "hp": 10
+   },
+   "desc": "가죽을 덧대 충격을 줄인다.",
+   "price": 160,
+   "source": "shop",
+   "color": "leather"
+  },
+  "a_rivet_armor": {
+   "id": "a_rivet_armor",
+   "name": "리벳 강철 갑옷",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 2,
+   "stats": {
+    "def": 15,
+    "hp": 20
+   },
+   "desc": "리벳으로 짠 강철 갑옷.",
+   "price": 500,
+   "source": "shop",
+   "color": "steel"
+  },
+  "a_steam_plate": {
+   "id": "a_steam_plate",
+   "name": "증기 판금 갑옷",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 24,
+    "hp": 50
+   },
+   "desc": "증기 완충 장치가 든 판금 갑옷.",
+   "price": 1280,
+   "source": "shop",
+   "color": "steel"
+  },
+  "a_brass_guard_mail": {
+   "id": "a_brass_guard_mail",
+   "name": "황동 근위 갑주",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 4,
+   "stats": {
+    "def": 34,
+    "res": 6
+   },
+   "desc": "근위대 장교용 갑주.",
+   "price": 2880,
+   "source": "shop",
+   "color": "brass"
+  },
+  "a_ether_plate": {
+   "id": "a_ether_plate",
+   "name": "에테르 강화 갑주",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 5,
+   "stats": {
+    "def": 46,
+    "hp": 120
+   },
+   "desc": "에테르 결계가 흐르는 갑주.",
+   "price": 6180,
+   "source": "shop",
+   "color": "cyan"
+  },
+  "a_rusted_knight_mail": {
+   "id": "a_rusted_knight_mail",
+   "name": "녹슨 기사의 갑옷",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 22,
+    "res": 10
+   },
+   "desc": "옛 서약 기사의 갑옷.",
+   "price": 850,
+   "source": "chest",
+   "color": "rust"
+  },
+  "a_oath_holy_plate": {
+   "id": "a_oath_holy_plate",
+   "name": "서약 기사의 성갑",
+   "slot": "armor",
+   "kind": "heavy",
+   "chars": [
+    "luke"
+   ],
+   "tier": 7,
+   "stats": {
+    "def": 80,
+    "res": 30,
+    "hp": 300
+   },
+   "desc": "서약의 빛이 깃든 성갑. 녹이 닿지 못한다.",
+   "price": 28000,
+   "source": "legend",
+   "color": "gold"
+  },
+  "a_lab_coat": {
+   "id": "a_lab_coat",
+   "name": "연구원 가운",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 0,
+   "stats": {
+    "def": 3,
+    "res": 6
+   },
+   "desc": "기술원 연구복.",
+   "price": -20,
+   "source": "start",
+   "color": "white"
+  },
+  "a_novice_robe": {
+   "id": "a_novice_robe",
+   "name": "견습 로브",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 1,
+   "stats": {
+    "def": 4,
+    "res": 8
+   },
+   "desc": "마법 견습생의 로브.",
+   "price": 160,
+   "source": "shop",
+   "color": "cyan"
+  },
+  "a_resonance_cloak": {
+   "id": "a_resonance_cloak",
+   "name": "공명 망토",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 2,
+   "stats": {
+    "def": 7,
+    "res": 14
+   },
+   "desc": "공명을 부드럽게 흘려보내는 망토.",
+   "price": 500,
+   "source": "shop",
+   "color": "teal"
+  },
+  "a_silk_robe": {
+   "id": "a_silk_robe",
+   "name": "은사 로브",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 10,
+    "res": 22,
+    "mp": 20
+   },
+   "desc": "은실로 짠 로브.",
+   "price": 1280,
+   "source": "shop",
+   "color": "silver"
+  },
+  "a_clockwork_dress": {
+   "id": "a_clockwork_dress",
+   "name": "태엽 수호복",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 4,
+   "stats": {
+    "def": 14,
+    "res": 30
+   },
+   "desc": "작은 태엽 방어구가 달린 옷.",
+   "price": 2880,
+   "source": "shop",
+   "color": "brass"
+  },
+  "a_starlight_robe": {
+   "id": "a_starlight_robe",
+   "name": "별빛 로브",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 5,
+   "stats": {
+    "def": 18,
+    "res": 42,
+    "mp": 40
+   },
+   "desc": "밤하늘을 짠 듯한 로브.",
+   "price": 6180,
+   "source": "shop",
+   "color": "violet"
+  },
+  "a_elf_robe": {
+   "id": "a_elf_robe",
+   "name": "고대 엘프의 로브",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 11,
+    "res": 26,
+    "hp": 60
+   },
+   "desc": "녹색 서약회가 보관하던 로브.",
+   "price": 850,
+   "source": "chest",
+   "color": "green"
+  },
+  "a_archmage_vestment": {
+   "id": "a_archmage_vestment",
+   "name": "대마도사의 성의",
+   "slot": "armor",
+   "kind": "robe",
+   "chars": [
+    "iris"
+   ],
+   "tier": 7,
+   "stats": {
+    "def": 40,
+    "res": 80,
+    "mp": 100
+   },
+   "desc": "엘레이온 대마도사의 성의.",
+   "price": 28000,
+   "source": "legend",
+   "color": "gold"
+  },
+  "a_captain_coat": {
+   "id": "a_captain_coat",
+   "name": "선장 코트",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 0,
+   "stats": {
+    "def": 5
+   },
+   "desc": "남색 선장 코트.",
+   "price": -20,
+   "source": "start",
+   "color": "navy"
+  },
+  "a_quilted_vest": {
+   "id": "a_quilted_vest",
+   "name": "누빔 조끼",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 1,
+   "stats": {
+    "def": 7,
+    "spd": 1
+   },
+   "desc": "가볍고 질긴 조끼.",
+   "price": 160,
+   "source": "shop",
+   "color": "leather"
+  },
+  "a_sky_pirate_coat": {
+   "id": "a_sky_pirate_coat",
+   "name": "하늘해적 코트",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 2,
+   "stats": {
+    "def": 12,
+    "spd": 2
+   },
+   "desc": "바람을 가르는 해적 코트.",
+   "price": 500,
+   "source": "shop",
+   "color": "red"
+  },
+  "a_reinforced_coat": {
+   "id": "a_reinforced_coat",
+   "name": "강화 가죽 코트",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 20,
+    "hp": 30
+   },
+   "desc": "철판을 숨긴 가죽 코트.",
+   "price": 1280,
+   "source": "shop",
+   "color": "leather"
+  },
+  "a_flight_suit": {
+   "id": "a_flight_suit",
+   "name": "방탄 비행복",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "def": 29,
+    "spd": 3
+   },
+   "desc": "비행사용 방탄복.",
+   "price": 2880,
+   "source": "shop",
+   "color": "olive"
+  },
+  "a_storm_coat": {
+   "id": "a_storm_coat",
+   "name": "폭풍 망토 코트",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 5,
+   "stats": {
+    "def": 40,
+    "res": 10
+   },
+   "desc": "폭풍 속에서도 펄럭이지 않는다.",
+   "price": 6180,
+   "source": "shop",
+   "color": "navy"
+  },
+  "a_shadow_cloak": {
+   "id": "a_shadow_cloak",
+   "name": "그림자 망토",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "def": 18,
+    "spd": 6
+   },
+   "desc": "그림자처럼 몸을 감춘다.",
+   "price": 850,
+   "source": "chest",
+   "color": "dark"
+  },
+  "a_albatross_captain": {
+   "id": "a_albatross_captain",
+   "name": "알바트로스 함장복",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "zed"
+   ],
+   "tier": 7,
+   "stats": {
+    "def": 70,
+    "spd": 12,
+    "res": 25
+   },
+   "desc": "알바트로스호 초대 함장의 제복.",
+   "price": 28000,
+   "source": "legend",
+   "color": "gold"
+  },
+  "a_traveler_cloak": {
+   "id": "a_traveler_cloak",
+   "name": "여행자의 망토",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 1,
+   "stats": {
+    "def": 5,
+    "res": 5
+   },
+   "desc": "누구나 걸칠 수 있는 망토.",
+   "price": 150,
+   "source": "shop",
+   "color": "green"
+  },
+  "a_mithril_mail": {
+   "id": "a_mithril_mail",
+   "name": "미스릴 사슬옷",
+   "slot": "armor",
+   "kind": "light",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "def": 26,
+    "res": 20
+   },
+   "desc": "드워프가 짠 가벼운 사슬옷.",
+   "price": 3200,
+   "source": "shop",
+   "color": "silver"
+  }
+ },
+ "accessories": {
+  "x_copper_ring": {
+   "id": "x_copper_ring",
+   "name": "구리 반지",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 1,
+   "stats": {
+    "hp": 30
+   },
+   "icon": "ring",
+   "desc": "HP가 조금 오른다.",
+   "price": 140,
+   "source": "shop"
+  },
+  "x_leather_gloves": {
+   "id": "x_leather_gloves",
+   "name": "가죽 장갑",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 1,
+   "stats": {
+    "atk": 4
+   },
+   "icon": "glove",
+   "desc": "손에 착 붙는다.",
+   "price": 140,
+   "source": "shop"
+  },
+  "x_brass_watch": {
+   "id": "x_brass_watch",
+   "name": "황동 회중시계",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 2,
+   "stats": {
+    "spd": 3
+   },
+   "icon": "watch",
+   "desc": "시간 감각이 예민해진다.",
+   "price": 460,
+   "source": "shop"
+  },
+  "x_crystal_pendant": {
+   "id": "x_crystal_pendant",
+   "name": "수정 펜던트",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 2,
+   "stats": {
+    "mp": 20,
+    "res": 4
+   },
+   "icon": "pendant",
+   "desc": "에테르를 머금은 수정.",
+   "price": 460,
+   "source": "shop"
+  },
+  "x_steel_bracer": {
+   "id": "x_steel_bracer",
+   "name": "강철 손목보호대",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 2,
+   "stats": {
+    "def": 6
+   },
+   "icon": "bracer",
+   "desc": "단단한 손목보호대.",
+   "price": 460,
+   "source": "shop"
+  },
+  "x_pressure_gauge": {
+   "id": "x_pressure_gauge",
+   "name": "증기 압력계",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "atk": 8
+   },
+   "icon": "gauge",
+   "desc": "힘을 쓸 때를 알려 준다.",
+   "price": 1150,
+   "source": "shop",
+   "crit": 0.03
+  },
+  "x_ether_earring": {
+   "id": "x_ether_earring",
+   "name": "에테르 귀걸이",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "mag": 10
+   },
+   "icon": "earring",
+   "desc": "마력이 귓가에 맴돈다.",
+   "price": 1150,
+   "source": "shop"
+  },
+  "x_gear_brooch": {
+   "id": "x_gear_brooch",
+   "name": "기어 브로치",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "def": 10,
+    "res": 10
+   },
+   "icon": "brooch",
+   "desc": "톱니 모양 부적.",
+   "price": 2700,
+   "source": "shop"
+  },
+  "x_hawk_feather": {
+   "id": "x_hawk_feather",
+   "name": "매의 깃털",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "spd": 6
+   },
+   "icon": "feather",
+   "desc": "몸이 가벼워진다.",
+   "price": 2700,
+   "source": "shop",
+   "crit": 0.04
+  },
+  "x_life_cog": {
+   "id": "x_life_cog",
+   "name": "생명의 톱니",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 5,
+   "stats": {
+    "hp": 200
+   },
+   "icon": "cog",
+   "desc": "심장처럼 고동치는 톱니.",
+   "price": 6000,
+   "source": "shop"
+  },
+  "x_sage_glasses": {
+   "id": "x_sage_glasses",
+   "name": "현자의 안경",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 5,
+   "stats": {
+    "mag": 20,
+    "mp": 50
+   },
+   "icon": "glasses",
+   "desc": "보이지 않던 것이 보인다.",
+   "price": 6000,
+   "source": "shop"
+  },
+  "x_lucky_nut": {
+   "id": "x_lucky_nut",
+   "name": "토비의 행운 너트",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "spd": 2
+   },
+   "icon": "nut",
+   "desc": "토비가 숨겨 둔 행운의 너트.",
+   "price": 600,
+   "source": "chest",
+   "crit": 0.06
+  },
+  "x_elf_dew": {
+   "id": "x_elf_dew",
+   "name": "엘프의 이슬 목걸이",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 3,
+   "stats": {
+    "hp": 80,
+    "res": 8
+   },
+   "icon": "pendant",
+   "desc": "마르지 않는 이슬이 담겼다.",
+   "price": 800,
+   "source": "chest"
+  },
+  "x_b7_core": {
+   "id": "x_b7_core",
+   "name": "B-7의 코어",
+   "slot": "accessory",
+   "chars": [
+    "luke",
+    "iris",
+    "zed"
+   ],
+   "tier": 4,
+   "stats": {
+    "atk": 6,
+    "mag": 6,
+    "def": 6,
+    "spd": 3
+   },
+   "icon": "cog",
+   "desc": "버려진 로봇이 남긴 따뜻한 코어.",
+   "price": 1500,
+   "source": "chest"
+  }
+ },
+ "key_items": {
+  "key_oath_seal_1": {
+   "name": "서약의 인장 조각 (검)",
+   "desc": "검이 새겨진 돌 조각. 잊힌 서약의 사당과 관련 있는 듯하다."
+  },
+  "key_oath_seal_2": {
+   "name": "서약의 인장 조각 (방패)",
+   "desc": "방패가 새겨진 돌 조각."
+  },
+  "key_oath_seal_3": {
+   "name": "서약의 인장 조각 (불꽃)",
+   "desc": "불꽃이 새겨진 돌 조각."
+  }
+ },
+ "shops": {
+  "weapon_shop": {
+   "name": "톱니 대장간",
+   "keeper": "blacksmith",
+   "stock": [
+    "w_broadsword",
+    "w_rivet_claymore",
+    "w_piston_blade",
+    "w_gear_greatsword",
+    "w_ether_buster",
+    "w_furnace_zanbato",
+    "w_oak_staff",
+    "w_bronze_rod",
+    "w_crystal_fork",
+    "w_clock_scepter",
+    "w_ether_harp",
+    "w_constellation",
+    "w_musket",
+    "w_double_barrel",
+    "w_brass_sniper",
+    "w_steam_repeater",
+    "w_ether_railgun",
+    "w_sky_hunter"
+   ]
+  },
+  "item_shop": {
+   "name": "모르간 수리점",
+   "keeper": "morgan",
+   "stock": [
+    "item_steam_tonic",
+    "item_ether_flask",
+    "item_antidote_oil",
+    "item_high_tonic",
+    "item_wakeup_spring",
+    "item_steam_bomb",
+    "item_field_kit",
+    "item_dense_ether",
+    "item_big_bomb",
+    "item_elixir_distill",
+    "item_mega_ether",
+    "a_padded_plate",
+    "a_rivet_armor",
+    "a_steam_plate",
+    "a_brass_guard_mail",
+    "a_ether_plate",
+    "a_novice_robe",
+    "a_resonance_cloak",
+    "a_silk_robe",
+    "a_clockwork_dress",
+    "a_starlight_robe",
+    "a_quilted_vest",
+    "a_sky_pirate_coat",
+    "a_reinforced_coat",
+    "a_flight_suit",
+    "a_storm_coat",
+    "a_traveler_cloak",
+    "a_mithril_mail",
+    "x_copper_ring",
+    "x_leather_gloves",
+    "x_brass_watch",
+    "x_crystal_pendant",
+    "x_steel_bracer",
+    "x_pressure_gauge",
+    "x_ether_earring",
+    "x_gear_brooch",
+    "x_hawk_feather",
+    "x_life_cog",
+    "x_sage_glasses"
+   ]
+  }
+ },
+ "unlock": {
+  "1": {},
+  "2": {
+   "any": [
+    "scene:ch3_02",
+    "battles>=3",
+    "level>=5"
+   ]
+  },
+  "3": {
+   "any": [
+    "ch3_clear",
+    "level>=8"
+   ]
+  },
+  "4": {
+   "any": [
+    "level>=12"
+   ]
+  },
+  "5": {
+   "any": [
+    "level>=18"
+   ]
+  },
+  "6": {
+   "any": [
+    "level>=24"
+   ]
+  }
+ },
+ "start": {
+  "luke": {
+   "weapon": "w_ashbringer_raw",
+   "armor": "a_old_oath_plate",
+   "accessory": null
+  },
+  "iris": {
+   "weapon": "w_tuning_fork",
+   "armor": "a_lab_coat",
+   "accessory": null
+  },
+  "zed": {
+   "weapon": "w_old_rifle",
+   "armor": "a_captain_coat",
+   "accessory": null
+  }
+ },
+ "inn": {
+  "name": "증기 주전자 여관",
+  "price_per_level": 4,
+  "min_price": 20
+ }
+}

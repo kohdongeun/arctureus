@@ -21,12 +21,18 @@ class Character:
         self.growth = assets.load_json("battle.json")["growth"][self.id]
         self.level = level
         self.exp = 0
-        self.hp = self.max_hp
-        self.mp = self.max_mp
+        self.equip = {"weapon": None, "armor": None, "accessory": None}
         self.steam = 0          # 루크 전용 증기압 게이지
+        self.equip = dict(_start_equip().get(self.id, {"weapon": None, "armor": None, "accessory": None}))
+        self.hp, self.mp = self.max_hp, self.max_mp
+
+    def base_stat(self, k):
+        return int(self.base[k] + self.growth[k] * (self.level - 1))
 
     def stat(self, k):
-        return int(self.base[k] + self.growth[k] * (self.level - 1))
+        """레벨 능력치 + 장비 보정"""
+        from src.systems import equipment
+        return self.base_stat(k) + equipment.bonus(self).get(k, 0)
 
     @property
     def max_hp(self):
@@ -56,10 +62,10 @@ class Character:
         ups = []
         while self.exp >= exp_to_next(self.level):
             self.exp -= exp_to_next(self.level)
-            before = {k: self.stat(k) for k in STATS}
+            before = {k: self.base_stat(k) for k in STATS}
             known = {s["id"] for s in self.skills()}
             self.level += 1
-            diffs = {k: self.stat(k) - before[k] for k in STATS}
+            diffs = {k: self.base_stat(k) - before[k] for k in STATS}
             learned = [s["name"] for s in self.skills() if s["id"] not in known]
             self.hp = min(self.max_hp, self.hp + diffs["hp"])
             self.mp = min(self.max_mp, self.mp + diffs["mp"])
@@ -70,12 +76,21 @@ class Character:
         self.hp, self.mp, self.steam = self.max_hp, self.max_mp, 0
 
 
+def _start_equip():
+    try:
+        return assets.load_json("equipment.json")["start"]
+    except (OSError, KeyError):
+        return {}
+
+
 class GameState:
     def __init__(self, story):
         battle = assets.load_json("battle.json")
         lv = battle["start_level"]
         self.party = [Character(p, lv) for p in story["protagonists"]]
         self.items = dict(battle["start_items"])
+        self.gear: dict[str, int] = {}          # 가방 속 장비 (장착 중인 것은 제외)
+        self.key_items: set[str] = set()       # 소중한 것
         self.gold = 120
         self.flags: set[str] = set()
         self.map_id = None

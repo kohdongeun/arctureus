@@ -48,6 +48,7 @@ def path_mask(m, x, z, soft=1.6):
 def height(m, x, z):
     x, z = np.asarray(x, float), np.asarray(z, float)
     h = 0.55 * np.sin(x * 0.09 + 1.3) * np.cos(z * 0.07 - 0.4) + 0.35 * np.sin((x + z) * 0.05)
+    h = h * m.get("flat", 1.0)                 # 마을처럼 평평한 맵
     for hx, hz, r, hh in m.get("hills", []):
         h = h + hh * np.exp(-((x - hx) ** 2 + (z - hz) ** 2) / (2 * r * r))
     # 맵 가장자리는 언덕으로 막아 자연스러운 경계를 만든다
@@ -65,10 +66,20 @@ def scatter(m):
     half = m["size"] / 2 - 2
     out = {"tree": [], "bush": [], "rock": [], "tuft": [], "flower": []}
     keep_clear = [(n["pos"][0], n["pos"][1]) for n in m.get("npcs", [])] + [tuple(m["start"])]
-    keep_clear += [tuple(e["pos"]) for e in m.get("exits", []) + m.get("events", []) if "pos" in e]
+    keep_clear += [tuple(e["pos"]) for e in m.get("exits", []) + m.get("events", []) + m.get("chests", []) if "pos" in e]
+    keep_clear += [tuple(p[:2]) for p in m.get("lamps", []) + m.get("crates", [])]
+    rects = []
+    for b in m.get("buildings", []):
+        w, d = b["size"]
+        if int(b.get("rot", 0)) % 180 == 90:
+            w, d = d, w
+        rects.append((b["pos"][0], b["pos"][1], w / 2 + 2.2, d / 2 + 2.2))
+
+    def in_rect(x, z):
+        return any(abs(x - rx) < hw and abs(z - rz) < hd for rx, rz, hw, hd in rects)
 
     def free(x, z, gap):
-        if path_distance(m, x, z) < gap:
+        if path_distance(m, x, z) < gap or in_rect(x, z):
             return False
         return all(math.hypot(x - a, z - b) > 3.0 for a, b in keep_clear)
 
@@ -93,8 +104,8 @@ def scatter(m):
         while len(out[kind]) < n:
             x, z = rng.uniform(-half, half, 2)
             d = float(path_distance(m, x, z))
-            # 풀은 길 가장자리에 몰리게
-            if d > 0.2 and (d < 3.5 or rng.random() < 0.35):
+            # 풀은 길 가장자리에 몰리게 (건물 안에는 안 남)
+            if d > 0.2 and (d < 3.5 or rng.random() < 0.35) and not in_rect(x, z):
                 out[kind].append((float(x), float(z), float(rng.uniform(0.6, 1.2)), float(rng.uniform(0, 180))))
     return out
 

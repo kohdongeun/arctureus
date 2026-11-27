@@ -118,6 +118,11 @@ class BattleCore:
             return "all", self.living(False), 0
         if tkind == "all_allies":
             return "all", self.living(True), 0
+        if tkind == "all_party":
+            return "all", list(self.party), 0
+        if tkind == "dead_ally":
+            c = [f for f in self.party if not f.alive]
+            return ("single", c, 0) if c else ("single", [], 0)
         if tkind == "ally":
             c = self.living(True)
             return "single", c, min(range(len(c)), key=lambda i: c[i].hp / c[i].max_hp)
@@ -200,6 +205,9 @@ class BattleCore:
     CRIT_PARTY, CRIT_ENEMY = 0.12, 0.05
 
     def roll_crit(self, a, bonus=0.0):
+        if a.party:                                   # 장비의 치명타 보정 (렌즈·명검 등)
+            from src.systems import equipment
+            bonus += equipment.crit_bonus(a.ref)
         return random.random() < (self.CRIT_PARTY if a.party else self.CRIT_ENEMY) + bonus
 
     def skill_tier(self, ch, sk):
@@ -229,17 +237,37 @@ class BattleCore:
         elif kind == "item":
             item = self.B["items"][data]
             self.state.items[data] -= 1
-            t = targets[0]
             yield {"t": "say", "text": item["name"]}
             yield {"t": "wait", "s": 0.2}
             yield {"t": "sfx", "id": item["sfx"]}
-            yield {"t": "fx", "fx": item["fx"], "src": a, "dst": t, "big": False}
+            for t in targets:
+                yield {"t": "fx", "fx": item["fx"], "src": a, "dst": t, "big": len(targets) > 1, "tier": 0}
             yield {"t": "wait", "s": 0.3}
-            if "heal_hp" in item and t.alive:
-                yield from self.heal(t, item["heal_hp"])
-            if "heal_mp" in item:
-                t.mp = min(t.max_mp, t.mp + item["heal_mp"])
-                yield {"t": "float", "who": t, "text": f"MP +{item['heal_mp']}", "color": MP, "size": 28}
+            for t in targets:
+                if item.get("damage") and not t.party:
+                    if t.alive:
+                        out = []
+                        self.damage(t, int(item["damage"] * random.uniform(0.95, 1.05)), out=out)
+                        for e in out:
+                            yield e
+                    continue
+                if item.get("revive") and not t.alive:
+                    t.hp = max(1, int(t.max_hp * item["revive"]))
+                    t.atb = 0
+                    yield {"t": "revive", "who": t}
+                    yield {"t": "float", "who": t, "text": "부활!", "color": HEAL, "size": 30, "rise": True}
+                if not t.alive:
+                    continue
+                if "heal_hp" in item:
+                    yield from self.heal(t, item["heal_hp"])
+                if "heal_mp" in item:
+                    before = t.mp
+                    t.mp = min(t.max_mp, t.mp + item["heal_mp"])
+                    yield {"t": "float", "who": t, "text": f"MP +{t.mp - before}", "color": MP, "size": 28}
+                if item.get("cure"):
+                    for k in ("burn", "blind", "stop"):
+                        t.status.pop(k, None)
+                    yield {"t": "float", "who": t, "text": "상태 회복", "color": HEAL, "size": 24, "rise": True}
             yield {"t": "wait", "s": 0.5}
         elif kind == "attack":
             spec = self.B["attack"][ch.id]
@@ -252,7 +280,9 @@ class BattleCore:
             yield {"t": "sfx", "id": spec["sfx"]}
             yield {"t": "fx", "fx": spec["fx"], "src": a, "dst": t, "big": crit, "tier": 0}
             yield {"t": "wait", "s": 0.12}
-            yield from self.hit(a, t, "mag" if spec.get("stat") == "mag" else "phys", spec["power"], spec["element"],
+            from src.systems import equipment
+            element = equipment.weapon_element(ch) or spec["element"]
+            yield from self.hit(a, t, "mag" if spec.get("stat") == "mag" else "phys", spec["power"], element,
                                 crit=crit)
             yield {"t": "wait", "s": 0.2}
             yield {"t": "back", "who": a}

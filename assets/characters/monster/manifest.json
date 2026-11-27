@@ -89,5 +89,12 @@
       658
     ],
     "faces": "front"
+  },
+  "oath_wraith": {
+    "size": [
+      700,
+      704
+    ],
+    "faces": "right"
   }
 }

@@ -711,6 +711,10 @@ class Battle3D:
                 self.shake = max(self.shake, 0.2 if f.view.boss else 0.08)
         elif k == "flash":
             self.flash_ui(rgb(ev["color"]), 0.45)
+        elif k == "revive":
+            f = ev["who"]
+            f.view.body.color = color.white
+            self.fx.pillar(self.view_pos(f), rgb((255, 240, 170)), 4.0)
         return core
 
     def start_skill(self, a, tier, name):
@@ -863,6 +867,7 @@ class Battle3D:
             n = len(self.sub)
             if up or down:
                 self.sub_i = (self.sub_i + (1 if down else -1)) % n
+                self.draw_sub()
                 g.sfx("cursor")
             elif cancel:
                 g.sfx("cancel")
@@ -898,16 +903,29 @@ class Battle3D:
             names = [s["name"] for s, _, _ in core.skills(core.actor)]
         else:
             items = core.items()
-            self.sub = [("item", k, True) for k, _, _ in items]
+            anyone_down = any(not f.alive for f in core.party)
+            self.sub = [("item", k, anyone_down or it.get("target") != "dead_ally") for k, it, _ in items]
             extras = [f"x{n}" for _, _, n in items]
             names = [it["name"] for _, it, _ in items]
-        for i in range(6):
-            self.sub_items[i].text = names[i] if i < len(names) else ""
-            self.sub_extra[i].text = extras[i] if i < len(extras) else ""
-            if i < len(self.sub):
-                self.sub_items[i].color = INK if self.sub[i][2] else color.rgba32(150, 130, 110)
-        self.sub_i = 0
+        self.sub_names, self.sub_extras = names, extras
+        self.sub_i, self.sub_off = 0, 0
+        self.draw_sub()
         self.ui_state = "sub"
+
+    def draw_sub(self):
+        """보조 목록 6줄 (넘치면 커서를 따라 스크롤)"""
+        if self.sub_i < self.sub_off:
+            self.sub_off = self.sub_i
+        elif self.sub_i >= self.sub_off + 6:
+            self.sub_off = self.sub_i - 5
+        for r in range(6):
+            i = self.sub_off + r
+            self.sub_items[r].text = self.sub_names[i] if i < len(self.sub_names) else ""
+            self.sub_extra[r].text = self.sub_extras[i] if i < len(self.sub_extras) else ""
+            if i < len(self.sub):
+                self.sub_items[r].color = INK if self.sub[i][2] else color.rgba32(150, 130, 110)
+        more = len(self.sub) > 6
+        self.sub_extra[0].text = ("▲ " if more and self.sub_off > 0 else "") + self.sub_extra[0].text
 
     def choose_target(self, tkind, payload):
         mode, cands, idx = self.core.targets_for(tkind)
@@ -1063,7 +1081,7 @@ class Battle3D:
         self.sub_panel.enabled = self.ui_state == "sub" or (self.ui_state == "target" and self.target[4] == "sub")
         self.desc.enabled = self.ui_state == "sub"
         if self.ui_state == "sub":
-            self.sub_cursor.y = 0.135 - self.sub_i * 0.051
+            self.sub_cursor.y = 0.135 - (self.sub_i - getattr(self, "sub_off", 0)) * 0.051
             kind, data, _ = self.sub[self.sub_i]
             self.desc_text.text = data["description"] if kind == "skill" else core.B["items"][data]["desc"]
         # 대상 화살표 (여러 대상이면 깜빡이며 순환)

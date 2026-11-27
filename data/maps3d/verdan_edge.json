@@ -225,6 +225,20 @@
       ],
       "dir": "ne",
       "label": "고목의 요람"
+    },
+    {
+      "pos": [
+        -31.8,
+        2.2
+      ],
+      "r": 2.4,
+      "to": "chimney_ward",
+      "spawn": [
+        0.0,
+        -20.5
+      ],
+      "dir": "ne",
+      "travel": "숲 서쪽 선착장에서 알바트로스호를 타고 굴뚝거리에 도착했다."
     }
   ],
   "events": [
@@ -236,6 +250,61 @@
         {
           "scene": "ch3_02"
         }
+      ]
+    }
+  ],
+  "chests": [
+    {
+      "id": "v1",
+      "pos": [
+        -30.0,
+        12.0
+      ],
+      "items": [
+        "w_rusted_knight"
+      ]
+    },
+    {
+      "id": "v2",
+      "pos": [
+        30.5,
+        -24.0
+      ],
+      "items": [
+        "x_b7_core"
+      ]
+    },
+    {
+      "id": "v3",
+      "pos": [
+        25.0,
+        27.0
+      ],
+      "items": [
+        "key_oath_seal_1",
+        "item_grand_elixir"
+      ]
+    },
+    {
+      "id": "v4",
+      "pos": [
+        -24.0,
+        -27.0
+      ],
+      "items": [
+        "w_hawk_eye"
+      ]
+    },
+    {
+      "id": "v5",
+      "pos": [
+        12.0,
+        -30.0
+      ],
+      "gold": 300,
+      "items": [
+        "item_high_tonic",
+        "item_wakeup_spring"
       ]
     }
   ]

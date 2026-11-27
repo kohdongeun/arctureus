@@ -71,6 +71,36 @@
       "role": "NPC",
       "description": "cute rusty boxy mining robot, single round cyan glowing eye, small antenna with red light, brass and rust-orange body, piston legs, three-quarter view facing left",
       "portrait_hint": "non-humanoid robot, no human, no girl, mechanical machine character only, boxy metal body, upper body of the robot, plain white background, no circle"
+    },
+    "kid_tobi": {
+      "name": "토비",
+      "role": "NPC",
+      "description": "8-year-old cheerful boy, messy brown hair, oversized flat cap, soot on nose, patched overalls, toy wrench in hand, big smile, three-quarter view facing left"
+    },
+    "worker_hank": {
+      "name": "광부 행크",
+      "role": "NPC",
+      "description": "burly middle-aged miner man, 1boy, male, short beard, mining helmet with brass lamp, dusty work vest, pickaxe on shoulder, tired kind face, three-quarter view facing left"
+    },
+    "granny_bess": {
+      "name": "베스 할머니",
+      "role": "NPC",
+      "description": "kind old grandmother street cook, 1girl, grey hair bun, headscarf, apron, holding a ladle and small stew pot, warm smile, three-quarter view facing left"
+    },
+    "guard_rookie": {
+      "name": "신참 근위병 피터",
+      "role": "NPC",
+      "description": "young rookie imperial guard boy, 1boy, male, brass and white guard uniform, oversized helmet slightly tilted, spear, nervous smile, three-quarter view facing left"
+    },
+    "innkeeper": {
+      "name": "여관 주인 마사",
+      "role": "NPC",
+      "description": "cheerful plump innkeeper woman, 1girl, red hair in a bun, white apron over green dress, holding a tray with a steaming mug, three-quarter view facing left"
+    },
+    "blacksmith": {
+      "name": "대장장이 브론",
+      "role": "NPC",
+      "description": "muscular blacksmith man, 1boy, male, bald with thick black beard, leather apron, brass goggles on forehead, big hammer on shoulder, soot on arms, three-quarter view facing left"
     }
   },
   "portrait_style": "2000s classic Korean and Japanese anime RPG character portrait, half-body waist-up illustration, beautiful detailed anime face, clean dark lineart, soft cel shading, vibrant colors, character facing slightly left, isolated on plain pure white #FFFFFF background, no background scenery, no text",
@@ -142,6 +172,10 @@
       "name": "녹의 왕",
       "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, rust king, dream of the sleeping giant, enormous dark spectral figure made of rust fog and corroded metal, crown of broken gears, hollow glowing red eyes, tattered rust cloak dissolving into red mist, eldritch final boss, full body, three-quarter view facing right",
       "portrait_hint": ""
+    },
+    "oath_wraith": {
+      "name": "서약의 망령",
+      "description": "isolated character design on plain light grey studio backdrop, spectral ghost knight boss monster, towering armored knight made of pale blue ghostly flame, ornate ancient silver armor with broken chains, glowing cyan eyes in a dark helmet, holding a giant ethereal greatsword, tattered royal cape, full body, three-quarter view facing right"
     }
   }
 }

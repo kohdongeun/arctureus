@@ -51,8 +51,10 @@ def to_dict(st) -> dict:
         "items": dict(st.items),
         "flags": sorted(st.flags),
         "battles_won": st.battles_won,
-        "party": [{"id": c.id, "level": c.level, "exp": c.exp, "hp": c.hp, "mp": c.mp, "steam": c.steam}
-                  for c in st.party],
+        "gear": dict(getattr(st, "gear", {})),
+        "key_items": sorted(getattr(st, "key_items", set())),
+        "party": [{"id": c.id, "level": c.level, "exp": c.exp, "hp": c.hp, "mp": c.mp, "steam": c.steam,
+                   "equip": dict(getattr(c, "equip", {}))} for c in st.party],
     }
 
 
@@ -67,6 +69,10 @@ def apply_dict(st, d: dict):
     st.items = {k: int(v) for k, v in d.get("items", {}).items() if k in known_items}
     st.flags = set(d.get("flags", []))
     st.battles_won = int(d.get("battles_won", 0))
+    from src.systems import equipment
+    if "gear" in d:                       # 장비가 생기기 전 세이브는 시작 장비 그대로
+        st.gear = {k: int(v) for k, v in d["gear"].items() if equipment.gear(k)}
+    st.key_items = {k for k in d.get("key_items", []) if equipment.item_def(k)}
     by_id = {c.id: c for c in st.party}
     for p in d.get("party", []):
         c = by_id.get(p["id"])
@@ -74,6 +80,9 @@ def apply_dict(st, d: dict):
             continue
         c.level = max(1, int(p["level"]))
         c.exp = int(p["exp"])
+        for slot, gid in p.get("equip", {}).items():
+            if slot in c.equip and (gid is None or equipment.can_equip(c.id, gid)):
+                c.equip[slot] = gid
         c.hp = max(0, min(c.max_hp, int(p["hp"])))
         c.mp = max(0, min(c.max_mp, int(p["mp"])))
         c.steam = int(p.get("steam", 0))

@@ -79,5 +79,47 @@
   "endpoint": "image.pollinations.ai (free)",
   "score": -0.6,
   "why": "흰테두리 0%, 잘림 1, 차지 24%"
+ },
+ "kid_tobi": {
+  "seed": 7220,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, 8-year-old cheerful boy, messy brown hair, oversized flat cap, soot on nose, patched overalls, toy wrench in hand, big smile, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.28,
+  "why": "흰테두리 88%, 잘림 1, 차지 36%"
+ },
+ "worker_hank": {
+  "seed": 7231,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, burly middle-aged miner man, 1boy, male, short beard, mining helmet with brass lamp, dusty work vest, pickaxe on shoulder, tired kind face, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 1%"
+ },
+ "granny_bess": {
+  "seed": 7241,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, kind old grandmother street cook, 1girl, grey hair bun, headscarf, apron, holding a ladle and small stew pot, warm smile, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.59,
+  "why": "흰테두리 1%, 잘림 1, 차지 16%"
+ },
+ "guard_rookie": {
+  "seed": 7250,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, young rookie imperial guard boy, 1boy, male, brass and white guard uniform, oversized helmet slightly tilted, spear, nervous smile, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.21,
+  "why": "흰테두리 39%, 잘림 1, 차지 15%"
+ },
+ "innkeeper": {
+  "seed": 7261,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, cheerful plump innkeeper woman, 1girl, red hair in a bun, white apron over green dress, holding a tray with a steaming mug, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.03,
+  "why": "흰테두리 63%, 잘림 1, 차지 33%"
+ },
+ "blacksmith": {
+  "seed": 7271,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, muscular blacksmith man, 1boy, male, bald with thick black beard, leather apron, brass goggles on forehead, big hammer on shoulder, soot on arms, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.6,
+  "why": "흰테두리 0%, 잘림 1, 차지 38%"
  }
 }

@@ -14,7 +14,7 @@ import random
 import sys
 
 from panda3d.core import Filename, TransparencyAttrib
-from ursina import (Entity, Mesh, Text, Texture, Ursina, Vec3, application, camera, color, destroy,
+from ursina import (Entity, Quad, Mesh, Text, Texture, Ursina, Vec3, application, camera, color, destroy,
                     held_keys, lerp, window)
 
 from src3d import terrain
@@ -53,6 +53,26 @@ def rgb(r, g, b, a=255):
 
 
 # ====================================================================== 메시 생성 헬퍼
+def weapon_quad(pose, cw=1024, ch=256, x0=40, x1=984):
+    """무기 그림(가로 1024x256, 손잡이 끝 x0 → 끝 x1) 네 모서리 → 캐릭터 원본 그림의 픽셀 좌표.
+    tools/art/make_weapon_layers.py 의 quad_px 와 같은 계산 (그림 위쪽이 화면 위쪽을 향함)."""
+    gx, gy = pose["grip"]
+    tx, ty = pose["tip"]
+    L = math.hypot(tx - gx, ty - gy)
+    ux, uy = (tx - gx) / L, (ty - gy) / L
+    nx, ny = uy, -ux
+    if ny > 0:
+        nx, ny = -nx, -ny
+    k = L / (x1 - x0)
+    th = pose.get("thick", 1.0)
+
+    def P(cx, cy):
+        a = (cx - x0) * k
+        b = -(cy - ch / 2) * k * th
+        return (gx + ux * a + nx * b, gy + uy * a + ny * b)
+    return [P(0, 0), P(cw, 0), P(cw, ch), P(0, ch)]
+
+
 def _unit_sphere(lat, lon):
     """반지름 1 구 (위→아래 행, 각도 열). 반환: 정점(=법선), uv, 삼각형 인덱스"""
     import numpy as np
@@ -117,6 +137,18 @@ class World:
         self.build_trees()
         self.build_rocks()
         self.build_grass()
+        self.build_town()
+        self.chests = []
+        self.altars = []
+
+    def build_town(self):
+        """건물·가로등·상자 소품 (src3d/buildings.py)"""
+        from src3d import buildings
+        self.rects, self.chimneys = [], []
+        if not (self.m.get("buildings") or self.m.get("lamps") or self.m.get("crates")):
+            return
+        ents, self.rects, self.chimneys = buildings.build(self.m, self.h, tex)
+        self.ents += ents
 
     def h(self, x, z):
         return float(terrain.height(self.m, x, z))
@@ -261,9 +293,14 @@ class World:
         for e in self.ents:
             destroy(e)
         self.ents = []
+        for c in self.chests + self.altars:
+            c.destroy()
+        self.chests, self.altars = [], []
 
     def blocked(self, x, z, r=0.45):
         if abs(x) > self.half - 7 or abs(z) > self.half - 7:
+            return True
+        if any(abs(x - rx) < hw + r and abs(z - rz) < hd + r for rx, rz, hw, hd in getattr(self, "rects", [])):
             return True
         return any((x - cx) ** 2 + (z - cz) ** 2 < (cr + r) ** 2 for cx, cz, cr in self.colliders)
 
@@ -282,6 +319,86 @@ def field_manifest():
             return json.load(f)
     except (OSError, ValueError):
         return {}
+
+
+def _chest_tex(key):
+    return tex({"wood": "town/chest_wood.jpg", "metal": "town/chest_band.jpg", "stone": "textures3d/tile_stone.jpg",
+                "gold": "town/metal.jpg"}[key])
+
+
+class Chest:
+    """보물상자: 몸통 + 경첩으로 열리는 뚜껑. 열면 안의 물건을 얻는다 (플래그로 기억)."""
+    W, H, D = 1.15, 0.62, 0.74
+
+    def __init__(self, world, data, opened):
+        from src3d.buildings import MeshBuilder
+        self.data = data
+        self.x, self.z = data["pos"]
+        self.opened = opened
+        self.t = 1.0 if opened else 0.0
+        y = world.h(self.x, self.z)
+        self.root = Entity(position=(self.x, y, self.z), rotation_y=data.get("rot", 0))
+        w, h, d = self.W, self.H, self.D
+        same = lambda a, b, c: (a, b, c)  # noqa: E731
+        mb = MeshBuilder()
+        mb.box("wood", (0, h / 2, 0), (w, h, d), same, 0.7)
+        for bx in (-w * 0.34, w * 0.34):
+            mb.box("metal", (bx, h / 2, 0), (0.13, h + 0.02, d + 0.03), same, 0.5)
+        mb.box("gold", (0, h * 0.62, -d / 2 - 0.03), (0.2, 0.24, 0.06), same, 0.3)
+        for e in mb.entities(_chest_tex):
+            e.parent = self.root
+        # 뚜껑: 뒤쪽 위 모서리가 경첩
+        self.lid = Entity(parent=self.root, position=(0, h, d / 2))
+        lb = MeshBuilder()
+        lb.box("wood", (0, 0.14, -d / 2), (w + 0.04, 0.28, d + 0.04), same, 0.7)
+        for bx in (-w * 0.34, w * 0.34):
+            lb.box("metal", (bx, 0.15, -d / 2), (0.14, 0.3, d + 0.06), same, 0.5)
+        for e in lb.entities(_chest_tex):
+            e.parent = self.lid
+        self.sync()
+
+    def sync(self):
+        k = 1 - (1 - self.t) ** 3
+        self.lid.rotation_x = -108 * k
+
+    def destroy(self):
+        destroy(self.root)
+
+
+class Altar:
+    """잊힌 서약의 사당: 돌 제단 + 인장 조각을 끼우는 홈 3개 (가진 조각만큼 빛남)"""
+
+    def __init__(self, world, data):
+        from src3d.buildings import MeshBuilder
+        self.data = data
+        self.x, self.z = data["pos"]
+        y = world.h(self.x, self.z)
+        self.root = Entity(position=(self.x, y, self.z))
+        same = lambda a, b, c: (a, b, c)  # noqa: E731
+        mb = MeshBuilder()
+        mb.box("stone", (0, 0.2, 0), (3.2, 0.4, 2.4), same, 1.0)
+        mb.box("stone", (0, 0.75, 0), (2.2, 0.7, 1.2), same, 1.0)
+        mb.box("stone", (0, 1.2, 0), (2.6, 0.2, 1.5), same, 1.0)
+        for sx in (-1.4, 1.4):                       # 양쪽 돌기둥
+            mb.box("stone", (sx, 1.3, 0.9), (0.5, 2.6, 0.5), same, 1.0)
+        for e in mb.entities(_chest_tex):
+            e.parent = self.root
+        self.sockets = []
+        for i, sx in enumerate((-0.7, 0, 0.7)):
+            s = Entity(parent=self.root, model="sphere", position=(sx, 1.38, 0), scale=0.3, shader=unlit_shader,
+                       color=color.rgb(0.25, 0.25, 0.3))
+            self.sockets.append(s)
+        self.lit = -1
+
+    def set_lit(self, n):
+        if n == self.lit:
+            return
+        self.lit = n
+        for i, s in enumerate(self.sockets):
+            s.color = color.rgb(0.5, 0.95, 1.0) if i < n else color.rgb(0.25, 0.25, 0.3)
+
+    def destroy(self):
+        destroy(self.root)
 
 
 class Motion:
@@ -315,6 +432,9 @@ class Actor:
         self.name = name
         self.on_step = None           # 발이 땅에 닿을 때마다 호출 (발소리·먼지)
         self.mo = Motion()
+        self.sprite = sprite
+        self.weapon = None            # 장착 무기 그림 (몸 앞/뒤에 붙는 사각형)
+        self.weapon_id = None
         if Actor._manifest is None:
             Actor._manifest = field_manifest()
         info = Actor._manifest.get(sprite, {})
@@ -346,6 +466,28 @@ class Actor:
         self.shadow.setTransparency(TransparencyAttrib.MAlpha)
         self.shadow.hide(0b0001)
         self.sync()
+
+    def set_weapon(self, weapon_id):
+        """장착 무기를 캐릭터 그림에 붙인다: 원래 그려진 무기를 지운 몸 그림 + 무기 그림 (data/weapon_pose.json)"""
+        if not self.single or weapon_id == self.weapon_id:
+            return
+        pose = load_json("weapon_pose.json").get(self.sprite)
+        wimg = os.path.join(IMG, "equipment", f"{weapon_id}.png") if weapon_id else None
+        body_img = os.path.join(FIELD_DIR, f"{self.sprite}_body.png")
+        if not pose or not wimg or not os.path.exists(wimg) or not os.path.exists(body_img):
+            return
+        self.weapon_id = weapon_id
+        if self.weapon is None:
+            self.body.texture = tex(body_img)
+            W, H = pose["size"]
+            q = weapon_quad(pose)
+            verts = [(x / W - 0.5, 1 - y / H, 0) for x, y in q]
+            mesh = Mesh(vertices=verts, uvs=[(0, 1), (1, 1), (1, 0), (0, 0)], triangles=[0, 2, 1, 0, 3, 2])
+            self.weapon = Entity(parent=self.body, model=mesh, double_sided=True, shader=sprite_shader,
+                                 z=-0.004 if pose["layer"] == "front" else 0.004)
+            self.weapon.setTransparency(TransparencyAttrib.MDual)
+            self.weapon.hide(0b0001)
+        self.weapon.texture = tex(wimg)
 
     def _flip(self):
         left = self.facing in ("sw", "nw")
@@ -390,6 +532,10 @@ class Actor:
         b.set_shader_input("lean", mo.lean * self.forward_sign)
         b.set_shader_input("hop", mo.hop / max(0.01, self.h))
         b.set_shader_input("flash", mo.flash)
+        if self.weapon is not None:                 # 무기 층도 같은 동작 (같은 좌표계)
+            wp = self.weapon
+            for k in ("walk", "phase", "lean", "hop", "flash"):
+                wp.set_shader_input(k, b.get_shader_input(k))
         bob = abs(math.cos(self.anim)) * 0.035 * self.h * self.walk_amt + mo.hop
         self.shadow.scale = (self.shadow_w * (1 - min(0.5, bob / self.h)) * (0.85 + 0.15 * turn),
                              self.shadow_w * 0.55 * (1 - min(0.5, bob / self.h)))
@@ -602,14 +748,18 @@ class Game:
         self.hint = Text(parent=camera.ui, text=self.FIELD_HINT, font=font(FONT_UI), origin=(-0.5, 0.5),
                          position=(-0.87, 0.485), scale=0.85, color=color.rgba(1, 1, 1, 0.85))
         self.hint.create_background(padding=0.012, radius=0.008, color=color.rgba(0.08, 0.06, 0.04, 0.55))
-        self.toast = Text(parent=camera.ui, text="", origin=(0, 0), y=-0.08, scale=1.1, z=-0.5,
+        # 알림 (보물상자·상점·여관 등): 화면 위쪽 가운데, 어두운 반투명 띠 위에 글씨
+        self.toast_bg = Entity(parent=camera.ui, model=Quad(radius=0.012), y=0.3, z=-0.49, color=color.rgba(0.05, 0.04, 0.06, 0),
+                               scale=(0.5, 0.08))
+        self.toast = Text(parent=camera.ui, text="", origin=(0, 0), y=0.3, scale=1.15, z=-0.5,
                           color=color.rgba32(255, 236, 190))
         self.toast_t = 0.0
         from src3d.battle3d import FX
         self.field_fx = FX(tex("textures3d/fx_glow.png"))
         self.fader = Entity(parent=camera.ui, model="quad", scale=(4, 2), color=color.rgba(0, 0, 0, 0), z=-0.98)
-        from src3d.menu3d import Menu3D, TitleUI
+        from src3d.menu3d import Menu3D, ShopUI, TitleUI
         self.menu = Menu3D(self)
+        self.shop = ShopUI(self)
         self.title = TitleUI(self)
         self.bgm = None
         self._audio(None)
@@ -652,11 +802,24 @@ class Game:
                               Actor(self.world, "zed", sx, sz - 3.0, facing, "zed")]
             self.line_up()
             for n in m.get("npcs", []):
-                a = Actor(self.world, n["sprite"], n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
+                sprite = n["sprite"]
+                if not os.path.exists(os.path.join(FIELD_DIR, sprite + ".png")) and not os.path.exists(
+                        os.path.join(IMG, "sprites3d", sprite + ".png")):
+                    sprite = n.get("fallback", "morgan")          # 아직 그림이 없는 NPC
+                a = Actor(self.world, sprite, n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
                 a.data = n
                 a.talks = 0
                 self.npcs.append(a)
                 self.world.colliders.append((a.x, a.z, 0.6))
+            for c in m.get("chests", []):
+                ch = Chest(self.world, c, f"chest:{m['id']}:{c['id']}" in self.state.flags)
+                self.world.chests.append(ch)
+                self.world.colliders.append((ch.x, ch.z, 0.75))
+            for a_ in m.get("altars", []):
+                al = Altar(self.world, a_)
+                self.world.altars.append(al)
+                self.world.colliders.append((al.x, al.z, 1.5))
+            self.refresh_weapons()
             self.state.map_id = m["id"]
             self.state.pos = (sx, sz)
             self.banner = Banner(m["name"], m.get("subtitle", ""))
@@ -672,6 +835,13 @@ class Game:
             intro = m.get("intro_scene")
             if intro and f"scene:{intro}" not in self.state.flags:
                 self.play_scene(intro)
+
+    def refresh_weapons(self):
+        """장착 무기를 필드·전투 캐릭터 그림에 반영"""
+        if not self.player:
+            return
+        for actor, ch in zip([self.player] + self.followers, self.state.party):
+            actor.set_weapon(ch.equip.get("weapon"))
 
     def footstep(self, actor):
         """발이 땅에 닿을 때: 작은 발소리 + 흙먼지"""
@@ -765,6 +935,8 @@ class Game:
     def show_toast(self, text, dur=1.6):
         self.toast.text = text
         self.toast_t = dur
+        lines = text.split("\n")
+        self.toast_bg.scale = (max(0.3, max(len(x) for x in lines) * 0.026 + 0.08), 0.045 * len(lines) + 0.04)
 
     # ------------------------------------------------------------ 이벤트 (스토리 장면·보스전)
     def scene_lines(self, scene_id):
@@ -801,6 +973,16 @@ class Game:
         elif "battle" in st:
             self.battle_cb = self._event_battle_end
             self.start_battle(st["battle"], st.get("boss", False))
+        elif "lines" in st:
+            self.dialogue.open(st["lines"], self._next_step)
+        elif "give" in st:
+            from src.systems import equipment
+            got = [equipment.give(self.state, iid) for iid in st["give"]]
+            names = [g["name"] for g in got if g]
+            self.sfx("levelup")
+            self.show_toast("획득!\n" + "\n".join(names), 4.0)
+            self.refresh_weapons()
+            self._next_step()
         elif "flag" in st:
             self.state.flags.add(st["flag"])
             self._next_step()
@@ -831,21 +1013,36 @@ class Game:
             self.inside_exit = True
             self.input_override = None
             self.sfx("sfx_door")
-            self.fade_to(lambda: self.load_map(in_exit["to"], tuple(in_exit["spawn"]), in_exit.get("dir")))
+            def go(ex=in_exit):
+                self.load_map(ex["to"], tuple(ex["spawn"]), ex.get("dir"))
+                if ex.get("travel"):
+                    self.show_toast(ex["travel"], 2.6)
+            self.fade_to(go)
             return True
         self.inside_exit = bool(in_exit)
+        near_any = False
         for ev in m.get("events", []):
             if ev.get("type") != "zone" or f"event:{ev['id']}" in self.state.flags or not self.requires_ok(ev):
                 continue
             if math.hypot(p.x - ev["pos"][0], p.z - ev["pos"][1]) < ev.get("r", 2.5):
+                need = ev.get("requires_items", [])
+                have = [k for k in need if k in self.state.key_items]
+                if len(have) < len(need):                 # 열쇠 아이템이 모자라면 안내만 (구역에 들어올 때 한 번)
+                    near_any = True
+                    if not getattr(self, "_hinted", False):
+                        self._hinted = True
+                        self.show_toast(ev.get("missing_text", "무언가가 더 필요하다…").format(have=len(have), need=len(need)), 3.0)
+                    continue
                 self.run_event(ev)
                 return True
+        if not near_any:
+            self._hinted = False
         return False
 
     @property
     def busy(self):
         return (self.mode != "field" or self.dialogue.active or self.event is not None or self.fade is not None
-                or self.menu.active)
+                or self.menu.active or self.shop.active)
 
     # ------------------------------------------------------------ 데이터
     def speaker_name(self, sid):
@@ -855,6 +1052,10 @@ class Game:
         for town in self.story["npc_dialogues"].values():
             for n in town["npcs"]:
                 if n["id"] == sid:
+                    return n["name"]
+        if self.world:                       # 맵에만 있는 NPC (여관 주인·대장장이 등)
+            for n in self.world.m.get("npcs", []):
+                if n["id"] == sid and n.get("name"):
                     return n["name"]
         return sid
 
@@ -950,6 +1151,9 @@ class Game:
         if self.menu.active:
             self.menu.input(key)
             return
+        if self.shop.active:
+            self.shop.input(key)
+            return
         if self.event is not None:
             return
         if key in ("z", "space", "enter"):
@@ -990,6 +1194,7 @@ class Game:
         if self.toast_t > 0:
             self.toast_t -= dt
             self.toast.alpha = min(1.0, self.toast_t * 3)
+            self.toast_bg.color = color.rgba(0.05, 0.04, 0.06, 0.78 * min(1.0, self.toast_t * 3))
         if self.mode == "title":
             self.title.update(dt)
             self.update_camera(dt)
@@ -1039,11 +1244,39 @@ class Game:
             n.step(0, 0, dt, self.yaw, speed)
         # 말 걸 수 있는 NPC 표시
         near = self.nearest_npc()
-        self.bubble.enabled = bool(near) and not self.busy
-        if near:
+        chest = self.nearest_chest()
+        self.bubble.enabled = bool(near or chest) and not self.busy
+        if chest and (not near or math.hypot(chest.x - p.x, chest.z - p.z) < 1.4):
+            self.bubble.position = (chest.x, self.world.h(chest.x, chest.z) + 1.6 + math.sin(self.clock * 4) * 0.08, chest.z)
+        elif near:
             self.bubble.position = (near.x, self.world.h(near.x, near.z) + near.h + 0.55 + math.sin(self.clock * 4) * 0.08,
                                     near.z)
+        self.update_props(dt)
         self.update_camera(dt)
+
+    def update_props(self, dt):
+        """상자 뚜껑, 반짝임, 굴뚝 연기, 제단 홈"""
+        w = self.world
+        self._prop_t = getattr(self, "_prop_t", 0.0) + dt
+        tick = self._prop_t > 0.22
+        if tick:
+            self._prop_t = 0.0
+        for c in w.chests:
+            if c.opened and c.t < 1:
+                c.t = min(1.0, c.t + dt * 2.2)
+                c.sync()
+            elif not c.opened and tick and random.random() < 0.6:
+                self.field_fx.particle(Vec3(c.x + random.uniform(-0.5, 0.5), w.h(c.x, c.z) + random.uniform(0.6, 1.1),
+                                            c.z + random.uniform(-0.4, 0.4)), (0, 0.6, 0), 0.7, 0.14,
+                                       color.rgb(1.0, 0.88, 0.45))
+        if tick:
+            for ch in w.chimneys:
+                self.field_fx.particle(ch + Vec3(random.uniform(-0.15, 0.15), 0, random.uniform(-0.15, 0.15)),
+                                       (random.uniform(-0.1, 0.3), random.uniform(0.8, 1.3), random.uniform(-0.1, 0.2)),
+                                       random.uniform(2.2, 3.0), random.uniform(0.5, 0.7),
+                                       color.rgba(0.55, 0.55, 0.58, 0.45), grow=1.8, additive=False)
+        for a in w.altars:
+            a.set_lit(sum(1 for k in a.data.get("keys", []) if k in self.state.key_items))
 
     def update_camera(self, dt):
         if self.mode == "title":           # 타이틀: 숲 위를 천천히 도는 카메라
@@ -1094,10 +1327,13 @@ class Game:
         r = math.radians(self.yaw)
         fx, fz = math.sin(r), math.cos(r)              # 화면 안쪽
         rx, rz = math.cos(r), -math.sin(r)             # 화면 오른쪽
-        cols = self.world.colliders
+        cols = list(self.world.colliders)
+        for rx, rz, hw, hd in getattr(self.world, "rects", []):     # 건물은 크고 높아 더 넓게 가린다
+            cols.append((rx, rz, max(hw, hd) + 3.0))
         best, best_score = (p.x, p.z), None
-        for dx in range(-8, 9, 2):
-            for dz in range(-8, 9, 2):
+        rng_ = range(-14, 15, 2) if getattr(self.world, "rects", None) else range(-8, 9, 2)
+        for dx in rng_:
+            for dz in rng_:
                 cx, cz = p.x + dx, p.z + dz
                 if self.world.blocked(cx, cz, 1.2) or abs(cx) > self.world.half - 10 or abs(cz) > self.world.half - 10:
                     continue
@@ -1147,7 +1383,7 @@ class Game:
             self.bgm_fade = 0.5
         self.bgm, self.bgm_name = None, None
 
-    def nearest_npc(self, reach=2.6):
+    def nearest_npc(self, reach=2.9):
         p = self.player
         best, bd = None, reach
         for n in self.npcs:
@@ -1156,11 +1392,54 @@ class Game:
                 best, bd = n, d
         return best
 
+    def nearest_chest(self, reach=1.9):
+        p = self.player
+        best, bd = None, reach
+        for c in self.world.chests:
+            dd = math.hypot(c.x - p.x, c.z - p.z)
+            if not c.opened and dd < bd:
+                best, bd = c, dd
+        return best
+
+    def open_chest(self, c):
+        from src.systems import equipment
+        c.opened = True
+        self.state.flags.add(f"chest:{self.world.m['id']}:{c.data['id']}")
+        self.sfx("levelup", 0.7)
+        names = []
+        for iid in c.data.get("items", []):
+            g = equipment.give(self.state, iid)
+            if g:
+                names.append(g["name"])
+        if c.data.get("gold"):
+            self.state.gold += c.data["gold"]
+            names.append(f"{c.data['gold']} 골드")
+        top = Vec3(c.x, self.world.h(c.x, c.z) + 0.9, c.z)
+        self.field_fx.burst(top, 40, color.rgb(1.0, 0.85, 0.4), (1.5, 4.5), up=2.5, grav=4)
+        self.field_fx.pillar(top - Vec3(0, 0.8, 0), color.rgb(1.0, 0.9, 0.55), 3.0, 20)
+        self.show_toast("보물상자를 열었다!\n" + "\n".join(f"「{x}」을(를) 얻었다" for x in names), 3.6)
+
     def try_talk(self):
+        c = self.nearest_chest()
+        if c and (not self.nearest_npc() or math.hypot(c.x - self.player.x, c.z - self.player.z) < 1.4):
+            self.player.face_vector(c.x - self.player.x, c.z - self.player.z, self.yaw)
+            self.open_chest(c)
+            return
         n = self.nearest_npc()
         if not n:
             return
         d = n.data
+        if d.get("shop") or d.get("inn"):                 # 상점 주인·여관 주인
+            n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
+            self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)
+            self.sfx("sfx_confirm")
+            greet = d.get("greeting")
+            then = (lambda: self.shop.open(d["shop"])) if d.get("shop") else self.shop.open_inn
+            if greet:
+                self.dialogue.open([{"speaker": d["id"], "text": greet}], then)
+            else:
+                then()
+            return
         # 서로 마주 보기
         n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
         self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)

@@ -89,5 +89,12 @@
   "endpoint": "image.pollinations.ai (free)",
   "score": -0.5,
   "why": "흰테두리 10%, 잘림 1, 차지 41%"
+ },
+ "oath_wraith": {
+  "seed": 9230,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design on plain light grey studio backdrop, spectral ghost knight boss monster, towering armored knight made of pale blue ghostly flame, ornate ancient silver armor with broken chains, glowing cyan eyes in a dark helmet, holding a giant ethereal greatsword, tattered royal cape, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 35%"
  }
 }

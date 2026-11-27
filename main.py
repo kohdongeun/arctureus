@@ -170,6 +170,10 @@ def autoplay(game, out_dir):
         shot("menu_status_iris")
         yield key("x", 8)
         yield key("down arrow", 6)
+        yield key("z", 10)                          # 장비
+        shot("menu_equip")
+        yield key("x", 8)
+        yield key("down arrow", 6)
         yield key("z", 10)                          # 아이템
         shot("menu_items")
         hp0 = game.state.party[0].hp
@@ -226,7 +230,7 @@ def autoplay(game, out_dir):
         check("보스 처치·제3장 완료", "ch3_clear" in game.state.flags and "event:ritual" in game.state.flags)
         # ---- 타이틀로 → 이어하기
         yield key("x", 10)
-        for _ in range(4):
+        for _ in range(5):                          # 타이틀로
             yield key("down arrow", 4)
         yield key("z", 8)
         yield key("left arrow", 4)                  # 확인 창: '예'

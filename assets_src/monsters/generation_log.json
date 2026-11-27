@@ -1,0 +1,72 @@
+{
+ "rust_crawler": {
+  "seed": 9100,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, rusty mechanical centipede beetle monster, segmented corroded brass and iron body plates, many thin piston legs, glowing orange eyes, steam leaking from joints, sharp pincer mandibles, low crawling pose, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 38%"
+ },
+ "hollow": {
+  "seed": 9110,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, hollow wraith monster, a person who lost all memories in rust fog, ghostly grey translucent humanoid in tattered hooded cloak, faceless dark hollow face with two faint pale glowing eyes, long thin arms with claw fingers, wisps of reddish rust mist around it, floating, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 40%"
+ },
+ "boss_rusted_claw": {
+  "seed": 9221,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant rusted steampunk crab machine boss monster, huge corroded iron pincer claw raised, brass boiler body with rivets and pipes, rust-red and dark iron colors, glowing red furnace core, steam venting from chimneys, menacing, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.07,
+  "why": "흰테두리 7%, 잘림 0, 차지 1%"
+ },
+ "boss_grinder": {
+  "seed": 9230,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant forest mining machine boss monster, massive spinning drill arm, armored brass and iron tank body on caterpillar treads, glowing blue ether tank on its back, smokestacks venting steam, menacing red sensor eyes, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.65,
+  "why": "흰테두리 65%, 잘림 0, 차지 1%"
+ },
+ "brass_guard": {
+  "seed": 9240,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, brass guard automaton soldier, emotionless humanoid clockwork robot knight, polished brass and white enamel armor plates, round glass visor face with single glowing blue eye slit, ether spear and round shield, steam pipes on back, imperial guard insignia, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.1,
+  "why": "흰테두리 10%, 잘림 0, 차지 17%"
+ },
+ "boss_tick": {
+  "seed": 9251,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, twin clockmaker boy villain, mischievous grin, short orange hair, top hat with gears, brass monocle, striped waistcoat, wielding a giant pendulum blade, pocket watches hanging, 1boy, male, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.75,
+  "why": "흰테두리 75%, 잘림 0, 차지 39%"
+ },
+ "boss_tock": {
+  "seed": 9262,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, twin clockmaker girl villain, cold smile, short orange hair with gear hairpin, small top hat, brass monocle, striped dress with apron of tools, holding a giant clock key wrench, 1girl, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.03,
+  "why": "흰테두리 63%, 잘림 1, 차지 34%"
+ },
+ "boss_cecil": {
+  "seed": 9272,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, handsome young man knight captain in battle stance, 1boy, male, face clearly visible, neat short golden hair, blue eyes, white and gold steam-powered guard armor, glowing ether rapier thrust forward, flowing white cape, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.01,
+  "why": "흰테두리 1%, 잘림 0, 차지 39%"
+ },
+ "boss_time_warden": {
+  "seed": 9280,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, ancient time guardian golem, tall robed stone and brass construct, giant clock face as its head with glowing hands, huge pendulum swinging from its chest, floating gears orbiting around it, golden sand particles, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.0,
+  "why": "흰테두리 0%, 잘림 0, 차지 30%"
+ },
+ "boss_iron_legion": {
+  "seed": 9291,
+  "prompt": "anime style, 2000s JRPG battle monster sprite, isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, colossal brass guard war mech titan, massive humanoid walking fortress of brass and iron, cannons on shoulders, glowing blue ether core in chest, many small guard soldiers built into its armor, steam venting, full body, three-quarter view facing right, full body entirely visible, centered, clean dark lineart, cel shading, dramatic colors, single monster only, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": 0.23,
+  "why": "흰테두리 23%, 잘림 0, 차지 27%"
+ }
+}

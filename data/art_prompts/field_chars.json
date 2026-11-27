@@ -21,7 +21,7 @@
       "name": "제드 레이븐홀트",
       "role": "주인공",
       "description": "27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, three-quarter view facing right",
-      "portrait_hint": "handsome adult man, 1boy, male, masculine face, sharp jawline"
+      "portrait_hint": "handsome adult man, 1boy, male, long jet black hair tied in a low ponytail, black hair, monocle lens over right eye, navy blue coat"
     },
     "cecil": {
       "name": "세실 노블",
@@ -33,7 +33,7 @@
       "name": "발타자르 그림웰",
       "role": "최종 적대자",
       "description": "58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, three-quarter view facing left",
-      "portrait_hint": "old man, 1boy, male, plain white background, no circle, no frame, no border"
+      "portrait_hint": "old man, 1boy, male, gold-rimmed round glasses, upper body on plain white background, no circle, no ring, no frame, no border, no medallion"
     },
     "morgan": {
       "name": "마담 모르간",
@@ -90,47 +90,58 @@
     },
     "boss_rusted_claw": {
       "name": "녹슨 집게",
-      "description": "giant rusted steampunk crab machine boss monster, huge corroded iron pincer claw raised, brass boiler body with rivets and pipes, rust-red and dark iron colors, glowing red furnace core, steam venting from chimneys, menacing, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant rusted steampunk crab machine boss monster, huge corroded iron pincer claw raised, brass boiler body with rivets and pipes, rust-red and dark iron colors, glowing red furnace core, steam venting from chimneys, menacing, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_grinder": {
       "name": "숲 채굴기 그라인더",
-      "description": "giant forest mining machine boss monster, massive spinning drill arm, armored brass and iron tank body on caterpillar treads, glowing blue ether tank on its back, smokestacks venting steam, menacing red sensor eyes, three-quarter view facing right"
+      "description": "isolated on plain pure white background, no sky, no clouds, no ground, no city, mechanical monster only, compact giant mining machine on caterpillar treads with a huge spinning drill arm in front, brass and iron plates, glowing blue ether tank on its back, two smokestacks, menacing red sensor eyes, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "brass_guard": {
       "name": "황동 근위병",
-      "description": "brass guard automaton soldier, emotionless humanoid clockwork robot knight, polished brass and white enamel armor plates, round glass visor face with single glowing blue eye slit, ether spear and round shield, steam pipes on back, imperial guard insignia, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, brass guard automaton soldier, emotionless humanoid clockwork robot knight, polished brass and white enamel armor plates, round glass visor face with single glowing blue eye slit, ether spear and round shield, steam pipes on back, imperial guard insignia, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_tick": {
       "name": "시계공 틱",
-      "description": "twin clockmaker boy villain, mischievous grin, short orange hair, top hat with gears, brass monocle, striped waistcoat, wielding a giant pendulum blade, pocket watches hanging, 1boy, male, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, twin clockmaker boy villain, mischievous grin, short orange hair, top hat with gears, brass monocle, striped waistcoat, wielding a giant pendulum blade, pocket watches hanging, 1boy, male, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_tock": {
       "name": "시계공 톡",
-      "description": "twin clockmaker girl villain, cold smile, short orange hair with gear hairpin, small top hat, brass monocle, striped dress with apron of tools, holding a giant clock key wrench, 1girl, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, twin clockmaker girl villain, cold smile, short orange hair with gear hairpin, small top hat, brass monocle, striped dress with apron of tools, holding a giant clock key wrench, 1girl, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_cecil": {
       "name": "근위대장 세실",
-      "description": "handsome young man knight captain in battle stance, 1boy, male, face clearly visible, neat short golden hair, blue eyes, white and gold steam-powered guard armor, glowing ether rapier thrust forward, flowing white cape, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, handsome young man knight captain in battle stance, 1boy, male, face clearly visible, neat short golden hair, blue eyes, white and gold steam-powered guard armor, glowing ether rapier thrust forward, flowing white cape, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_time_warden": {
       "name": "시간의 파수꾼",
-      "description": "ancient time guardian golem, tall robed stone and brass construct, giant clock face as its head with glowing hands, huge pendulum swinging from its chest, floating gears orbiting around it, golden sand particles, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, ancient time guardian golem, tall robed stone and brass construct, giant clock face as its head with glowing hands, huge pendulum swinging from its chest, floating gears orbiting around it, golden sand particles, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_iron_legion": {
       "name": "아이언 레기온",
-      "description": "colossal brass guard war mech titan, massive humanoid walking fortress of brass and iron, cannons on shoulders, glowing blue ether core in chest, many small guard soldiers built into its armor, steam venting, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, colossal brass guard war mech titan, massive humanoid walking fortress of brass and iron, cannons on shoulders, glowing blue ether core in chest, many small guard soldiers built into its armor, steam venting, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_balthazar": {
       "name": "기술원장 발타자르",
-      "description": "villain old scholar in battle pose, 1boy, male, old man, short silver hair and beard, gold-rimmed glasses, black academic coat covered with dozens of small pocket watches, brass prosthetic left hand glowing, giant clock hands floating behind him as weapons, cold expression, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, villain old scholar in battle pose, 1boy, male, old man, short silver hair and beard, gold-rimmed glasses, black academic coat covered with dozens of small pocket watches, brass prosthetic left hand glowing, giant clock hands floating behind him as weapons, cold expression, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_chrono_armor": {
       "name": "크로노 아머 발타자르",
-      "description": "giant clockwork battle armor mech piloted by an old scholar, huge brass suit with a giant clock dial on the chest, twelve clock-hand cannons, gears and steam, menacing, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, giant clockwork battle armor mech piloted by an old scholar, huge brass suit with a giant clock dial on the chest, twelve clock-hand cannons, gears and steam, menacing, full body, three-quarter view facing right",
+      "portrait_hint": ""
     },
     "boss_rust_king": {
       "name": "녹의 왕",
-      "description": "rust king, dream of the sleeping giant, enormous dark spectral figure made of rust fog and corroded metal, crown of broken gears, hollow glowing red eyes, tattered rust cloak dissolving into red mist, eldritch final boss, full body, three-quarter view facing right"
+      "description": "isolated character design sheet on plain pure white studio background, no environment, no sky, no ground, no smoke clouds, no circle frame, rust king, dream of the sleeping giant, enormous dark spectral figure made of rust fog and corroded metal, crown of broken gears, hollow glowing red eyes, tattered rust cloak dissolving into red mist, eldritch final boss, full body, three-quarter view facing right",
+      "portrait_hint": ""
     }
   }
 }

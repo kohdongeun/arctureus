@@ -1,0 +1,51 @@
+{
+  "rust_crawler": {
+    "size": [
+      607,
+      685
+    ],
+    "faces": "right"
+  },
+  "hollow": {
+    "size": [
+      555,
+      679
+    ],
+    "faces": "right"
+  },
+  "boss_rusted_claw": {
+    "size": [
+      660,
+      595
+    ],
+    "faces": "right"
+  },
+  "brass_guard": {
+    "size": [
+      350,
+      685
+    ],
+    "faces": "right"
+  },
+  "boss_tick": {
+    "size": [
+      704,
+      719
+    ],
+    "faces": "right"
+  },
+  "boss_tock": {
+    "size": [
+      600,
+      721
+    ],
+    "faces": "right"
+  },
+  "boss_cecil": {
+    "size": [
+      524,
+      697
+    ],
+    "faces": "right"
+  }
+}

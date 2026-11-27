@@ -151,10 +151,12 @@ class FX:
 # ====================================================================== 적 빌보드
 class EnemyView:
     def __init__(self, game, f, pos):
-        img = os.path.join(game_root(game), "assets", "images", f.enemy["sprite"])
+        # 1순위: 생성한 일러스트 assets/characters/monster/<적 id>.png (오른쪽=파티 쪽을 바라봄), 없으면 예전 2D 그림
+        new = os.path.join(game_root(game), "assets", "characters", "monster", f.enemy["id"] + ".png")
+        img = new if os.path.exists(new) else os.path.join(game_root(game), "assets", "images", f.enemy["sprite"])
         t = Texture(img)
         t.filtering = "mipmap"
-        h = 3.0 if f.enemy.get("boss") else 1.5
+        h = f.enemy.get("height", 3.0 if f.enemy.get("boss") else 1.6)
         w = h * t.width / t.height
         self.h = h
         y = game.world.h(pos.x, pos.z)
@@ -220,8 +222,8 @@ class Battle3D:
         self.sub_i = 0
         self.target = None
         self.ended = False
-        p = game.player
-        self.center = Vec3(p.x, game.world.h(p.x, p.z), p.z)
+        cx, cz = game.battle_spot()        # 카메라 앞을 가리는 나무가 없는 가까운 자리
+        self.center = Vec3(cx, game.world.h(cx, cz), cz)
         r = math.radians(game.yaw)
         self.R = Vec3(math.cos(r), 0, -math.sin(r))      # 화면 오른쪽
         self.F = Vec3(math.sin(r), 0, math.cos(r))       # 화면 안쪽
@@ -256,7 +258,9 @@ class Battle3D:
         """전투 구도: 양 진영 사이를 조금 더 멀리, 낮은 각도로"""
         # 하단 상태창에 가리지 않도록 초점을 카메라 쪽으로 당겨 전투가 화면 위쪽에 오게 한다
         mid = self.center + self.F * 0.2
-        return mid + Vec3(0, 0.6, 0), 42.0, 19.0
+        if self.core.boss:                 # 큰 보스는 머리까지 들어오도록 조금 멀리·높게
+            return mid + self.F * 0.6 + Vec3(0, 1.5, 0), 36.0, 25.0
+        return mid + self.F * 0.7 + Vec3(0, 0.9, 0), 40.0, 20.5
 
     # ------------------------------------------------------------ UI
     def build_ui(self):

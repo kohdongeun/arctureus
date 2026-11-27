@@ -14,25 +14,25 @@
   "why": "흰테두리 2%, 잘림 0, 차지 54%"
  },
  "zed": {
-  "seed": 8320,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8371,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, handsome adult man, 1boy, male, masculine face, sharp jawline, 27-year-old sky pirate sniper, long black hair tied in a low ponytail, telescope monocle on right eye, long navy captain coat with brass buttons and tool pouches, long ether rifle on his back, small brass mechanical hawk perched on his shoulder, relaxed smirk, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": 0.5,
-  "why": "흰테두리 50%, 잘림 0, 차지 2%"
+  "score": 0.27,
+  "why": "흰테두리 27%, 잘림 0, 차지 45%"
  },
  "cecil": {
-  "seed": 8330,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8380,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, handsome young man, 1boy, male, face clearly visible, short neat golden hair, bright blue eyes, no hair covering face, 19-year-old young knight captain, neat golden hair, white and gold steam-powered armor, slim ether rapier at his waist, serious proud expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": -0.6,
-  "why": "흰테두리 0%, 잘림 1, 차지 50%"
+  "score": -2.02,
+  "why": "흰테두리 18%, 잘림 3, 차지 56%"
  },
  "balthazar": {
-  "seed": 8340,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8390,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, old man, 1boy, male, plain white background, no circle, no frame, no border, 58-year-old scholar, short silver hair and beard, gold-rimmed glasses, black academic coat decorated with dozens of small pocket watches, brass prosthetic left hand, calm cold expression, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": 0.56,
-  "why": "흰테두리 56%, 잘림 0, 차지 52%"
+  "score": 0.72,
+  "why": "흰테두리 72%, 잘림 0, 차지 40%"
  },
  "morgan": {
   "seed": 8351,
@@ -77,10 +77,10 @@
   "why": "흰테두리 0%, 잘림 0, 차지 41%"
  },
  "b7": {
-  "seed": 8410,
-  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, cute rusty boxy mining robot, single round cyan glowing eye, small antenna with red light, brass and rust-orange body, piston legs, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "seed": 8460,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, 2000s anime RPG character portrait, half body waist-up, beautiful detailed anime face, non-humanoid robot, no human, no girl, mechanical machine character only, boxy metal body, upper body of the robot, plain white background, no circle, cute rusty boxy mining robot, single round cyan glowing eye, small antenna with red light, brass and rust-orange body, piston legs, soft cel shading, facing slightly left, isolated on plain white, simple background, no scenery, no shapes behind, no text",
   "endpoint": "image.pollinations.ai (free)",
-  "score": 0.0,
-  "why": "흰테두리 0%, 잘림 0, 차지 33%"
+  "score": 0.44,
+  "why": "흰테두리 44%, 잘림 0, 차지 40%"
  }
 }

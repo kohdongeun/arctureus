@@ -36,7 +36,7 @@ def mask_rembg(img: Image.Image) -> np.ndarray:
     global _session
     from rembg import new_session, remove
     if _session is None:
-        _session = new_session("isnet-anime")
+        _session = new_session(os.environ.get("REMBG_MODEL", "isnet-anime"))
     m = remove(img.convert("RGB"), session=_session, only_mask=True, post_process_mask=False)
     return np.asarray(m, np.float32) / 255.0
 

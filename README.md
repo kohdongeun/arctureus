@@ -1,24 +1,35 @@
 # 황동의 심장 : 아스카론 연대기
 
-2000년대 초반 국산 PC RPG 감성의 2.5D 쿼터뷰 스팀펑크 판타지 RPG (pygame-ce).
-현재는 프롤로그~1장 일부(굴뚝거리 → 지하 배수로 → 보스 '녹슨 집게')를 플레이할 수 있는 데모다.
+2000년대 초반 국산 PC RPG 감성의 2.5D 쿼터뷰 스팀펑크 판타지 RPG. 본편은 **3D 쿼터뷰 버전**(ursina / Panda3D)이다.
+현재 3장 '녹슨 숲' 구간(베르단 숲 어귀 → 고목의 요람 → 공명의 제단 → 보스 '숲 채굴기 그라인더')을 플레이할 수 있다.
+이전 2D(pygame) 데모(프롤로그~1장)는 `main2d.py` 로 남겨 두었다.
 
 ## 실행
 
 ```bash
 pip install -r requirements.txt
-python main.py      # 2D 버전 (전투·메뉴·세이브까지 플레이 가능한 데모)
-python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NPC 대화)
+python main.py      # 3D 본편: 타이틀 → 새 게임 / 이어하기
+python main2d.py    # 이전 2D 데모
 ```
 
-### 3D 쿼터뷰 버전 (`main3d.py`, `src3d/`)
+Windows 실행 파일: GitHub Actions 의 **Build Windows EXE** 워크플로가 `Arcturus_RPG.exe` 하나로 만들어 Artifacts 에 올린다.
+직접 빌드: `pip install pyinstaller && python tools/build_exe.py` → `dist/Arcturus_RPG.exe`
+
+### 조작 (3D, `main.py`, `src3d/`)
 | 키 | 동작 |
 |---|---|
-| WASD / 방향키 | 이동 (카메라 기준) |
-| Z / Space / Enter | 대화 · 다음 대사 |
+| WASD / 방향키 | 이동 (카메라 기준) · 메뉴 커서 |
+| Z / Space / Enter | 대화 · 다음 대사 · 결정 |
+| X / Esc / Tab | 필드 메뉴 · 취소 |
 | Q / E | 카메라 45° 회전 |
 | 마우스 휠 | 확대 / 축소 |
 
+- **타이틀**: 숲 위를 천천히 도는 카메라 + 새 게임 / 이어하기(3D 세이브가 있을 때) / 종료
+- **필드 메뉴**: 상태(능력치·스킬·반신 일러스트, ◀▶ 동료 전환) / 아이템(대상 선택 사용) / 저장 / 불러오기 / 타이틀로 / 게임 종료.
+  세이브는 2D 와 같은 슬롯 3개·같은 폴더를 쓰며, 2D 세이브는 3D 에서 '불러올 수 없음'으로 표시된다
+- **맵 이동**: 맵 JSON 의 `exits` (위치·반경·도착 맵·도착 지점) → 페이드 아웃/인
+- **스토리 이벤트**: 맵 JSON 의 `intro_scene`(첫 방문), `events` — `talk`(NPC 첫 대화), `zone`(구역 진입) 이벤트가
+  `steps` 를 차례로 실행: `scene`(story.json 장면) → `battle`(보스전) → `flag` → `banner`. 본 장면·끝난 이벤트는 플래그로 기억(세이브됨)
 - 높이맵 지형(언덕·흙길·잔디 텍스처, 나무 그림자는 텍스처에 구움), 입체 나무·덤불·바위, 풀포기·꽃
 - 항상 카메라를 바라보는 빌보드 캐릭터 + 발밑 그림자, 동료 2명이 발자취를 따라 걸음, 카메라 회전 시 앞/뒷모습 자동 전환
 - **ATB 전투** (`src3d/battle3d.py`, 규칙은 2D 와 공용인 `src/systems/battle_core.py`): 걷다 보면 랜덤 인카운트 →
@@ -31,16 +42,12 @@ python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NP
   (rembg `isnet-anime` 모델로 누끼 → 흰 테두리 색 복원 → 다리 사이 같은 배경 구멍 제거 → 여백 자르기 →
   `assets/characters/field/<id>.png`). 이미지가 있는 캐릭터는 자동으로 전신 일러스트 빌보드로, 없는 캐릭터는 기존 시트 스프라이트로 표시된다.
   도구 설치: `pip install "rembg[cpu]"` (게임 실행에는 필요 없음)
-- 자동 촬영 테스트: `python main3d.py --shots 폴더` (화면 없는 리눅스에서는 `xvfb-run -a` 로 실행)
+- 자동 테스트: `python main.py --shots 폴더` — 타이틀 → 새 게임 → 이벤트 → 전투 → 메뉴·아이템·저장 → 맵 이동 → 보스 이벤트 →
+  타이틀 → 이어하기까지 실제 게임 루프로 진행하며 12개 항목 점검 + 스크린샷 (화면 없는 리눅스에서는 `xvfb-run -a`)
+- 몬스터 일러스트: `assets_src/monsters/<적 id>.png` → `python tools/art/prepare_field_chars.py --src assets_src/monsters --out assets/characters/monster --crop-bottom 0.04` (없으면 예전 2D 그림)
 - 조명은 `src3d/shaders.py` 의 자체 셰이더(방향광·환경광·안개). ursina 기본 그림자 셰이더는 일부 드라이버에서 크래시가 나서 쓰지 않는다.
 
-| 키 | 동작 |
-|---|---|
-| 방향키 / WASD | 이동 (↑ 북동, → 남동, ↓ 남서, ← 북서) · 메뉴 커서 |
-| Z / Enter / Space | 대화 · 조사 · 결정 |
-| X / Esc | 취소 · 필드 메뉴 |
-
-## 구현된 시스템
+## 2D 버전에서 구현된 시스템 (`main2d.py`)
 - **필드**: 아이소메트릭 타일맵, 블록을 쌓은 건물, 깊이 정렬, 에테르 가로등 광원, 어두운 맵 조명, 맵 이동, NPC 배회
 - **대화**: 타자기 효과, 감정별 초상화 일러스트(주인공), NPC 는 도트 초상화, 대사는 `data/story.json` 에서 읽음
 - **ATB 전투**: 속도 기반 게이지, 웨이트 모드 명령 입력(공격/스킬/방어/아이템/도주), 약점·내성·치명타,
@@ -54,7 +61,14 @@ python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NP
 
 ## 폴더
 ```
-main.py                 진입점
+main.py                 3D 본편 진입점 (자동 테스트 --shots, 빌드 검증 --smoke)
+main2d.py               이전 2D 버전 진입점
+src3d/game.py           3D 필드·맵 이동·이벤트·카메라·대화창
+src3d/battle3d.py       3D 전투 연출·UI
+src3d/menu3d.py         필드 메뉴·타이틀 화면
+src/systems/battle_core.py  전투 규칙 (2D/3D 공용)
+src/systems/save.py     세이브/로드 (2D/3D 공용)
+data/maps3d/*.json      3D 맵 (지형·길·언덕·거목·NPC·출구·이벤트·인카운트)
 src/engine              게임 루프·장면 스택·입력, 리소스 로더·오디오
 src/scenes              title / field / dialogue / battle / menu
 src/entities/party.py   캐릭터·레벨업·인벤토리

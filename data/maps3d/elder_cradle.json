@@ -1,0 +1,215 @@
+{
+  "id": "elder_cradle",
+  "name": "고목의 요람",
+  "subtitle": "녹색 서약회의 마지막 거점",
+  "size": 70,
+  "seed": 23,
+  "bgm": "mystery",
+  "paths": [
+    {
+      "points": [
+        [
+          0,
+          -36
+        ],
+        [
+          0,
+          -26
+        ],
+        [
+          -1,
+          -16
+        ],
+        [
+          0,
+          -8
+        ]
+      ],
+      "width": 5.0
+    },
+    {
+      "points": [
+        [
+          0,
+          -8
+        ],
+        [
+          -8,
+          -5
+        ],
+        [
+          -15,
+          -3
+        ]
+      ],
+      "width": 3.6
+    },
+    {
+      "points": [
+        [
+          0,
+          -8
+        ],
+        [
+          10,
+          -10
+        ],
+        [
+          18,
+          -6
+        ]
+      ],
+      "width": 3.0
+    }
+  ],
+  "clearings": [
+    [
+      0,
+      -2,
+      8.5
+    ],
+    [
+      -15,
+      -3,
+      4.2
+    ],
+    [
+      18,
+      -6,
+      3.2
+    ]
+  ],
+  "hills": [
+    [
+      -18,
+      16,
+      9,
+      3.6
+    ],
+    [
+      18,
+      18,
+      10,
+      4.0
+    ],
+    [
+      -20,
+      -20,
+      7,
+      2.2
+    ],
+    [
+      22,
+      -22,
+      7,
+      2.0
+    ]
+  ],
+  "landmark_trees": [
+    [
+      0,
+      9,
+      3.0
+    ]
+  ],
+  "trees": 46,
+  "bushes": 36,
+  "rocks": 14,
+  "tufts": 520,
+  "flowers": 220,
+  "start": [
+    0.0,
+    -26.0
+  ],
+  "start_dir": "ne",
+  "stone_areas": [
+    [
+      -15,
+      -3,
+      3.4
+    ]
+  ],
+  "exits": [
+    {
+      "pos": [
+        0.0,
+        -29.5
+      ],
+      "r": 2.4,
+      "to": "verdan_edge",
+      "spawn": [
+        8.0,
+        27.0
+      ],
+      "dir": "sw",
+      "label": "베르단 숲 어귀"
+    }
+  ],
+  "intro_scene": "ch3_03",
+  "npcs": [
+    {
+      "id": "silvaen",
+      "sprite": "silvaen",
+      "pos": [
+        2.5,
+        1.5
+      ],
+      "dir": "sw",
+      "town": "rusted_woods",
+      "keys": [
+        "default"
+      ]
+    }
+  ],
+  "standing": {
+    "silvaen": "silvaen"
+  },
+  "events": [
+    {
+      "id": "ritual",
+      "type": "zone",
+      "pos": [
+        -15,
+        -3
+      ],
+      "r": 2.6,
+      "requires": [
+        "scene:ch3_03"
+      ],
+      "hint": "공명의 제단",
+      "steps": [
+        {
+          "scene": "ch3_04"
+        },
+        {
+          "scene": "ch3_05",
+          "repeat": true
+        },
+        {
+          "battle": [
+            "boss_grinder"
+          ],
+          "boss": true
+        },
+        {
+          "scene": "ch3_06"
+        },
+        {
+          "flag": "ch3_clear"
+        },
+        {
+          "banner": [
+            "제3장 완료",
+            "다음 여정: 기어홀드 (3D 이식 예정)"
+          ]
+        }
+      ]
+    }
+  ],
+  "encounters": {
+    "table": "elder_cradle",
+    "chance_per_meter": 0.025,
+    "min_meters": 16,
+    "safe_radius": 6
+  }
+}

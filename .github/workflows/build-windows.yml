@@ -6,8 +6,10 @@ on:
     paths:
       - "main.py"
       - "src/**"
+      - "src3d/**"
       - "assets/**"
       - "data/**"
+      - "requirements.txt"
       - "Arcturus_RPG.spec"
       - "tools/build_exe.py"
       - ".github/workflows/build-windows.yml"
@@ -30,20 +32,39 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pygame-ce Pillow pyinstaller
+          pip install "ursina==8.3.0" numpy Pillow pyinstaller
 
-      - name: Build single-file EXE
+      - name: Build single-file EXE (3D version)
         run: python tools/build_exe.py
 
-      - name: Smoke test the EXE (title -> new game -> field)
+      # GitHub 의 Windows 빌드 서버에는 GPU 가 없어 OpenGL 이 1.1 뿐이다.
+      # 스모크 테스트 동안만 Mesa 소프트웨어 렌더러(llvmpipe)를 exe 옆에 두어 셰이더를 돌린다 (배포 파일에는 넣지 않음).
+      - name: Fetch Mesa software OpenGL for the smoke test
         shell: pwsh
         env:
-          SDL_VIDEODRIVER: dummy
-          SDL_AUDIODRIVER: dummy
+          GH_TOKEN: ${{ github.token }}
         run: |
-          $p = Start-Process -FilePath "dist\Arcturus_RPG.exe" -ArgumentList "--smoke" -Wait -PassThru -NoNewWindow
+          $rel = Invoke-RestMethod -Headers @{ Authorization = "Bearer $env:GH_TOKEN" } https://api.github.com/repos/pal1000/mesa-dist-win/releases/latest
+          $asset = $rel.assets | Where-Object { $_.name -like "*release-msvc.7z" } | Select-Object -First 1
+          Write-Host "Mesa: $($asset.name)"
+          Invoke-WebRequest $asset.browser_download_url -OutFile mesa.7z
+          7z x mesa.7z -omesa -y | Out-Null
+          New-Item -ItemType Directory -Force smoke | Out-Null
+          Copy-Item dist\Arcturus_RPG.exe smoke\
+          Get-ChildItem mesa\x64\*.dll | Where-Object { $_.Name -match "^(opengl32|libgallium_wgl|libglapi|dxil)\.dll$" } | Copy-Item -Destination smoke\
+          Get-ChildItem smoke
+
+      - name: Smoke test the EXE (title -> new game -> 3D field)
+        shell: pwsh
+        env:
+          GALLIUM_DRIVER: llvmpipe
+        run: |
+          $p = Start-Process -FilePath "smoke\Arcturus_RPG.exe" -ArgumentList "--smoke" -Wait -PassThru -NoNewWindow -RedirectStandardOutput smoke\out.txt -RedirectStandardError smoke\err.txt
           Write-Host "exit code: $($p.ExitCode)"
-          if (Test-Path "dist\Arcturus_RPG_error.log") { Get-Content "dist\Arcturus_RPG_error.log" }
+          Get-Content smoke\out.txt -Tail 20
+          Get-Content smoke\err.txt -Tail 30
+          if (Test-Path "smoke\Arcturus_RPG_error.log") { Get-Content "smoke\Arcturus_RPG_error.log" }
+          if (-not (Select-String -Path smoke\out.txt -Pattern "smoke: OK" -Quiet)) { exit 1 }
           exit $p.ExitCode
 
       - name: Upload EXE

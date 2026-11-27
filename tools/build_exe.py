@@ -3,7 +3,7 @@
     pip install -r requirements.txt pyinstaller
     python tools/build_exe.py
 
-1) 루크 도트 스프라이트로 아이콘(build_assets/icon.ico) 생성
+1) 루크 SD 일러스트로 아이콘(build_assets/icon.ico) 생성
 2) Arcturus_RPG.spec 으로 PyInstaller 실행
 결과: dist/Arcturus_RPG.exe (Windows 에서 빌드한 경우)
 
@@ -25,15 +25,20 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
 def make_icon():
+    """3D 필드용 루크 SD 일러스트로 아이콘(build_assets/icon.ico) 생성"""
     out_dir = os.path.join(ROOT, "build_assets")
     os.makedirs(out_dir, exist_ok=True)
-    sheet = Image.open(os.path.join(ROOT, "assets", "images", "characters", "chr_luke.png")).convert("RGBA")
-    frame = sheet.crop((0, 0, 48, 72)).crop((0, 0, 48, 48))      # 남동 방향 정면, 상반신
-    base = Image.new("RGBA", (48, 48), (27, 34, 56, 255))
-    base.alpha_composite(frame)
-    big = base.resize((256, 256), Image.NEAREST)
+    luke = Image.open(os.path.join(ROOT, "assets", "characters", "field", "luke.png")).convert("RGBA")
+    head = luke.crop((0, 0, luke.width, min(luke.height, luke.width)))     # 위쪽 정사각형 (얼굴·상반신)
+    head.thumbnail((232, 232), Image.LANCZOS)
+    base = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
+    disc = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
+    from PIL import ImageDraw
+    ImageDraw.Draw(disc).ellipse([4, 4, 252, 252], fill=(38, 44, 66, 255), outline=(226, 184, 102, 255), width=8)
+    base.alpha_composite(disc)
+    base.alpha_composite(head, ((256 - head.width) // 2, 256 - head.height - 8))
     path = os.path.join(out_dir, "icon.ico")
-    big.save(path, sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
+    base.save(path, sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
     print("아이콘:", path)
 
 

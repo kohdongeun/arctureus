@@ -13,7 +13,8 @@ import os
 import sys
 import time
 
-from src.engine import assets
+from src import config as cfg
+from src import datafiles as assets      # pygame 없이 (2D/3D 공용)
 
 SLOTS = 3
 VERSION = 1
@@ -100,6 +101,19 @@ def read(slot: int) -> dict | None:
 
 def any_save() -> bool:
     return any(read(i) for i in range(SLOTS))
+
+
+def map_exists_3d(map_id) -> bool:
+    return bool(map_id) and os.path.exists(os.path.join(cfg.DATA, "maps3d", f"{map_id}.json"))
+
+
+def map_name(map_id) -> str:
+    for sub in ("maps3d", "maps"):
+        p = os.path.join(cfg.DATA, sub, f"{map_id}.json")
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                return json.load(f).get("name", map_id)
+    return str(map_id)
 
 
 def fmt_time(sec: float) -> str:

@@ -14,7 +14,7 @@ import random
 import sys
 
 from panda3d.core import Filename, TransparencyAttrib
-from ursina import (Cylinder, Entity, Mesh, Text, Texture, Ursina, Vec3, application, camera, color, destroy,
+from ursina import (Entity, Mesh, Text, Texture, Ursina, Vec3, application, camera, color, destroy,
                     held_keys, lerp, window)
 
 from src3d import terrain
@@ -51,6 +51,58 @@ def rgb(r, g, b, a=255):
     return color.rgba32(r, g, b, a)
 
 
+# ====================================================================== 메시 생성 헬퍼
+def _unit_sphere(lat, lon):
+    """반지름 1 구 (위→아래 행, 각도 열). 반환: 정점(=법선), uv, 삼각형 인덱스"""
+    import numpy as np
+    th = np.linspace(0, math.pi, lat + 1)
+    ph = np.linspace(0, math.tau, lon + 1)
+    T, P = np.meshgrid(th, ph, indexing="ij")
+    v = np.stack([np.sin(T) * np.cos(P), np.cos(T), np.sin(T) * np.sin(P)], -1).reshape(-1, 3)
+    uv = np.stack([P / math.tau, 1 - T / math.pi], -1).reshape(-1, 2)
+    tris = []
+    for i in range(lat):
+        for j in range(lon):
+            a, b = i * (lon + 1) + j, i * (lon + 1) + j + 1
+            c, d = a + lon + 1, b + lon + 1
+            tris += [a, c, b, b, c, d]
+    return v, uv, np.array(tris, np.int64)
+
+
+def _unit_cylinder(n):
+    """아래 y=0, 위 y=1, 반지름 1 옆면. 반환: 정점, 법선, uv, 삼각형"""
+    import numpy as np
+    ang = np.linspace(0, math.tau, n + 1)
+    top = np.stack([np.cos(ang), np.ones_like(ang), np.sin(ang)], -1)
+    bot = np.stack([np.cos(ang), np.zeros_like(ang), np.sin(ang)], -1)
+    v = np.concatenate([top, bot])
+    nrm = v * [1, 0, 1]
+    uv = np.concatenate([np.stack([ang / math.tau, np.ones_like(ang)], -1), np.stack([ang / math.tau, np.zeros_like(ang)], -1)])
+    tris = []
+    for k in range(n):
+        a, b, c, d = k, k + 1, n + 1 + k, n + 2 + k
+        tris += [a, c, b, b, c, d]
+    return v, nrm, uv, np.array(tris, np.int64)
+
+
+def _merge(parts, col_div):
+    """(정점, 법선, uv, 색, 삼각형) 조각들을 한 Mesh 로"""
+    import numpy as np
+    vs, ns, us, cs, ts = [], [], [], [], []
+    off = 0
+    for v, n, uv, col, t in parts:
+        vs.append(v)
+        ns.append(n)
+        us.append(uv)
+        cs.append(np.tile(np.array(list(col) + [col_div], float) / col_div, (len(v), 1)))
+        ts.append(t + off)
+        off += len(v)
+    V, N, U, C, T = (np.concatenate(a) for a in (vs, ns, us, cs, ts))
+    N = N / np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-6)
+    return Mesh(vertices=V.tolist(), triangles=T.tolist(), uvs=U.tolist(), normals=N.tolist(),
+                colors=[color.rgba(*c) for c in C.tolist()], static=True)
+
+
 # ====================================================================== 월드
 class World:
     def __init__(self, map_id):
@@ -59,6 +111,7 @@ class World:
         self.sc = terrain.scatter(self.m)
         self.colliders = terrain.colliders(self.m, self.sc)
         self.rng = random.Random(self.m.get("seed", 1))
+        self.ents = []
         self.build_terrain()
         self.build_trees()
         self.build_rocks()
@@ -97,19 +150,38 @@ class World:
         else:
             self.ground = Entity(model=mesh, texture=tex(f"textures3d/terrain_{self.m['id']}.jpg"),
                                  shader=lit_shader)
+        self.ents.append(self.ground)
 
     def build_trees(self):
-        trunks = Entity()
-        leaves = Entity(texture=tex("textures3d/leaves.png"), shader=lit_shader)
+        """나무·덤불을 numpy 로 바로 한 메시에 쌓는다.
+        (구 엔티티 수천 개를 만든 뒤 combine 하면 RAM 이 3GB 가까이 들어서, 저해상도 구·원기둥을 직접 생성)"""
+        import numpy as np
+        sph_v, sph_uv, sph_t = _unit_sphere(7, 11)
+        cyl_v, cyl_n, cyl_uv, cyl_t = _unit_cylinder(7)
+        trunk_parts, leaf_parts = [], []
+
+        def cyl(base, d, r, h, col):
+            d = np.asarray(d, float)
+            d /= np.linalg.norm(d)
+            u = np.cross(d, [0.0, 0.0, 1.0] if abs(d[2]) < 0.9 else [1.0, 0.0, 0.0])
+            u /= np.linalg.norm(u)
+            w = np.cross(u, d)
+            loc = cyl_v * [r, h, r]
+            pos = base + loc[:, :1] * u + loc[:, 1:2] * d + loc[:, 2:3] * w
+            nrm = cyl_n[:, :1] * u + cyl_n[:, 2:3] * w
+            trunk_parts.append((pos, nrm, cyl_uv, col, cyl_t))
+
+        def blob(center, scale, col):
+            leaf_parts.append((sph_v * scale + center, sph_v, sph_uv, col, sph_t))
+
         for x, z, s, rot in self.sc["tree"]:
             y = self.h(x, z) - 0.3
-            Entity(parent=trunks, model=Cylinder(7, radius=0.32 * s, height=3.4 * s, start=0), position=(x, y, z),
-                   color=rgb(150, 110, 80))
+            base = np.array([x, y, z])
+            cyl(base, (0, 1, 0), 0.32 * s, 3.4 * s, (150, 110, 80))
             for k in range(3):            # 굵은 가지
                 a = math.radians(rot + k * 120)
-                Entity(parent=trunks, model=Cylinder(5, radius=0.12 * s, height=1.4 * s, start=0),
-                       position=(x, y + 2.3 * s, z), rotation=(math.degrees(0.8) * math.sin(a), rot + k * 120, 40),
-                       color=rgb(140, 100, 72))
+                d = (math.cos(a) * math.sin(math.radians(40)), math.cos(math.radians(40)), math.sin(a) * math.sin(math.radians(40)))
+                cyl(base + [0, 2.3 * s, 0], d, 0.12 * s, 1.4 * s, (140, 100, 72))
             blobs = 11 + self.rng.randint(0, 4)
             for i in range(blobs):
                 a = self.rng.uniform(0, math.tau)
@@ -117,20 +189,19 @@ class World:
                 hgt = self.rng.uniform(3.0, 5.4) * s
                 sz = self.rng.uniform(1.1, 2.0) * s
                 g = self.rng.uniform(0.7, 1.12) * (0.85 + 0.15 * (hgt / (5.4 * s)))
-                Entity(parent=leaves, model="sphere", position=(x + math.cos(a) * r, y + hgt, z + math.sin(a) * r),
-                       scale=(sz * 1.15, sz * 0.9, sz * 1.15), color=color.rgb(0.78 * g, 0.95 * g, 0.7 * g))
+                blob((x + math.cos(a) * r, y + hgt, z + math.sin(a) * r), np.array([sz * 1.15, sz * 0.9, sz * 1.15]) / 2,
+                     (0.78 * g, 0.95 * g, 0.7 * g))
         for x, z, s, rot in self.sc["bush"]:
             y = self.h(x, z)
             for i in range(3):
                 a = self.rng.uniform(0, math.tau)
-                Entity(parent=leaves, model="sphere", position=(x + math.cos(a) * 0.5 * s, y + 0.45 * s, z + math.sin(a) * 0.5 * s),
-                       scale=(1.3 * s, 0.9 * s, 1.3 * s), color=color.rgb(0.7, 0.9, 0.62))
-        trunks.texture = tex("textures3d/bark.png")
-        trunks.shader = lit_shader
-        trunks.combine(include_normals=True)
-        leaves.combine(include_normals=True)
+                blob((x + math.cos(a) * 0.5 * s, y + 0.45 * s, z + math.sin(a) * 0.5 * s),
+                     np.array([1.3 * s, 0.9 * s, 1.3 * s]) / 2, (0.7, 0.9, 0.62))
+        trunks = Entity(model=_merge(trunk_parts, 255), texture=tex("textures3d/bark.png"), shader=lit_shader)
+        leaves = Entity(model=_merge(leaf_parts, 1), texture=tex("textures3d/leaves.png"), shader=lit_shader)
         leaves.texture_scale = (3, 3)
         self.trunks, self.leaves = trunks, leaves
+        self.ents += [trunks, leaves]
 
     def rock_mesh(self, rng):
         """노이즈로 찌그러뜨린 구 메시"""
@@ -161,6 +232,7 @@ class World:
                    scale=(1.3 * s, 1.0 * s, 1.0 * s), rotation_y=rot, color=color.rgb(0.95, 0.95, 0.92))
         rocks.combine(include_normals=True)
         self.rocks = rocks
+        self.ents.append(rocks)
 
     def build_grass(self):
         """풀포기·꽃: 교차한 사각형 두 장씩을 한 메시에 몰아 넣는다 (알파 테스트)"""
@@ -182,6 +254,12 @@ class World:
                        texture=tex("textures3d/" + file), double_sided=True, shader=unlit_shader)
             e.setTransparency(TransparencyAttrib.MBinary)
             e.hide(0b0001)
+            self.ents.append(e)
+
+    def destroy(self):
+        for e in self.ents:
+            destroy(e)
+        self.ents = []
 
     def blocked(self, x, z, r=0.45):
         if abs(x) > self.half - 7 or abs(z) > self.half - 7:
@@ -272,6 +350,13 @@ class Actor:
         row = ROW[self.facing]
         self.body.texture_offset = (frame * 0.25, 1 - (row + 1) * 0.25)
 
+    def destroy(self):
+        destroy(self.body)
+        destroy(self.shadow)
+
+    def set_visible(self, on):
+        self.body.enabled = self.shadow.enabled = on
+
     def face_vector(self, vx, vz, cam_yaw):
         self.cam_yaw = cam_yaw
         if abs(vx) > 1e-4 or abs(vz) > 1e-4:
@@ -323,7 +408,13 @@ class DialogueUI:
         return self.root.enabled
 
     def open(self, lines, on_done=None):
-        self.lines = [l for l in lines if l.get("speaker") != "choice"]
+        flags = self.game.state.flags
+        self.lines = [l for l in lines if l.get("speaker") != "choice"
+                      and (not l.get("condition") or l["condition"] in flags)]
+        if not self.lines:
+            if on_done:
+                on_done()
+            return
         self.i, self.shown, self.on_done = 0, 0.0, on_done
         self.root.enabled = True
         self.show_line()
@@ -414,8 +505,12 @@ class Banner:
 
 # ====================================================================== 게임
 class Game:
-    def __init__(self, map_id="verdan_edge", size=(1280, 720)):
-        self.app = Ursina(title="황동의 심장 : 아스카론 연대기 (3D)", size=size, development_mode=False,
+    """모드: title(타이틀) → field(필드) ⇄ menu(메뉴) / dialogue / battle. 맵 이동은 페이드 아웃 → 교체 → 페이드 인."""
+
+    FIELD_HINT = "WASD·방향키 이동   Z·Space 대화/조사   X·Esc 메뉴   Q/E 시점 회전   휠 확대"
+
+    def __init__(self, map_id="verdan_edge", size=(1280, 720), start="title"):
+        self.app = Ursina(title="황동의 심장 : 아스카론 연대기", size=size, development_mode=False,
                           borderless=False, vsync=True)
         window.color = rgb(150, 182, 210)
         window.fps_counter.enabled = False
@@ -428,55 +523,262 @@ class Game:
         self.story = load_json("story.json")
         from src.entities.party import GameState      # 파티 성장·인벤토리 (2D 와 공용)
         self.state = GameState(self.story)
+        self.first_map = map_id
         self.battle = None
         self.listeners = []
         self.walked = 0.0
         self.encounters_enabled = True
-        self.world = World(map_id)
-        m = self.world.m
-        # 조명·안개는 src3d/shaders.py 의 자체 셰이더가 계산 (그림자는 지형 텍스처에 구워 둠)
+        self.world, self.player, self.followers, self.npcs = None, None, [], []
+        self.mode = "boot"
+        self.event = None                 # 진행 중인 맵 이벤트 (대화 → 전투 → 대화 …)
+        self.battle_cb = None
+        self.fade = None
+        self.banner = None
+        self.input_override = None        # 자동 테스트: (x, z) 이동 입력
         window.color = color.rgb(*LIGHT["fog_color"])
-        # 파티 (루크가 앞장서고 아이리스·제드가 뒤따름)
-        sx, sz = m["start"]
-        self.player = Actor(self.world, "luke", sx, sz, m.get("start_dir", "ne"), "luke")
-        self.followers = [Actor(self.world, "iris", sx, sz - 1.5, "ne", "iris"),
-                          Actor(self.world, "zed", sx, sz - 3.0, "ne", "zed")]
-        self.trail = [(sx, sz - i * 0.125) for i in range(160)]     # 처음엔 뒤로 한 줄 대열
-        # NPC
-        self.npcs = []
-        for n in m.get("npcs", []):
-            a = Actor(self.world, n["sprite"], n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
-            a.data = n
-            a.talks = 0
-            self.npcs.append(a)
-            self.world.colliders.append((a.x, a.z, 0.6))
+        # 카메라
+        self.yaw, self.yaw_goal = 35.0, 35.0
+        self.pitch, self.dist = 50.0, 36.0
+        self.zoom = 36.0                  # 필드에서 플레이어가 고른 카메라 거리 (휠)
+        camera.fov = 30
+        self.cam_target = Vec3(0, 0, 0)
+        # 공용 UI
         self.bubble = Entity(model="quad", texture=tex("ui3d/bubble.png"), billboard=True, scale=0.75,
                              shader=unlit_shader, enabled=False)
         self.bubble.setTransparency(TransparencyAttrib.MAlpha)
         self.bubble.hide(0b0001)
-        # 카메라
-        self.yaw, self.yaw_goal = 35.0, 35.0
-        self.pitch, self.dist = 50.0, 36.0
-        camera.fov = 30
-        self.cam_target = Vec3(self.player.x, self.world.h(self.player.x, self.player.z), self.player.z)
-        # UI
         self.dialogue = DialogueUI(self)
-        self.banner = Banner(m["name"], m.get("subtitle", ""))
-        self.hint = Text(parent=camera.ui, text="WASD·방향키 이동   Z·Space 대화   Q/E 시점 회전   휠 확대",
-                         font=font(FONT_UI), origin=(-0.5, 0.5), position=(-0.87, 0.485), scale=0.85,
-                         color=color.rgba(1, 1, 1, 0.85))
+        self.hint = Text(parent=camera.ui, text=self.FIELD_HINT, font=font(FONT_UI), origin=(-0.5, 0.5),
+                         position=(-0.87, 0.485), scale=0.85, color=color.rgba(1, 1, 1, 0.85))
         self.hint.create_background(padding=0.012, radius=0.008, color=color.rgba(0.08, 0.06, 0.04, 0.55))
-        self.input_override = None        # 자동 테스트: (x, z) 이동 입력
-        self.state.map_id = m["id"]
+        self.toast = Text(parent=camera.ui, text="", origin=(0, 0), y=-0.08, scale=1.1, z=-0.5,
+                          color=color.rgba32(255, 236, 190))
+        self.toast_t = 0.0
+        self.fader = Entity(parent=camera.ui, model="quad", scale=(4, 2), color=color.rgba(0, 0, 0, 0), z=-0.98)
+        from src3d.menu3d import Menu3D, TitleUI
+        self.menu = Menu3D(self)
+        self.title = TitleUI(self)
         self.bgm = None
-        self._audio(m.get("bgm"))
+        self._audio(None)
         Entity(update=self.update, input=self.input)
-        self.update_camera(1.0)
-        intro = m.get("intro_scene")
-        if intro:
-            scene_ = next((s for c in self.story["chapters"] for s in c["scenes"] if s["id"] == intro), None)
-            if scene_:
-                self.dialogue.open(scene_["dialogue"])
+        if start == "title":
+            self.show_title()
+        else:
+            self.load_map(map_id)
+
+    # ------------------------------------------------------------ 맵 불러오기/비우기
+    def unload_map(self):
+        if self.world:
+            self.world.destroy()
+        for a in ([self.player] if self.player else []) + self.followers + self.npcs:
+            a.destroy()
+        self.world, self.player, self.followers, self.npcs = None, None, [], []
+        self.bubble.enabled = False
+        if self.banner and self.banner.root:
+            destroy(self.banner.root)
+        self.banner = None
+
+    def load_map(self, map_id, pos=None, facing=None, party=True):
+        """맵을 새로 짓고 파티·NPC 를 배치한다. party=False 는 타이틀 배경용 (사람 없이 풍경만)."""
+        self.unload_map()
+        self.world = World(map_id)
+        m = self.world.m
+        sx, sz = pos or m["start"]
+        facing = facing or m.get("start_dir", "ne")
+        if party:
+            # 파티 (루크가 앞장서고 아이리스·제드가 뒤따름)
+            self.player = Actor(self.world, "luke", sx, sz, facing, "luke")
+            self.followers = [Actor(self.world, "iris", sx, sz - 1.5, facing, "iris"),
+                              Actor(self.world, "zed", sx, sz - 3.0, facing, "zed")]
+            self.line_up()
+            for n in m.get("npcs", []):
+                a = Actor(self.world, n["sprite"], n["pos"][0], n["pos"][1], n.get("dir", "se"), n["id"])
+                a.data = n
+                a.talks = 0
+                self.npcs.append(a)
+                self.world.colliders.append((a.x, a.z, 0.6))
+            self.state.map_id = m["id"]
+            self.state.pos = (sx, sz)
+            self.banner = Banner(m["name"], m.get("subtitle", ""))
+            self.mode = "field"
+            self.hint.text = self.FIELD_HINT
+            self.hint.enabled = True
+            self.cam_target = Vec3(sx, self.world.h(sx, sz) + 0.9, sz)
+            self.pitch, self.dist = 50.0, self.zoom
+            self.set_bgm(m.get("bgm"), fade=0.6)
+            self.walked = 0.0
+            self.inside_exit = True        # 도착 지점에서 곧바로 다시 나가지 않게, 출구 밖으로 한 번 나가야 작동
+            self.update_camera(1.0)
+            intro = m.get("intro_scene")
+            if intro and f"scene:{intro}" not in self.state.flags:
+                self.play_scene(intro)
+
+    def line_up(self):
+        """동료를 루크 뒤로 한 줄 세운다"""
+        p = self.player
+        r = math.radians(self.yaw)
+        bx, bz = -math.sin(r), -math.cos(r)            # 화면 아래쪽(카메라 쪽)
+        self.trail = [(p.x + bx * i * 0.125, p.z + bz * i * 0.125) for i in range(160)]
+        for i, f in enumerate(self.followers):
+            f.x, f.z = self.trail[(i + 1) * 12]
+            f.sync()
+
+    def fade_to(self, action, dur=0.4):
+        """화면을 검게 덮은 뒤 action 실행, 다시 밝힌다"""
+        if self.fade:
+            return
+        self.fade = {"t": 0.0, "dur": dur, "action": action, "done": False}
+
+    def _update_fade(self, dt):
+        f = self.fade
+        if not f:
+            return
+        f["t"] += dt
+        if not f["done"]:
+            a = min(1.0, f["t"] / f["dur"])
+            if a >= 1.0:
+                f["done"] = True
+                f["t"] = 0.0
+                f["action"]()
+        else:
+            a = max(0.0, 1 - f["t"] / f["dur"])
+            if a <= 0:
+                self.fade = None
+        self.fader.color = color.rgba(0, 0, 0, a)
+
+    # ------------------------------------------------------------ 타이틀/새 게임/세이브
+    def show_title(self):
+        self.mode = "title"
+        self.dialogue.root.enabled = False
+        self.menu.close()
+        self.load_map(self.first_map, party=False)
+        self.hint.enabled = False
+        self.pitch, self.dist = 34.0, 72.0
+        self.set_bgm("title", fade=0.8)
+        self.title.open()
+
+    def new_game(self):
+        from src.entities.party import GameState
+        self.title.close()
+
+        def go():
+            self.state = GameState(self.story)
+            self.load_map(self.first_map)
+        self.fade_to(go, 0.6)
+
+    def save_slot(self, slot):
+        from src.systems import save
+        st = self.state
+        st.pos = (round(self.player.x, 2), round(self.player.z, 2))
+        st.dir = self.player.facing
+        return save.save(slot, st)
+
+    def load_slot(self, slot):
+        from src.entities.party import GameState
+        from src.systems import save
+        d = save.read(slot)
+        if not d or not save.map_exists_3d(d["map_id"]):
+            return False
+        self.title.close()
+        self.menu.close()
+
+        def go():
+            self.battle = None
+            self.event = None
+            self.dialogue.root.enabled = False
+            self.state = save.apply_dict(GameState(self.story), d)
+            self.load_map(d["map_id"], tuple(d["pos"]), d.get("dir"))
+        self.fade_to(go, 0.5)
+        return True
+
+    def to_title(self):
+        self.menu.close()
+        self.fade_to(self.show_title, 0.5)
+
+    def show_toast(self, text, dur=1.6):
+        self.toast.text = text
+        self.toast_t = dur
+
+    # ------------------------------------------------------------ 이벤트 (스토리 장면·보스전)
+    def scene_lines(self, scene_id):
+        sc = next((s for c in self.story["chapters"] for s in c["scenes"] if s["id"] == scene_id), None)
+        return sc["dialogue"] if sc else []
+
+    def play_scene(self, scene_id, on_done=None):
+        def done():
+            self.state.flags.add(f"scene:{scene_id}")
+            if on_done:
+                on_done()
+        self.dialogue.open(self.scene_lines(scene_id), done)
+
+    def run_event(self, ev):
+        self.event = {"ev": ev, "i": 0}
+        self.input_override = None
+        self._next_step()
+
+    def _next_step(self):
+        e = self.event
+        if e is None:
+            return
+        steps = e["ev"]["steps"]
+        if e["i"] >= len(steps):
+            self.state.flags.add(f"event:{e['ev']['id']}")
+            self.event = None
+            return
+        st = steps[e["i"]]
+        e["i"] += 1
+        if "scene" in st:
+            if f"scene:{st['scene']}" in self.state.flags and not st.get("repeat"):
+                return self._next_step()
+            self.play_scene(st["scene"], self._next_step)
+        elif "battle" in st:
+            self.battle_cb = self._event_battle_end
+            self.start_battle(st["battle"], st.get("boss", False))
+        elif "flag" in st:
+            self.state.flags.add(st["flag"])
+            self._next_step()
+        elif "banner" in st:
+            self.banner = Banner(*st["banner"])
+            self._next_step()
+        else:
+            self._next_step()
+
+    def _event_battle_end(self, kind):
+        if kind == "victory":
+            self._next_step()
+        else:
+            self.event = None             # 패배/도주: 이벤트를 처음부터 다시 (본 장면은 건너뜀)
+
+    def requires_ok(self, ev):
+        return all(r in self.state.flags for r in ev.get("requires", []))
+
+    def check_triggers(self):
+        """출구·구역 이벤트"""
+        p = self.player
+        m = self.world.m
+        in_exit = None
+        for ex in m.get("exits", []):
+            if math.hypot(p.x - ex["pos"][0], p.z - ex["pos"][1]) < ex.get("r", 2.5):
+                in_exit = ex
+        if in_exit and not self.inside_exit:
+            self.inside_exit = True
+            self.input_override = None
+            self.sfx("sfx_door")
+            self.fade_to(lambda: self.load_map(in_exit["to"], tuple(in_exit["spawn"]), in_exit.get("dir")))
+            return True
+        self.inside_exit = bool(in_exit)
+        for ev in m.get("events", []):
+            if ev.get("type") != "zone" or f"event:{ev['id']}" in self.state.flags or not self.requires_ok(ev):
+                continue
+            if math.hypot(p.x - ev["pos"][0], p.z - ev["pos"][1]) < ev.get("r", 2.5):
+                self.run_event(ev)
+                return True
+        return False
+
+    @property
+    def busy(self):
+        return (self.mode != "field" or self.dialogue.active or self.event is not None or self.fade is not None
+                or self.menu.active)
 
     # ------------------------------------------------------------ 데이터
     def speaker_name(self, sid):
@@ -566,6 +868,11 @@ class Game:
             cb(event, data)
 
     def input(self, key):
+        if self.fade:
+            return
+        if self.mode == "title":
+            self.title.input(key)
+            return
         if self.battle:
             self.battle.input(key)
             return
@@ -573,18 +880,25 @@ class Game:
             if key in ("z", "space", "enter", "left mouse down"):
                 self.dialogue.advance()
             return
+        if self.menu.active:
+            self.menu.input(key)
+            return
+        if self.event is not None:
+            return
         if key in ("z", "space", "enter"):
             self.try_talk()
+        elif key in ("x", "escape", "tab"):
+            self.input_override = None
+            self.sfx("sfx_menu")
+            self.menu.open()
         elif key == "q":
             self.yaw_goal -= 45
         elif key == "e":
             self.yaw_goal += 45
         elif key == "scroll up":
-            self.dist = max(20, self.dist - 3)
+            self.zoom = max(20, self.zoom - 3)
         elif key == "scroll down":
-            self.dist = min(50, self.dist + 3)
-        elif key == "escape":
-            application.quit()
+            self.zoom = min(50, self.zoom + 3)
 
     def move_vector(self):
         if self.input_override is not None:
@@ -604,15 +918,29 @@ class Game:
         from ursina import time as utime
         dt = min(utime.dt, 1 / 20)
         self._update_music(dt)
+        self._update_fade(dt)
         self.clock = getattr(self, "clock", 0.0) + dt
+        if self.toast_t > 0:
+            self.toast_t -= dt
+            self.toast.alpha = min(1.0, self.toast_t * 3)
+        if self.mode == "title":
+            self.title.update(dt)
+            self.update_camera(dt)
+            return
+        if self.world is None or self.player is None:
+            return
         self.dialogue.update(dt)
-        self.banner.update(dt)
+        self.menu.update(dt)
+        if self.banner:
+            self.banner.update(dt)
         if self.battle:
             self.battle.update(dt)
             self.update_camera(dt)
             return
+        if not self.menu.active:
+            self.state.playtime += dt
         speed = 5.2
-        vx, vz = (0.0, 0.0) if self.dialogue.active else self.move_vector()
+        vx, vz = (0.0, 0.0) if self.busy else self.move_vector()
         p = self.player
         if vx or vz:
             nx, nz = p.x + vx * speed * dt, p.z + vz * speed * dt
@@ -624,7 +952,7 @@ class Game:
                 self.trail.insert(0, (p.x, p.z))
                 self.trail = self.trail[:160]
             self.walked += speed * dt
-            if self.check_encounter(speed * dt):
+            if self.check_triggers() or self.check_encounter(speed * dt):
                 return
         p.step(vx, vz, dt, self.yaw, speed)
         # 동료: 발자취를 따라 일정 간격 뒤에서 걷는다
@@ -643,21 +971,29 @@ class Game:
             n.step(0, 0, dt, self.yaw, speed)
         # 말 걸 수 있는 NPC 표시
         near = self.nearest_npc()
-        self.bubble.enabled = bool(near) and not self.dialogue.active
+        self.bubble.enabled = bool(near) and not self.busy
         if near:
             self.bubble.position = (near.x, self.world.h(near.x, near.z) + near.h + 0.55 + math.sin(self.clock * 4) * 0.08,
                                     near.z)
         self.update_camera(dt)
 
     def update_camera(self, dt):
+        if self.mode == "title":           # 타이틀: 숲 위를 천천히 도는 카메라
+            self.yaw_goal += dt * 4
+            self.yaw = self.yaw_goal
+            goal = Vec3(0, self.world.h(0, 0) + 1.0, 0) if self.world else Vec3(0, 0, 0)
+            self.cam_target = goal
+            r, pr = math.radians(self.yaw), math.radians(self.pitch)
+            hd = math.cos(pr) * self.dist
+            camera.position = goal + Vec3(-math.sin(r) * hd, math.sin(pr) * self.dist, -math.cos(r) * hd)
+            camera.look_at(goal)
+            return
         self.yaw = lerp(self.yaw, self.yaw_goal, min(1, dt * 6))
         p = self.player
         goal = Vec3(p.x, self.world.h(p.x, p.z) + 0.9, p.z)
-        pitch_goal, dist_goal = 50.0, getattr(self, "field_dist", self.dist)
+        pitch_goal, dist_goal = 50.0, self.zoom
         if self.battle:
             goal, pitch_goal, dist_goal = self.battle.camera_goal()
-        else:
-            self.field_dist = self.dist
         self.pitch = lerp(self.pitch, pitch_goal, min(1, dt * 3))
         self.dist = lerp(self.dist, dist_goal, min(1, dt * 3))
         self.cam_target = lerp(self.cam_target, goal, min(1, dt * (3 if self.battle else 6)))
@@ -682,29 +1018,58 @@ class Game:
             return True
         return False
 
+    def battle_spot(self):
+        """전투 자리: 플레이어 근처에서 카메라와 전투 사이를 가리는 나무·덤불이 가장 적은 곳"""
+        p = self.player
+        r = math.radians(self.yaw)
+        fx, fz = math.sin(r), math.cos(r)              # 화면 안쪽
+        rx, rz = math.cos(r), -math.sin(r)             # 화면 오른쪽
+        cols = self.world.colliders
+        best, best_score = (p.x, p.z), None
+        for dx in range(-8, 9, 2):
+            for dz in range(-8, 9, 2):
+                cx, cz = p.x + dx, p.z + dz
+                if self.world.blocked(cx, cz, 1.2) or abs(cx) > self.world.half - 10 or abs(cz) > self.world.half - 10:
+                    continue
+                score = math.hypot(dx, dz) * 0.15
+                for ox, oz, orad in cols:
+                    vx, vz = ox - cx, oz - cz
+                    b = -(vx * fx + vz * fz)               # 카메라 쪽으로 얼마나
+                    lat = abs(vx * rx + vz * rz)
+                    if -4.5 < b < 10 and lat < 4.2 + orad:
+                        score += 3.0 if b > 0 else 1.5     # 카메라와 전투 사이 / 전투 대열 자리 위
+                if best_score is None or score < best_score:
+                    best, best_score = (cx, cz), score
+        return best
+
     def start_battle(self, enemy_ids, boss=False):
         from src3d.battle3d import Battle3D
         self.walked = 0.0
         self.input_override = None
+        self.menu.close()
         self.emit("encounter", enemies=enemy_ids)
+        self.hint.enabled = False
         self.battle = Battle3D(self, enemy_ids, boss, on_end=self.end_battle)
         self.emit("battle_start", enemies=enemy_ids)
 
     def end_battle(self, kind):
         self.battle = None
+        self.hint.enabled = True
         p = self.player
         if kind == "defeat":
             for c in self.state.party:
                 c.full_heal()
             p.x, p.z = self.world.m["start"]
+            self.show_toast("정신을 차려 보니 숲 입구였다…", 2.4)
         # 동료를 다시 루크 뒤로 줄 세우고 NPC 표시 복구
-        self.trail = [(p.x, p.z - i * 0.125) for i in range(160)]
-        for i, f in enumerate(self.followers):
-            f.x, f.z = p.x, p.z - (i + 1) * 1.5
+        self.line_up()
         for n in self.npcs:
-            n.body.enabled = n.shadow.enabled = True
+            n.set_visible(True)
         self.set_bgm(self.world.m.get("bgm"), fade=0.8)
         self.emit("battle_end", result=kind)
+        cb, self.battle_cb = self.battle_cb, None
+        if cb:
+            cb(kind)
 
     def stop_bgm(self):
         if self.bgm is not None:
@@ -726,6 +1091,15 @@ class Game:
         if not n:
             return
         d = n.data
+        # 서로 마주 보기
+        n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
+        self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)
+        for ev in self.world.m.get("events", []):       # 이 NPC 에게 걸린 스토리 이벤트가 먼저
+            if (ev.get("type") == "talk" and ev.get("npc") == d["id"] and f"event:{ev['id']}" not in self.state.flags
+                    and self.requires_ok(ev)):
+                self.sfx("sfx_confirm")
+                self.run_event(ev)
+                return
         town = self.story["npc_dialogues"].get(d["town"], {"npcs": []})
         prof = next((x for x in town["npcs"] if x["id"] == d["id"]), None)
         pool = []
@@ -735,9 +1109,6 @@ class Game:
             return
         line = pool[n.talks % len(pool)]
         n.talks += 1
-        # 서로 마주 보기
-        n.face_vector(self.player.x - n.x, self.player.z - n.z, self.yaw)
-        self.player.face_vector(n.x - self.player.x, n.z - self.player.z, self.yaw)
         self.sfx("sfx_confirm")
         self.dialogue.open([{"speaker": d["id"], "text": line}])
 

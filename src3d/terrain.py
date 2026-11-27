@@ -65,18 +65,21 @@ def scatter(m):
     half = m["size"] / 2 - 2
     out = {"tree": [], "bush": [], "rock": [], "tuft": [], "flower": []}
     keep_clear = [(n["pos"][0], n["pos"][1]) for n in m.get("npcs", [])] + [tuple(m["start"])]
+    keep_clear += [tuple(e["pos"]) for e in m.get("exits", []) + m.get("events", []) if "pos" in e]
 
     def free(x, z, gap):
         if path_distance(m, x, z) < gap:
             return False
         return all(math.hypot(x - a, z - b) > 3.0 for a, b in keep_clear)
 
-    trees = []
+    # 랜드마크 거목 (위치·크기 고정) → 일반 나무는 이를 피해 배치
+    trees = [(float(x), float(z), float(sc), 0.0) for x, z, sc in m.get("landmark_trees", [])]
     tries = 0
-    while len(trees) < m.get("trees", 70) and tries < 6000:
+    n_land = len(trees)
+    while len(trees) < m.get("trees", 70) + n_land and tries < 6000:
         tries += 1
         x, z = rng.uniform(-half, half, 2)
-        if free(x, z, 2.6) and all(math.hypot(x - a, z - b) > 4.2 for a, b, *_ in trees):
+        if free(x, z, 2.6) and all(math.hypot(x - a, z - b) > 4.2 * max(1.0, s * 0.8) for a, b, s, _ in trees):
             trees.append((float(x), float(z), float(rng.uniform(0.85, 1.35)), float(rng.uniform(0, 360))))
     out["tree"] = trees
     for kind, n, gap in (("bush", m.get("bushes", 40), 1.2), ("rock", m.get("rocks", 18), 1.5)):

@@ -7,8 +7,24 @@
 
 ```bash
 pip install -r requirements.txt
-python main.py
+python main.py      # 2D 버전 (전투·메뉴·세이브까지 플레이 가능한 데모)
+python main3d.py    # 3D 쿼터뷰 버전 (ursina, 개발 중: 필드 탐험·NPC 대화)
 ```
+
+### 3D 쿼터뷰 버전 (`main3d.py`, `src3d/`)
+| 키 | 동작 |
+|---|---|
+| WASD / 방향키 | 이동 (카메라 기준) |
+| Z / Space / Enter | 대화 · 다음 대사 |
+| Q / E | 카메라 45° 회전 |
+| 마우스 휠 | 확대 / 축소 |
+
+- 높이맵 지형(언덕·흙길·잔디 텍스처, 나무 그림자는 텍스처에 구움), 입체 나무·덤불·바위, 풀포기·꽃
+- 항상 카메라를 바라보는 빌보드 캐릭터 + 발밑 그림자, 동료 2명이 발자취를 따라 걸음, 카메라 회전 시 앞/뒷모습 자동 전환
+- 반투명 양피지 대화창 + 우측 하단 대형 스탠딩 일러스트(감정별, 인물이 바뀌면 슬라이드 인), 맵 이름 배너
+- 맵 정의: `data/maps3d/*.json`, 그래픽: `python tools/art/gen_hd_chars.py`, `python tools/art/gen_textures3d.py`
+- 자동 촬영 테스트: `python main3d.py --shots 폴더` (화면 없는 리눅스에서는 `xvfb-run -a` 로 실행)
+- 조명은 `src3d/shaders.py` 의 자체 셰이더(방향광·환경광·안개). ursina 기본 그림자 셰이더는 일부 드라이버에서 크래시가 나서 쓰지 않는다.
 
 | 키 | 동작 |
 |---|---|
@@ -57,7 +73,7 @@ python tools/autotest.py               # 화면 없이 타이틀~보스까지 �
 ```
 
 ## 라이선스 메모
-- 폰트: Galmuri (SIL OFL 1.1, `assets/fonts/OFL-Galmuri.md`)
+- 폰트: Galmuri (SIL OFL 1.1, `assets/fonts/OFL-Galmuri.md`), 나눔명조·나눔고딕 (SIL OFL 1.1, `assets/fonts/OFL-Nanum.txt`)
 - 그 외 그래픽·사운드는 이 저장소의 스크립트로 생성한 것
 
 ## 실행 파일(.exe) 빌드

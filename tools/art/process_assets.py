@@ -40,6 +40,10 @@ CATEGORIES = {
         {"suffix": "", "mode": "fit", "size": (256, 256)},
         {"suffix": "_large", "mode": "height", "size": (None, 640)},  # 컷신용 상반신
     ]},
+    # 3D 버전 대화창 스탠딩 일러스트 (우측 하단, 높이 924) → 파일명 stand_<id>_<emotion>
+    "standing": {"remove_bg": True, "outputs": [
+        {"suffix": "", "mode": "height", "size": (None, 924)},
+    ]},
     # 쿼터뷰 배경: 내부 해상도 1280x720
     "backgrounds": {"remove_bg": False, "outputs": [
         {"suffix": "", "mode": "cover", "size": (1280, 720)},

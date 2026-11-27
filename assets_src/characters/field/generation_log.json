@@ -72,5 +72,12 @@
   "endpoint": "image.pollinations.ai (free)",
   "score": -0.59,
   "why": "흰테두리 1%, 잘림 1, 차지 21%"
+ },
+ "b7": {
+  "seed": 7210,
+  "prompt": "anime style, 2d game character sprite, clean lineart, solid white background, cute chibi, big head small body, 3 heads tall, SD anime character, cute rusty boxy mining robot, single round cyan glowing eye, small antenna with red light, brass and rust-orange body, piston legs, full body standing with feet visible, flat cel shading, vibrant colors, isolated on plain white, simple background, no scenery, no shapes behind, no text",
+  "endpoint": "image.pollinations.ai (free)",
+  "score": -0.6,
+  "why": "흰테두리 0%, 잘림 1, 차지 24%"
  }
 }

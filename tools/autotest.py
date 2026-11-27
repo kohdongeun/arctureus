@@ -45,6 +45,7 @@ class Pilot:
         self.levelups = []
         self.skills_used = collections.Counter()
         self.shot_names = []
+        self.moods = []
         self.frame = 0
         game.listeners.append(self.on_event)
 
@@ -54,6 +55,8 @@ class Pilot:
             self.levelups.append(data["levelups"])
         if ev == "action" and data.get("kind") == "skill":
             self.skills_used[data["skill"]] += 1
+        if ev == "bgm_mood":
+            self.moods.append(data["mood"])
         if ev in ("map_enter", "encounter", "victory", "defeat", "battle_end", "talk", "save", "load"):
             self.log.append(f"[{self.frame / 60:6.1f}s] {ev} {data}")
 
@@ -444,6 +447,7 @@ def main():
         "스킬 사용(이펙트)": sum(pilot.skills_used.values()) >= 3,
         "전투 승리": pilot.events["victory"] >= 1,
         "레벨업": bool(pilot.levelups),
+        "대사 분위기에 따른 BGM 전환": {"mystery", "town", "tense", "sad", "epic"} <= set(pilot.moods),
         "보스 격파": bool(st and "boss_rusted_claw_defeated" in st.flags),
         "저장(빈 슬롯 + 덮어쓰기)": pilot.events["save"] == 2 and files == ["slot1.sav"],
         "이어하기로 불러오기": pilot2.events["load"] == 1 and isinstance(game2.scene, FieldScene),
@@ -454,6 +458,7 @@ def main():
     for k, v in checks.items():
         print(f"  [{'OK' if v else 'FAIL'}] {k}")
     print("레벨업 기록:", pilot.levelups)
+    print("대사에 따라 바뀐 BGM:", " → ".join(pilot.moods))
     print(f"스크린샷 {len(pilot.shot_names)}장 → {shots}")
     pygame.quit()
     sys.exit(0 if all(checks.values()) else 1)

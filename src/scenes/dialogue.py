@@ -42,6 +42,20 @@ class Dialogue(Scene):
 
     def on_enter(self):
         self.game.emit("dialogue_open", speaker=self.lines[0]["speaker"] if self.lines else None)
+        if self.lines:
+            self.apply_mood(self.lines[0])
+
+    def apply_mood(self, line):
+        """대사 줄의 bgm_mood 태그로 BGM 전환 (default = 현재 맵의 기본 곡). 대화가 끝나면 필드가 맵 곡으로 되돌린다."""
+        mood = line.get("bgm_mood")
+        if not mood:
+            return
+        if mood == "default":
+            field = next((s for s in reversed(self.game.scenes) if hasattr(s, "map")), None)
+            mood = field.map.d.get("bgm") if field else None
+        if mood:
+            self.game.audio.play_bgm(mood, fade_ms=900)
+            self.game.emit("bgm_mood", mood=mood)
 
     @property
     def line(self):
@@ -61,6 +75,8 @@ class Dialogue(Scene):
             else:
                 self.i += 1
                 self.shown = 0
+                if self.i < len(self.lines):
+                    self.apply_mood(self.lines[self.i])
                 if self.i >= len(self.lines):
                     self.game.pop()
                     self.game.emit("dialogue_close")

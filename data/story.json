@@ -23,9 +23,16 @@
       "twin_tick": "시계공 틱",
       "twin_tock": "시계공 톡"
     },
-    "emotion_tags": ["normal", "smile", "angry", "sad", "surprised", "serious", "shy", "smirk", "hurt", "determined", "tired"]
+    "emotion_tags": ["normal", "smile", "angry", "sad", "surprised", "serious", "shy", "smirk", "hurt", "determined", "tired"],
+    "bgm_moods": {
+      "_note": "대사 줄의 bgm_mood 가 나오면 그 줄부터 해당 곡으로 바뀌고, 다음 bgm_mood 가 나올 때까지 유지된다. 대화가 끝나면 맵 기본 곡으로 돌아간다.",
+      "tense": "tense",
+      "sad": "sad",
+      "mystery": "mystery",
+      "epic": "epic",
+      "default": "(현재 맵의 기본 BGM)"
+    }
   },
-
   "art_direction": {
     "concept": "황동과 그을음, 그리고 그 틈새로 스며드는 푸른 에테르 빛. 중세의 돌과 나무 위에 증기 파이프와 톱니가 덧붙여진 세계. 2000년대 초반 국산 PC RPG의 손그림 쿼터뷰 감성을 기본으로, 따뜻한 채도의 일러스트풍 픽셀아트를 지향한다.",
     "keywords": ["황동", "그을음", "증기", "에테르 빛", "녹", "양피지", "스테인드글라스", "비행선"],
@@ -61,7 +68,11 @@
     },
     "region_color_keys": {
       "chimney_ward": {"main": ["soot", "copper", "rust"], "accent": "ether_cyan", "mood": "그을린 붉은 노을, 늘 연기가 낀 하늘"},
-      "brassheim_upper": {"main": ["brass_light", "steam", "parchment"], "accent": "ether_cyan", "mood": "눈부신 황동 첨탑과 하얀 대리석, 완벽하게 정돈된 화려함"},
+      "brassheim_upper": {
+        "main": ["brass_light", "steam", "parchment"],
+        "accent": "ether_cyan",
+        "mood": "눈부신 황동 첨탑과 하얀 대리석, 완벽하게 정돈된 화려함"
+      },
       "skyport_nell": {"main": ["steam", "night_navy", "brass"], "accent": "copper", "mood": "구름 위 부유 부두, 바람에 펄럭이는 돛과 풍선"},
       "rusted_woods": {"main": ["moss", "rust", "rust_fog"], "accent": "ether_cyan", "mood": "녹슨 쇳덩이와 뒤엉킨 고목, 안개 속 반딧불"},
       "gearhold": {"main": ["iron", "copper", "soot"], "accent": "blood_red", "mood": "용광로 불빛이 비치는 거대한 지하 대장간"},
@@ -79,9 +90,17 @@
       "dialogue_box": "화면 하단 1280x200, 좌측에 초상화 256x256 (감정별 교체), 이름표는 황동 명판 모양",
       "cursor": "작은 톱니바퀴, 선택 시 회전",
       "hp_mp_gauge": "HP는 붉은 압력계, MP(에테르)는 푸른 유리관에 담긴 액체",
-      "font_recommendation": {"dialogue": "나눔명조 / 본명조 계열", "ui": "Galmuri 또는 둥근모꼴 계열 픽셀 폰트", "note": "폰트 파일은 assets/fonts/에 직접 넣어야 함 (라이선스 확인 필수)"}
+      "font_recommendation": {
+        "dialogue": "나눔명조 / 본명조 계열",
+        "ui": "Galmuri 또는 둥근모꼴 계열 픽셀 폰트",
+        "note": "폰트 파일은 assets/fonts/에 직접 넣어야 함 (라이선스 확인 필수)"
+      }
     },
-    "portrait_spec": {"size": [256, 256], "emotions_required": ["normal", "smile", "angry", "sad", "surprised", "serious"], "naming": "portrait_{speaker}_{emotion}.png"},
+    "portrait_spec": {
+      "size": [256, 256],
+      "emotions_required": ["normal", "smile", "angry", "sad", "surprised", "serious"],
+      "naming": "portrait_{speaker}_{emotion}.png"
+    },
     "asset_naming": {
       "tile": "tile_{region}_{name}_{variant}.png",
       "character": "chr_{id}_{action}_{dir}.png (dir: n, ne, e, se, s, sw, w, nw)",
@@ -97,58 +116,196 @@
       "day_night": "지역별 시간대 틴트 (low-saturation multiply)"
     }
   },
-
   "world": {
     "name": "아스카론 대륙",
     "overview": "아스카론은 거대한 태엽 거인 '아르카누스'의 등 위에 세워진 대륙이다. 사람들은 이 사실을 신화로만 알고 있다. 대지 깊숙이 흐르는 푸른 결정 '심맥석(心脈石)'을 끓이면 에테르 증기가 나오는데, 이것이 비행선과 기계 기사, 도시의 불빛을 움직인다. 200년 전의 '증기 혁명' 이후 아우렐리아 증기제국은 에테르로 대륙을 지배해 왔다. 그러나 채굴이 깊어질수록 대륙 곳곳에서 금속을 녹슬게 하고 사람의 기억을 지워버리는 '녹안개'가 피어오르기 시작했다.",
     "core_conflict": "심맥석은 사실 아르카누스의 피가 굳은 것이고, 녹안개는 피를 잃은 거인이 꾸는 '망각의 꿈'이다. 제국이 에테르를 퍼올릴수록 거인은 죽어가고, 거인이 완전히 멈추면 대륙은 녹안개에 삼켜져 모든 것이 잊혀진다.",
     "themes": ["진보의 대가", "기억과 정체성", "물려받은 죄와 속죄", "인간과 기계의 경계"],
     "calendar": {"current_year": "증기력 203년", "note": "증기력은 최초의 에테르 기관이 가동된 해를 원년으로 한다. 그 이전은 '마도력'이라 부른다."},
-
     "history": [
-      {"era": "거인의 시대", "period": "신화", "description": "옛 신들이 혼돈의 바다 '공백'에 맞서기 위해 태엽 거인 아르카누스를 만들었다. 거인은 바다 위에 엎드려 등으로 땅을 떠받쳤고, 그 위에서 생명이 태어났다."},
-      {"era": "엘레이온 마도 왕국", "period": "마도력 1년 ~ 1100년", "description": "거인의 '심장 소리'를 들을 수 있었던 고대인들이 '공명술'이라는 마법을 발전시켜 엘레이온 왕국을 세웠다. 그들은 거인과 대화하며 땅을 돌봤다."},
-      {"era": "첫 번째 녹안개", "period": "마도력 1100년경", "description": "엘레이온의 마도사들이 거인의 힘을 끌어내 영원한 생명을 얻으려다 첫 번째 녹안개를 일으켰다. 왕국은 안개 속에서 하룻밤 만에 잊혀졌다. 마지막 대마도사 '아이리스 엘레이온'이 자신의 영혼을 바쳐 안개를 봉인했다고 전해진다."},
-      {"era": "철과 검의 시대", "period": "마도력 1100년 ~ 1800년", "description": "마법이 잊힌 대륙에서 기사왕국들이 흥망을 거듭했다. 기사들은 '서약 기사단'을 세워 왕이 아닌 백성에게 충성을 맹세했다."},
-      {"era": "증기 혁명", "period": "증기력 1년", "description": "광산 기술자 '에드워드 아우렐'이 심맥석을 끓여 에테르 증기를 얻는 데 성공했다. 그 기술로 아우렐 가문은 대륙을 통일하고 아우렐리아 증기제국을 세웠다."},
-      {"era": "왕립 기술원의 시대", "period": "증기력 50년 ~ 현재", "description": "왕립 기술원이 에테르 기술을 독점하며 황제보다 큰 권력을 쥐었다. 비행선이 하늘을 메웠고, 서약 기사단은 '시대에 뒤처진 유물'로 몰려 해체되었다."},
-      {"era": "굴뚝거리 파업 사건", "period": "증기력 193년", "description": "심층 광산의 광부들이 녹안개 피해를 호소하며 파업했다. 진압 명령을 받은 마지막 서약 기사 '오스카 애쉬포드'는 명령을 거부했고, 반역죄로 처형되었다."},
-      {"era": "심장 펌프 가동", "period": "증기력 198년 ~ 현재", "description": "기술원이 대륙 중심부에 초대형 채굴 장치 '심장 펌프'를 가동했다. 에테르 생산량은 열 배로 늘었고, 녹안개는 스무 배로 퍼졌다. 기술원은 안개가 '자연 현상'이라고 발표했다."}
+      {
+        "era": "거인의 시대",
+        "period": "신화",
+        "description": "옛 신들이 혼돈의 바다 '공백'에 맞서기 위해 태엽 거인 아르카누스를 만들었다. 거인은 바다 위에 엎드려 등으로 땅을 떠받쳤고, 그 위에서 생명이 태어났다."
+      },
+      {
+        "era": "엘레이온 마도 왕국",
+        "period": "마도력 1년 ~ 1100년",
+        "description": "거인의 '심장 소리'를 들을 수 있었던 고대인들이 '공명술'이라는 마법을 발전시켜 엘레이온 왕국을 세웠다. 그들은 거인과 대화하며 땅을 돌봤다."
+      },
+      {
+        "era": "첫 번째 녹안개",
+        "period": "마도력 1100년경",
+        "description": "엘레이온의 마도사들이 거인의 힘을 끌어내 영원한 생명을 얻으려다 첫 번째 녹안개를 일으켰다. 왕국은 안개 속에서 하룻밤 만에 잊혀졌다. 마지막 대마도사 '아이리스 엘레이온'이 자신의 영혼을 바쳐 안개를 봉인했다고 전해진다."
+      },
+      {
+        "era": "철과 검의 시대",
+        "period": "마도력 1100년 ~ 1800년",
+        "description": "마법이 잊힌 대륙에서 기사왕국들이 흥망을 거듭했다. 기사들은 '서약 기사단'을 세워 왕이 아닌 백성에게 충성을 맹세했다."
+      },
+      {
+        "era": "증기 혁명",
+        "period": "증기력 1년",
+        "description": "광산 기술자 '에드워드 아우렐'이 심맥석을 끓여 에테르 증기를 얻는 데 성공했다. 그 기술로 아우렐 가문은 대륙을 통일하고 아우렐리아 증기제국을 세웠다."
+      },
+      {
+        "era": "왕립 기술원의 시대",
+        "period": "증기력 50년 ~ 현재",
+        "description": "왕립 기술원이 에테르 기술을 독점하며 황제보다 큰 권력을 쥐었다. 비행선이 하늘을 메웠고, 서약 기사단은 '시대에 뒤처진 유물'로 몰려 해체되었다."
+      },
+      {
+        "era": "굴뚝거리 파업 사건",
+        "period": "증기력 193년",
+        "description": "심층 광산의 광부들이 녹안개 피해를 호소하며 파업했다. 진압 명령을 받은 마지막 서약 기사 '오스카 애쉬포드'는 명령을 거부했고, 반역죄로 처형되었다."
+      },
+      {
+        "era": "심장 펌프 가동",
+        "period": "증기력 198년 ~ 현재",
+        "description": "기술원이 대륙 중심부에 초대형 채굴 장치 '심장 펌프'를 가동했다. 에테르 생산량은 열 배로 늘었고, 녹안개는 스무 배로 퍼졌다. 기술원은 안개가 '자연 현상'이라고 발표했다."
+      }
     ],
-
     "geography": [
-      {"id": "chimney_ward", "name": "굴뚝거리", "type": "하층 도시", "region": "황동 도시 브라스하임 하층", "description": "제국 수도의 지하층. 수천 개의 굴뚝과 파이프가 뒤엉킨 노동자들의 구역이다. 하늘은 늘 연기로 덮여 있고, 상층의 불빛은 '천장의 별'이라 불린다. 주인공 루크의 고향.", "atmosphere": "쇠 두드리는 소리, 증기 배출음, 기름 냄새와 싸구려 스튜 냄새", "bgm": "bgm_chimney_ward"},
-      {"id": "brassheim_upper", "name": "황동 도시 브라스하임 (상층)", "type": "제국 수도", "region": "중부", "description": "황동 첨탑과 거대한 시계탑 '크로노 스파이어'가 솟은 제국의 심장. 귀족과 기술원 학자들만 사는 상층은 하층의 연기가 닿지 않도록 거대한 '증기 차양'으로 막혀 있다.", "atmosphere": "오르골 음악, 정확한 시계 종소리, 하얀 증기 분수", "bgm": "bgm_brassheim"},
-      {"id": "skyport_nell", "name": "부유 항구 넬", "type": "하늘 도시", "region": "구름층", "description": "거대한 에테르 기구에 매달려 구름 위를 떠다니는 자유 항구. 하늘해적과 밀수꾼, 제국에 쫓기는 자들의 낙원이다.", "atmosphere": "바람 소리, 갈매기 대신 기계 새, 선술집의 아코디언", "bgm": "bgm_skyport"},
-      {"id": "rusted_woods", "name": "녹슨 숲 베르단", "type": "숲 / 던전", "region": "동부", "description": "녹안개에 가장 먼저 잠긴 고대의 숲. 나무들은 쇠처럼 녹슬었고, 숲을 지키던 엘프 '녹색 서약회'는 기억을 잃어가며 버티고 있다. 숲 곳곳에 버려진 제국 채굴기가 녹슨 채 서 있다.", "atmosphere": "삐걱이는 나무, 주황빛 안개, 이름을 잊은 자들의 웅얼거림", "bgm": "bgm_rusted_woods"},
-      {"id": "gearhold", "name": "지하 왕국 기어홀드", "type": "드워프 도시", "region": "북부 산맥 지하", "description": "드워프 대장간 씨족들의 지하 왕국. 증기 혁명 이전부터 거인의 '뼈'를 깎아 무기를 만들어 왔다. 제국과는 불가침 조약을 맺었지만 그 조약이 깨지기 직전이다.", "atmosphere": "용광로의 굉음, 쇠망치의 리듬, 붉은 쇳물 강", "bgm": "bgm_gearhold"},
-      {"id": "still_city", "name": "멈춘 도시 엘레이온", "type": "고대 유적 / 던전", "region": "남부 사막", "description": "첫 번째 녹안개에 삼켜진 고대 마도 왕국의 수도. 모든 시계가 같은 시각에 멈춰 있고, 시간이 끊긴 사람들의 그림자가 천 년째 같은 행동을 되풀이한다.", "atmosphere": "모래 바람, 멈춘 시계의 침묵, 가끔 울리는 단 한 번의 종소리", "bgm": "bgm_still_city"},
-      {"id": "heart_pump", "name": "심장 펌프", "type": "제국 시설 / 던전", "region": "대륙 중심 대균열", "description": "대지에 박힌 거대한 강철 바늘. 거인의 심장까지 뚫고 들어가 에테르를 빨아올리는 기술원 최대의 시설이다.", "atmosphere": "고막을 찢는 펌프 소리, 땅 밑에서 들려오는 거대한 신음", "bgm": "bgm_heart_pump"},
-      {"id": "arcanus_inside", "name": "아르카누스의 체내", "type": "최종 던전", "region": "대지 아래", "description": "거인의 혈관과 태엽이 이루는 살아 있는 미궁. 가장 깊은 곳에 거인의 심장과 '기억의 방'이 있다.", "atmosphere": "심장 박동처럼 울리는 진동, 빛나는 혈관, 천 년의 기억이 떠도는 공간", "bgm": "bgm_arcanus"}
+      {
+        "id": "chimney_ward",
+        "name": "굴뚝거리",
+        "type": "하층 도시",
+        "region": "황동 도시 브라스하임 하층",
+        "description": "제국 수도의 지하층. 수천 개의 굴뚝과 파이프가 뒤엉킨 노동자들의 구역이다. 하늘은 늘 연기로 덮여 있고, 상층의 불빛은 '천장의 별'이라 불린다. 주인공 루크의 고향.",
+        "atmosphere": "쇠 두드리는 소리, 증기 배출음, 기름 냄새와 싸구려 스튜 냄새",
+        "bgm": "bgm_chimney_ward"
+      },
+      {
+        "id": "brassheim_upper",
+        "name": "황동 도시 브라스하임 (상층)",
+        "type": "제국 수도",
+        "region": "중부",
+        "description": "황동 첨탑과 거대한 시계탑 '크로노 스파이어'가 솟은 제국의 심장. 귀족과 기술원 학자들만 사는 상층은 하층의 연기가 닿지 않도록 거대한 '증기 차양'으로 막혀 있다.",
+        "atmosphere": "오르골 음악, 정확한 시계 종소리, 하얀 증기 분수",
+        "bgm": "bgm_brassheim"
+      },
+      {
+        "id": "skyport_nell",
+        "name": "부유 항구 넬",
+        "type": "하늘 도시",
+        "region": "구름층",
+        "description": "거대한 에테르 기구에 매달려 구름 위를 떠다니는 자유 항구. 하늘해적과 밀수꾼, 제국에 쫓기는 자들의 낙원이다.",
+        "atmosphere": "바람 소리, 갈매기 대신 기계 새, 선술집의 아코디언",
+        "bgm": "bgm_skyport"
+      },
+      {
+        "id": "rusted_woods",
+        "name": "녹슨 숲 베르단",
+        "type": "숲 / 던전",
+        "region": "동부",
+        "description": "녹안개에 가장 먼저 잠긴 고대의 숲. 나무들은 쇠처럼 녹슬었고, 숲을 지키던 엘프 '녹색 서약회'는 기억을 잃어가며 버티고 있다. 숲 곳곳에 버려진 제국 채굴기가 녹슨 채 서 있다.",
+        "atmosphere": "삐걱이는 나무, 주황빛 안개, 이름을 잊은 자들의 웅얼거림",
+        "bgm": "bgm_rusted_woods"
+      },
+      {
+        "id": "gearhold",
+        "name": "지하 왕국 기어홀드",
+        "type": "드워프 도시",
+        "region": "북부 산맥 지하",
+        "description": "드워프 대장간 씨족들의 지하 왕국. 증기 혁명 이전부터 거인의 '뼈'를 깎아 무기를 만들어 왔다. 제국과는 불가침 조약을 맺었지만 그 조약이 깨지기 직전이다.",
+        "atmosphere": "용광로의 굉음, 쇠망치의 리듬, 붉은 쇳물 강",
+        "bgm": "bgm_gearhold"
+      },
+      {
+        "id": "still_city",
+        "name": "멈춘 도시 엘레이온",
+        "type": "고대 유적 / 던전",
+        "region": "남부 사막",
+        "description": "첫 번째 녹안개에 삼켜진 고대 마도 왕국의 수도. 모든 시계가 같은 시각에 멈춰 있고, 시간이 끊긴 사람들의 그림자가 천 년째 같은 행동을 되풀이한다.",
+        "atmosphere": "모래 바람, 멈춘 시계의 침묵, 가끔 울리는 단 한 번의 종소리",
+        "bgm": "bgm_still_city"
+      },
+      {
+        "id": "heart_pump",
+        "name": "심장 펌프",
+        "type": "제국 시설 / 던전",
+        "region": "대륙 중심 대균열",
+        "description": "대지에 박힌 거대한 강철 바늘. 거인의 심장까지 뚫고 들어가 에테르를 빨아올리는 기술원 최대의 시설이다.",
+        "atmosphere": "고막을 찢는 펌프 소리, 땅 밑에서 들려오는 거대한 신음",
+        "bgm": "bgm_heart_pump"
+      },
+      {
+        "id": "arcanus_inside",
+        "name": "아르카누스의 체내",
+        "type": "최종 던전",
+        "region": "대지 아래",
+        "description": "거인의 혈관과 태엽이 이루는 살아 있는 미궁. 가장 깊은 곳에 거인의 심장과 '기억의 방'이 있다.",
+        "atmosphere": "심장 박동처럼 울리는 진동, 빛나는 혈관, 천 년의 기억이 떠도는 공간",
+        "bgm": "bgm_arcanus"
+      }
     ],
-
     "factions": [
-      {"id": "empire", "name": "아우렐리아 증기제국", "leader": "황제 레오폴트 3세 (명목상)", "description": "에테르 기술로 대륙을 통일한 제국. 황제는 병약한 소년이고, 실권은 왕립 기술원이 쥐고 있다. 상징은 '톱니 왕관'."},
-      {"id": "academy", "name": "왕립 기술원", "leader": "기술원장 발타자르 그림웰", "description": "에테르 연구와 생산을 독점하는 학자 집단. 산하에 자동인형 병단 '황동 근위대'와 비밀 연구 부서 '태엽실'을 두고 있다.", "public_goal": "에테르 기술로 인류를 영원히 번영시키는 것", "true_goal": "아르카누스를 깨워 그 의지를 지배하고 '정지된 영원'을 만드는 것"},
-      {"id": "oath_knights", "name": "서약 기사단 (해체)", "leader": "없음", "description": "왕이 아닌 백성에게 충성을 맹세했던 옛 기사단. 증기력 120년에 해체되었다. 마지막 기사 오스카 애쉬포드의 처형 이후 이름조차 금기가 되었다.", "motto": "강철은 녹슬어도, 맹세는 녹슬지 않는다."},
-      {"id": "cloud_free", "name": "자유 구름단", "leader": "평의회 (선장들의 투표)", "description": "부유 항구 넬을 거점으로 한 하늘해적 연합. 제국의 에테르 수송선을 털어 하층민에게 나눠 주는 의적이라는 소문과, 그냥 도둑이라는 소문이 동시에 돈다."},
-      {"id": "green_oath", "name": "녹색 서약회", "leader": "대드루이드 실바엔", "description": "녹슨 숲의 엘프 드루이드들. 거인의 심장 소리를 듣는 옛 공명술의 마지막 계승자들이다."},
-      {"id": "gearhold_clans", "name": "기어홀드 대장간 씨족", "leader": "강철왕 토르빈", "description": "일곱 씨족으로 이루어진 드워프 왕국. 장인 정신과 고집으로 유명하며, 에테르를 '거인의 피를 훔친 더러운 불'이라며 쓰지 않는다."},
-      {"id": "soot_union", "name": "그을음 노동조합", "leader": "마담 모르간", "description": "굴뚝거리 노동자들의 비밀 결사. 겉으로는 공제회, 속으로는 반제국 저항 조직이다."}
+      {
+        "id": "empire",
+        "name": "아우렐리아 증기제국",
+        "leader": "황제 레오폴트 3세 (명목상)",
+        "description": "에테르 기술로 대륙을 통일한 제국. 황제는 병약한 소년이고, 실권은 왕립 기술원이 쥐고 있다. 상징은 '톱니 왕관'."
+      },
+      {
+        "id": "academy",
+        "name": "왕립 기술원",
+        "leader": "기술원장 발타자르 그림웰",
+        "description": "에테르 연구와 생산을 독점하는 학자 집단. 산하에 자동인형 병단 '황동 근위대'와 비밀 연구 부서 '태엽실'을 두고 있다.",
+        "public_goal": "에테르 기술로 인류를 영원히 번영시키는 것",
+        "true_goal": "아르카누스를 깨워 그 의지를 지배하고 '정지된 영원'을 만드는 것"
+      },
+      {
+        "id": "oath_knights",
+        "name": "서약 기사단 (해체)",
+        "leader": "없음",
+        "description": "왕이 아닌 백성에게 충성을 맹세했던 옛 기사단. 증기력 120년에 해체되었다. 마지막 기사 오스카 애쉬포드의 처형 이후 이름조차 금기가 되었다.",
+        "motto": "강철은 녹슬어도, 맹세는 녹슬지 않는다."
+      },
+      {
+        "id": "cloud_free",
+        "name": "자유 구름단",
+        "leader": "평의회 (선장들의 투표)",
+        "description": "부유 항구 넬을 거점으로 한 하늘해적 연합. 제국의 에테르 수송선을 털어 하층민에게 나눠 주는 의적이라는 소문과, 그냥 도둑이라는 소문이 동시에 돈다."
+      },
+      {
+        "id": "green_oath",
+        "name": "녹색 서약회",
+        "leader": "대드루이드 실바엔",
+        "description": "녹슨 숲의 엘프 드루이드들. 거인의 심장 소리를 듣는 옛 공명술의 마지막 계승자들이다."
+      },
+      {
+        "id": "gearhold_clans",
+        "name": "기어홀드 대장간 씨족",
+        "leader": "강철왕 토르빈",
+        "description": "일곱 씨족으로 이루어진 드워프 왕국. 장인 정신과 고집으로 유명하며, 에테르를 '거인의 피를 훔친 더러운 불'이라며 쓰지 않는다."
+      },
+      {
+        "id": "soot_union",
+        "name": "그을음 노동조합",
+        "leader": "마담 모르간",
+        "description": "굴뚝거리 노동자들의 비밀 결사. 겉으로는 공제회, 속으로는 반제국 저항 조직이다."
+      }
     ],
-
     "technology_and_magic": {
-      "ether": {"name": "에테르 증기", "description": "심맥석을 고온으로 끓여 얻는 푸른 증기. 기계를 움직이고 '에테르 술식'이라는 인공 마법을 가능하게 한다. 게임 내 MP는 '에테르 게이지'로 표시된다."},
-      "resonance": {"name": "공명술", "description": "에테르 없이 세계(거인)의 진동과 공명하여 일으키는 고대의 진짜 마법. 현재는 엘프 드루이드와 아이리스만 쓸 수 있다. 기계를 멈추거나 깨우고, 녹안개를 정화할 수 있다."},
+      "ether": {
+        "name": "에테르 증기",
+        "description": "심맥석을 고온으로 끓여 얻는 푸른 증기. 기계를 움직이고 '에테르 술식'이라는 인공 마법을 가능하게 한다. 게임 내 MP는 '에테르 게이지'로 표시된다."
+      },
+      "resonance": {
+        "name": "공명술",
+        "description": "에테르 없이 세계(거인)의 진동과 공명하여 일으키는 고대의 진짜 마법. 현재는 엘프 드루이드와 아이리스만 쓸 수 있다. 기계를 멈추거나 깨우고, 녹안개를 정화할 수 있다."
+      },
       "machines": [
         {"name": "비행선", "description": "에테르 기구와 증기 프로펠러로 나는 배. 제국 함대는 철갑, 해적선은 나무와 천."},
         {"name": "황동 근위병", "description": "기술원이 만든 자동인형 병사. 감정은 없지만 명령에는 절대 복종한다."},
         {"name": "증기 갑주", "description": "에테르 피스톤을 장착한 강화 갑옷. 하층 광부들이 쓰는 작업용과 근위대의 전투용이 있다."},
         {"name": "영혼 태엽", "description": "기술원 태엽실의 금지 기술. 사람의 기억을 태엽에 감아 인형에 옮긴다."}
       ],
-      "rust_fog": {"name": "녹안개", "description": "금속을 녹슬게 하고, 오래 들이마신 생물의 기억을 지운다. 기억을 모두 잃은 자는 '홀로우'가 되어 안개 속을 떠돈다. 녹안개 속 몬스터는 '녹슨 것들'이라 불린다.", "gameplay": "필드에 오염도 게이지가 있으며, 오래 머물면 아군 스킬이 하나씩 '잊혀져' 봉인된다. 아이리스의 공명술이나 정화 아이템으로 회복한다."}
+      "rust_fog": {
+        "name": "녹안개",
+        "description": "금속을 녹슬게 하고, 오래 들이마신 생물의 기억을 지운다. 기억을 모두 잃은 자는 '홀로우'가 되어 안개 속을 떠돈다. 녹안개 속 몬스터는 '녹슨 것들'이라 불린다.",
+        "gameplay": "필드에 오염도 게이지가 있으며, 오래 머물면 아군 스킬이 하나씩 '잊혀져' 봉인된다. 아이리스의 공명술이나 정화 아이템으로 회복한다."
+      }
     },
-
     "secret_lore": {
       "arcanus_truth": "아르카누스는 대륙을 떠받친 채 수만 년을 견뎌온 지친 신이다. 심맥석은 그의 피, 녹안개는 피를 잃은 그가 꾸는 '모든 것을 잊고 싶다'는 꿈이다.",
       "first_fog_truth": "천 년 전 첫 번째 녹안개도 엘레이온 마도사들이 영생을 위해 거인의 피를 뽑아내다 일어났다. 제국은 같은 역사를 기계로 되풀이하고 있다.",
@@ -158,7 +315,6 @@
       "balthazar_truth": "발타자르의 아내 엘레나는 20년 전 녹안개로 기억을 잃고 그를 알아보지 못한 채 죽었다. 그 뒤 그는 자신도 아내의 얼굴을 잊어가고 있다는 사실을 견디지 못했고, 거인을 지배해 세계의 시간을 '정지'시켜 더 이상 아무것도 잃지 않는 영원을 만들려 한다."
     }
   },
-
   "protagonists": [
     {
       "id": "luke",
@@ -179,12 +335,48 @@
       "unique_mechanic": {"name": "증기압 게이지", "description": "공격 적중 시 +15, 피격 시 +10. 100이 되면 스킬 위력 1.5배. 과열 상태가 되면 다음 턴 행동 불가."},
       "base_stats": {"hp": 340, "mp": 40, "atk": 30, "def": 24, "mag": 6, "res": 12, "spd": 13},
       "skills": [
-        {"id": "sk_luke_01", "name": "피스톤 강타", "level": 1, "cost": {"mp": 0}, "description": "대검의 피스톤을 터뜨려 내려찍는 일격. 증기압 +20."},
-        {"id": "sk_luke_02", "name": "서약의 방패", "level": 3, "cost": {"mp": 6}, "description": "인접한 아군 1명이 받을 공격을 대신 받는다. 3턴 지속."},
-        {"id": "sk_luke_03", "name": "증기 배출", "level": 6, "cost": {"mp": 8}, "description": "주변 8칸 적에게 화상 + 명중률 감소. 증기압 초기화."},
-        {"id": "sk_luke_04", "name": "렌치 수리", "level": 9, "cost": {"mp": 5}, "description": "기계 계열 아군(핀, 자동인형)의 HP 회복. 적 기계에게 쓰면 오작동."},
-        {"id": "sk_luke_05", "name": "철갑 돌진", "level": 15, "cost": {"mp": 14}, "description": "대각선 방향으로 4칸 돌진하며 경로의 적을 넉백."},
-        {"id": "sk_luke_06", "name": "애쉬브링어 : 맹세 해방", "level": 30, "cost": {"steam_pressure": 100}, "description": "궁극기. 증기압을 전부 소모해 대검을 백열 상태로 만들고 전방 부채꼴 범위에 극대 대미지. 녹슨 것들에게 2배."}
+        {
+          "id": "sk_luke_01",
+          "name": "피스톤 강타",
+          "level": 1,
+          "cost": {"mp": 0},
+          "description": "대검의 피스톤을 터뜨려 내려찍는 일격. 증기압 +20."
+        },
+        {
+          "id": "sk_luke_02",
+          "name": "서약의 방패",
+          "level": 3,
+          "cost": {"mp": 6},
+          "description": "인접한 아군 1명이 받을 공격을 대신 받는다. 3턴 지속."
+        },
+        {
+          "id": "sk_luke_03",
+          "name": "증기 배출",
+          "level": 6,
+          "cost": {"mp": 8},
+          "description": "주변 8칸 적에게 화상 + 명중률 감소. 증기압 초기화."
+        },
+        {
+          "id": "sk_luke_04",
+          "name": "렌치 수리",
+          "level": 9,
+          "cost": {"mp": 5},
+          "description": "기계 계열 아군(핀, 자동인형)의 HP 회복. 적 기계에게 쓰면 오작동."
+        },
+        {
+          "id": "sk_luke_05",
+          "name": "철갑 돌진",
+          "level": 15,
+          "cost": {"mp": 14},
+          "description": "대각선 방향으로 4칸 돌진하며 경로의 적을 넉백."
+        },
+        {
+          "id": "sk_luke_06",
+          "name": "애쉬브링어 : 맹세 해방",
+          "level": 30,
+          "cost": {"steam_pressure": 100},
+          "description": "궁극기. 증기압을 전부 소모해 대검을 백열 상태로 만들고 전방 부채꼴 범위에 극대 대미지. 녹슨 것들에게 2배."
+        }
       ],
       "quotes": [
         "고장 난 건 고치면 돼. 사람이든, 기계든, 세상이든.",
@@ -208,15 +400,48 @@
       "secret": "그녀는 천 년 전 녹안개를 봉인한 대마도사 아이리스 엘레이온의 영혼 태엽을 심장으로 가진 자동인형이다. 5장에서 진실을 알게 된다. 그녀만이 거인 아르카누스와 직접 대화할 수 있다.",
       "character_arc": "누군가가 정해준 존재였던 소녀가, 자신이 사람이든 기계든 스스로의 의지로 살아가겠다고 선택한다.",
       "combat_style": "회복, 보조, 정화. 에테르를 쓰지 않는 공명술이라 녹안개 속에서도 약해지지 않는 유일한 마법사다.",
-      "unique_mechanic": {"name": "공명 화음", "description": "같은 계열의 공명 스킬을 연속으로 쓰면 '화음' 단계가 오른다(최대 3). 3단계에서 다른 계열 스킬을 쓰면 '전조'가 발동해 효과 2배."},
+      "unique_mechanic": {
+        "name": "공명 화음",
+        "description": "같은 계열의 공명 스킬을 연속으로 쓰면 '화음' 단계가 오른다(최대 3). 3단계에서 다른 계열 스킬을 쓰면 '전조'가 발동해 효과 2배."
+      },
       "base_stats": {"hp": 220, "mp": 150, "atk": 8, "def": 12, "mag": 32, "res": 30, "spd": 15},
       "skills": [
         {"id": "sk_iris_01", "name": "치유의 음", "level": 1, "cost": {"mp": 5}, "description": "아군 1명 HP 회복."},
-        {"id": "sk_iris_02", "name": "공진파", "level": 3, "cost": {"mp": 9}, "description": "직선 4칸 진동 공격. 기계 계열 적에게 1.5배."},
-        {"id": "sk_iris_03", "name": "정화의 선율", "level": 6, "cost": {"mp": 10}, "description": "3x3 범위 녹안개 오염 제거 + 아군 상태이상 해제."},
-        {"id": "sk_iris_04", "name": "정지 화음", "level": 10, "cost": {"mp": 16}, "description": "기계 적 1체를 2턴간 정지. 보스에게는 1턴."},
-        {"id": "sk_iris_05", "name": "기억의 노래", "level": 18, "cost": {"mp": 22}, "description": "녹안개로 '잊혀진' 아군 스킬을 되살리고 아군 전체 HP 소량 회복."},
-        {"id": "sk_iris_06", "name": "엘레이온 레퀴엠", "level": 32, "cost": {"mp": 90}, "description": "궁극기. 아군 전체 완전 회복 및 부활, 3턴간 받는 대미지 50% 감소. 전투당 1회."}
+        {
+          "id": "sk_iris_02",
+          "name": "공진파",
+          "level": 3,
+          "cost": {"mp": 9},
+          "description": "직선 4칸 진동 공격. 기계 계열 적에게 1.5배."
+        },
+        {
+          "id": "sk_iris_03",
+          "name": "정화의 선율",
+          "level": 6,
+          "cost": {"mp": 10},
+          "description": "3x3 범위 녹안개 오염 제거 + 아군 상태이상 해제."
+        },
+        {
+          "id": "sk_iris_04",
+          "name": "정지 화음",
+          "level": 10,
+          "cost": {"mp": 16},
+          "description": "기계 적 1체를 2턴간 정지. 보스에게는 1턴."
+        },
+        {
+          "id": "sk_iris_05",
+          "name": "기억의 노래",
+          "level": 18,
+          "cost": {"mp": 22},
+          "description": "녹안개로 '잊혀진' 아군 스킬을 되살리고 아군 전체 HP 소량 회복."
+        },
+        {
+          "id": "sk_iris_06",
+          "name": "엘레이온 레퀴엠",
+          "level": 32,
+          "cost": {"mp": 90},
+          "description": "궁극기. 아군 전체 완전 회복 및 부활, 3턴간 받는 대미지 50% 감소. 전투당 1회."
+        }
       ],
       "quotes": [
         "이게 '꼬치구이'라는 거군요. 책에서 봤어요. 먹어봐도 되나요? 이거 하나 더 먹어봐도 되나요?",
@@ -240,24 +465,46 @@
       "secret": "제드는 심장 펌프에 '비상 정지 코드'를 숨겨 두었지만, 그 코드를 쓰려면 누군가 펌프 핵심부에 직접 들어가야 한다. 그는 처음부터 자신이 그 역할을 맡을 생각이었다.",
       "character_arc": "죄책감에 혼자 죽으려던 남자가, 동료들과 함께 살아서 속죄하는 길을 택한다.",
       "combat_style": "원거리 고화력 딜러. 쿼터뷰 사거리 6칸 저격, 핀을 이용한 정찰과 교란.",
-      "unique_mechanic": {"name": "핀 지휘", "description": "제드의 턴에 핀에게 별도 명령(정찰, 교란, 아이템 운반, 쪼기)을 내릴 수 있다. 핀은 HP가 따로 있으며 파괴되면 루크의 [렌치 수리]로만 복구된다."},
+      "unique_mechanic": {
+        "name": "핀 지휘",
+        "description": "제드의 턴에 핀에게 별도 명령(정찰, 교란, 아이템 운반, 쪼기)을 내릴 수 있다. 핀은 HP가 따로 있으며 파괴되면 루크의 [렌치 수리]로만 복구된다."
+      },
       "base_stats": {"hp": 250, "mp": 90, "atk": 27, "def": 14, "mag": 16, "res": 14, "spd": 22},
       "skills": [
-        {"id": "sk_zed_01", "name": "정조준", "level": 1, "cost": {"mp": 0}, "description": "사거리 6칸 단일 사격. 다음 턴까지 이동하지 않으면 치명타 확정."},
+        {
+          "id": "sk_zed_01",
+          "name": "정조준",
+          "level": 1,
+          "cost": {"mp": 0},
+          "description": "사거리 6칸 단일 사격. 다음 턴까지 이동하지 않으면 치명타 확정."
+        },
         {"id": "sk_zed_02", "name": "핀, 가라!", "level": 3, "cost": {"mp": 4}, "description": "핀이 적 1체를 쪼아 실명 상태로 만든다."},
         {"id": "sk_zed_03", "name": "산탄 장전", "level": 7, "cost": {"mp": 10}, "description": "전방 부채꼴 3칸 범위 사격."},
-        {"id": "sk_zed_04", "name": "급조 덫", "level": 11, "cost": {"mp": 8}, "description": "지정한 칸에 증기 덫 설치. 밟은 적은 2턴 이동 불가."},
-        {"id": "sk_zed_05", "name": "약점 분석", "level": 16, "cost": {"mp": 12}, "description": "적 1체의 약점과 행동 패턴 공개. 3턴간 아군 전원의 해당 적 대상 대미지 +30%."},
-        {"id": "sk_zed_06", "name": "롱 굿바이", "level": 30, "cost": {"mp": 60}, "description": "궁극기. 에테르 과충전 탄을 1턴 충전 후 발사. 직선 화면 끝까지 관통하는 초고화력 일격."}
+        {
+          "id": "sk_zed_04",
+          "name": "급조 덫",
+          "level": 11,
+          "cost": {"mp": 8},
+          "description": "지정한 칸에 증기 덫 설치. 밟은 적은 2턴 이동 불가."
+        },
+        {
+          "id": "sk_zed_05",
+          "name": "약점 분석",
+          "level": 16,
+          "cost": {"mp": 12},
+          "description": "적 1체의 약점과 행동 패턴 공개. 3턴간 아군 전원의 해당 적 대상 대미지 +30%."
+        },
+        {
+          "id": "sk_zed_06",
+          "name": "롱 굿바이",
+          "level": 30,
+          "cost": {"mp": 60},
+          "description": "궁극기. 에테르 과충전 탄을 1턴 충전 후 발사. 직선 화면 끝까지 관통하는 초고화력 일격."
+        }
       ],
-      "quotes": [
-        "걱정 마, 꼬마. 내 배는 지금까지 딱 세 번밖에 추락 안 했어.",
-        "내가 만든 거야, 저 괴물. 그러니까 내가 끝내야지.",
-        "리나, 오늘은 하늘이 맑아. 네가 좋아하던 색이야."
-      ]
+      "quotes": ["걱정 마, 꼬마. 내 배는 지금까지 딱 세 번밖에 추락 안 했어.", "내가 만든 거야, 저 괴물. 그러니까 내가 끝내야지.", "리나, 오늘은 하늘이 맑아. 네가 좋아하던 색이야."]
     }
   ],
-
   "major_characters": [
     {
       "id": "balthazar",
@@ -282,10 +529,7 @@
       "title": "황동 근위대 대장",
       "appearance": "단정한 금발, 흰색과 금색의 근위대 증기 갑주. 허리에 정교한 에테르 세검을 찼다.",
       "description": "루크의 소꿉친구. 굴뚝거리 출신이지만 기술원 장학생으로 뽑혀 상층으로 올라갔고, 최연소 근위대장이 되었다. 하층을 '벗어나야 할 곳'이라 여기며 제국의 질서를 믿는다. 루크가 반역자의 길을 걷는 것을 누구보다 괴로워한다.",
-      "quotes": [
-        "루크, 넌 언제나 그랬지. 고칠 수 없는 걸 고치려고 해.",
-        "질서가 없으면 굴뚝거리 같은 곳이 생기는 거다. 나는 그걸 없애려고 여기까지 왔어."
-      ]
+      "quotes": ["루크, 넌 언제나 그랬지. 고칠 수 없는 걸 고치려고 해.", "질서가 없으면 굴뚝거리 같은 곳이 생기는 거다. 나는 그걸 없애려고 여기까지 왔어."]
     },
     {
       "id": "arcanus",
@@ -326,7 +570,6 @@
       "description": "고집 세고 술을 좋아하는 드워프 왕. 거인의 뼈를 다루는 대장장이 가문의 장인으로, 루크의 대검을 보고 한눈에 그 가치를 알아본다."
     }
   ],
-
   "chapters": [
     {
       "id": "prologue",
@@ -342,10 +585,10 @@
           "location": "굴뚝거리 전경",
           "trigger": "game_start",
           "dialogue": [
-            {"speaker": "narration", "text": "옛날 옛적, 거대한 거인이 바다 위에 엎드려 그 등으로 땅을 떠받쳤다고 한다."},
+            {"speaker": "narration", "text": "옛날 옛적, 거대한 거인이 바다 위에 엎드려 그 등으로 땅을 떠받쳤다고 한다.", "bgm_mood": "mystery"},
             {"speaker": "narration", "text": "사람들은 그 이야기를 잊었다. 대지 아래에서 푸른 돌을 캐내 불을 지피고, 하늘에 배를 띄우면서."},
             {"speaker": "narration", "text": "그리고 지금. 땅은 조금씩, 녹슬어 가고 있다."},
-            {"speaker": "narration", "text": "— 증기력 203년. 황동 도시 브라스하임 하층, 굴뚝거리."}
+            {"speaker": "narration", "text": "— 증기력 203년. 황동 도시 브라스하임 하층, 굴뚝거리.", "bgm_mood": "default"}
           ]
         },
         {
@@ -357,8 +600,8 @@
             {"speaker": "luke", "emotion": "tired", "text": "으으… 할멈, 어젯밤에 3번가 보일러 고치느라 새벽에 들어왔다고요…"},
             {"speaker": "morgan", "text": "그래서 오늘은 5번가 증기 펌프다. 또 터졌단다. 그 동네 애들이 사흘째 더운물도 못 쓰고 있어."},
             {"speaker": "luke", "emotion": "serious", "text": "…또? 지난주에 새 밸브로 갈았는데. 요즘 쇠가 너무 빨리 녹슬어요. 이상해."},
-            {"speaker": "morgan", "text": "……광산 쪽에서 안개가 올라온다는 소문이 있다. 쓸데없는 소리 말고 공구나 챙겨라."},
-            {"speaker": "luke", "emotion": "smile", "text": "네, 네. 다녀옵니다, 마담 모르간!"}
+            {"speaker": "morgan", "text": "……광산 쪽에서 안개가 올라온다는 소문이 있다. 쓸데없는 소리 말고 공구나 챙겨라.", "bgm_mood": "mystery"},
+            {"speaker": "luke", "emotion": "smile", "text": "네, 네. 다녀옵니다, 마담 모르간!", "bgm_mood": "default"}
           ]
         },
         {
@@ -369,7 +612,7 @@
             {"speaker": "kid_tobi", "text": "우와! 루크 형이 고쳤다! 따뜻한 물 나온다!"},
             {"speaker": "luke", "emotion": "smile", "text": "이번엔 좀 오래 갈 거야. 밸브를 두 겹으로 감았거든."},
             {"speaker": "kid_tobi", "text": "형, 형! 저기 천장의 별 봐! 하나가 떨어지고 있어!"},
-            {"speaker": "luke", "emotion": "surprised", "text": "천장의 별이…? 아니, 저건 비행정이다! 폐광장 쪽으로 떨어진다!"}
+            {"speaker": "luke", "emotion": "surprised", "text": "천장의 별이…? 아니, 저건 비행정이다! 폐광장 쪽으로 떨어진다!", "bgm_mood": "tense"}
           ]
         },
         {
@@ -377,7 +620,7 @@
           "location": "폐광장 추락 현장",
           "trigger": "find_iris",
           "dialogue": [
-            {"speaker": "narration", "text": "부서진 소형 비행정에서 푸른 에테르가 새어 나오고 있었다. 조종석에는 백금발의 소녀가 쓰러져 있었다."},
+            {"speaker": "narration", "text": "부서진 소형 비행정에서 푸른 에테르가 새어 나오고 있었다. 조종석에는 백금발의 소녀가 쓰러져 있었다.", "bgm_mood": "mystery"},
             {"speaker": "luke", "emotion": "surprised", "text": "기술원 연구복…? 상층 사람이 왜 여기에. 이봐, 괜찮아? 정신 차려!"},
             {"speaker": "iris", "emotion": "tired", "text": "……아파요…… 너무 아프대요……"},
             {"speaker": "luke", "emotion": "serious", "text": "어디가? 어디 다쳤어?"},
@@ -390,7 +633,6 @@
       "boss": null,
       "rewards": {"exp": 0, "gold": 50, "items": ["item_wrench_basic", "item_steam_tonic x3"]}
     },
-
     {
       "id": "chapter_1",
       "number": 1,
@@ -405,14 +647,14 @@
           "location": "모르간 수리점 2층",
           "trigger": "iris_wakes",
           "dialogue": [
-            {"speaker": "iris", "emotion": "surprised", "text": "……여기는 어디인가요? 천장이 낮고, 냄새가… 독특하네요. 기름과 양파 냄새."},
+            {"speaker": "iris", "emotion": "surprised", "text": "……여기는 어디인가요? 천장이 낮고, 냄새가… 독특하네요. 기름과 양파 냄새.", "bgm_mood": "default"},
             {"speaker": "luke", "emotion": "smile", "text": "굴뚝거리에 온 걸 환영해. 양파 냄새는 할멈이 끓인 스튜고. 나는 루크. 너 하늘에서 떨어졌어."},
             {"speaker": "iris", "emotion": "normal", "text": "저는 아이리스예요. 기술원장 발타자르 그림웰의 딸이에요."},
             {"speaker": "luke", "emotion": "surprised", "text": "기, 기술원장?! 제국에서 황제 다음… 아니, 황제보다 높다는 그 사람?"},
-            {"speaker": "iris", "emotion": "sad", "text": "아버지의 연구 기록을 봤어요. '열쇠 기동 예정일: 증기력 203년 수확제.' 그리고 열쇠 항목에 제 이름이 적혀 있었어요."},
+            {"speaker": "iris", "emotion": "sad", "text": "아버지의 연구 기록을 봤어요. '열쇠 기동 예정일: 증기력 203년 수확제.' 그리고 열쇠 항목에 제 이름이 적혀 있었어요.", "bgm_mood": "mystery"},
             {"speaker": "iris", "emotion": "serious", "text": "제가 '열쇠'라는 게 무슨 뜻인지 모르겠어요. 하지만 치료를 받을 때마다 기억이 없어져요. 이번엔… 전부 없어질 것 같았어요."},
             {"speaker": "luke", "emotion": "serious", "text": "……그래서 도망쳤구나."},
-            {"speaker": "iris", "emotion": "shy", "text": "네. 그런데 비행정 조종법은 책으로만 배워서요. 착륙 부분은 아직 읽지 않았었어요."}
+            {"speaker": "iris", "emotion": "shy", "text": "네. 그런데 비행정 조종법은 책으로만 배워서요. 착륙 부분은 아직 읽지 않았었어요.", "bgm_mood": "default"}
           ]
         },
         {
@@ -420,15 +662,15 @@
           "location": "굴뚝거리 중앙로",
           "trigger": "cecil_encounter",
           "dialogue": [
-            {"speaker": "cecil", "text": "모든 주민은 집 밖으로 나와 정렬하라! 기술원 소속 실종자를 수색한다!"},
+            {"speaker": "cecil", "text": "모든 주민은 집 밖으로 나와 정렬하라! 기술원 소속 실종자를 수색한다!", "bgm_mood": "tense"},
             {"speaker": "luke", "emotion": "surprised", "text": "……세실?"},
             {"speaker": "cecil", "text": "루크. …오랜만이군."},
             {"speaker": "luke", "emotion": "angry", "text": "오랜만이라는 인사를 근위병 백 명 끌고 와서 하냐? 여기 네 고향이잖아!"},
             {"speaker": "cecil", "text": "그래서 내가 왔다. 다른 대장이 왔으면 문부터 부쉈을 거다."},
             {"speaker": "cecil", "text": "백금발의 소녀를 찾고 있다. 기술원장 각하의 따님이시다. 보면 알려줘. 이건 친구로서 하는 부탁이야."},
-            {"speaker": "luke", "emotion": "serious", "text": "……친구로서라. 너 상층 올라간 뒤로 편지 한 통 없었잖아."},
+            {"speaker": "luke", "emotion": "serious", "text": "……친구로서라. 너 상층 올라간 뒤로 편지 한 통 없었잖아.", "bgm_mood": "sad"},
             {"speaker": "cecil", "text": "…………"},
-            {"speaker": "cecil", "text": "수색 계속! 3구역부터 뒤져라!"}
+            {"speaker": "cecil", "text": "수색 계속! 3구역부터 뒤져라!", "bgm_mood": "tense"}
           ]
         },
         {
@@ -438,11 +680,11 @@
           "dialogue": [
             {"speaker": "morgan", "text": "루크, 이걸 가져가라."},
             {"speaker": "luke", "emotion": "surprised", "text": "이건… 아버지 문장? 할멈이 왜 이걸."},
-            {"speaker": "morgan", "text": "오스카가 처형되기 전날 나한테 맡겼다. '루크가 스스로 맹세를 세울 때 줘라'면서."},
-            {"speaker": "morgan", "text": "그 아가씨를 지키겠다고 마음먹었다면, 지금이 그때다. 지하 배수로를 따라가면 도시 밖 폐수 방출구로 나간다."},
+            {"speaker": "morgan", "text": "오스카가 처형되기 전날 나한테 맡겼다. '루크가 스스로 맹세를 세울 때 줘라'면서.", "bgm_mood": "sad"},
+            {"speaker": "morgan", "text": "그 아가씨를 지키겠다고 마음먹었다면, 지금이 그때다. 지하 배수로를 따라가면 도시 밖 폐수 방출구로 나간다.", "bgm_mood": "epic"},
             {"speaker": "luke", "emotion": "determined", "text": "……할멈. 다녀올게요."},
             {"speaker": "morgan", "text": "다녀오는 건 좋은데, 살아서 와라. 수리비 밀린 거 아직 다 못 받았다."},
-            {"speaker": "system", "text": "[서약 기사 문장]을 획득했습니다."},
+            {"speaker": "system", "text": "[서약 기사 문장]을 획득했습니다.", "bgm_mood": "default"},
             {"speaker": "system", "text": "아이리스가 파티에 합류했습니다."}
           ]
         },
@@ -451,10 +693,10 @@
           "location": "지하 배수로 최심부",
           "trigger": "boss_pre",
           "dialogue": [
-            {"speaker": "iris", "emotion": "surprised", "text": "루크 씨, 저기… 저 기계, 비명을 지르고 있어요!"},
+            {"speaker": "iris", "emotion": "surprised", "text": "루크 씨, 저기… 저 기계, 비명을 지르고 있어요!", "bgm_mood": "tense"},
             {"speaker": "luke", "emotion": "serious", "text": "폐기된 채굴기잖아. 녹안개에 오염돼서 미쳐 버린 거야."},
-            {"speaker": "iris", "emotion": "sad", "text": "아파서 그래요. 몸이 녹슬어서, 자기가 뭐였는지 잊어버려서…"},
-            {"speaker": "luke", "emotion": "determined", "text": "……그럼 편하게 해주자. 그게 기계공이 해줄 수 있는 일이야."},
+            {"speaker": "iris", "emotion": "sad", "text": "아파서 그래요. 몸이 녹슬어서, 자기가 뭐였는지 잊어버려서…", "bgm_mood": "sad"},
+            {"speaker": "luke", "emotion": "determined", "text": "……그럼 편하게 해주자. 그게 기계공이 해줄 수 있는 일이야.", "bgm_mood": "epic"},
             {"speaker": "system", "text": "BOSS - 녹슨 집게"}
           ]
         },
@@ -463,17 +705,17 @@
           "location": "폐수 방출구",
           "trigger": "meet_zed",
           "dialogue": [
-            {"speaker": "zed", "emotion": "smirk", "text": "어라. 수송선 털러 왔더니 웬 생쥐 두 마리가 하수구에서 기어 나오네."},
+            {"speaker": "zed", "emotion": "smirk", "text": "어라. 수송선 털러 왔더니 웬 생쥐 두 마리가 하수구에서 기어 나오네.", "bgm_mood": "default"},
             {"speaker": "fin", "text": "끼익! 끼이익!"},
             {"speaker": "luke", "emotion": "angry", "text": "누가 생쥐야! …잠깐, 저 비행선. 해적기잖아!"},
             {"speaker": "zed", "emotion": "smile", "text": "정확히는 '자유 구름단 소속 알바트로스호'. 선장 제드 레이븐홀트다. 이 녀석은 핀, 내 일등항해사."},
-            {"speaker": "zed", "emotion": "serious", "text": "……그런데 그 아가씨, 기술원 연구복이네. 그리고 그 머리 위 태엽 장식……"},
+            {"speaker": "zed", "emotion": "serious", "text": "……그런데 그 아가씨, 기술원 연구복이네. 그리고 그 머리 위 태엽 장식……", "bgm_mood": "mystery"},
             {"speaker": "iris", "emotion": "normal", "text": "이건 머리핀이에요. 아버지가 절대 빼지 말라고 하셨어요."},
             {"speaker": "zed", "emotion": "serious", "text": "(……영혼 태엽이다. 발타자르, 결국 그걸 완성한 건가.)"},
-            {"speaker": "narration", "text": "그때 머리 위로 근위대 비행선의 탐조등이 쏟아졌다."},
+            {"speaker": "narration", "text": "그때 머리 위로 근위대 비행선의 탐조등이 쏟아졌다.", "bgm_mood": "tense"},
             {"speaker": "zed", "emotion": "smirk", "text": "자, 생쥐들. 근위대한테 잡히든지, 내 배에 타든지. 3초 줄게. 하나, 둘—"},
             {"speaker": "luke", "emotion": "determined", "text": "탈게! 탄다고!"},
-            {"speaker": "system", "text": "제드 레이븐홀트가 파티에 합류했습니다."}
+            {"speaker": "system", "text": "제드 레이븐홀트가 파티에 합류했습니다.", "bgm_mood": "default"}
           ]
         }
       ],
@@ -490,7 +732,6 @@
       "rewards": {"exp": 500, "gold": 300, "items": ["item_oath_crest", "accessory_goggles"]},
       "party_after": ["luke", "iris", "zed"]
     },
-
     {
       "id": "chapter_2",
       "number": 2,
@@ -505,7 +746,7 @@
           "location": "알바트로스호 갑판",
           "trigger": "arrive_nell",
           "dialogue": [
-            {"speaker": "luke", "emotion": "hurt", "text": "우웨엑…… 땅…… 땅이 필요해……"},
+            {"speaker": "luke", "emotion": "hurt", "text": "우웨엑…… 땅…… 땅이 필요해……", "bgm_mood": "default"},
             {"speaker": "zed", "emotion": "smirk", "text": "증기 기사님께서 고소공포증이라니. 이거 해적들한테 팔면 술값 한 달 치는 나오겠는데."},
             {"speaker": "iris", "emotion": "surprised", "text": "와아…… 구름이 발밑에 있어요! 책에서는 구름이 솜 같다고 했는데, 직접 보니까 증기 같네요!"},
             {"speaker": "fin", "text": "끼익!"},
@@ -520,7 +761,7 @@
           "location": "갈까마귀 노파의 천막",
           "trigger": "meet_informant",
           "dialogue": [
-            {"speaker": "raven_crone", "text": "흐흐흐, 제드 꼬마. 이번엔 무슨 정보를 사러 왔나? 값은 늘 그렇듯 비싸다."},
+            {"speaker": "raven_crone", "text": "흐흐흐, 제드 꼬마. 이번엔 무슨 정보를 사러 왔나? 값은 늘 그렇듯 비싸다.", "bgm_mood": "mystery"},
             {"speaker": "zed", "emotion": "serious", "text": "기술원 태엽실. '열쇠 기동'이라는 계획에 대해 아는 거 다."},
             {"speaker": "raven_crone", "text": "……위험한 이름을 꺼내는구나. 좋다. 태엽실은 지난 10년간 멈춘 도시 엘레이온에서 무언가를 발굴했다. 고대 대마도사의 '영혼 태엽'이라더군."},
             {"speaker": "raven_crone", "text": "그리고 수확제 날, 심장 펌프 최심부에서 무슨 의식을 치른다는 소문이 있다. 펌프보다 더 깊은 곳, '거인의 심장'에 닿기 위해서라나."},
@@ -534,7 +775,7 @@
           "location": "넬 요양원",
           "trigger": "meet_lina",
           "dialogue": [
-            {"speaker": "narration", "text": "하얀 커튼이 바람에 흔들리는 작은 방. 창가에 앉은 소녀는 초점 없는 눈으로 구름을 보고 있었다."},
+            {"speaker": "narration", "text": "하얀 커튼이 바람에 흔들리는 작은 방. 창가에 앉은 소녀는 초점 없는 눈으로 구름을 보고 있었다.", "bgm_mood": "sad"},
             {"speaker": "zed", "emotion": "smile", "text": "리나. 오빠 왔다. 오늘은 하늘이 맑네. 네가 좋아하던 색이야."},
             {"speaker": "lina", "text": "…………"},
             {"speaker": "narration", "text": "제드가 목에 걸린 오르골을 감자, 단순한 멜로디가 흘러나왔다. 리나의 손가락이 아주 조금 움직였다."},
@@ -546,8 +787,8 @@
             {"speaker": "zed", "emotion": "hurt", "text": "심장 펌프. 대륙 중심에 박힌 그 괴물 바늘. 그거 설계한 놈이 나야."},
             {"speaker": "iris", "emotion": "sad", "text": "……제드 씨."},
             {"speaker": "zed", "emotion": "serious", "text": "그러니까 이건 내 문제다. 너희를 녹슨 숲까지는 데려다주겠지만, 그 다음은……"},
-            {"speaker": "luke", "emotion": "determined", "text": "그 다음도 같이 가. 고장 난 건 고치면 돼. 혼자서 못 고치면, 여럿이서 고치면 되고."},
-            {"speaker": "zed", "emotion": "smirk", "text": "……하. 굴뚝거리 놈들은 다 이렇게 오지랖이 넓냐?"}
+            {"speaker": "luke", "emotion": "determined", "text": "그 다음도 같이 가. 고장 난 건 고치면 돼. 혼자서 못 고치면, 여럿이서 고치면 되고.", "bgm_mood": "epic"},
+            {"speaker": "zed", "emotion": "smirk", "text": "……하. 굴뚝거리 놈들은 다 이렇게 오지랖이 넓냐?", "bgm_mood": "default"}
           ]
         },
         {
@@ -555,12 +796,12 @@
           "location": "넬 하역장",
           "trigger": "boss_pre",
           "dialogue": [
-            {"speaker": "twin_tick", "text": "째깍. 찾았다, 찾았다. 태엽 아가씨."},
+            {"speaker": "twin_tick", "text": "째깍. 찾았다, 찾았다. 태엽 아가씨.", "bgm_mood": "tense"},
             {"speaker": "twin_tock", "text": "째깍. 데려간다, 데려간다. 나머지는 부순다."},
             {"speaker": "zed", "emotion": "serious", "text": "쌍둥이 시계공 틱과 톡. 기술원이 고용한 현상금 사냥꾼 중에서도 제일 악질이야."},
-            {"speaker": "iris", "emotion": "surprised", "text": "저 사람들… 몸에서 저랑 똑같은 소리가 나요. 째깍째깍."},
+            {"speaker": "iris", "emotion": "surprised", "text": "저 사람들… 몸에서 저랑 똑같은 소리가 나요. 째깍째깍.", "bgm_mood": "mystery"},
             {"speaker": "zed", "emotion": "serious", "text": "(……역시. 태엽실의 실험체들이다.)"},
-            {"speaker": "system", "text": "BOSS - 쌍둥이 시계공 틱 & 톡"}
+            {"speaker": "system", "text": "BOSS - 쌍둥이 시계공 틱 & 톡", "bgm_mood": "tense"}
           ]
         },
         {
@@ -568,12 +809,12 @@
           "location": "넬 하역장",
           "trigger": "boss_post",
           "dialogue": [
-            {"speaker": "twin_tick", "text": "째……깍…… 태엽이…… 풀린다……"},
+            {"speaker": "twin_tick", "text": "째……깍…… 태엽이…… 풀린다……", "bgm_mood": "sad"},
             {"speaker": "twin_tock", "text": "형…… 우리…… 원래…… 이름이…… 뭐였지……"},
             {"speaker": "narration", "text": "두 사냥꾼의 몸이 멈췄다. 가슴의 태엽 장치에서 작은 종이가 떨어졌다. '실험체 11호, 12호. 영혼 이식 부분 성공.'"},
             {"speaker": "iris", "emotion": "hurt", "text": "……사람이었어요. 이 사람들, 원래는 사람이었어요."},
             {"speaker": "luke", "emotion": "angry", "text": "기술원 놈들… 사람한테 무슨 짓을 한 거야."},
-            {"speaker": "zed", "emotion": "serious", "text": "……출발하자. 녹슨 숲으로. 아가씨가 뭔지, 거기서 답이 나올 거야."}
+            {"speaker": "zed", "emotion": "serious", "text": "……출발하자. 녹슨 숲으로. 아가씨가 뭔지, 거기서 답이 나올 거야.", "bgm_mood": "default"}
           ]
         }
       ],
@@ -590,7 +831,6 @@
       },
       "rewards": {"exp": 2400, "gold": 1200, "items": ["airship_upgrade_engine_1", "item_ether_flask x3"]}
     },
-
     {
       "id": "chapter_3",
       "number": 3,
@@ -598,14 +838,21 @@
       "subtitle": "녹슨 숲의 노래",
       "region": "rusted_woods",
       "synopsis": "녹안개가 가장 짙은 녹슨 숲 베르단. 일행은 안개 속에서 기억을 잃어가는 엘프들과, 숲 곳곳에 버려진 제국의 채굴기들을 목격한다. 대드루이드 실바엔은 아이리스를 보자마자 '천 년 만이군요, 아이리스 님'이라며 무릎을 꿇는다. 실바엔은 거인 아르카누스의 존재와 녹안개의 정체를 알려주고, 아이리스는 처음으로 공명술을 통해 거인의 목소리를 직접 듣는다. 그러나 숲을 노린 제국의 채굴 부대가 들이닥치고, 그 선두에는 세실이 있다.",
-      "objectives": ["녹안개 오염도 시스템 튜토리얼", "기억을 잃은 엘프 정찰병 엘윈 돕기", "녹색 서약회 거점 '고목의 요람' 도달", "실바엔과 대화", "공명의 제단에서 의식 진행", "보스: 숲 채굴기 '그라인더' + 세실 (연속 전투)"],
+      "objectives": [
+        "녹안개 오염도 시스템 튜토리얼",
+        "기억을 잃은 엘프 정찰병 엘윈 돕기",
+        "녹색 서약회 거점 '고목의 요람' 도달",
+        "실바엔과 대화",
+        "공명의 제단에서 의식 진행",
+        "보스: 숲 채굴기 '그라인더' + 세실 (연속 전투)"
+      ],
       "scenes": [
         {
           "id": "ch3_01",
           "location": "녹슨 숲 입구",
           "trigger": "enter_woods",
           "dialogue": [
-            {"speaker": "luke", "emotion": "surprised", "text": "나무가…… 녹슬었어? 나무가 어떻게 녹이 슬어?"},
+            {"speaker": "luke", "emotion": "surprised", "text": "나무가…… 녹슬었어? 나무가 어떻게 녹이 슬어?", "bgm_mood": "mystery"},
             {"speaker": "zed", "emotion": "serious", "text": "녹안개는 금속만 녹슬게 하는 게 아니야. 생명이든 기억이든, 오래된 것부터 갉아먹지."},
             {"speaker": "zed", "emotion": "serious", "text": "숨 오래 들이마시지 마. 오래 있으면 자기 이름부터 잊어버린다."},
             {"speaker": "iris", "emotion": "sad", "text": "……숲이 노래하고 있어요. 아주 작은 소리로. '잊지 마, 잊지 마' 하고요."},
@@ -617,10 +864,10 @@
           "location": "녹슨 개울가",
           "trigger": "meet_elwin",
           "dialogue": [
-            {"speaker": "elwin", "text": "……누구지? 아니, 나는 누구지? 나는 여기서 뭘 하고 있었지……?"},
+            {"speaker": "elwin", "text": "……누구지? 아니, 나는 누구지? 나는 여기서 뭘 하고 있었지……?", "bgm_mood": "sad"},
             {"speaker": "iris", "emotion": "normal", "text": "괜찮아요. 잠깐만요. 지금 정화의 선율을 들려드릴게요."},
             {"speaker": "narration", "text": "아이리스의 지팡이가 맑은 음을 울리자, 엘프 주변의 주황빛 안개가 물러났다."},
-            {"speaker": "elwin", "text": "……엘윈. 내 이름은 엘윈이야! 녹색 서약회의 정찰병! 고마워, 고마워 인간…… 아니, 너는……"},
+            {"speaker": "elwin", "text": "……엘윈. 내 이름은 엘윈이야! 녹색 서약회의 정찰병! 고마워, 고마워 인간…… 아니, 너는……", "bgm_mood": "default"},
             {"speaker": "elwin", "text": "그 노래, 공명술이잖아. 대드루이드님 말고 공명술을 쓰는 자는 처음 봐!"},
             {"speaker": "luke", "emotion": "smile", "text": "아이리스, 너 대단하다. 그런 것도 할 수 있었어?"},
             {"speaker": "iris", "emotion": "shy", "text": "저도 몰랐어요. 그냥…… 어떻게 하는지 알고 있었어요. 처음부터."}
@@ -631,7 +878,7 @@
           "location": "고목의 요람",
           "trigger": "meet_silvaen",
           "dialogue": [
-            {"speaker": "silvaen", "text": "……이 공명. 이 음색. 설마……"},
+            {"speaker": "silvaen", "text": "……이 공명. 이 음색. 설마……", "bgm_mood": "mystery"},
             {"speaker": "narration", "text": "백발의 늙은 엘프가 지팡이를 짚고 일어서더니, 아이리스 앞에 천천히 무릎을 꿇었다."},
             {"speaker": "silvaen", "text": "천 년 만이군요, 아이리스 님. 엘레이온의 마지막 대마도사여."},
             {"speaker": "iris", "emotion": "surprised", "text": "네……? 저, 저는 그냥 아이리스예요. 기술원장의 딸이고, 열일곱 살이고……"},
@@ -640,7 +887,7 @@
             {"speaker": "zed", "emotion": "serious", "text": "대드루이드. 녹안개의 정체를 알려줘. 내가 알아야 해."},
             {"speaker": "silvaen", "text": "……이 땅은 거인의 등입니다. 아르카누스라는 이름의, 옛 신들이 만든 태엽 거인. 당신들이 캐내는 푸른 돌은 그의 피이고, 녹안개는 피를 잃은 그가 꾸는 꿈입니다."},
             {"speaker": "silvaen", "text": "'잊고 싶다'는 꿈. 수만 년의 무게를, 모든 기억을 내려놓고 싶다는 지친 신의 꿈이지요."},
-            {"speaker": "zed", "emotion": "hurt", "text": "……그럼 내 펌프는, 신의 심장에서 피를 빨아내고 있었다는 거군."}
+            {"speaker": "zed", "emotion": "hurt", "text": "……그럼 내 펌프는, 신의 심장에서 피를 빨아내고 있었다는 거군.", "bgm_mood": "sad"}
           ]
         },
         {
@@ -648,15 +895,15 @@
           "location": "공명의 제단",
           "trigger": "resonance_ritual",
           "dialogue": [
-            {"speaker": "silvaen", "text": "아이리스 님, 제단에 손을 얹으십시오. 거인의 목소리를 들을 수 있을 겁니다."},
+            {"speaker": "silvaen", "text": "아이리스 님, 제단에 손을 얹으십시오. 거인의 목소리를 들을 수 있을 겁니다.", "bgm_mood": "mystery"},
             {"speaker": "iris", "emotion": "determined", "text": "……네."},
             {"speaker": "arcanus", "text": "……작은…… 태엽의…… 아이야……"},
             {"speaker": "iris", "emotion": "surprised", "text": "꿈속의 그 목소리……!"},
-            {"speaker": "arcanus", "text": "……무겁다…… 너무 오래…… 기억하고 있었다…… 땅의 무게도…… 너희의 웃음도…… 울음도……"},
+            {"speaker": "arcanus", "text": "……무겁다…… 너무 오래…… 기억하고 있었다…… 땅의 무게도…… 너희의 웃음도…… 울음도……", "bgm_mood": "sad"},
             {"speaker": "arcanus", "text": "……피가 빠져나간다…… 차가워진다…… 이제 잊고 싶구나…… 전부……"},
-            {"speaker": "iris", "emotion": "hurt", "text": "잊으면 안 돼요! 당신이 잊으면 이 땅도, 사람들도 전부……!"},
+            {"speaker": "iris", "emotion": "hurt", "text": "잊으면 안 돼요! 당신이 잊으면 이 땅도, 사람들도 전부……!", "bgm_mood": "epic"},
             {"speaker": "arcanus", "text": "……너는…… 천 년 전에도…… 같은 말을 했지……"},
-            {"speaker": "narration", "text": "제단의 빛이 꺼졌다. 루크는 그 순간 자신의 귀에도 거대한 심장 소리가 선명하게 울렸다는 걸 깨달았다."},
+            {"speaker": "narration", "text": "제단의 빛이 꺼졌다. 루크는 그 순간 자신의 귀에도 거대한 심장 소리가 선명하게 울렸다는 걸 깨달았다.", "bgm_mood": "mystery"},
             {"speaker": "luke", "emotion": "serious", "text": "……들었어. 나도. 아버지도 이 소리를 들었던 걸까."}
           ]
         },
@@ -665,11 +912,11 @@
           "location": "고목의 요람",
           "trigger": "boss_pre",
           "dialogue": [
-            {"speaker": "elwin", "text": "대드루이드님! 제국군이에요! 거대한 채굴기를 몰고 숲으로 들어오고 있어요!"},
+            {"speaker": "elwin", "text": "대드루이드님! 제국군이에요! 거대한 채굴기를 몰고 숲으로 들어오고 있어요!", "bgm_mood": "tense"},
             {"speaker": "cecil", "text": "녹색 서약회에 고한다. 이 숲은 제국 에테르 개발 구역으로 지정되었다. 즉시 퇴거하라."},
             {"speaker": "luke", "emotion": "angry", "text": "세실! 너 이 숲 꼴 안 보여?! 너희가 캐내는 게 이 숲을 죽이고 있다고!"},
             {"speaker": "cecil", "text": "……루크. 기술원장의 따님을 납치한 반역자가 되었구나. 오스카 애쉬포드와 똑같은 길을 걷는군."},
-            {"speaker": "luke", "emotion": "determined", "text": "그래. 그 길이 옳다면, 기꺼이 걷겠어."},
+            {"speaker": "luke", "emotion": "determined", "text": "그래. 그 길이 옳다면, 기꺼이 걷겠어.", "bgm_mood": "epic"},
             {"speaker": "system", "text": "BOSS - 숲 채굴기 그라인더"}
           ]
         },
@@ -678,7 +925,7 @@
           "location": "고목의 요람",
           "trigger": "boss_post",
           "dialogue": [
-            {"speaker": "cecil", "text": "……그라인더가, 저 고물 같은 대검에……?"},
+            {"speaker": "cecil", "text": "……그라인더가, 저 고물 같은 대검에……?", "bgm_mood": "default"},
             {"speaker": "luke", "emotion": "serious", "text": "고물 아니야. 아버지 검이야. 7년 동안 내가 고쳤어."},
             {"speaker": "cecil", "text": "……퇴각한다. 하지만 기억해라, 루크. 다음에는 내가 직접 상대하겠다."},
             {"speaker": "cecil", "text": "그리고…… 이 숲. 보고서에는 '오염이 심해 채굴 불가'라고 적겠다. …그게 내가 할 수 있는 전부다."},
@@ -699,7 +946,6 @@
       },
       "rewards": {"exp": 5200, "gold": 2000, "items": ["accessory_elder_leaf", "item_memory_tonic x3"]}
     },
-
     {
       "id": "chapter_4",
       "number": 4,
@@ -707,14 +953,22 @@
       "subtitle": "거인의 뼈를 두드리는 자들",
       "region": "gearhold",
       "synopsis": "지하 왕국 기어홀드에 도착한 일행. 드워프들은 제국 사람이라면 질색하지만, 루크의 대검이 거인의 뼈로 만든 옛 서약 기사검이라는 사실을 알아본 강철왕 토르빈은 그를 시험한다. 한편 기술원은 불가침 조약을 깨고 기어홀드 지하의 거대 심맥석 광맥을 차지하려 황동 근위대 함대를 보낸다. 일행은 드워프들과 함께 공성전을 치르고, 세실과의 일대일 결투가 펼쳐진다.",
-      "objectives": ["기어홀드 입성 (드워프 문지기의 수수께끼)", "강철왕 토르빈 알현", "대장간 시련: 거인의 뼈 담금질 (리듬 미니게임)", "애쉬브링어 재단조", "기어홀드 공방전 (거점 방어 전투)", "보스: 세실 노블 결투", "선택지: 세실을 어떻게 할 것인가"],
+      "objectives": [
+        "기어홀드 입성 (드워프 문지기의 수수께끼)",
+        "강철왕 토르빈 알현",
+        "대장간 시련: 거인의 뼈 담금질 (리듬 미니게임)",
+        "애쉬브링어 재단조",
+        "기어홀드 공방전 (거점 방어 전투)",
+        "보스: 세실 노블 결투",
+        "선택지: 세실을 어떻게 할 것인가"
+      ],
       "scenes": [
         {
           "id": "ch4_01",
           "location": "기어홀드 대문",
           "trigger": "arrive_gearhold",
           "dialogue": [
-            {"speaker": "dwarf_gatekeeper", "text": "멈춰라, 지상의 키다리들아! 기어홀드의 문은 수수께끼를 푼 자에게만 열린다!"},
+            {"speaker": "dwarf_gatekeeper", "text": "멈춰라, 지상의 키다리들아! 기어홀드의 문은 수수께끼를 푼 자에게만 열린다!", "bgm_mood": "default"},
             {"speaker": "dwarf_gatekeeper", "text": "'두드릴수록 강해지고, 식으면 굳어지며, 불 없이는 태어나지 못하는 것은?'"},
             {"speaker": "luke", "emotion": "smile", "text": "강철. 그리고 대장장이의 고집."},
             {"speaker": "dwarf_gatekeeper", "text": "……으하하하! 뒤에 그건 정답에 없었지만 마음에 드는군! 들어와라, 키다리!"}
@@ -728,10 +982,10 @@
             {"speaker": "torbin", "text": "흥. 기술원 연구복 입은 계집, 해적 선장, 그리고 하층 기계공 꼬마. 우스운 조합이군."},
             {"speaker": "torbin", "text": "……잠깐. 꼬마, 그 등에 멘 검 이리 줘봐라."},
             {"speaker": "narration", "text": "토르빈은 애쉬브링어를 받아 들고 한참 동안 칼날을 쓰다듬었다."},
-            {"speaker": "torbin", "text": "……거인의 뼈다. 우리 할아버지의 할아버지가 서약 기사들을 위해 벼려준 검이야. 이 검을 들었던 자의 이름이 뭐냐?"},
+            {"speaker": "torbin", "text": "……거인의 뼈다. 우리 할아버지의 할아버지가 서약 기사들을 위해 벼려준 검이야. 이 검을 들었던 자의 이름이 뭐냐?", "bgm_mood": "mystery"},
             {"speaker": "luke", "emotion": "serious", "text": "오스카 애쉬포드. 제 아버지입니다."},
             {"speaker": "torbin", "text": "오스카…… 20년 전 이 대장간에 찾아와서 '광산 깊은 곳에서 심장 소리가 들린다'고 했던 그 기사. 우리만 믿어준 그 이야기를, 지상 놈들은 아무도 안 믿었지."},
-            {"speaker": "torbin", "text": "좋다. 이 검에 피스톤 따위를 덕지덕지 붙여 놓은 건 마음에 안 들지만, 솜씨는 나쁘지 않아. 시련을 통과하면 이 검을 제대로 다시 벼려주마."}
+            {"speaker": "torbin", "text": "좋다. 이 검에 피스톤 따위를 덕지덕지 붙여 놓은 건 마음에 안 들지만, 솜씨는 나쁘지 않아. 시련을 통과하면 이 검을 제대로 다시 벼려주마.", "bgm_mood": "epic"}
           ]
         },
         {
@@ -739,12 +993,12 @@
           "location": "기어홀드 휴게소",
           "trigger": "camp_talk",
           "dialogue": [
-            {"speaker": "iris", "emotion": "normal", "text": "제드 씨. 하나 물어봐도 돼요? 처음 만났을 때, 제 머리핀을 보고 표정이 굳었었죠."},
+            {"speaker": "iris", "emotion": "normal", "text": "제드 씨. 하나 물어봐도 돼요? 처음 만났을 때, 제 머리핀을 보고 표정이 굳었었죠.", "bgm_mood": "default"},
             {"speaker": "zed", "emotion": "serious", "text": "……눈치 빠르네."},
-            {"speaker": "zed", "emotion": "serious", "text": "기술원에 있을 때 태엽실 문서를 본 적이 있어. 사람의 기억을 태엽에 감아서 다른 그릇에 옮기는 기술. 그 핵심 부품이 그 모양이었지."},
-            {"speaker": "iris", "emotion": "sad", "text": "……그럼 저도 그 쌍둥이 시계공처럼……?"},
+            {"speaker": "zed", "emotion": "serious", "text": "기술원에 있을 때 태엽실 문서를 본 적이 있어. 사람의 기억을 태엽에 감아서 다른 그릇에 옮기는 기술. 그 핵심 부품이 그 모양이었지.", "bgm_mood": "mystery"},
+            {"speaker": "iris", "emotion": "sad", "text": "……그럼 저도 그 쌍둥이 시계공처럼……?", "bgm_mood": "sad"},
             {"speaker": "zed", "emotion": "smile", "text": "모르지. 확실하지 않은 걸로 겁먹을 필요는 없어. 그리고 아가씨."},
-            {"speaker": "zed", "emotion": "serious", "text": "네가 뭐로 만들어졌든, 내가 아는 아이리스는 넬 시장에서 꼬치 일곱 개를 먹고 배탈 난 녀석이야. 그게 기계가 할 짓이냐?"},
+            {"speaker": "zed", "emotion": "serious", "text": "네가 뭐로 만들어졌든, 내가 아는 아이리스는 넬 시장에서 꼬치 일곱 개를 먹고 배탈 난 녀석이야. 그게 기계가 할 짓이냐?", "bgm_mood": "default"},
             {"speaker": "iris", "emotion": "shy", "text": "……여섯 개였어요. 일곱 번째는 핀이 먹었어요."},
             {"speaker": "fin", "text": "끼익!"}
           ]
@@ -754,12 +1008,12 @@
           "location": "기어홀드 대광장",
           "trigger": "boss_pre",
           "dialogue": [
-            {"speaker": "cecil", "text": "루크 애쉬포드. 나와라. 이 전투, 너와 나의 결투로 끝내자."},
+            {"speaker": "cecil", "text": "루크 애쉬포드. 나와라. 이 전투, 너와 나의 결투로 끝내자.", "bgm_mood": "tense"},
             {"speaker": "luke", "emotion": "serious", "text": "……세실."},
-            {"speaker": "cecil", "text": "나는 굴뚝거리에서 태어났다. 거기서 아버지가 광산 사고로 죽고, 어머니가 기침병으로 죽었다. 그래서 나는 위로 올라갔어. 다시는 아무것도 잃지 않으려고."},
+            {"speaker": "cecil", "text": "나는 굴뚝거리에서 태어났다. 거기서 아버지가 광산 사고로 죽고, 어머니가 기침병으로 죽었다. 그래서 나는 위로 올라갔어. 다시는 아무것도 잃지 않으려고.", "bgm_mood": "sad"},
             {"speaker": "cecil", "text": "질서가 없으면 굴뚝거리 같은 곳이 생기는 거다. 나는 그걸 없애려고 여기까지 왔어. 그런데 너는 그 질서를 부수려고 하지."},
-            {"speaker": "luke", "emotion": "determined", "text": "그 질서가 굴뚝거리를 만든 거야, 세실. 연기 위에 차양을 치고, 아래는 보지 않는 질서가."},
-            {"speaker": "cecil", "text": "……말로는 안 되겠군. 검을 들어라."},
+            {"speaker": "luke", "emotion": "determined", "text": "그 질서가 굴뚝거리를 만든 거야, 세실. 연기 위에 차양을 치고, 아래는 보지 않는 질서가.", "bgm_mood": "epic"},
+            {"speaker": "cecil", "text": "……말로는 안 되겠군. 검을 들어라.", "bgm_mood": "tense"},
             {"speaker": "system", "text": "BOSS - 황동 근위대장 세실 노블 (일대일 결투)"}
           ]
         },
@@ -768,14 +1022,28 @@
           "location": "기어홀드 대광장",
           "trigger": "boss_post",
           "dialogue": [
-            {"speaker": "cecil", "text": "……졌다. 어릴 때부터 단 한 번도 너한테 진 적 없었는데."},
-            {"speaker": "luke", "emotion": "smile", "text": "팔씨름은 맨날 졌잖아, 내가."},
+            {"speaker": "cecil", "text": "……졌다. 어릴 때부터 단 한 번도 너한테 진 적 없었는데.", "bgm_mood": "sad"},
+            {"speaker": "luke", "emotion": "smile", "text": "팔씨름은 맨날 졌잖아, 내가.", "bgm_mood": "default"},
             {"speaker": "cecil", "text": "…………바보 같은 녀석."},
             {"speaker": "torbin", "text": "흥, 젊은 것들. 결투는 끝났다. 자, 그 근위대장을 어떻게 할 거냐, 꼬마?"},
-            {"speaker": "choice", "text": "세실에게 뭐라고 말할까?", "options": [
-              {"id": "cecil_join", "text": "같이 가자. 네 눈으로 심장 펌프를 확인해.", "flag": "cecil_ally", "effect": "세실이 게스트 동료로 합류. 6장 상층 반란 루트에서 근위대 일부가 아군화. 진 엔딩 조건 1"},
-              {"id": "cecil_return", "text": "돌아가. 그리고 상층에서 네가 본 걸 기억해.", "flag": "cecil_inside", "effect": "6장에서 세실이 내부에서 성문을 열어주는 이벤트 발생"}
-            ]}
+            {
+              "speaker": "choice",
+              "text": "세실에게 뭐라고 말할까?",
+              "options": [
+                {
+                  "id": "cecil_join",
+                  "text": "같이 가자. 네 눈으로 심장 펌프를 확인해.",
+                  "flag": "cecil_ally",
+                  "effect": "세실이 게스트 동료로 합류. 6장 상층 반란 루트에서 근위대 일부가 아군화. 진 엔딩 조건 1"
+                },
+                {
+                  "id": "cecil_return",
+                  "text": "돌아가. 그리고 상층에서 네가 본 걸 기억해.",
+                  "flag": "cecil_inside",
+                  "effect": "6장에서 세실이 내부에서 성문을 열어주는 이벤트 발생"
+                }
+              ]
+            }
           ]
         },
         {
@@ -783,7 +1051,7 @@
           "location": "강철왕의 대장간",
           "trigger": "reforge",
           "dialogue": [
-            {"speaker": "torbin", "text": "자, 다 됐다. 거인의 뼈에 네 피스톤 장치를 녹여 넣었다. 드워프 역사상 처음으로 증기와 뼈가 한 몸이 된 검이다."},
+            {"speaker": "torbin", "text": "자, 다 됐다. 거인의 뼈에 네 피스톤 장치를 녹여 넣었다. 드워프 역사상 처음으로 증기와 뼈가 한 몸이 된 검이다.", "bgm_mood": "epic"},
             {"speaker": "torbin", "text": "이 검은 거인의 일부다. 거인의 심장 소리와 공명하지. 이걸로 거인의 몸속 어디든 길을 열 수 있을 거다."},
             {"speaker": "luke", "emotion": "determined", "text": "……감사합니다, 강철왕."},
             {"speaker": "torbin", "text": "감사는 됐고, 오스카가 못 한 일 끝내고 와서 술이나 한잔 사라."},
@@ -805,7 +1073,6 @@
       },
       "rewards": {"exp": 9500, "gold": 3500, "items": ["weapon_ashbringer_giantbone", "armor_dwarf_plate"]}
     },
-
     {
       "id": "chapter_5",
       "number": 5,
@@ -813,14 +1080,22 @@
       "subtitle": "멈춘 시간의 도시",
       "region": "still_city",
       "synopsis": "남부 사막에 반쯤 묻힌 고대 도시 엘레이온. 모든 시계가 같은 시각에 멈춘 이 도시에서는 천 년 전 사람들의 그림자가 끝없이 같은 하루를 되풀이한다. 도시 중앙의 대마도사 탑에 오른 아이리스는 자신과 똑같은 얼굴을 한 초상화와, 태엽실의 발굴 기록을 발견한다. 그리고 자신이 인간이 아니라 대마도사의 영혼 태엽을 심장으로 가진 자동인형이라는 진실을 알게 된다. 절망한 아이리스 앞에 발타자르가 직접 나타나, 그녀를 데려간다.",
-      "objectives": ["사막 횡단 (알바트로스호 항해 이벤트)", "멈춘 도시 진입", "되풀이되는 그림자들의 시간 퍼즐", "대마도사의 탑 등반", "아이리스의 진실", "보스: 탑의 수호자 '시간의 파수꾼'", "발타자르 등장 (패배 이벤트)"],
+      "objectives": [
+        "사막 횡단 (알바트로스호 항해 이벤트)",
+        "멈춘 도시 진입",
+        "되풀이되는 그림자들의 시간 퍼즐",
+        "대마도사의 탑 등반",
+        "아이리스의 진실",
+        "보스: 탑의 수호자 '시간의 파수꾼'",
+        "발타자르 등장 (패배 이벤트)"
+      ],
       "scenes": [
         {
           "id": "ch5_01",
           "location": "멈춘 도시 정문",
           "trigger": "enter_city",
           "dialogue": [
-            {"speaker": "luke", "emotion": "surprised", "text": "……사람들이 있어. 아니, 사람의 그림자? 다들 똑같은 동작을 반복하고 있어."},
+            {"speaker": "luke", "emotion": "surprised", "text": "……사람들이 있어. 아니, 사람의 그림자? 다들 똑같은 동작을 반복하고 있어.", "bgm_mood": "mystery"},
             {"speaker": "zed", "emotion": "serious", "text": "천 년 전 녹안개가 이 도시를 삼킨 순간, 시간까지 같이 멈춰 버린 거야. 저 그림자들은 그날 하루를 천 년째 살고 있는 거고."},
             {"speaker": "iris", "emotion": "sad", "text": "……이 거리, 알아요. 저기 모퉁이에 빵집이 있었고, 그 옆에 분수가 있었어요."},
             {"speaker": "luke", "emotion": "surprised", "text": "아이리스? 너 여기 와본 적 있어?"},
@@ -832,10 +1107,10 @@
           "location": "되풀이되는 광장",
           "trigger": "shadow_people",
           "dialogue": [
-            {"speaker": "shadow_baker", "text": "갓 구운 빵 사세요! 오늘은 대마도사님이 봉인 의식을 하시는 날이라 특별히 꿀빵도 구웠어요!"},
+            {"speaker": "shadow_baker", "text": "갓 구운 빵 사세요! 오늘은 대마도사님이 봉인 의식을 하시는 날이라 특별히 꿀빵도 구웠어요!", "bgm_mood": "mystery"},
             {"speaker": "shadow_child", "text": "엄마, 아이리스 님이 정말 안개를 막아주실까?"},
             {"speaker": "shadow_mother", "text": "그럼. 그분은 우리를 한 번도 버린 적이 없으셨단다."},
-            {"speaker": "narration", "text": "그림자들은 같은 말을 끝없이 반복했다. 천 년 동안, 오지 않는 내일을 기다리며."},
+            {"speaker": "narration", "text": "그림자들은 같은 말을 끝없이 반복했다. 천 년 동안, 오지 않는 내일을 기다리며.", "bgm_mood": "sad"},
             {"speaker": "iris", "emotion": "hurt", "text": "……미안해요…… 미안해요……"},
             {"speaker": "luke", "emotion": "surprised", "text": "아이리스, 왜 사과를……"},
             {"speaker": "iris", "emotion": "hurt", "text": "모르겠어요. 그냥, 미안하다는 말이 멈추지 않아요……"}
@@ -846,19 +1121,19 @@
           "location": "대마도사의 탑 최상층",
           "trigger": "iris_truth",
           "dialogue": [
-            {"speaker": "narration", "text": "탑의 꼭대기 방. 벽에는 커다란 초상화가 걸려 있었다. 백금발에 청록색 눈, 머리 위의 은빛 장식. 아이리스와 똑같은 얼굴이었다."},
+            {"speaker": "narration", "text": "탑의 꼭대기 방. 벽에는 커다란 초상화가 걸려 있었다. 백금발에 청록색 눈, 머리 위의 은빛 장식. 아이리스와 똑같은 얼굴이었다.", "bgm_mood": "mystery"},
             {"speaker": "zed", "emotion": "serious", "text": "'엘레이온의 마지막 대마도사, 아이리스 엘레이온.' ……그리고 이건 태엽실의 발굴 기록이야."},
-            {"speaker": "zed", "emotion": "hurt", "text": "'증기력 190년. 대마도사 유해에서 영혼 태엽 회수. 기억 손상 심각. 인형 그릇에 이식 후 12세 상태로 기동. 정기 조정으로 원래 기억 억제. 목적: 공명의 열쇠.'"},
+            {"speaker": "zed", "emotion": "hurt", "text": "'증기력 190년. 대마도사 유해에서 영혼 태엽 회수. 기억 손상 심각. 인형 그릇에 이식 후 12세 상태로 기동. 정기 조정으로 원래 기억 억제. 목적: 공명의 열쇠.'", "bgm_mood": "sad"},
             {"speaker": "iris", "emotion": "hurt", "text": "…………"},
             {"speaker": "luke", "emotion": "angry", "text": "그러니까…… 치료라는 게 기억을 지우는 거였어? 아이리스가 다시 대마도사로 돌아오지 않게?"},
             {"speaker": "iris", "emotion": "hurt", "text": "……가슴에 손을 얹어 봤어요. 매일 밤. 다들 두근두근 소리가 난다고 하길래."},
             {"speaker": "iris", "emotion": "hurt", "text": "제 가슴에선 째깍째깍 소리가 났어요. 저는 그게…… 원래 그런 건 줄 알았어요."},
             {"speaker": "iris", "emotion": "hurt", "text": "저는 사람이 아니었네요. 아버지의 딸도 아니고, 대마도사도 아니고. 그냥…… 열쇠였어요."},
-            {"speaker": "luke", "emotion": "determined", "text": "아니야."},
+            {"speaker": "luke", "emotion": "determined", "text": "아니야.", "bgm_mood": "epic"},
             {"speaker": "luke", "emotion": "determined", "text": "너는 처음 보는 음식은 다 먹어봐야 직성이 풀리고, 고장 난 기계를 보면 우는 애야. 고장 난 펌프 고쳤을 때 애들이 웃으니까 너도 따라 웃었잖아. 열쇠가 그런 걸 하냐?"},
             {"speaker": "zed", "emotion": "smile", "text": "그리고 넬 시장 꼬치 여섯 개. 기록에 남겨 둬야지."},
             {"speaker": "iris", "emotion": "sad", "text": "……두 분 다, 바보예요."},
-            {"speaker": "narration", "text": "그때 탑 전체가 울렸다. 멈춰 있던 거대한 시계가, 천 년 만에 한 번 종을 쳤다."}
+            {"speaker": "narration", "text": "그때 탑 전체가 울렸다. 멈춰 있던 거대한 시계가, 천 년 만에 한 번 종을 쳤다.", "bgm_mood": "mystery"}
           ]
         },
         {
@@ -866,13 +1141,13 @@
           "location": "대마도사의 탑 최상층",
           "trigger": "boss_post",
           "dialogue": [
-            {"speaker": "balthazar", "text": "훌륭하다. 시간의 파수꾼까지 쓰러뜨리다니. 레이븐홀트, 자네는 기술원을 떠난 뒤에도 실력이 녹슬지 않았군."},
+            {"speaker": "balthazar", "text": "훌륭하다. 시간의 파수꾼까지 쓰러뜨리다니. 레이븐홀트, 자네는 기술원을 떠난 뒤에도 실력이 녹슬지 않았군.", "bgm_mood": "tense"},
             {"speaker": "zed", "emotion": "angry", "text": "발타자르……!"},
             {"speaker": "balthazar", "text": "아이리스. 이제 알았겠지. 너는 나의 가장 위대한 작품이다. 그리고 수확제 날, 너는 거인의 심장에 닿아 그 의지를 내게 건네줄 것이다."},
             {"speaker": "iris", "emotion": "determined", "text": "……싫어요. 저는 당신의 작품이 아니에요."},
-            {"speaker": "balthazar", "text": "……그래. 그 표정. 그 대답. 엘레나를 닮았구나. 내 아내를. 네 얼굴을 고를 때, 나도 모르게 그녀를 닮게 만들었는지도 모르겠군."},
+            {"speaker": "balthazar", "text": "……그래. 그 표정. 그 대답. 엘레나를 닮았구나. 내 아내를. 네 얼굴을 고를 때, 나도 모르게 그녀를 닮게 만들었는지도 모르겠군.", "bgm_mood": "sad"},
             {"speaker": "balthazar", "text": "잃는다는 것이 무엇인지 아는가? 사랑하던 이의 얼굴이, 매일 조금씩 흐려지는 것이다. 나는 이제 엘레나의 목소리를 기억하지 못한다."},
-            {"speaker": "balthazar", "text": "그러니 세계를 멈출 것이다. 더 이상 아무도, 아무것도 잃지 않도록."},
+            {"speaker": "balthazar", "text": "그러니 세계를 멈출 것이다. 더 이상 아무도, 아무것도 잃지 않도록.", "bgm_mood": "tense"},
             {"speaker": "system", "text": "BOSS - 기술원장 발타자르"}
           ]
         },
@@ -881,10 +1156,10 @@
           "location": "대마도사의 탑 최상층",
           "trigger": "boss_post_forced_loss",
           "dialogue": [
-            {"speaker": "narration", "text": "발타자르가 왼손의 황동 의수를 들자, 탑 안의 모든 시간이 멈췄다. 루크도, 제드도, 핀도 움직일 수 없었다."},
+            {"speaker": "narration", "text": "발타자르가 왼손의 황동 의수를 들자, 탑 안의 모든 시간이 멈췄다. 루크도, 제드도, 핀도 움직일 수 없었다.", "bgm_mood": "tense"},
             {"speaker": "balthazar", "text": "정지 술식. 거인의 시간 태엽에서 추출한 힘이다. 이 힘을 세계 전체에 퍼뜨리는 것이 나의 영원이다."},
             {"speaker": "balthazar", "text": "아이리스, 가자. 이번 조정이 마지막이다. 이번에는 아프지 않게 해주마."},
-            {"speaker": "iris", "emotion": "hurt", "text": "루크 씨……! 제드 씨……!"},
+            {"speaker": "iris", "emotion": "hurt", "text": "루크 씨……! 제드 씨……!", "bgm_mood": "sad"},
             {"speaker": "luke", "emotion": "hurt", "text": "(움직여…… 움직이라고……! 아이리스……!!)"},
             {"speaker": "narration", "text": "시간이 다시 흐르기 시작했을 때, 아이리스와 발타자르는 사라지고 없었다."},
             {"speaker": "narration", "text": "바닥에는 아이리스의 머리 위에 달려 있던 작은 황동 태엽 장식만이 떨어져 있었다."}
@@ -900,12 +1175,18 @@
         "weakness": ["공명"],
         "patterns": ["시간 되감기 (직전 턴 상태로 HP 복구, 3턴마다)", "진자 낙하 (랜덤 열 공격)", "정지 (아군 1명 2턴 행동불가)", "공략: 탑의 시계 장치 4개를 먼저 부수면 되감기 불가"],
         "drop": ["accessory_still_hourglass", "material_time_gear"],
-        "followup_boss": {"id": "boss_balthazar_1", "name": "기술원장 발타자르", "level": 80, "hp": 99999, "forced_loss": true, "forced_loss_condition": "3턴 경과"}
+        "followup_boss": {
+          "id": "boss_balthazar_1",
+          "name": "기술원장 발타자르",
+          "level": 80,
+          "hp": 99999,
+          "forced_loss": true,
+          "forced_loss_condition": "3턴 경과"
+        }
       },
       "rewards": {"exp": 14000, "gold": 0, "items": ["item_iris_clockpin", "item_elaion_journal"]},
       "party_after": ["luke", "zed"]
     },
-
     {
       "id": "chapter_6",
       "number": 6,
@@ -913,17 +1194,26 @@
       "subtitle": "굴뚝 아래의 반란",
       "region": "brassheim_upper",
       "synopsis": "아이리스를 빼앗긴 루크와 제드는 굴뚝거리로 돌아온다. 마담 모르간의 그을음 노동조합, 자유 구름단의 해적들, 녹색 서약회의 엘프들, 기어홀드의 드워프들. 여정에서 만난 모든 이들이 수확제 날 '대반란'을 위해 모인다. 하층이 봉기해 증기 차양을 부수고, 해적 함대가 하늘에서, 드워프들이 땅 밑에서 공격하는 동안, 루크와 제드는 크로노 스파이어로 잠입해 심장 펌프로 향하는 엘리베이터를 확보해야 한다. 세실의 선택에 따라 근위대의 일부가 아군이 된다.",
-      "objectives": ["굴뚝거리 귀환, 모르간과 대화", "아이리스의 태엽 장식 수리 (루크와 제드의 협력 퀘스트)", "동맹 소집 (서브 퀘스트 결과에 따라 지원군 변화)", "작전 회의", "대반란: 증기 차양 파괴", "크로노 스파이어 등반", "보스: 황동 근위 거상 '아이언 레기온'", "심장 펌프 엘리베이터 확보"],
+      "objectives": [
+        "굴뚝거리 귀환, 모르간과 대화",
+        "아이리스의 태엽 장식 수리 (루크와 제드의 협력 퀘스트)",
+        "동맹 소집 (서브 퀘스트 결과에 따라 지원군 변화)",
+        "작전 회의",
+        "대반란: 증기 차양 파괴",
+        "크로노 스파이어 등반",
+        "보스: 황동 근위 거상 '아이언 레기온'",
+        "심장 펌프 엘리베이터 확보"
+      ],
       "scenes": [
         {
           "id": "ch6_01",
           "location": "모르간 수리점",
           "trigger": "return_home",
           "dialogue": [
-            {"speaker": "morgan", "text": "……꼴이 말이 아니구나, 루크. 그 아가씨는?"},
+            {"speaker": "morgan", "text": "……꼴이 말이 아니구나, 루크. 그 아가씨는?", "bgm_mood": "sad"},
             {"speaker": "luke", "emotion": "hurt", "text": "……빼앗겼어요. 눈앞에서. 손가락 하나 못 움직이고."},
             {"speaker": "morgan", "text": "그래서, 여기서 주저앉을 거냐?"},
-            {"speaker": "luke", "emotion": "determined", "text": "……아니요. 고장 난 건 고치면 돼요. 이번엔 혼자 안 고칠 거예요."},
+            {"speaker": "luke", "emotion": "determined", "text": "……아니요. 고장 난 건 고치면 돼요. 이번엔 혼자 안 고칠 거예요.", "bgm_mood": "epic"},
             {"speaker": "morgan", "text": "흐흐. 이제야 오스카 아들 같구나."},
             {"speaker": "morgan", "text": "말해주마. 그을음 노동조합은 20년 동안 이날을 준비했다. 네 아버지가 처형당한 날부터. 굴뚝거리 사람 삼천 명이 망치를 들고 기다리고 있다."}
           ]
@@ -933,10 +1223,10 @@
           "location": "알바트로스호 작업실",
           "trigger": "repair_clockpin",
           "dialogue": [
-            {"speaker": "zed", "emotion": "serious", "text": "아이리스의 태엽 장식 말이야. 그냥 장식이 아니었어. 이건 기억을 '억제'하는 제어 장치야."},
+            {"speaker": "zed", "emotion": "serious", "text": "아이리스의 태엽 장식 말이야. 그냥 장식이 아니었어. 이건 기억을 '억제'하는 제어 장치야.", "bgm_mood": "mystery"},
             {"speaker": "luke", "emotion": "surprised", "text": "억제? 그럼 이게 빠졌다는 건……"},
             {"speaker": "zed", "emotion": "serious", "text": "발타자르가 새 걸 달기 전까지, 아이리스는 원래 기억을 되찾을 수 있다는 거지. 대마도사 아이리스 엘레이온의 기억을."},
-            {"speaker": "zed", "emotion": "smirk", "text": "그리고 내가 이걸 반대로 개조하면…… 억제 장치가 아니라 '기억 보호 장치'가 되겠지. 녹안개에도, 발타자르의 조정에도 기억이 지워지지 않도록."},
+            {"speaker": "zed", "emotion": "smirk", "text": "그리고 내가 이걸 반대로 개조하면…… 억제 장치가 아니라 '기억 보호 장치'가 되겠지. 녹안개에도, 발타자르의 조정에도 기억이 지워지지 않도록.", "bgm_mood": "default"},
             {"speaker": "luke", "emotion": "smile", "text": "제드, 너 천재구나."},
             {"speaker": "zed", "emotion": "smirk", "text": "이제 알았어? 근데 미세 가공은 네 손이 더 낫다. 굴뚝거리 기계공 실력 좀 보자."},
             {"speaker": "system", "text": "협력 미니게임 [태엽 장식 개조]가 시작됩니다."}
@@ -947,7 +1237,7 @@
           "location": "굴뚝거리 지하 집회장",
           "trigger": "war_council",
           "dialogue": [
-            {"speaker": "morgan", "text": "그을음 노동조합 삼천. 망치와 렌치는 충분하다."},
+            {"speaker": "morgan", "text": "그을음 노동조합 삼천. 망치와 렌치는 충분하다.", "bgm_mood": "epic"},
             {"speaker": "pirate_captain_greta", "text": "자유 구름단 비행선 스물두 척. 제드 꼬마가 빚진 술값만큼은 싸워주지."},
             {"speaker": "elwin", "condition": "sq_rusted_memories_complete", "text": "녹색 서약회도 왔어! 대드루이드님이 공명술로 근위병 인형들의 동력을 흔들어 주실 거야!"},
             {"speaker": "torbin", "text": "기어홀드의 일곱 씨족이 땅 밑으로 굴을 파서 심장 펌프 기초부를 친다. 거인의 뼈에 박힌 그 더러운 바늘, 드워프 망치로 흔들어 주마."},
@@ -964,7 +1254,7 @@
           "location": "증기 차양",
           "trigger": "canopy_break",
           "dialogue": [
-            {"speaker": "narration", "text": "수확제의 종이 울리는 순간, 하층 전체에서 망치 소리가 일제히 울려 퍼졌다."},
+            {"speaker": "narration", "text": "수확제의 종이 울리는 순간, 하층 전체에서 망치 소리가 일제히 울려 퍼졌다.", "bgm_mood": "epic"},
             {"speaker": "narration", "text": "드워프의 폭약과 해적선의 포격이 증기 차양의 지지대를 끊었고, 200년간 상층과 하층을 가르던 거대한 황동 천장이 무너져 내렸다."},
             {"speaker": "kid_tobi", "text": "……형. 루크 형. 저게…… 하늘이야? 천장의 별이 아니라, 진짜 하늘?"},
             {"speaker": "luke", "emotion": "smile", "text": "그래, 토비. 저게 진짜 하늘이야."},
@@ -976,7 +1266,7 @@
           "location": "크로노 스파이어 상층",
           "trigger": "boss_pre",
           "dialogue": [
-            {"speaker": "balthazar_voice", "text": "(전성관) 훌륭한 소동이군, 애쉬포드. 하지만 늦었다. 의식은 이미 시작되었다."},
+            {"speaker": "balthazar_voice", "text": "(전성관) 훌륭한 소동이군, 애쉬포드. 하지만 늦었다. 의식은 이미 시작되었다.", "bgm_mood": "tense"},
             {"speaker": "balthazar_voice", "text": "아이언 레기온, 침입자를 배제하라."},
             {"speaker": "zed", "emotion": "serious", "text": "황동 근위병 백 기를 하나로 합친 거상이다. 기술원 최후의 방어선."},
             {"speaker": "luke", "emotion": "determined", "text": "그 뒤에 엘리베이터가 있는 거지? 그럼 부수고 지나간다!"},
@@ -991,12 +1281,16 @@
         "hp": 32000,
         "element": "기계 / 에테르",
         "weakness": ["녹", "공명", "번개"],
-        "patterns": ["군단 포격 (전체 공격)", "분리 (HP 50%에서 소형 근위병 6기로 분리 후 3턴 뒤 재합체)", "에테르 방벽 (원거리 무효 2턴)", "지원군 보정: 6장 소집한 동맹 수만큼 매 턴 보스 HP 감소 이벤트"],
+        "patterns": [
+          "군단 포격 (전체 공격)",
+          "분리 (HP 50%에서 소형 근위병 6기로 분리 후 3턴 뒤 재합체)",
+          "에테르 방벽 (원거리 무효 2턴)",
+          "지원군 보정: 6장 소집한 동맹 수만큼 매 턴 보스 HP 감소 이벤트"
+        ],
         "drop": ["accessory_legion_core", "material_royal_brass x5"]
       },
       "rewards": {"exp": 28000, "gold": 12000, "items": ["item_clockpin_guardian", "weapon_long_goodbye_mk2"]}
     },
-
     {
       "id": "chapter_7",
       "number": 7,
@@ -1004,21 +1298,30 @@
       "subtitle": "황동의 심장",
       "region": "arcanus_inside",
       "synopsis": "심장 펌프를 통해 거인의 체내로 들어간 루크와 제드. 거인의 기억이 떠도는 혈관 미궁에서, 루크는 아버지 오스카의 기억과 마주하고, 제드는 펌프의 비상 정지 장치를 향한다. 심장부에서 발타자르는 아이리스를 거인의 심장에 연결해 의식을 진행하고 있었다. 그러나 개조한 태엽 장식을 통해 기억을 되찾은 아이리스는 스스로 발타자르의 제어를 끊는다. 발타자르와의 최종 결전, 그리고 '모든 것을 잊고 싶다'는 거인 아르카누스와의 마지막 대화가 남아 있다.",
-      "objectives": ["심장 펌프 최심부 하강", "거인의 혈관 미궁 돌파", "기억의 방: 서약 기사 문장으로 문 열기", "제드: 비상 정지 장치 가동 (시간제한)", "심장부 도달, 아이리스에게 태엽 장식 전달", "보스: 발타자르 3페이즈", "보스: 아르카누스의 꿈 '녹의 왕'", "엔딩 분기"],
+      "objectives": [
+        "심장 펌프 최심부 하강",
+        "거인의 혈관 미궁 돌파",
+        "기억의 방: 서약 기사 문장으로 문 열기",
+        "제드: 비상 정지 장치 가동 (시간제한)",
+        "심장부 도달, 아이리스에게 태엽 장식 전달",
+        "보스: 발타자르 3페이즈",
+        "보스: 아르카누스의 꿈 '녹의 왕'",
+        "엔딩 분기"
+      ],
       "scenes": [
         {
           "id": "ch7_01",
           "location": "기억의 방",
           "trigger": "oscar_memory",
           "dialogue": [
-            {"speaker": "narration", "text": "서약 기사 문장을 문에 대자, 거인의 기억이 빛이 되어 쏟아져 나왔다. 그 가운데 한 기사의 모습이 보였다."},
+            {"speaker": "narration", "text": "서약 기사 문장을 문에 대자, 거인의 기억이 빛이 되어 쏟아져 나왔다. 그 가운데 한 기사의 모습이 보였다.", "bgm_mood": "mystery"},
             {"speaker": "oscar", "text": "……이 기억을 보고 있는 게 누구든. 내 이름은 오스카 애쉬포드, 서약 기사다."},
             {"speaker": "oscar", "text": "나는 광산 깊은 곳에서 거인의 심장 소리를 들었다. 아프다고, 지쳤다고 울고 있었다. 기술원에 알렸지만, 그들은 듣지 않았다."},
             {"speaker": "oscar", "text": "내일 나는 광부들을 진압하라는 명령을 받는다. 나는 거부할 것이다. 백성을 향해 검을 드는 건 서약 기사가 아니니까."},
-            {"speaker": "oscar", "text": "……루크. 만약 이걸 네가 보고 있다면. 미안하다. 너를 혼자 두고 가는 아버지라서."},
+            {"speaker": "oscar", "text": "……루크. 만약 이걸 네가 보고 있다면. 미안하다. 너를 혼자 두고 가는 아버지라서.", "bgm_mood": "sad"},
             {"speaker": "oscar", "text": "하지만 기억해라. 강철은 녹슬어도, 맹세는 녹슬지 않는다. 네가 지키고 싶은 걸 찾으면, 그게 너의 맹세다."},
             {"speaker": "luke", "emotion": "hurt", "text": "……찾았어요, 아버지. 지키고 싶은 거."},
-            {"speaker": "luke", "emotion": "determined", "text": "그러니까 이제, 제 맹세를 지키러 갈게요."},
+            {"speaker": "luke", "emotion": "determined", "text": "그러니까 이제, 제 맹세를 지키러 갈게요.", "bgm_mood": "epic"},
             {"speaker": "system", "text": "궁극기 [애쉬브링어 : 맹세 해방]의 봉인이 완전히 해제되었습니다."}
           ]
         },
@@ -1027,16 +1330,26 @@
           "location": "심장 펌프 제어 핵",
           "trigger": "zed_choice",
           "dialogue": [
-            {"speaker": "zed", "emotion": "serious", "text": "여기서 갈라지자, 루크. 비상 정지 코드는 이 제어 핵 안에서 직접 입력해야 해."},
+            {"speaker": "zed", "emotion": "serious", "text": "여기서 갈라지자, 루크. 비상 정지 코드는 이 제어 핵 안에서 직접 입력해야 해.", "bgm_mood": "tense"},
             {"speaker": "luke", "emotion": "surprised", "text": "안에서? 펌프 안은 에테르 압력 때문에 사람이 버틸 수가……"},
             {"speaker": "zed", "emotion": "smile", "text": "알아. 내가 설계했으니까. 처음부터 이렇게 할 생각이었어."},
             {"speaker": "luke", "emotion": "angry", "text": "웃기지 마! 혼자 죽으려고 여기까지 온 거야?! 리나는 어떡하고!"},
-            {"speaker": "zed", "emotion": "hurt", "text": "……리나한테 오르골 좀 대신 감아줘. 하루에 한 번이면 돼."},
+            {"speaker": "zed", "emotion": "hurt", "text": "……리나한테 오르골 좀 대신 감아줘. 하루에 한 번이면 돼.", "bgm_mood": "sad"},
             {"speaker": "fin", "text": "끼이익! 끼이익!"},
-            {"speaker": "choice", "text": "어떻게 할까?", "options": [
-              {"id": "zed_alone", "text": "(제드를 보낸다)", "flag": "zed_sacrifice", "effect": "노멀 엔딩 루트. 제드 이탈."},
-              {"id": "zed_together", "text": "렌치를 꺼낸다. '압력은 내가 버텨줄게. 같이 들어가.'", "condition": "luke_zed_affinity >= 60", "flag": "zed_saved", "effect": "협력 미니게임 성공 시 제드 생존. 진 엔딩 조건 2"}
-            ]}
+            {
+              "speaker": "choice",
+              "text": "어떻게 할까?",
+              "options": [
+                {"id": "zed_alone", "text": "(제드를 보낸다)", "flag": "zed_sacrifice", "effect": "노멀 엔딩 루트. 제드 이탈."},
+                {
+                  "id": "zed_together",
+                  "text": "렌치를 꺼낸다. '압력은 내가 버텨줄게. 같이 들어가.'",
+                  "condition": "luke_zed_affinity >= 60",
+                  "flag": "zed_saved",
+                  "effect": "협력 미니게임 성공 시 제드 생존. 진 엔딩 조건 2"
+                }
+              ]
+            }
           ]
         },
         {
@@ -1044,16 +1357,16 @@
           "location": "거인의 심장",
           "trigger": "final_altar",
           "dialogue": [
-            {"speaker": "narration", "text": "거대한 황동 심장이 느리게, 아주 느리게 뛰고 있었다. 그 앞에 수백 개의 관에 연결된 아이리스가 눈을 감고 서 있었다."},
+            {"speaker": "narration", "text": "거대한 황동 심장이 느리게, 아주 느리게 뛰고 있었다. 그 앞에 수백 개의 관에 연결된 아이리스가 눈을 감고 서 있었다.", "bgm_mood": "mystery"},
             {"speaker": "balthazar", "text": "왔군, 애쉬포드. 하지만 보아라. 열쇠는 이미 자물쇠에 꽂혔다. 이제 거인의 의지는 내 것이 된다."},
-            {"speaker": "luke", "emotion": "determined", "text": "아이리스! 이거 받아!"},
+            {"speaker": "luke", "emotion": "determined", "text": "아이리스! 이거 받아!", "bgm_mood": "epic"},
             {"speaker": "narration", "text": "루크가 던진 태엽 장식이 아이리스의 머리 위에 닿는 순간, 맑은 공명음이 심장부 전체에 울려 퍼졌다."},
             {"speaker": "iris", "emotion": "determined", "text": "……기억나요. 전부."},
             {"speaker": "iris", "emotion": "determined", "text": "천 년 전의 저도, 열두 살 때 처음 눈을 뜬 저도, 넬 시장에서 꼬치를 먹던 저도. 전부 저예요."},
             {"speaker": "iris", "emotion": "angry", "text": "발타자르 그림웰. 저는 당신의 열쇠가 아니에요. 그리고 아르카누스는, 당신이 지배할 물건이 아니에요!"},
             {"speaker": "narration", "text": "아이리스를 묶고 있던 관들이 공명음에 산산이 부서졌다."},
-            {"speaker": "balthazar", "text": "……그래. 결국 너도 나를 떠나는구나. 엘레나처럼."},
-            {"speaker": "balthazar", "text": "좋다. 그렇다면 내 손으로 직접 세계를 멈추겠다!"},
+            {"speaker": "balthazar", "text": "……그래. 결국 너도 나를 떠나는구나. 엘레나처럼.", "bgm_mood": "sad"},
+            {"speaker": "balthazar", "text": "좋다. 그렇다면 내 손으로 직접 세계를 멈추겠다!", "bgm_mood": "tense"},
             {"speaker": "system", "text": "FINAL BOSS - 기술원장 발타자르"}
           ]
         },
@@ -1062,14 +1375,14 @@
           "location": "거인의 심장",
           "trigger": "balthazar_defeated",
           "dialogue": [
-            {"speaker": "balthazar", "text": "……어째서…… 멈추지 않는 거냐…… 시간이……"},
+            {"speaker": "balthazar", "text": "……어째서…… 멈추지 않는 거냐…… 시간이……", "bgm_mood": "sad"},
             {"speaker": "iris", "emotion": "sad", "text": "시간은 멈추면 안 돼요. 잃는 건 아프지만…… 잃을 수 있다는 건, 가지고 있었다는 뜻이니까요."},
             {"speaker": "balthazar", "text": "……엘레나는…… 웃을 때…… 왼쪽 볼에 보조개가 있었다……"},
             {"speaker": "balthazar", "text": "……아직…… 기억하고 있었구나…… 나는……"},
             {"speaker": "iris", "emotion": "sad", "text": "……안녕히 주무세요, 아버지."},
             {"speaker": "narration", "text": "발타자르의 몸에 감긴 수많은 시계들이 하나씩, 다시 째깍이기 시작했다. 그리고 그는 조용히 눈을 감았다."},
-            {"speaker": "arcanus", "text": "……이제…… 됐다…… 이제…… 잊게 해다오……"},
-            {"speaker": "narration", "text": "거인의 심장이 멈추려 하고 있었다. 녹안개가 심장부를 가득 채우며 형체를 이루었다. 거인이 꾸는 망각의 꿈, '녹의 왕'이었다."}
+            {"speaker": "arcanus", "text": "……이제…… 됐다…… 이제…… 잊게 해다오……", "bgm_mood": "mystery"},
+            {"speaker": "narration", "text": "거인의 심장이 멈추려 하고 있었다. 녹안개가 심장부를 가득 채우며 형체를 이루었다. 거인이 꾸는 망각의 꿈, '녹의 왕'이었다.", "bgm_mood": "tense"}
           ]
         },
         {
@@ -1077,8 +1390,8 @@
           "location": "망각의 꿈",
           "trigger": "final_dream",
           "dialogue": [
-            {"speaker": "arcanus", "text": "……작은 것들아…… 너희도 지치지 않았느냐…… 잊으면 편해진다…… 아픔도…… 슬픔도……"},
-            {"speaker": "luke", "emotion": "determined", "text": "잊으면 편하겠지. 아버지가 처형당한 날도, 혼자 남겨진 밤들도."},
+            {"speaker": "arcanus", "text": "……작은 것들아…… 너희도 지치지 않았느냐…… 잊으면 편해진다…… 아픔도…… 슬픔도……", "bgm_mood": "mystery"},
+            {"speaker": "luke", "emotion": "determined", "text": "잊으면 편하겠지. 아버지가 처형당한 날도, 혼자 남겨진 밤들도.", "bgm_mood": "epic"},
             {"speaker": "luke", "emotion": "smile", "text": "그래도 난 기억할래. 할멈이 끓여준 양파 스튜, 처음 진짜 하늘을 본 토비 얼굴, 같이 싸워준 사람들."},
             {"speaker": "zed", "condition": "zed_saved", "emotion": "smile", "text": "리나가 오르골 노래만은 기억하고 있었어. 아무리 다 잊어도, 소중한 건 남더라고. 그러니까 당신도 다 잊을 필요 없어."},
             {"speaker": "iris", "emotion": "determined", "text": "아르카누스. 천 년 전의 저는 당신을 억지로 붙잡아 두었어요. 제 영혼으로 봉인해서. 미안해요."},
@@ -1090,17 +1403,46 @@
       "boss": {
         "id": "boss_final",
         "phases": [
-          {"name": "기술원장 발타자르", "level": 60, "hp": 42000, "element": "시간", "patterns": ["정밀 저격 시계침", "시간 지연 (아군 행동 순서 최하위로)", "황동 의수 분석 (아군 약점 노출)"]},
-          {"name": "크로노 아머 발타자르", "level": 62, "hp": 58000, "element": "시간 / 에테르", "patterns": ["거대 시계 갑주 탑승", "12시 방향 포격 (턴마다 시계침이 가리키는 방향의 직선 전체 공격)", "되감기 (2회 한정)"]},
-          {"name": "정지의 왕 발타자르", "level": 65, "hp": 72000, "element": "시간", "patterns": ["세계 정지 카운트다운 (5턴 후 전멸기)", "아이리스의 [정지 화음]으로만 카운트 지연 가능", "그가 잃어버린 기억들의 환영 소환"]},
-          {"name": "아르카누스의 꿈 '녹의 왕'", "level": 70, "hp": 130000, "element": "녹 / 망각", "weakness": ["공명", "맹세"], "patterns": ["대망각 (아군 스킬 2개 무작위 봉인)", "녹의 파도 (전체 HP 50% 감소 + 오염)", "속삭임 (매 턴 아군 1명 수면)", "기억의 등불: 6장 동맹 수와 진행 중 획득한 '기억의 조각' 수만큼 매 턴 봉인된 스킬 자동 복구"]}
+          {
+            "name": "기술원장 발타자르",
+            "level": 60,
+            "hp": 42000,
+            "element": "시간",
+            "patterns": ["정밀 저격 시계침", "시간 지연 (아군 행동 순서 최하위로)", "황동 의수 분석 (아군 약점 노출)"]
+          },
+          {
+            "name": "크로노 아머 발타자르",
+            "level": 62,
+            "hp": 58000,
+            "element": "시간 / 에테르",
+            "patterns": ["거대 시계 갑주 탑승", "12시 방향 포격 (턴마다 시계침이 가리키는 방향의 직선 전체 공격)", "되감기 (2회 한정)"]
+          },
+          {
+            "name": "정지의 왕 발타자르",
+            "level": 65,
+            "hp": 72000,
+            "element": "시간",
+            "patterns": ["세계 정지 카운트다운 (5턴 후 전멸기)", "아이리스의 [정지 화음]으로만 카운트 지연 가능", "그가 잃어버린 기억들의 환영 소환"]
+          },
+          {
+            "name": "아르카누스의 꿈 '녹의 왕'",
+            "level": 70,
+            "hp": 130000,
+            "element": "녹 / 망각",
+            "weakness": ["공명", "맹세"],
+            "patterns": [
+              "대망각 (아군 스킬 2개 무작위 봉인)",
+              "녹의 파도 (전체 HP 50% 감소 + 오염)",
+              "속삭임 (매 턴 아군 1명 수면)",
+              "기억의 등불: 6장 동맹 수와 진행 중 획득한 '기억의 조각' 수만큼 매 턴 봉인된 스킬 자동 복구"
+            ]
+          }
         ],
         "drop": []
       },
       "rewards": {"exp": 0, "gold": 0, "items": []}
     }
   ],
-
   "endings": [
     {
       "id": "ending_true",
@@ -1108,12 +1450,12 @@
       "condition": "cecil_ally + zed_saved + 6장 동맹 전원 소집 + 기억의 조각 12개 이상 수집",
       "summary": "아이리스의 공명술과 루크의 거골 대검, 제드가 역설계한 심장 펌프가 하나로 이어져 거인의 심장에 '역류'를 일으킨다. 빼앗긴 에테르가 거인에게 돌아가고, 아르카누스는 처음으로 '무게를 나눠 드는' 감각을 느끼며 녹안개의 꿈에서 깨어난다. 거인은 다시 잠들지만 이번엔 망각이 아닌 안식이다. 제국은 에테르를 포기하고, 거인과 공명하는 새로운 기술을 엘프와 드워프, 하층의 기계공들이 함께 만들기 시작한다. 아이리스의 가슴은 여전히 째깍거리지만, 그녀는 그 소리를 좋아하게 되었다.",
       "epilogue_dialogue": [
-        {"speaker": "narration", "text": "증기력 204년, 봄. 이제 사람들은 그 해를 '공명력 원년'이라 부른다."},
+        {"speaker": "narration", "text": "증기력 204년, 봄. 이제 사람들은 그 해를 '공명력 원년'이라 부른다.", "bgm_mood": "epic"},
         {"speaker": "narration", "text": "브라스하임의 증기 차양은 다시 세워지지 않았다. 굴뚝거리의 아이들은 매일 아침 진짜 하늘을 본다."},
         {"speaker": "narration", "text": "세실은 근위대를 해체하고 새로운 서약 기사단을 세웠다. 첫 번째 단원 명부에는 루크의 이름이 가장 위에 적혀 있다."},
-        {"speaker": "narration", "text": "부유 항구 넬의 요양원. 오르골 소리를 듣던 리나가 처음으로 오빠의 이름을 불렀다."},
+        {"speaker": "narration", "text": "부유 항구 넬의 요양원. 오르골 소리를 듣던 리나가 처음으로 오빠의 이름을 불렀다.", "bgm_mood": "sad"},
         {"speaker": "zed", "emotion": "smile", "text": "……그래, 리나. 오빠야. 오빠 왔어."},
-        {"speaker": "iris", "emotion": "smile", "text": "루크 씨, 이번엔 어디 가요? 저 아직 못 먹어본 음식이 백 가지는 넘어요."},
+        {"speaker": "iris", "emotion": "smile", "text": "루크 씨, 이번엔 어디 가요? 저 아직 못 먹어본 음식이 백 가지는 넘어요.", "bgm_mood": "default"},
         {"speaker": "luke", "emotion": "smile", "text": "일단 할멈 수리점부터. 수리비 밀린 거 갚으러."},
         {"speaker": "luke", "emotion": "smile", "text": "그 다음엔…… 어디든. 고장 난 게 있으면 고치러 가자."},
         {"speaker": "narration", "text": "대지 아래에서, 거대한 심장이 천천히 그리고 편안하게 뛰었다."},
@@ -1126,7 +1468,7 @@
       "condition": "진 엔딩 조건 미충족",
       "summary": "아이리스는 천 년 전처럼 자신의 영혼 태엽을 거인의 심장에 바쳐 녹안개를 다시 봉인한다. 이번에는 그녀 자신이 거인의 새로운 '심장 태엽'이 되어, 거인과 함께 대륙의 무게를 짊어진다. 녹안개는 걷히고 세계는 구원받았지만, 아이리스는 돌아오지 않는다. (zed_sacrifice 시: 심장 펌프는 정지했지만, 제드 역시 돌아오지 않았다.) 루크는 매일 밤 굴뚝거리의 지붕 위에서 땅에 귀를 댄다. 째깍, 째깍. 대지 아래에서 작은 태엽 소리가 들려온다.",
       "epilogue_dialogue": [
-        {"speaker": "luke", "emotion": "sad", "text": "아이리스. 오늘 토비가 처음으로 혼자 보일러를 고쳤어. 너 봤으면 엄청 좋아했을 텐데."},
+        {"speaker": "luke", "emotion": "sad", "text": "아이리스. 오늘 토비가 처음으로 혼자 보일러를 고쳤어. 너 봤으면 엄청 좋아했을 텐데.", "bgm_mood": "sad"},
         {"speaker": "luke", "emotion": "smile", "text": "넬 시장에 새 꼬치 가게가 생겼대. 언젠가 같이 가자. 일곱 개 사줄게."},
         {"speaker": "narration", "text": "째깍. 대지 아래에서, 대답하듯 태엽이 한 번 감겼다."},
         {"speaker": "narration", "text": "— 황동의 심장 : 아스카론 연대기 — 끝"}
@@ -1138,257 +1480,492 @@
       "condition": "녹의 왕 전투 패배 후 '잊는다' 선택",
       "summary": "거인의 심장이 멈춘다. 녹안개는 대륙 전체를 덮고, 사람들은 아무 고통도 기억도 없는 평온 속에 잠긴다. 마지막까지 녹슬지 않은 것은 굴뚝거리 수리점 벽에 걸린, 낡은 서약 기사 문장 하나였다.",
       "epilogue_dialogue": [
-        {"speaker": "arcanus", "text": "……쉬어라…… 이제 아무도 기억하지 않아도 된다……"},
+        {"speaker": "arcanus", "text": "……쉬어라…… 이제 아무도 기억하지 않아도 된다……", "bgm_mood": "mystery"},
         {"speaker": "narration", "text": "어딘가에서, 아주 작게 태엽이 감기는 소리가 났다."},
         {"speaker": "system", "text": "다시 맹세하겠습니까? [최종장 심장부에서 재시작]"}
       ]
     }
   ],
-
   "npc_dialogues": {
     "chimney_ward": {
       "town_name": "굴뚝거리",
       "npcs": [
-        {"id": "morgan", "name": "마담 모르간", "role": "수리점 주인 / 노동조합 우두머리", "location": "모르간 수리점", "sprite": "npc_morgan", "shop": "repair",
+        {
+          "id": "morgan",
+          "name": "마담 모르간",
+          "role": "수리점 주인 / 노동조합 우두머리",
+          "location": "모르간 수리점",
+          "sprite": "npc_morgan",
+          "shop": "repair",
           "dialogues": {
             "prologue": ["일거리는 게시판에 붙여놨다. 다 끝내기 전엔 밥 없다.", "그 대검? 네 아버지 검을 그렇게 뜯어고쳐 놓으면 오스카가 무덤에서 벌떡 일어나겠다. …뭐, 솜씨는 좋다만."],
             "chapter_1": ["그 아가씨, 손이 차갑더구나. 이상할 정도로. …아니다, 신경 쓰지 마라.", "근위대 놈들 오기 전에 뒷문으로 나가라. 열쇠는 늘 있던 곳에 있다."],
             "chapter_6": ["20년을 기다렸다. 오스카가 처형당한 광장에서 이번엔 우리가 망치를 든다.", "살아서 와라, 루크. 늙은이 앞에서 먼저 가는 놈은 수리비 두 배다."]
-          }},
-        {"id": "kid_tobi", "name": "토비", "role": "굴뚝거리 아이", "location": "5번가", "sprite": "npc_boy_child",
+          }
+        },
+        {
+          "id": "kid_tobi",
+          "name": "토비",
+          "role": "굴뚝거리 아이",
+          "location": "5번가",
+          "sprite": "npc_boy_child",
           "dialogues": {
             "default": ["루크 형! 나도 크면 형처럼 기계공 될 거야!", "천장의 별은 왜 안 움직여? 진짜 별은 움직인다던데."],
             "chapter_6": ["형, 차양 부수는 거 나도 도울래! 나 볼트 푸는 거 진짜 잘해!"],
             "after_ending": ["형! 하늘에 진짜 새가 날아! 기계 새 말고 진짜 새!"]
-          }},
-        {"id": "worker_hank", "name": "광부 행크", "role": "심층 광산 광부", "location": "광부 선술집 '검은 폐'", "sprite": "npc_miner",
+          }
+        },
+        {
+          "id": "worker_hank",
+          "name": "광부 행크",
+          "role": "심층 광산 광부",
+          "location": "광부 선술집 '검은 폐'",
+          "sprite": "npc_miner",
           "dialogues": {
-            "default": ["요즘 갱도 밑에서 이상한 소리가 들려. 쿵, 쿵. 꼭 심장 뛰는 소리 같다니까.", "동료 녀석이 안개 마시고 제 마누라 이름을 잊어버렸어. 기술원은 그냥 피로 때문이래. 웃기고 있네."],
+            "default": [
+              "요즘 갱도 밑에서 이상한 소리가 들려. 쿵, 쿵. 꼭 심장 뛰는 소리 같다니까.",
+              "동료 녀석이 안개 마시고 제 마누라 이름을 잊어버렸어. 기술원은 그냥 피로 때문이래. 웃기고 있네."
+            ],
             "chapter_6": ["삼천 명이야, 루크. 망치 든 손이 삼천 개. 오늘은 우리가 질서를 만든다."]
-          }},
-        {"id": "granny_bess", "name": "베스 할머니", "role": "스튜 노점상", "location": "중앙로", "sprite": "npc_old_woman", "shop": "food",
+          }
+        },
+        {
+          "id": "granny_bess",
+          "name": "베스 할머니",
+          "role": "스튜 노점상",
+          "location": "중앙로",
+          "sprite": "npc_old_woman",
+          "shop": "food",
           "dialogues": {
             "default": ["양파 스튜 한 그릇 5골드! 고기는 없어, 대신 정은 듬뿍!", "오스카 기사님? 우리 영감 광산에서 깔렸을 때 맨손으로 바위를 치워주신 분이야. 반역자? 흥."],
             "chapter_1": ["그 백금발 아가씨, 스튜를 세 그릇이나 먹더라. 상층 사람은 다 저렇게 잘 먹나?"]
-          }},
-        {"id": "guard_rookie", "name": "신참 근위병 피터", "role": "하층 순찰 근위병", "location": "굴뚝거리 검문소", "sprite": "npc_guard",
+          }
+        },
+        {
+          "id": "guard_rookie",
+          "name": "신참 근위병 피터",
+          "role": "하층 순찰 근위병",
+          "location": "굴뚝거리 검문소",
+          "sprite": "npc_guard",
           "dialogues": {
             "default": ["순찰 중입니다. 수상한 사람 보면 신고… 아, 루크 형? 저 7번가 피터예요. 기억나요?", "근위대 들어가면 상층 산다길래 들어왔는데, 맨날 하층 순찰만 돌아요."],
             "chapter_6": ["형… 저도 굴뚝거리 사람이에요. 오늘은 갑옷 벗고 망치 들게요."]
-          }}
+          }
+        }
       ]
     },
-
     "brassheim_upper": {
       "town_name": "황동 도시 브라스하임 (상층)",
       "npcs": [
-        {"id": "noble_lady", "name": "귀부인 마르셀린", "role": "상층 귀족", "location": "크로노 광장", "sprite": "npc_noble",
+        {
+          "id": "noble_lady",
+          "name": "귀부인 마르셀린",
+          "role": "상층 귀족",
+          "location": "크로노 광장",
+          "sprite": "npc_noble",
           "dialogues": {
             "default": ["어머, 하층 냄새가 나는군요. 경비병은 뭘 하는 거죠?", "녹안개? 그런 건 하층의 일이잖아요. 우리는 차양이 있으니 괜찮아요."],
             "after_canopy": ["……하늘이 저렇게 생겼었군요. 차양 아래에서 태어나서, 처음 봐요."]
-          }},
-        {"id": "scholar_quill", "name": "견습 학자 퀼", "role": "기술원 하급 연구원", "location": "기술원 도서관", "sprite": "npc_scholar",
+          }
+        },
+        {
+          "id": "scholar_quill",
+          "name": "견습 학자 퀼",
+          "role": "기술원 하급 연구원",
+          "location": "기술원 도서관",
+          "sprite": "npc_scholar",
           "dialogues": {
             "default": ["에테르 효율 보고서만 3년째 쓰고 있어요. 수치가 매년 줄어드는데 위에서는 늘었다고 쓰래요.", "태엽실이요? 거긴 기술원장님 직속이라 우리 같은 하급은 문 앞에도 못 가요."],
             "chapter_6": ["제가 몰래 빼둔 엘리베이터 출입 기록이에요. 가져가세요. 저도… 더 이상 거짓 보고서는 쓰기 싫어요."]
-          }},
-        {"id": "emperor_leopold", "name": "황제 레오폴트 3세", "role": "아우렐리아 황제 (13세)", "location": "황궁 테라스", "sprite": "npc_emperor",
+          }
+        },
+        {
+          "id": "emperor_leopold",
+          "name": "황제 레오폴트 3세",
+          "role": "아우렐리아 황제 (13세)",
+          "location": "황궁 테라스",
+          "sprite": "npc_emperor",
           "dialogues": {
             "chapter_6": ["너희가 반란군인가? …나는 황제지만, 기술원장이 정해준 말만 해왔어.", "아래에 사람들이 그렇게 많이 사는 줄 몰랐어. 차양 너머가 그냥 공장인 줄 알았어."],
             "after_ending": ["나는 이제 진짜 황제가 되고 싶어. 위에서 내려다보는 게 아니라, 아래에서 같이 서 있는."]
-          }},
-        {"id": "clock_keeper", "name": "시계지기 오토", "role": "크로노 스파이어 관리인", "location": "시계탑 기관실", "sprite": "npc_clockkeeper",
+          }
+        },
+        {
+          "id": "clock_keeper",
+          "name": "시계지기 오토",
+          "role": "크로노 스파이어 관리인",
+          "location": "시계탑 기관실",
+          "sprite": "npc_clockkeeper",
           "dialogues": {
-            "default": ["크로노 스파이어의 시계는 200년간 1초도 틀린 적 없지. 그게 내 자랑이야.", "기술원장님은 매일 밤 이 시계 앞에 서 계셔. 무슨 생각을 하시는지는 몰라도, 늘 같은 초침을 보고 계시지."]
-          }}
+            "default": [
+              "크로노 스파이어의 시계는 200년간 1초도 틀린 적 없지. 그게 내 자랑이야.",
+              "기술원장님은 매일 밤 이 시계 앞에 서 계셔. 무슨 생각을 하시는지는 몰라도, 늘 같은 초침을 보고 계시지."
+            ]
+          }
+        }
       ]
     },
-
     "skyport_nell": {
       "town_name": "부유 항구 넬",
       "npcs": [
-        {"id": "raven_crone", "name": "갈까마귀 노파", "role": "정보상", "location": "부두 끝 천막", "sprite": "npc_crone",
+        {
+          "id": "raven_crone",
+          "name": "갈까마귀 노파",
+          "role": "정보상",
+          "location": "부두 끝 천막",
+          "sprite": "npc_crone",
           "dialogues": {
             "default": ["정보는 공짜가 아니란다. 은화든, 비밀이든, 기억이든.", "흐흐, 제드 꼬마는 빚이 많아. 돈 빚, 술 빚, 그리고 마음의 빚."],
             "chapter_6": ["이번 정보는 공짜다. 기술원 함대 배치도. 세계가 망하면 정보 장사도 끝이니까."]
-          }},
-        {"id": "pirate_captain_greta", "name": "그레타 선장", "role": "자유 구름단 원로 선장", "location": "선술집 '떨어진 닻'", "sprite": "npc_pirate_captain",
+          }
+        },
+        {
+          "id": "pirate_captain_greta",
+          "name": "그레타 선장",
+          "role": "자유 구름단 원로 선장",
+          "location": "선술집 '떨어진 닻'",
+          "sprite": "npc_pirate_captain",
           "dialogues": {
             "default": ["제드 꼬마가 데려온 손님이면 내 손님이지. 단, 술값은 각자 내.", "자유 구름단은 법이 셋뿐이야. 남의 배 건드리지 마, 빚 갚아, 그리고 스튜는 먹지 마."],
             "chapter_6": ["스물두 척. 자유 구름단 전 함대다. 하늘은 우리가 맡지."]
-          }},
-        {"id": "tavern_cook", "name": "요리사 '수프' 빌", "role": "선술집 요리사", "location": "선술집 '떨어진 닻'", "sprite": "npc_cook", "shop": "food",
-          "dialogues": {
-            "default": ["우리 스튜 맛 좀 볼 텐가? 재료는 묻지 말고.", "다들 내 스튜를 무서워하는데, 저 백금발 아가씨는 두 그릇 먹고 갔어. 진정한 미식가야!"]
-          }},
-        {"id": "nurse_clara", "name": "간호사 클라라", "role": "요양원 간호사", "location": "넬 요양원", "sprite": "npc_nurse",
+          }
+        },
+        {
+          "id": "tavern_cook",
+          "name": "요리사 '수프' 빌",
+          "role": "선술집 요리사",
+          "location": "선술집 '떨어진 닻'",
+          "sprite": "npc_cook",
+          "shop": "food",
+          "dialogues": {"default": ["우리 스튜 맛 좀 볼 텐가? 재료는 묻지 말고.", "다들 내 스튜를 무서워하는데, 저 백금발 아가씨는 두 그릇 먹고 갔어. 진정한 미식가야!"]}
+        },
+        {
+          "id": "nurse_clara",
+          "name": "간호사 클라라",
+          "role": "요양원 간호사",
+          "location": "넬 요양원",
+          "sprite": "npc_nurse",
           "dialogues": {
             "default": ["리나는 오늘도 창밖만 보고 있어요. 그래도 제드 씨가 오는 날은 표정이 조금 달라요.", "녹안개 환자들은 늘어나는데 치료법은 없어요. 그나마 익숙한 소리나 냄새에 조금씩 반응하죠."],
             "after_ending": ["리나가…… 오늘 아침에 제 이름을 물어봤어요. 기적이에요."]
-          }},
-        {"id": "dock_mechanic", "name": "정비공 니코", "role": "비행선 정비소 주인", "location": "넬 정비 독", "sprite": "npc_mechanic", "shop": "airship",
+          }
+        },
+        {
+          "id": "dock_mechanic",
+          "name": "정비공 니코",
+          "role": "비행선 정비소 주인",
+          "location": "넬 정비 독",
+          "sprite": "npc_mechanic",
+          "shop": "airship",
           "dialogues": {
             "default": ["알바트로스호? 저건 비행선이 아니라 날아다니는 기적이야. 어떻게 아직 안 떨어지는지 모르겠다니까.", "엔진 개조? 심맥석 부품이 필요해. 아니면 드워프 강철이든가."]
-          }}
+          }
+        }
       ]
     },
-
     "rusted_woods": {
       "town_name": "녹슨 숲 베르단",
       "npcs": [
-        {"id": "elwin", "name": "엘윈", "role": "녹색 서약회 정찰병", "location": "숲 전역", "sprite": "npc_elwin",
+        {
+          "id": "elwin",
+          "name": "엘윈",
+          "role": "녹색 서약회 정찰병",
+          "location": "숲 전역",
+          "sprite": "npc_elwin",
           "dialogues": {
-            "default": ["이쪽이야! 안개가 옅은 길을 따라와. 반딧불이 많은 곳이 안전해!", "내 이름은 엘윈. …방금 말했던가? 미안, 안개 때문에 자꾸 까먹어.", "아이리스의 노래 덕분에 오늘은 내 이름을 세 번밖에 안 까먹었어!"],
+            "default": [
+              "이쪽이야! 안개가 옅은 길을 따라와. 반딧불이 많은 곳이 안전해!",
+              "내 이름은 엘윈. …방금 말했던가? 미안, 안개 때문에 자꾸 까먹어.",
+              "아이리스의 노래 덕분에 오늘은 내 이름을 세 번밖에 안 까먹었어!"
+            ],
             "chapter_6": ["녹색 서약회 모두가 왔어! 이번엔 숲이 아니라 세계를 지킬 거야!"]
-          }},
-        {"id": "silvaen", "name": "대드루이드 실바엔", "role": "녹색 서약회 수장", "location": "고목의 요람", "sprite": "npc_silvaen",
+          }
+        },
+        {
+          "id": "silvaen",
+          "name": "대드루이드 실바엔",
+          "role": "녹색 서약회 수장",
+          "location": "고목의 요람",
+          "sprite": "npc_silvaen",
           "dialogues": {
             "default": ["천 년을 살았지만 이제 절반밖에 기억나지 않는구려. 남은 절반을 소중히 써야겠지요.", "공명술이란 듣는 것이오. 세계가 무엇을 원하는지, 아파하는지."],
             "chapter_5_after": ["아이리스 님이 무엇으로 태어나셨든, 그분의 노래는 진짜였소. 천 년 전에도, 지금도."]
-          }},
-        {"id": "hollow_elf", "name": "기억을 잃은 엘프", "role": "홀로우화가 진행 중인 엘프", "location": "안개 짙은 곳", "sprite": "npc_hollow",
+          }
+        },
+        {
+          "id": "hollow_elf",
+          "name": "기억을 잃은 엘프",
+          "role": "홀로우화가 진행 중인 엘프",
+          "location": "안개 짙은 곳",
+          "sprite": "npc_hollow",
           "dialogues": {
             "default": ["……누구…… 나는…… 누구였지……", "……노래…… 어떤 노래를…… 좋아했었는데……"],
             "after_purify": ["……아, 생각났어. 나는 미르엘. 어머니가 불러주던 자장가를 좋아했어. 고마워."]
-          }},
-        {"id": "abandoned_robot", "name": "버려진 채굴 로봇 B-7", "role": "녹슨 숲의 채굴 로봇", "location": "폐채굴장", "sprite": "npc_robot",
+          }
+        },
+        {
+          "id": "abandoned_robot",
+          "name": "버려진 채굴 로봇 B-7",
+          "role": "녹슨 숲의 채굴 로봇",
+          "location": "폐채굴장",
+          "sprite": "npc_robot",
           "dialogues": {
             "default": ["……삐…… 채굴…… 명령…… 대기…… 대기…… 대기……", "……삐…… 숲…… 아름답…… 다…… 기록…… 오류……"],
             "after_iris_talk": ["……삐…… 공명 신호 확인. 새 명령 수신: '숲을 지켜라'. ……명령, 수락합니다."]
-          }}
+          }
+        }
       ]
     },
-
     "gearhold": {
       "town_name": "지하 왕국 기어홀드",
       "npcs": [
-        {"id": "torbin", "name": "강철왕 토르빈", "role": "기어홀드의 왕", "location": "강철왕의 대장간", "sprite": "npc_torbin",
+        {
+          "id": "torbin",
+          "name": "강철왕 토르빈",
+          "role": "기어홀드의 왕",
+          "location": "강철왕의 대장간",
+          "sprite": "npc_torbin",
           "dialogues": {
             "default": ["망치질 소리가 멈추면 드워프는 죽은 거다. 그러니 우리는 계속 두드린다.", "에테르? 거인의 피를 훔친 더러운 불이다. 우리 용광로는 석탄과 고집으로 탄다."],
             "chapter_6": ["일곱 씨족 전원이 망치를 들었다. 드워프가 지상 전쟁에 나서는 건 오백 년 만이다!"]
-          }},
-        {"id": "dwarf_gatekeeper", "name": "문지기 브로크", "role": "기어홀드 대문 수문장", "location": "기어홀드 대문", "sprite": "npc_dwarf_guard",
-          "dialogues": {
-            "default": ["수수께끼 하나 더 들어볼 테냐? '먹으면 먹을수록 배고파지는 것은?' …정답은 드워프 맥주다!", "키다리들은 다 머리를 부딪치더군. 천장 조심해라."]
-          }},
-        {"id": "smith_hilda", "name": "대장장이 힐다", "role": "무기 상점 주인", "location": "망치 거리", "sprite": "npc_dwarf_smith", "shop": "weapon",
-          "dialogues": {
-            "default": ["우리 씨족 무기는 백 년을 써도 이가 안 빠져. 대신 비싸다.", "그 해적 선장 총, 제법이군. 총열을 거인의 뼈로 갈아주면 사거리가 한 칸은 늘 거다."]
-          }},
-        {"id": "brewmaster_gunnar", "name": "양조장인 군나르", "role": "선술집 주인", "location": "선술집 '녹은 모루'", "sprite": "npc_dwarf_brewer", "shop": "inn",
-          "dialogues": {
-            "default": ["기어홀드 흑맥주 한잔? 키다리는 반 잔이면 쓰러지지만.", "강철왕님이 오늘 기분이 좋으시더군. 오스카라는 이름을 20년 만에 들으셨다나."]
-          }}
+          }
+        },
+        {
+          "id": "dwarf_gatekeeper",
+          "name": "문지기 브로크",
+          "role": "기어홀드 대문 수문장",
+          "location": "기어홀드 대문",
+          "sprite": "npc_dwarf_guard",
+          "dialogues": {"default": ["수수께끼 하나 더 들어볼 테냐? '먹으면 먹을수록 배고파지는 것은?' …정답은 드워프 맥주다!", "키다리들은 다 머리를 부딪치더군. 천장 조심해라."]}
+        },
+        {
+          "id": "smith_hilda",
+          "name": "대장장이 힐다",
+          "role": "무기 상점 주인",
+          "location": "망치 거리",
+          "sprite": "npc_dwarf_smith",
+          "shop": "weapon",
+          "dialogues": {"default": ["우리 씨족 무기는 백 년을 써도 이가 안 빠져. 대신 비싸다.", "그 해적 선장 총, 제법이군. 총열을 거인의 뼈로 갈아주면 사거리가 한 칸은 늘 거다."]}
+        },
+        {
+          "id": "brewmaster_gunnar",
+          "name": "양조장인 군나르",
+          "role": "선술집 주인",
+          "location": "선술집 '녹은 모루'",
+          "sprite": "npc_dwarf_brewer",
+          "shop": "inn",
+          "dialogues": {"default": ["기어홀드 흑맥주 한잔? 키다리는 반 잔이면 쓰러지지만.", "강철왕님이 오늘 기분이 좋으시더군. 오스카라는 이름을 20년 만에 들으셨다나."]}
+        }
       ]
     },
-
     "still_city": {
       "town_name": "멈춘 도시 엘레이온",
       "npcs": [
-        {"id": "shadow_baker", "name": "그림자 빵집 주인", "role": "천 년 전의 그림자", "location": "되풀이되는 광장", "sprite": "npc_shadow",
+        {
+          "id": "shadow_baker",
+          "name": "그림자 빵집 주인",
+          "role": "천 년 전의 그림자",
+          "location": "되풀이되는 광장",
+          "sprite": "npc_shadow",
           "dialogues": {
             "default": ["갓 구운 빵 사세요! 오늘은 대마도사님이 봉인 의식을 하시는 날이라 특별히 꿀빵도 구웠어요!"],
             "after_time_puzzle": ["……어라? 손님, 처음 보는 얼굴이네요. 오늘이…… 며칠이었더라……"]
-          }},
-        {"id": "shadow_child", "name": "그림자 아이", "role": "천 년 전의 그림자", "location": "되풀이되는 광장", "sprite": "npc_shadow_child",
+          }
+        },
+        {
+          "id": "shadow_child",
+          "name": "그림자 아이",
+          "role": "천 년 전의 그림자",
+          "location": "되풀이되는 광장",
+          "sprite": "npc_shadow_child",
           "dialogues": {
             "default": ["엄마, 아이리스 님이 정말 안개를 막아주실까?"],
             "to_iris": ["……아이리스 님? 아이리스 님이다! 안개, 막아주신 거죠? 그래서 우리 아직 여기 있는 거죠?"]
-          }},
-        {"id": "desert_nomad", "name": "사막 유목민 자히르", "role": "도시 외곽 야영지 상인", "location": "모래 언덕 야영지", "sprite": "npc_nomad", "shop": "general",
+          }
+        },
+        {
+          "id": "desert_nomad",
+          "name": "사막 유목민 자히르",
+          "role": "도시 외곽 야영지 상인",
+          "location": "모래 언덕 야영지",
+          "sprite": "npc_nomad",
+          "shop": "general",
           "dialogues": {
             "default": ["저 도시엔 들어가지 마시오. 들어간 자들은 그림자가 되어 같은 날을 되풀이한다오.", "천 년에 한 번 종이 울리면 도시가 깨어난다는 전설이 있지. …방금 그 소리, 설마?"]
-          }}
+          }
+        }
       ]
     },
-
     "arcanus_inside": {
       "town_name": "아르카누스의 체내",
       "npcs": [
-        {"id": "memory_wisp", "name": "떠도는 기억의 빛", "role": "세이브 포인트 / 회복 지점", "location": "각 구역 휴식처", "sprite": "npc_memory_wisp",
+        {
+          "id": "memory_wisp",
+          "name": "떠도는 기억의 빛",
+          "role": "세이브 포인트 / 회복 지점",
+          "location": "각 구역 휴식처",
+          "sprite": "npc_memory_wisp",
           "dialogues": {
             "default": ["……쉬어가렴. 여기는 거인이 아직 잊지 않은 따뜻한 기억이야.", "……이건 수천 년 전 어떤 아이가 처음 걸음마를 뗀 기억이란다. 거인은 그걸 아직 간직하고 있어."]
-          }},
-        {"id": "memory_fragment", "name": "기억의 조각", "role": "수집 요소 (진 엔딩 조건)", "location": "혈관 미궁 곳곳", "sprite": "npc_memory_fragment",
+          }
+        },
+        {
+          "id": "memory_fragment",
+          "name": "기억의 조각",
+          "role": "수집 요소 (진 엔딩 조건)",
+          "location": "혈관 미궁 곳곳",
+          "sprite": "npc_memory_fragment",
           "dialogues": {
-            "default": ["(어부가 첫 고기를 낚고 환호하는 기억이 스쳐 지나간다.)", "(드워프 장인이 처음으로 망치를 쥐는 기억이 스쳐 지나간다.)", "(엘프 아이가 처음으로 숲의 노래를 따라 부르는 기억이 스쳐 지나간다.)", "(어느 기사가 아들을 안고 등대 대신 굴뚝 너머 별을 가리키는 기억이 스쳐 지나간다.)"]
-          }}
+            "default": [
+              "(어부가 첫 고기를 낚고 환호하는 기억이 스쳐 지나간다.)",
+              "(드워프 장인이 처음으로 망치를 쥐는 기억이 스쳐 지나간다.)",
+              "(엘프 아이가 처음으로 숲의 노래를 따라 부르는 기억이 스쳐 지나간다.)",
+              "(어느 기사가 아들을 안고 등대 대신 굴뚝 너머 별을 가리키는 기억이 스쳐 지나간다.)"
+            ]
+          }
+        }
       ]
     }
   },
-
   "party_banter": [
-    {"id": "banter_01", "trigger": "airship_travel", "lines": [
-      {"speaker": "luke", "text": "제드…… 이 배, 방금 덜컹했지? 분명히 덜컹했어."},
-      {"speaker": "zed", "text": "기류야, 기류. 아니면 엔진 볼트 하나 빠졌거나."},
-      {"speaker": "luke", "text": "볼트?! 어느 볼트?! 내가 고칠게, 지금 당장!"},
-      {"speaker": "iris", "text": "엔진 소리 들어보니까 괜찮대요. 조금 졸릴 뿐이래요."},
-      {"speaker": "zed", "text": "……엔진이 졸리다는 소린 처음 듣는데."}
-    ]},
-    {"id": "banter_02", "trigger": "walk_skyport", "lines": [
-      {"speaker": "iris", "text": "제드 씨, 핀은 어떻게 만든 거예요? 핀은 진짜 생각을 하는 것 같아요."},
-      {"speaker": "zed", "text": "리나가 어릴 때 새를 키우고 싶다고 해서 만들었어. 진짜 새는 비싸서."},
-      {"speaker": "fin", "text": "끼익!"},
-      {"speaker": "iris", "text": "핀이 '리나가 지어준 이름'이래요."},
-      {"speaker": "zed", "text": "……그것까지 알아들어? 무섭네, 아가씨."}
-    ]},
-    {"id": "banter_03", "trigger": "walk_rusted_woods", "lines": [
-      {"speaker": "luke", "text": "아이리스, 안개 속에서 괜찮아? 우린 머리가 좀 멍한데."},
-      {"speaker": "iris", "text": "저는 괜찮아요. 이상하죠? 저만 아무렇지도 않아요."},
-      {"speaker": "zed", "text": "(……기억이 태엽에 감겨 있으니까 안개가 못 건드리는 거겠지.)"},
-      {"speaker": "luke", "text": "제드, 뭐라고?"},
-      {"speaker": "zed", "text": "아무것도. 아가씨가 튼튼해서 다행이라고."}
-    ]},
-    {"id": "banter_04", "trigger": "walk_gearhold", "lines": [
-      {"speaker": "luke", "text": "와…… 저 용광로 좀 봐. 굴뚝거리 공장 열 개를 합쳐도 저것보다 작을 거야."},
-      {"speaker": "zed", "text": "드워프들은 에테르 없이 이 모든 걸 돌려. 기술원이 알면 배 아파 죽을걸."},
-      {"speaker": "iris", "text": "여기 기계들은 다 행복해 보여요. 오래 쓰이고, 잘 고쳐지고, 아껴지니까요."},
-      {"speaker": "luke", "text": "……좋은 기계공은 기계를 아끼는 법이지."}
-    ]},
-    {"id": "banter_05", "trigger": "walk_arcanus", "lines": [
-      {"speaker": "luke", "text": "제드. 다 끝나면 뭐 할 거야?"},
-      {"speaker": "zed", "text": "……글쎄. 리나 데리고 하늘 여행이나 할까. 추락 안 하는 배로."},
-      {"speaker": "luke", "text": "그럼 그 배 내가 정비할게. 공짜로."},
-      {"speaker": "zed", "text": "굴뚝거리 기계공이 공짜라니. 세상이 끝나긴 끝나나 보다."},
-      {"speaker": "luke", "text": "안 끝나. 우리가 안 끝나게 할 거니까."}
-    ]}
+    {
+      "id": "banter_01",
+      "trigger": "airship_travel",
+      "lines": [
+        {"speaker": "luke", "text": "제드…… 이 배, 방금 덜컹했지? 분명히 덜컹했어."},
+        {"speaker": "zed", "text": "기류야, 기류. 아니면 엔진 볼트 하나 빠졌거나."},
+        {"speaker": "luke", "text": "볼트?! 어느 볼트?! 내가 고칠게, 지금 당장!"},
+        {"speaker": "iris", "text": "엔진 소리 들어보니까 괜찮대요. 조금 졸릴 뿐이래요."},
+        {"speaker": "zed", "text": "……엔진이 졸리다는 소린 처음 듣는데."}
+      ]
+    },
+    {
+      "id": "banter_02",
+      "trigger": "walk_skyport",
+      "lines": [
+        {"speaker": "iris", "text": "제드 씨, 핀은 어떻게 만든 거예요? 핀은 진짜 생각을 하는 것 같아요."},
+        {"speaker": "zed", "text": "리나가 어릴 때 새를 키우고 싶다고 해서 만들었어. 진짜 새는 비싸서."},
+        {"speaker": "fin", "text": "끼익!"},
+        {"speaker": "iris", "text": "핀이 '리나가 지어준 이름'이래요."},
+        {"speaker": "zed", "text": "……그것까지 알아들어? 무섭네, 아가씨."}
+      ]
+    },
+    {
+      "id": "banter_03",
+      "trigger": "walk_rusted_woods",
+      "lines": [
+        {"speaker": "luke", "text": "아이리스, 안개 속에서 괜찮아? 우린 머리가 좀 멍한데."},
+        {"speaker": "iris", "text": "저는 괜찮아요. 이상하죠? 저만 아무렇지도 않아요."},
+        {"speaker": "zed", "text": "(……기억이 태엽에 감겨 있으니까 안개가 못 건드리는 거겠지.)"},
+        {"speaker": "luke", "text": "제드, 뭐라고?"},
+        {"speaker": "zed", "text": "아무것도. 아가씨가 튼튼해서 다행이라고."}
+      ]
+    },
+    {
+      "id": "banter_04",
+      "trigger": "walk_gearhold",
+      "lines": [
+        {"speaker": "luke", "text": "와…… 저 용광로 좀 봐. 굴뚝거리 공장 열 개를 합쳐도 저것보다 작을 거야."},
+        {"speaker": "zed", "text": "드워프들은 에테르 없이 이 모든 걸 돌려. 기술원이 알면 배 아파 죽을걸."},
+        {"speaker": "iris", "text": "여기 기계들은 다 행복해 보여요. 오래 쓰이고, 잘 고쳐지고, 아껴지니까요."},
+        {"speaker": "luke", "text": "……좋은 기계공은 기계를 아끼는 법이지."}
+      ]
+    },
+    {
+      "id": "banter_05",
+      "trigger": "walk_arcanus",
+      "lines": [
+        {"speaker": "luke", "text": "제드. 다 끝나면 뭐 할 거야?"},
+        {"speaker": "zed", "text": "……글쎄. 리나 데리고 하늘 여행이나 할까. 추락 안 하는 배로."},
+        {"speaker": "luke", "text": "그럼 그 배 내가 정비할게. 공짜로."},
+        {"speaker": "zed", "text": "굴뚝거리 기계공이 공짜라니. 세상이 끝나긴 끝나나 보다."},
+        {"speaker": "luke", "text": "안 끝나. 우리가 안 끝나게 할 거니까."}
+      ]
+    }
   ],
-
   "side_quests": [
-    {"id": "sq_chimney_repairs", "name": "굴뚝거리의 해결사", "chapter": "prologue", "giver": "morgan",
+    {
+      "id": "sq_chimney_repairs",
+      "name": "굴뚝거리의 해결사",
+      "chapter": "prologue",
+      "giver": "morgan",
       "steps": ["3번가 보일러 수리", "5번가 증기 펌프 수리", "베스 할머니 노점 화덕 수리"],
-      "reward": {"exp": 200, "gold": 150, "items": ["item_wrench_plus"]}},
-    {"id": "sq_albatross_repair", "name": "날아다니는 기적", "chapter": "chapter_2", "giver": "dock_mechanic",
+      "reward": {"exp": 200, "gold": 150, "items": ["item_wrench_plus"]}
+    },
+    {
+      "id": "sq_albatross_repair",
+      "name": "날아다니는 기적",
+      "chapter": "chapter_2",
+      "giver": "dock_mechanic",
       "steps": ["넬 시장에서 에테르 밸브 구매", "알바트로스호 엔진룸 수리 미니게임", "시험 비행 (루크 고소공포증 이벤트)"],
-      "reward": {"exp": 1000, "items": ["airship_upgrade_hull_1"], "affinity": {"zed": 15}}},
-    {"id": "sq_rusted_memories", "name": "잃어버린 이름들", "chapter": "chapter_3", "giver": "elwin",
+      "reward": {"exp": 1000, "items": ["airship_upgrade_hull_1"], "affinity": {"zed": 15}}
+    },
+    {
+      "id": "sq_rusted_memories",
+      "name": "잃어버린 이름들",
+      "chapter": "chapter_3",
+      "giver": "elwin",
       "steps": ["기억을 잃은 엘프 8명에게 아이리스의 [정화의 선율] 사용", "각자의 소중한 물건을 찾아 돌려주기"],
-      "reward": {"exp": 3000, "items": ["accessory_elf_locket"], "flag": "sq_rusted_memories_complete"}},
-    {"id": "sq_robot_b7", "name": "B-7의 새 명령", "chapter": "chapter_3", "giver": "abandoned_robot",
+      "reward": {"exp": 3000, "items": ["accessory_elf_locket"], "flag": "sq_rusted_memories_complete"}
+    },
+    {
+      "id": "sq_robot_b7",
+      "name": "B-7의 새 명령",
+      "chapter": "chapter_3",
+      "giver": "abandoned_robot",
       "steps": ["루크가 B-7 수리 (부품 3종 수집)", "아이리스가 B-7과 공명 대화"],
-      "reward": {"exp": 1500, "items": ["summon_b7"], "note": "최종전에서 B-7이 지원 공격으로 등장"}},
-    {"id": "sq_dwarf_ale", "name": "흑맥주 반 잔의 전설", "chapter": "chapter_4", "giver": "brewmaster_gunnar",
+      "reward": {"exp": 1500, "items": ["summon_b7"], "note": "최종전에서 B-7이 지원 공격으로 등장"}
+    },
+    {
+      "id": "sq_dwarf_ale",
+      "name": "흑맥주 반 잔의 전설",
+      "chapter": "chapter_4",
+      "giver": "brewmaster_gunnar",
       "steps": ["드워프 흑맥주 마시기 대결 (QTE)", "패배해도 진행 가능 - 루크가 쓰러지는 연출"],
-      "reward": {"exp": 500, "items": ["item_dwarf_ale x3"], "affinity": {"luke": 10}}},
-    {"id": "sq_lina_music", "name": "오르골의 노래", "chapter": "chapter_4", "giver": "zed",
+      "reward": {"exp": 500, "items": ["item_dwarf_ale x3"], "affinity": {"luke": 10}}
+    },
+    {
+      "id": "sq_lina_music",
+      "name": "오르골의 노래",
+      "chapter": "chapter_4",
+      "giver": "zed",
       "steps": ["넬 요양원 간호사 클라라와 대화", "기어홀드에서 오르골 태엽 부품 구하기", "아이리스와 함께 오르골 수리"],
-      "reward": {"exp": 2000, "affinity": {"zed": 25}, "note": "zed_together 선택지 해금 조건 중 하나"}},
-    {"id": "sq_memory_fragments", "name": "거인이 간직한 것", "chapter": "chapter_7", "giver": "memory_wisp",
+      "reward": {"exp": 2000, "affinity": {"zed": 25}, "note": "zed_together 선택지 해금 조건 중 하나"}
+    },
+    {
+      "id": "sq_memory_fragments",
+      "name": "거인이 간직한 것",
+      "chapter": "chapter_7",
+      "giver": "memory_wisp",
       "steps": ["거인의 체내 곳곳에 흩어진 기억의 조각 12개 수집"],
-      "reward": {"exp": 8000, "flag": "memory_fragments_12", "note": "진 엔딩 조건"}}
+      "reward": {"exp": 8000, "flag": "memory_fragments_12", "note": "진 엔딩 조건"}
+    }
   ],
-
   "affinity_system": {
     "description": "루크와 각 동료 사이의 친밀도(0~100). 대화 선택지, 서브 퀘스트, 야영 대화로 오른다.",
     "pairs": ["luke_iris", "luke_zed", "zed_iris"],
     "thresholds": {"40": "야영 특별 대화 해금", "60": "최종장 핵심 선택지 해금", "80": "합체 기술 해금"},
     "combo_skills": [
-      {"id": "combo_luke_iris", "name": "공명 증기 폭발", "members": ["luke", "iris"], "description": "아이리스의 공진파로 애쉬브링어의 피스톤을 과공명시켜 전방 광역 폭발."},
-      {"id": "combo_luke_zed", "name": "강철 탄환", "members": ["luke", "zed"], "description": "제드가 루크의 대검을 발판 삼아 공중 저격. 단일 대상 초고화력."},
-      {"id": "combo_zed_iris", "name": "핀의 노래", "members": ["zed", "iris"], "description": "핀이 아이리스의 공명음을 증폭해 전장 전체에 퍼뜨린다. 적 기계 전체 정지 1턴."}
+      {
+        "id": "combo_luke_iris",
+        "name": "공명 증기 폭발",
+        "members": ["luke", "iris"],
+        "description": "아이리스의 공진파로 애쉬브링어의 피스톤을 과공명시켜 전방 광역 폭발."
+      },
+      {
+        "id": "combo_luke_zed",
+        "name": "강철 탄환",
+        "members": ["luke", "zed"],
+        "description": "제드가 루크의 대검을 발판 삼아 공중 저격. 단일 대상 초고화력."
+      },
+      {
+        "id": "combo_zed_iris",
+        "name": "핀의 노래",
+        "members": ["zed", "iris"],
+        "description": "핀이 아이리스의 공명음을 증폭해 전장 전체에 퍼뜨린다. 적 기계 전체 정지 1턴."
+      }
     ]
   },
-
   "system_messages": {
     "game_over": "태엽이 멈췄습니다…… 다시 감겠습니까?",
     "save": "기억을 태엽에 감았습니다.",

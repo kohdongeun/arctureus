@@ -332,6 +332,8 @@ class DialogueUI:
         line = self.lines[self.i]
         sid = line["speaker"]
         g = self.game
+        if line.get("bgm_mood"):                 # 대사 분위기에 따라 BGM 전환
+            g.set_bgm(g.world.m.get("bgm") if line["bgm_mood"] == "default" else line["bgm_mood"])
         self.shown = 0.0
         self.body.text = ""
         self.body.color = rgb(58, 40, 26) if sid != "system" else rgb(130, 80, 20)
@@ -365,6 +367,7 @@ class DialogueUI:
         if self.i >= len(self.lines):
             self.root.enabled = False
             self.art.texture = None
+            self.game.set_bgm(self.game.world.m.get("bgm"))     # 대화가 끝나면 맵 기본 곡으로
             if self.on_done:
                 self.on_done()
             return
@@ -493,20 +496,52 @@ class Game:
         return None
 
     # ------------------------------------------------------------ 소리
+    BGM_VOLUME = 0.5
+
     def _audio(self, bgm):
         """ursina Audio 는 절대 경로를 못 받으므로 Panda3D 로더로 직접 불러온다"""
         self._sfx = {}
-        self.bgm = None
-        if not bgm:
+        self._music = {}
+        self.bgm, self.bgm_name, self.fading = None, None, []
+        self.set_bgm(bgm, fade=0.0)
+
+    def set_bgm(self, name, fade=1.0):
+        """BGM 교체: 이전 곡은 fade 초 동안 줄이고 새 곡은 키운다 (크로스페이드)"""
+        if not name or name == self.bgm_name:
             return
         try:
-            snd = self.app.loader.loadMusic(Filename.fromOsSpecific(os.path.join(ROOT, "assets", "bgm", bgm + ".ogg")))
-            snd.setLoop(True)
-            snd.setVolume(0.5)
-            snd.play()
-            self.bgm = snd
+            if name not in self._music:
+                path = os.path.join(ROOT, "assets", "bgm", name + ".ogg")
+                if not os.path.exists(path):
+                    return
+                self._music[name] = self.app.loader.loadMusic(Filename.fromOsSpecific(path))
+                self._music[name].setLoop(True)
+            snd = self._music[name]
         except Exception:  # noqa: BLE001 - 사운드 장치가 없어도 진행
-            self.bgm = None
+            return
+        if self.bgm is not None:
+            self.fading.append([self.bgm, self.bgm.getVolume()])
+        self.fading = [f for f in self.fading if f[0] is not snd]
+        snd.setVolume(0.0 if fade else self.BGM_VOLUME)
+        snd.play()
+        self.bgm, self.bgm_name, self.bgm_fade = snd, name, fade
+        self.log_bgm = getattr(self, "log_bgm", []) + [name]
+
+    def _update_music(self, dt):
+        if self.bgm is None:
+            return
+        f = getattr(self, "bgm_fade", 0.0)
+        step = dt / f if f else 1.0
+        self.bgm.setVolume(min(self.BGM_VOLUME, self.bgm.getVolume() + self.BGM_VOLUME * step))
+        keep = []
+        for snd, v in self.fading:
+            v = max(0.0, v - self.BGM_VOLUME * step)
+            snd.setVolume(v)
+            if v > 0:
+                keep.append([snd, v])
+            else:
+                snd.stop()
+        self.fading = keep
 
     def sfx(self, name):
         try:
@@ -554,6 +589,7 @@ class Game:
     def update(self):
         from ursina import time as utime
         dt = min(utime.dt, 1 / 20)
+        self._update_music(dt)
         self.clock = getattr(self, "clock", 0.0) + dt
         self.dialogue.update(dt)
         self.banner.update(dt)

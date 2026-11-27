@@ -109,6 +109,7 @@ def autoplay(game, out_dir):
         elif s == 13:
             shot("robot_dialogue")
             print("\n".join(log))
+            print("BGM 전환:", " → ".join(getattr(game, "log_bgm", [])))
             print(f"autoplay OK ({state['f']} frames)")
             application.quit()
 
